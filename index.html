@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794241241";</script>
+<script>window.MM_VER="1794241460";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -843,7 +843,7 @@ const ymM=()=>hoje().slice(0,7);
 function uso(){if(!S.uso||S.uso.ym!==ymM())S.uso={ym:ymM(),an:0,sc:0};return S.uso}
 const LIM={an:3,sc:5};
 const podeUsar=k=>!!S.plus;
-function limite(){toast('Sua análise grátis já foi usada. Novas análises no Momento+');S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
+function limite(){toast('Esse recurso é do Momento+');S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
 /* ---------- Fase da pele ---------- */
 const FASES={
  padrao:{t:'Padrão',i:'sparkle',d:'Rotina normal'},
@@ -923,7 +923,7 @@ function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fot
 async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&!S.ob.done){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}}catch(e){}}
 function cloudPush(now){if(!CL.ok||!S.cloud)return;clearTimeout(CL.t);CL.t=setTimeout(()=>cloudNow().catch(()=>{}),now?0:3000)}
 async function cloudNow(){const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
-const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Momento+.',limite_gratis:'Sua análise grátis já foi usada. Novas análises no Momento+.',limite_mes:'Você chegou ao limite de análises deste mês.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
+const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Momento+.',limite_gratis:'Esse recurso é do Momento+.',limite_mes:'Você chegou ao limite de análises deste mês.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
 function authView(){
@@ -1580,8 +1580,8 @@ function vCom(){
 function vPlano(){
   const u=uso(),bar=(k,l,i_)=>`<div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="display:flex;gap:8px;align-items:center">${ic(i_,16)}${l}</b><span class="small muted">${S.plus?'ilimitado':u[k]+' de '+LIM[k]}</span></div><div class="use"><b style="width:${S.plus?100:Math.min(100,u[k]/LIM[k]*100)}%"></b></div></div>`;
   return `<div class="plus">${head('crown','Momento+').replace('class="tile"','class="tile" style="background:rgba(255,255,255,.2);color:#fff"')}
-    <div class="small" style="opacity:.9;margin:-2px 0 2px">Tudo do grátis, mais:</div>
-    ${[['face','Novas análises sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['bottle','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
+    <div class="small" style="opacity:.9;margin:-2px 0 2px">Tudo liberado com a assinatura:</div>
+    ${[['face','Análise da pele por foto, sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['bottle','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
     <div style="display:grid;gap:8px;margin-top:6px">
       <div style="background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 34,90<span style="font-size:14px;font-weight:500"> /mês</span></div></div>
       <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 268,90 no ano.</div></div>
