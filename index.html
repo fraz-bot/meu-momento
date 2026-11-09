@@ -1655,19 +1655,45 @@ function hairPlan(r){
   const TX={hid:'Hidratação: use a máscara hidratante no lugar do condicionador, 1 vez na semana.',nut:'Nutrição: aplique a máscara nutritiva do meio às pontas, 1 vez na semana.',rec:'Reconstrução: máscara com proteínas, 1 vez só nesta semana, e hidrate bem na lavagem seguinte.'};
   const crono=slots.map((t,i)=>`Semana ${i+1} · ${TX[t]}`);
   const usados=[...new Set(slots)];
-  // produtos
-  const P_=[];
-  P_.push({k:'shampoo',passo:'Shampoo',busca:r.raiz>=60?'Shampoo de limpeza equilibrada para raiz oleosa, sem sulfato forte, usado só na raiz.':(r.pontas>=60||ct||alis||tint)?'Shampoo suave, sem sulfato forte'+(tint?', próprio para cabelo colorido':'')+', que não resseca.':r.danos>=60?'Shampoo suave com proteínas (queratina, aminoácidos).':'Shampoo neutro de uso regular.'});
-  P_.push({k:'cond',passo:'Condicionador',busca:(r.pontas>=60||r.frizz>=60||ct)?'Condicionador rico, com óleos ou manteigas, do meio às pontas.':r.raiz>=60?'Condicionador leve, só do meio às pontas.':'Condicionador com ação desembaraçante.'});
-  const MT={hid:'hidratação (glicerina, pantenol)',nut:'nutrição (óleos e manteigas: argan, karité, coco)',rec:'reconstrução (queratina, aminoácidos)'};
-  P_.push({k:'mascara',passo:'Máscara de tratamento',busca:'Tenha '+(usados.length>1?'uma de cada: ':'uma de ')+usados.map(x=>MT[x]).join(', ')+'.'});
-  if(r.frizz>=50||(ct&&r.pontas>=50)||r.poro>=60)P_.push({k:'leave',passo:'Leave-in ou creme de pentear',busca:ct?'Creme de pentear ou leave-in hidratante, aplicado com o cabelo úmido.':'Leave-in leve, só nas pontas, com o cabelo úmido.'});
-  if(q.calor==='sempre'||q.calor==='as')P_.push({k:'termico',passo:'Protetor térmico',busca:'Spray com proteção térmica, antes do secador ou da chapinha.'});
-  if(r.raiz>=70)P_.push({k:'esfol',passo:'Esfoliante de couro cabeludo',busca:'Esfoliante suave, 1 vez por semana, para soltar a oleosidade acumulada.'});
+  // produtos: cada item nasce das notas da foto e diz o porquê
+  const P_=[],nt=(v,l)=>`${l} ${v}/100`;
+  // shampoo
+  {let b,por;
+   if(r.raiz>=70){b='Shampoo de limpeza profunda ou antirresíduo, usado só na raiz; sem óleos pesados.';por=nt(r.raiz,'Raiz muito oleosa')}
+   else if(r.raiz>=55){b='Shampoo de limpeza equilibrada para raiz oleosa, sem sulfato forte, só na raiz.';por=nt(r.raiz,'Raiz oleosa')}
+   else if(r.danos>=60){b='Shampoo suave com proteínas (queratina, aminoácidos), baixo sulfato.';por=nt(r.danos,'Danos e quebra')}
+   else if(r.pontas>=60||ct||alis){b='Shampoo suave, sem sulfato forte (tipo low poo), que não resseca.';por=r.pontas>=60?nt(r.pontas,'Pontas ressecadas'):ct?'Cabelo '+r.tipo.toLowerCase()+' ressecam com facilidade':'Cabelo alisado'}
+   else{b='Shampoo neutro de uso regular, equilibrado.';por='Raiz e pontas sem problema forte'}
+   if(tint)b+=' De preferência próprio para cabelo colorido.';
+   P_.push({k:'shampoo',passo:'Shampoo',busca:b,por});}
+  // limpeza profunda ocasional
+  if(r.raiz>=70||(r.poro>=70&&r.danos<50&&r.pontas<70))P_.push({k:'clarif',passo:'Shampoo de limpeza profunda',busca:'Antirresíduo, 1 vez a cada 15 dias, para tirar acúmulo de produto e oleosidade.',por:r.raiz>=70?nt(r.raiz,'Raiz muito oleosa'):nt(r.poro,'Porosidade alta')+', acumula resíduo'});
+  // condicionador
+  {let b,por;
+   if(r.frizz>=65){b='Condicionador anti-frizz, com óleos leves ou silicone solúvel, do meio às pontas.';por=nt(r.frizz,'Frizz')}
+   else if(r.danos>=60){b='Condicionador reconstrutor leve, com proteínas, do meio às pontas.';por=nt(r.danos,'Danos e quebra')}
+   else if(r.pontas>=60||ct){b='Condicionador cremoso e rico, com óleos ou manteigas, do meio às pontas.';por=r.pontas>=60?nt(r.pontas,'Pontas ressecadas'):'Cabelo '+r.tipo.toLowerCase()+' precisa de mais nutrição'}
+   else if(r.raiz>=60){b='Condicionador leve, só do meio às pontas, sem tocar a raiz.';por=nt(r.raiz,'Raiz oleosa')}
+   else{b='Condicionador com ação desembaraçante.';por='Cabelo equilibrado'}
+   P_.push({k:'cond',passo:'Condicionador',busca:b,por});}
+  // máscaras do cronograma
+  const MT={hid:'hidratação (glicerina, pantenol, aloe)',nut:'nutrição (óleos e manteigas: argan, karité, coco)',rec:'reconstrução (queratina, aminoácidos)'};
+  P_.push({k:'mascara',passo:'Máscara de tratamento',busca:'Tenha '+(usados.length>1?'uma de cada: ':'uma de ')+usados.map(x=>MT[x]).join(' e ')+'.',por:'Seu cronograma de 4 semanas usa '+usados.map(x=>({hid:'hidratação',nut:'nutrição',rec:'reconstrução'}[x])).join(', ').replace(/, ([^,]*)$/,' e $1')});
+  // reparador de ligações (dano alto)
+  if(r.danos>=70)P_.push({k:'ligacao',passo:'Tratamento reparador de ligações',busca:'Ampola ou máscara com ativos que reconstroem as ligações do fio (bond builder), 1 vez por semana ou a cada 15 dias.',por:nt(r.danos,'Danos e quebra')+', fio frágil'});
+  // leave-in
+  if(r.frizz>=50||(ct&&r.pontas>=50)||r.poro>=60)P_.push({k:'leave',passo:'Leave-in ou creme de pentear',busca:ct?'Creme de pentear ou leave-in hidratante, aplicado com o cabelo úmido.':r.poro>=60?'Leave-in leve com ativos que selam o fio, aplicado com o cabelo úmido.':'Leave-in leve, só nas pontas, com o cabelo úmido.',por:r.frizz>=50?nt(r.frizz,'Frizz'):r.poro>=60?nt(r.poro,'Porosidade alta'):nt(r.pontas,'Pontas ressecadas')});
+  // óleo ou sérum de pontas
+  if(r.pontas>=65)P_.push({k:'oleo',passo:'Óleo ou sérum para as pontas',busca:ct?'Óleo vegetal ou sérum nutritivo, 2 gotas só nas pontas, para selar a hidratação.':'Sérum leve para pontas, 1 gota, sem passar na raiz.',por:nt(r.pontas,'Pontas ressecadas')});
+  // proteção
+  if(q.calor==='sempre'||q.calor==='as')P_.push({k:'termico',passo:'Protetor térmico',busca:'Spray com proteção térmica, antes do secador ou da chapinha.',por:q.calor==='sempre'?'Você usa calor sempre':'Você usa calor às vezes'});
+  if(tint||alis)P_.push({k:'solar',passo:'Protetor solar ou de cor para o cabelo',busca:'Spray ou leave-in com filtro UV, para proteger a cor e o fio do sol.',por:tint?'Cabelo tingido':'Cabelo alisado'});
+  // couro cabeludo
+  if(r.raiz>=70)P_.push({k:'esfol',passo:'Esfoliante de couro cabeludo',busca:'Esfoliante suave, 1 vez por semana, para soltar a oleosidade acumulada.',por:nt(r.raiz,'Raiz muito oleosa')});
   return{prior,crono,produtos:P_};
 }
-const promptHairMarcas=(r,pl)=>`Cabelo ${r.tipo}${hqTxt()?'; '+hqTxt():''}. Para cada produto abaixo, sugira um por faixa de preço (econ, mid, prem).
-Produtos: ${pl.produtos.map(x=>x.k+' = '+x.passo+' ('+x.busca+')').join(' | ')}.
+const promptHairMarcas=(r,pl)=>`Cabelo ${r.tipo}${hqTxt()?'; '+hqTxt():''}. Notas da foto (0 a 100): raiz oleosa ${r.raiz}, pontas ressecadas ${r.pontas}, porosidade ${r.poro}, danos ${r.danos}, frizz ${r.frizz}. Para cada produto abaixo, sugira um por faixa de preço (econ, mid, prem), escolhendo o produto que atende ao motivo indicado.
+Produtos: ${pl.produtos.map(x=>x.k+' = '+x.passo+' ('+x.busca+') Motivo: '+x.por).join(' | ')}.
 Responda SOMENTE com um JSON: {"marcas":{"chave":{"econ":"Marca e produto","mid":"Marca e produto","prem":"Marca e produto"}}}
 Cite só marcas conhecidas e vendidas no Brasil. Se não tiver certeza do nome exato do produto, cite só a marca e a linha. Não invente.`;
 async function analisarCabelo(){
@@ -1714,7 +1740,7 @@ function viewCabelo(){
     ${r.atencao?`<p class="note" style="color:var(--warn)">${esc(r.atencao)}</p>`:''}</div>
   ${pl.produtos.length?`<div class="card"><h3>Produtos para o seu cabelo</h3>
     <div class="seg" role="group" aria-label="Faixa de preço" style="margin:10px 0">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${l}</button>`).join('')}</div>
-    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier];return `<div class="vp"><span class="tile">${ic('bottle',18)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>`}).join('')}
+    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier];return `<div class="vp"><span class="tile">${ic('bottle',18)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>`}).join('')}
     <p class="note">Exemplos de marcas, sem preço fixo. Confira a lista de ingredientes no rótulo.</p></div>`:''}
   ${pl.crono.length?`<div class="card"><h3>Cronograma capilar</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.crono.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
   <p class="note">Não é diagnóstico. Queda forte, falhas ou coceira que não passa: procure um dermatologista ou tricologista.</p></div>`;
