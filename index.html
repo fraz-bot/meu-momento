@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794238004";</script>
+<script>window.MM_VER="1794240897";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -447,6 +447,7 @@ nav button.fab[aria-current="page"],:root:not([data-tema=suave]) nav button.fab[
 .wm{font-family:'Pacifico','Snell Roundhand','Brush Script MT','Segoe Script',cursive;font-weight:400;font-size:24px;line-height:1.2;letter-spacing:.01em;background:linear-gradient(100deg,#FF5C9A,#D6246E 60%,#B0125A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 3px rgba(214,36,110,.22));padding:2px 4px}
 .wm.big{font-size:38px}
 .bk2{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--tint);background:var(--surface);color:var(--accent);font:inherit;font-weight:700;font-size:15px;padding:9px 16px 9px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 16px rgba(214,36,110,.14)}.bk2.fill{background:var(--grad);color:#fff;border-color:transparent;padding:9px 16px}.bk2:active{transform:scale(.97)}
+.lock{position:relative}.lock>.lk{filter:blur(6px);opacity:.75;pointer-events:none;user-select:none}.lock>.lkb{position:absolute;inset:0;display:grid;place-items:center}.oferta{background:var(--grad);color:#fff;border:0}.oferta .pl{display:grid;gap:8px;margin:10px 0}.oferta .pl>div{background:rgba(255,255,255,.18);border-radius:14px;padding:10px 14px}.oferta .pl>div.best{background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.7)}.oferta .pl .pr2{font-family:var(--f-display);font-size:22px;font-weight:700}.oferta .pl .pr2 small{font-family:inherit;font-size:13px;font-weight:500}.card.oferta .btn{background:#fff!important;color:var(--accent)!important;box-shadow:0 6px 16px rgba(0,0,0,.12)!important}
 </style>
 
 <div class="app">
@@ -1084,6 +1085,11 @@ function lockRow(per){return `<div class="lockr">${ic('clock',18)}<span>Libera �
 let _mk=nowMin();setInterval(()=>{const x=nowMin();if(x===_mk)return;_mk=x;const a=document.activeElement;if(S.ob.done&&(S.tab==='hoje'||S.tab==='rotina')&&!S.cele&&!(a&&/INPUT|TEXTAREA/.test(a.tagName)))render()},15000);
 
 const LIVRES=['tema','quiz','plano','medalhas','conta','privacidade'];
+function ofertaPlus(titulo){return `<div class="card oferta"><h3 style="color:#fff">${titulo||'Libere a análise completa e a sua rotina'}</h3>
+  <div class="small" style="opacity:.95">Notas completas, prioridades, rotina de manhã e noite, produtos, cabelo, scanner e mais.</div>
+  <div class="pl"><div class="best"><span class="pr2">R$ 149,90 <small>/ano</small></span><div class="small">Equivale a R$ 12,49 por mês · melhor valor</div></div><div><span class="pr2">R$ 34,90 <small>/mês</small></span></div></div>
+  <button class="btn" data-act="plus-toggle" style="width:100%">${ic('crown',18)}Assinar agora</button>
+  <p class="small" style="opacity:.9;margin:8px 0 0">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</p></div>`}
 function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Momento+.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Momento+</button></div>`}
 function gate(){if(S.plus)return null;
   if(S.tab==='rotina')return paywall('Rotina personalizada','routine','Passo a passo de manhã e à noite, com lembretes e sequência.');
@@ -1114,6 +1120,17 @@ function viewAnalise(){
     </div></div>`;
   if(!rs)return `<div class="stack">${card1}
     <div class="card"><div class="row" style="gap:8px">${['Oleosidade','Hidratação','Poros','Manchas','Linhas finas','Vermelhidão'].map(x=>`<span class="badge">${x}</span>`).join('')}</div></div></div>`;
+  if(!S.plus){const pr=rs.prioridades||[];
+    return `<div class="stack">${S.okMsg==='pele'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Avaliação da pele concluída, ${nome}!</b><div class="small muted" style="margin-top:2px">Este é o resumo. Libere abaixo a análise completa e a sua rotina.</div></div></div>`:''}${card1}
+    <div class="card"><div class="row" style="justify-content:space-between"><h3>Tipo de pele</h3><b style="font-family:var(--f-display);font-size:20px">${esc(rs.tipo)}</b></div>
+      <p class="small muted" style="margin:4px 0 8px">${esc(rs.resumo)}</p>
+      <div class="lock"><div class="lk">${bar('Oleosidade',rs.oleo)}${bar('Hidratação',rs.hid,true)}${bar('Poros',rs.poros)}${bar('Manchas',rs.manchas)}${bar('Linhas finas',rs.linhas)}${bar('Vermelhidão',rs.verm)}</div><div class="lkb"><span class="badge">${ic('lock',12)} Notas completas no Momento+</span></div></div></div>
+    <div class="card"><h3>Prioridade número 1</h3>
+      <p class="small" style="margin:8px 0 0">${esc(pr[0]||'')}</p>
+      ${pr.length>1?`<div class="lock" style="margin-top:8px"><ol class="small lk" start="2" style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:6px">${pr.slice(1).map(x=>`<li>${esc(x)}</li>`).join('')}</ol><div class="lkb"><span class="badge">${ic('lock',12)} Mais prioridades no Momento+</span></div></div>`:''}
+      ${rs.atencao?`<p class="note" style="color:var(--warn)">${esc(rs.atencao)}</p>`:''}
+      <p class="note">Não é diagnóstico. Pinta que muda ou ferida que não cicatriza: procure um dermatologista.</p></div>
+    ${ofertaPlus()}</div>`}
   return `<div class="stack">${S.okMsg==='pele'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Avaliação da pele concluída, ${nome}!</b><div class="small muted" style="margin-top:2px">Veja o resultado abaixo. Em seguida, a sua rotina é montada com base nele.</div></div></div>`:''}${card1}
   <div class="card">
     <div class="row" style="justify-content:space-between"><h3>Tipo de pele</h3><b style="font-family:var(--f-display);font-size:20px">${esc(rs.tipo)}</b></div>
@@ -1567,6 +1584,7 @@ function vPlano(){
       <div style="background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 34,90<span style="font-size:14px;font-weight:500"> /mês</span></div></div>
       <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 268,90 no ano.</div></div>
     </div>
+    <div class="small" style="opacity:.95;margin:2px 0 4px">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</div>
     <button class="btn" data-act="plus-toggle">${S.plus?'Seu plano: Momento+':'Pagamento em breve'}</button></div>
   <div class="card"><h3>Grátis para sempre</h3><div class="perk" style="color:var(--ink)">${ic('face',18)}1 análise da pele por foto</div><div class="perk" style="color:var(--ink)">${ic('bottle',18)}Produtos por faixa de preço</div><div class="perk" style="color:var(--ink)">${ic('sparkle',18)}Dicas para a sua pele</div><div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="display:flex;gap:8px;align-items:center">${ic('face',16)}Análise grátis</b><span class="small muted">${S.plus?'ilimitada':(S.analises.length<1?'1 disponível':'já usada')}</span></div></div></div>
   <p class="note">Ainda não há cobrança. Os valores acima são os do lançamento.</p>`;}
@@ -1975,7 +1993,7 @@ async function analisar(){
   }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
   if(ok)S.okMsg='pele';
   S.analyzing=false;gameCheck();render();
-  if(ok){toast('Avaliação da pele concluída');window.scrollTo(0,0);montarRotina()}
+  if(ok){toast('Avaliação da pele concluída');window.scrollTo(0,0);if(S.plus)montarRotina()}
 }
 const promptRot=L=>`Você é uma esteticista. Escreva os textos da rotina de cuidados do rosto de ${S.nome}. Perfil: ${perfilTxt()}. Resultado da análise da foto: tipo ${S.result.tipo}; ${S.result.resumo}. Prioridades: ${S.result.prioridades.join(' | ')}.
 Os produtos JÁ FORAM ESCOLHIDOS pelas notas da análise. Não adicione, não remova e não troque nenhum. Manhã: ${L.manha.map(x=>x.k).join(', ')}. Noite: ${L.noite.map(x=>x.k).join(', ')}.
