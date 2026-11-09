@@ -445,6 +445,7 @@ nav button.fab[aria-current="page"],:root:not([data-tema=suave]) nav button.fab[
 .seg.three{grid-template-columns:repeat(3,1fr)}
 .wm{font-family:'Pacifico','Snell Roundhand','Brush Script MT','Segoe Script',cursive;font-weight:400;font-size:24px;line-height:1.2;letter-spacing:.01em;background:linear-gradient(100deg,#FF5C9A,#D6246E 60%,#B0125A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 3px rgba(214,36,110,.22));padding:2px 4px}
 .wm.big{font-size:38px}
+.bk2{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--tint);background:var(--surface);color:var(--accent);font:inherit;font-weight:700;font-size:15px;padding:9px 16px 9px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 16px rgba(214,36,110,.14)}.bk2.fill{background:var(--grad);color:#fff;border-color:transparent;padding:9px 16px}.bk2:active{transform:scale(.97)}
 </style>
 
 <div class="app">
@@ -1433,7 +1434,7 @@ function viewMais(){
     ${S.askDel?`<div class="card" style="text-align:center;display:grid;gap:10px"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:row('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"')}</div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
   const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Momento+','crown','Disponível para quem assina.'):V0;
-  return `<div class="stack"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><button class="back" data-act="mais-voltar">${ic('back',18)}Voltar</button><button class="back" data-go="hoje" style="color:var(--accent);font-weight:700">${ic('home',18)}Início</button></div>${V()}</div>`;
+  return `<div class="stack"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><button class="bk2" data-act="mais-voltar">${ic('back',18)}Voltar</button><button class="bk2 fill" data-go="hoje">${ic('home',18)}Início</button></div>${V()}</div>`;
 }
 const head=(i_,t)=>`<h2 style="display:flex;align-items:center;gap:10px"><span class="tile" style="width:38px;height:38px">${ic(i_,20)}</span>${t}</h2>`;
 function vMedalhas(){
@@ -1601,7 +1602,7 @@ function vQuiz(){
   return `<div class="bar"><b style="width:${i/QZ.length*100}%"></b></div>
   <div class="kick">Pergunta ${i+1} de ${QZ.length}</div><h1 style="font-size:24px">${x.t}</h1>
   <div class="stack" style="gap:10px">${x.o.map(o=>`<button class="opt" data-qz="${x.k}|${o[0]}" aria-pressed="${q[x.k]===o[0]}"><span class="tile">${ic(QZI[o[0]]||'sparkle',20)}</span><span>${o[1]}</span></button>`).join('')}</div>
-  <div class="row" style="justify-content:space-between;flex-wrap:nowrap">${i>0?`<button class="back" data-act="qz-volta">${ic('back',16)}Voltar</button>`:'<span></span>'}<button class="back" data-act="qz-pula">Pular</button></div>`;
+  <div class="row" style="justify-content:space-between;flex-wrap:nowrap">${i>0?`<button class="bk2" data-act="qz-volta">${ic('back',16)}Voltar</button>`:'<span></span>'}<button class="back" data-act="qz-pula">Pular</button></div>`;
 }
 
 const TEMAS=[['rosa','Rosa vibrante','Rosa e branco com degradê, ícones coloridos e mais vida.',['#FFF2F7','#FF6B9D','#D6246E','#2F8A6E']],['ouro','Rosa e dourado','Vibrante, com dourado nas recompensas: sequência, nível e conquistas.',['#FFF2F7','#D6246E','#C58B1F','#2F8A6E']],['salvia','Sálvia','Verde calmo, com dourado nas recompensas.',['#F7F9F7','#3E7B67','#C58B1F','#AD4A6C']],['suave','Rosa suave','Visual claro e minimalista, só com toques de rosa.',['#FAF7F6','#AD4A6C','#AD4A6C','#2F8A6E']]];
@@ -1769,7 +1770,7 @@ function viewOnboarding(){
       ['chart','Mostra o seu progresso','Diário, antes e depois e o que piora a sua pele.'],
       ['bell','Lembra e avisa','Horário de cada rotina e o aviso da próxima.']];
     return `<div class="ob">
-    <button class="back" data-act="ob-back">${ic('back',18)}Voltar</button>
+    <button class="bk2" data-act="ob-back">${ic('back',18)}Voltar</button>
     <div class="kick">Seu plano está pronto</div>
     <h1>${esc(S.nome)}, veja o que o app faz por você</h1>
     <div class="vlist">${B.map(([i_,t,d])=>`<div class="vb"><span class="tile">${ic(i_,22)}</span><div><b>${t}</b><span>${d}</span></div></div>`).join('')}</div>
@@ -1783,7 +1784,7 @@ function viewOnboarding(){
   const sel=o=>q.multi?S.pref.includes(o):(q.k==='age'?S.age===o&&S.ans.age:q.k==='tier'?S.tier===o&&S.ans.tier:S[q.k]===o);
   const ok=q.multi?S.pref.length>0:!!S.ans[q.k];
   return `<div class="ob">
-    <button class="back" data-act="ob-back">${ic('back',18)}Voltar</button>
+    <button class="bk2" data-act="ob-back">${ic('back',18)}Voltar</button>
     <div class="bar"><b style="width:${st/n*100}%"></b></div>
     <div class="kick">${st===1?`Prazer, ${esc(S.nome)}! `:''}Pergunta ${st} de ${n}</div>
     <h1 style="font-size:26px">${q.t}</h1>
