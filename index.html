@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
+<script>window.MM_VER="1794235735";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2031,6 +2032,17 @@ gameCheck();render();
 try{const f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Pacifico&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600&display=swap';document.head.appendChild(f)}catch(e){}
 
 authInit();
+/* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
+(function(){try{
+  if(/[?&#](code|access_token|error)=/.test(location.search+location.hash))return;
+  fetch('version.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{
+    if(!j||!j.v||j.v===window.MM_VER)return;
+    let g=null;try{g=sessionStorage.getItem('mm_upd')}catch(e){}
+    if(g===j.v)return;
+    try{sessionStorage.setItem('mm_upd',j.v)}catch(e){}
+    location.replace(location.pathname+'?v='+j.v);
+  }).catch(()=>{});
+}catch(e){}})();
 </script>
 
 </body></html>
