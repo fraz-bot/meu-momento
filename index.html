@@ -1553,11 +1553,13 @@ function vPlano(){
   return `<div class="plus">${head('crown','Momento+').replace('class="tile"','class="tile" style="background:rgba(255,255,255,.2);color:#fff"')}
     <div class="small" style="opacity:.9;margin:-2px 0 2px">Tudo do grátis, mais:</div>
     ${[['face','Novas análises sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['bottle','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
-    <div style="font-family:var(--f-display);font-size:26px;font-weight:700;margin-top:4px">R$ 14,90<span style="font-size:14px;font-weight:500"> /mês</span></div>
-    <div class="small" style="opacity:.85">Valor de exemplo</div>
+    <div style="display:grid;gap:8px;margin-top:6px">
+      <div style="background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 34,90<span style="font-size:14px;font-weight:500"> /mês</span></div></div>
+      <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 268,90 no ano.</div></div>
+    </div>
     <button class="btn" data-act="plus-toggle">${S.plus?'Seu plano: Momento+':'Pagamento em breve'}</button></div>
   <div class="card"><h3>Grátis para sempre</h3><div class="perk" style="color:var(--ink)">${ic('face',18)}1 análise da pele por foto</div><div class="perk" style="color:var(--ink)">${ic('bottle',18)}Produtos por faixa de preço</div><div class="perk" style="color:var(--ink)">${ic('sparkle',18)}Dicas para a sua pele</div><div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="display:flex;gap:8px;align-items:center">${ic('face',16)}Análise grátis</b><span class="small muted">${S.plus?'ilimitada':(S.analises.length<1?'1 disponível':'já usada')}</span></div></div></div>
-  <p class="note">Ainda não há cobrança. A assinatura real passa pela App Store e pelo Google Play, que ficam com 15% a 30%.</p>`;}
+  <p class="note">Ainda não há cobrança. Os valores acima são os do lançamento.</p>`;}
 function vConta(){
   const at=S.cloudAt?new Date(S.cloudAt):null;
   if(!CL.ok)return `<div class="card" style="text-align:center;padding:28px 18px">${head('cloud','Conta e nuvem')}<span class="tile" style="margin:14px auto 8px;width:52px;height:52px">${ic('lock',24)}</span><p class="small muted">Disponível dentro do Claude, com login. Por enquanto, os dados ficam só neste aparelho.</p></div>`;
