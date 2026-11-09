@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794241460";</script>
+<script>window.MM_VER="1794242091";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -22,6 +22,7 @@
 :root{
   --bg:#FFF2F7; --surface:#FFFFFF; --ink:#2A1420; --muted:#7A5B6B; --line:#F8D3E3;
   --g1:#FF6B9D; --g2:#D6246E; --grad:linear-gradient(145deg,var(--g1),var(--g2)); --accent:#D6246E; --accent-ink:#FFFFFF; --alert:#B3261E; --sage:#2F8A6E; --warn:#B86A06; --soft:#FFE3EE; --tint:#FFC6DD; --hd:#FFFFFF; --hdink:#D6246E;
+  --shc:214,36,110;
   --f-display:'Fraunces',Georgia,'Times New Roman',serif;
   --f-body:'Figtree','Segoe UI',system-ui,sans-serif;
 }
@@ -348,6 +349,19 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 .kr .tile{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);flex:none}
 .kr b{display:block;font-size:15px;color:var(--ink)}.kr span:not(.tile){display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
 .suave-tokens{}
+:root[data-tema=azul]:not([data-theme=dark]){--bg:#F3F8FF;--ink:#13202F;--muted:#586B80;--line:#D5E5F8;--g1:#4DA3FF;--g2:#1F6FD6;--accent:#1F6FD6;--soft:#E1EFFF;--tint:#BFDCFF;--hdink:#1F6FD6;--shc:31,111,214}
+:root[data-tema=arco]:not([data-theme=dark]){--bg:#FAF8FF;--ink:#231A33;--muted:#6B5F80;--line:#E6DEF5;--g1:#8B5CF6;--g2:#6D3FD9;--grad:linear-gradient(135deg,#E5484D 0%,#E88A1F 22%,#2FA36B 48%,#2D7FDB 74%,#8B5CF6 100%);--accent:#6D3FD9;--soft:#F1EAFF;--tint:#DFD1FF;--hdink:#6D3FD9;--shc:109,63,217}
+.avs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.avb{border:2px solid var(--line);background:var(--surface);border-radius:50%;padding:0;aspect-ratio:1;cursor:pointer;display:grid;place-items:center;overflow:hidden}
+.avb[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 3px var(--tint)}
+.avb svg{width:100%;height:100%;display:block}
+.cors{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cor{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;padding:10px 6px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.cor[aria-pressed=true]{border-color:var(--accent)}
+.cor i{width:34px;height:34px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.08)}
+.idg{display:flex;flex-wrap:wrap;gap:8px}
+.idg button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:9px 14px;font:inherit;font-size:14px;cursor:pointer}
+.idg button[aria-pressed=true]{border-color:var(--accent);background:var(--soft);color:var(--accent);font-weight:700}
 :root[data-tema=suave]:not([data-theme=dark]){--bg:#FAF7F6;--ink:#211B1D;--muted:#7E7276;--line:#EEE7E5;--g1:#CC6788;--g2:#AD4A6C;--accent:#AD4A6C;--soft:#F8EDF0;--tint:#F1DCE3;--hdink:#AD4A6C}
 /* tema suave: estrutura clara */
 :root[data-tema=suave] .hhero{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:22px}
@@ -362,8 +376,8 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 :root[data-tema=suave] .cta.go .btn{background:var(--accent);color:var(--accent-ink)}
 /* tema vibrante: rosa e branco com vida */
 :root:not([data-tema=suave]) body{background:radial-gradient(120% 55% at 100% 0%,var(--tint) 0%,transparent 62%),radial-gradient(90% 45% at 0% 0%,var(--soft) 0%,transparent 58%),var(--bg);background-attachment:fixed}
-:root:not([data-tema=suave]) .card,:root:not([data-tema=suave]) .rc,:root:not([data-tema=suave]) .nextc,:root:not([data-tema=suave]) .short button,:root:not([data-tema=suave]) .mrow,:root:not([data-tema=suave]) .tm,:root:not([data-tema=suave]) .doneb{box-shadow:0 8px 22px rgba(214,36,110,.09);border-color:var(--line)}
-:root:not([data-tema=suave]) .hhero{background:var(--grad);color:#fff;border:0;border-radius:24px;box-shadow:0 14px 30px rgba(214,36,110,.30)}
+:root:not([data-tema=suave]) .card,:root:not([data-tema=suave]) .rc,:root:not([data-tema=suave]) .nextc,:root:not([data-tema=suave]) .short button,:root:not([data-tema=suave]) .mrow,:root:not([data-tema=suave]) .tm,:root:not([data-tema=suave]) .doneb{box-shadow:0 8px 22px rgba(var(--shc),.09);border-color:var(--line)}
+:root:not([data-tema=suave]) .hhero{background:var(--grad);color:#fff;border:0;border-radius:24px;box-shadow:0 14px 30px rgba(var(--shc),.30)}
 :root:not([data-tema=suave]) .hhero .small,:root:not([data-tema=suave]) .hhero .muted{color:rgba(255,255,255,.88)}
 :root:not([data-tema=suave]) .hhero h2,:root:not([data-tema=suave]) .hhero h2 em,:root:not([data-tema=suave]) .hhero .lvrow{color:#fff}
 :root:not([data-tema=suave]) .hhero .lvbar{background:rgba(255,255,255,.28)}
@@ -372,15 +386,15 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 :root:not([data-tema=suave]) .hhero .dd i{background:rgba(255,255,255,.22)}
 :root:not([data-tema=suave]) .hhero .dd.on i{background:var(--hd);color:var(--hdink)}
 :root:not([data-tema=suave]) .hhero .dd.today i{border-color:#fff}
-:root:not([data-tema=suave]) .cta.go{background:var(--grad);color:#fff;border:0;box-shadow:0 10px 24px rgba(214,36,110,.28)}
+:root:not([data-tema=suave]) .cta.go{background:var(--grad);color:#fff;border:0;box-shadow:0 10px 24px rgba(var(--shc),.28)}
 :root:not([data-tema=suave]) .cta.go .btn{background:#fff;color:var(--accent);box-shadow:none}
-:root:not([data-tema=suave]) .btn{background:var(--grad);color:#fff;box-shadow:0 8px 18px rgba(214,36,110,.28)}
+:root:not([data-tema=suave]) .btn{background:var(--grad);color:#fff;box-shadow:0 8px 18px rgba(var(--shc),.28)}
 :root:not([data-tema=suave]) .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:none}
 :root:not([data-tema=suave]) .btn:disabled{background:var(--soft);color:var(--muted);box-shadow:none}
-:root:not([data-tema=suave]) nav{border-top:0;box-shadow:0 -10px 28px rgba(214,36,110,.12)}
+:root:not([data-tema=suave]) nav{border-top:0;box-shadow:0 -10px 28px rgba(var(--shc),.12)}
 :root:not([data-tema=suave]) nav button[aria-current="page"]{background:var(--grad);color:#fff}
-:root:not([data-tema=suave]) .tile,:root:not([data-tema=suave]) .short .tile,:root:not([data-tema=suave]) .vb .tile,:root:not([data-tema=suave]) .vp .tile,:root:not([data-tema=suave]) .pw .tile,:root:not([data-tema=suave]) .nextc .tile{background:var(--grad);color:#fff;box-shadow:0 6px 14px rgba(214,36,110,.22)}
-:root:not([data-tema=suave]) .seg button[aria-pressed="true"]{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 6px 14px rgba(214,36,110,.24)}
+:root:not([data-tema=suave]) .tile,:root:not([data-tema=suave]) .short .tile,:root:not([data-tema=suave]) .vb .tile,:root:not([data-tema=suave]) .vp .tile,:root:not([data-tema=suave]) .pw .tile,:root:not([data-tema=suave]) .nextc .tile{background:var(--grad);color:#fff;box-shadow:0 6px 14px rgba(var(--shc),.22)}
+:root:not([data-tema=suave]) .seg button[aria-pressed="true"]{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 6px 14px rgba(var(--shc),.24)}
 :root:not([data-tema=suave]) .badge{background:var(--grad);color:#fff}
 :root:not([data-tema=suave]) .nextc.now{background:var(--soft);border-color:var(--accent)}
 :root:not([data-tema=suave]) .kr{background:var(--soft);border-color:var(--g1)}
@@ -402,14 +416,14 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 
 /* ===== v28: hoje estilo referência, nav, medalhas ===== */
 .greet{display:flex;align-items:center;gap:12px}
-.av{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:20px;flex:none;box-shadow:0 6px 14px rgba(214,36,110,.3)}
+.av{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:20px;flex:none;box-shadow:0 6px 14px rgba(var(--shc),.3)}
 .gt2{flex:1;min-width:0;display:grid}.gt2 b{font-size:16px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ptsb{display:flex;align-items:center;gap:5px;border:1.5px solid var(--tint);background:var(--surface);color:var(--accent);border-radius:999px;padding:7px 12px;font:inherit;cursor:pointer;flex:none}
 .ptsb b{font-size:15px}.ptsb span{font-size:11px;font-weight:700}
 .wk7b{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .wd{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--muted)}
 .wd i{width:36px;height:36px;max-width:100%;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:13px;background:var(--soft);color:var(--accent);border:2px solid transparent}
-.wd.on i{background:var(--grad);color:#fff;box-shadow:0 5px 12px rgba(214,36,110,.3)}
+.wd.on i{background:var(--grad);color:#fff;box-shadow:0 5px 12px rgba(var(--shc),.3)}
 .wd.today i{border-color:var(--accent);background:var(--surface)}
 .wd.today.on i{background:var(--grad);border-color:#fff;box-shadow:0 0 0 2px var(--accent)}
 .wd.fut i{background:transparent;border:2px dashed var(--tint);color:var(--muted)}
@@ -420,7 +434,7 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 .hs{font-size:15px;font-weight:600;color:var(--ink)}
 .hbig{font-family:var(--f-display);font-weight:800;font-size:46px;line-height:1.05;color:var(--accent);letter-spacing:-.02em}
 .hbig.sm{font-size:24px;line-height:1.2;max-width:15em}
-.hpill{margin-top:10px;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--grad);color:#fff;border-radius:999px;padding:12px 26px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 22px rgba(214,36,110,.35)}
+.hpill{margin-top:10px;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--grad);color:#fff;border-radius:999px;padding:12px 26px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 22px rgba(var(--shc),.35)}
 .comp{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1.5px solid var(--tint);background:var(--surface);color:var(--ink);border-radius:20px;padding:12px 14px;font:inherit;cursor:pointer}
 .comp .cx{flex:1;min-width:0;display:grid;gap:6px}.comp .cx b{font-size:14px;line-height:1.25}
 .cbar{height:8px;border-radius:99px;background:var(--soft);overflow:hidden;display:block}.cbar i{display:block;height:100%;background:var(--grad);border-radius:99px}
@@ -430,10 +444,10 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 .pv3 button{display:flex;flex-direction:column;align-items:center;gap:8px;border:1.5px solid var(--tint);background:transparent;color:var(--accent);border-radius:20px;padding:16px 4px;font:inherit;cursor:pointer;min-width:0}
 .pv3 button b{font-size:12.5px;color:var(--ink);text-align:center}
 nav button.fab{overflow:visible;background:transparent;position:relative}
-nav .fabi{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;margin-top:-26px;box-shadow:0 0 0 5px var(--surface),0 6px 14px rgba(214,36,110,.28)}
+nav .fabi{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;margin-top:-26px;box-shadow:0 0 0 5px var(--surface),0 6px 14px rgba(var(--shc),.28)}
 nav button.fab{color:var(--accent);font-weight:700}
 nav button.fab[aria-current="page"],:root:not([data-tema=suave]) nav button.fab[aria-current="page"]{background:transparent;color:var(--accent)}
-@keyframes fabg{0%,100%{box-shadow:0 0 0 5px var(--surface),0 8px 22px rgba(214,36,110,.45)}50%{box-shadow:0 0 0 5px var(--surface),0 8px 30px rgba(255,107,157,.85)}}
+@keyframes fabg{0%,100%{box-shadow:0 0 0 5px var(--surface),0 8px 22px rgba(var(--shc),.45)}50%{box-shadow:0 0 0 5px var(--surface),0 8px 30px rgba(255,107,157,.85)}}
 @media (prefers-reduced-motion:reduce){nav .fabi{animation:none}}
 .medhead{text-align:center;background:linear-gradient(160deg,#FFE3EE,#FFF8FB);border:1.5px solid var(--tint)}
 .pbig{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;color:var(--accent)}
@@ -444,9 +458,9 @@ nav button.fab[aria-current="page"],:root:not([data-tema=suave]) nav button.fab[
 .md.lock{opacity:.75}
 .dlist{display:grid;gap:10px;margin-top:10px}.dica{display:grid;gap:2px;border-left:3px solid var(--tint);padding-left:10px}.dica b{font-size:14px}.dica span{font-size:13px;color:var(--muted);line-height:1.4}
 .seg.three{grid-template-columns:repeat(3,1fr)}
-.wm{font-family:'Pacifico','Snell Roundhand','Brush Script MT','Segoe Script',cursive;font-weight:400;font-size:24px;line-height:1.2;letter-spacing:.01em;background:linear-gradient(100deg,#FF5C9A,#D6246E 60%,#B0125A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 3px rgba(214,36,110,.22));padding:2px 4px}
+.wm{font-family:'Pacifico','Snell Roundhand','Brush Script MT','Segoe Script',cursive;font-weight:400;font-size:24px;line-height:1.2;letter-spacing:.01em;background:linear-gradient(100deg,#FF5C9A,#D6246E 60%,#B0125A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 3px rgba(var(--shc),.22));padding:2px 4px}
 .wm.big{font-size:38px}
-.bk2{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--tint);background:var(--surface);color:var(--accent);font:inherit;font-weight:700;font-size:15px;padding:9px 16px 9px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 16px rgba(214,36,110,.14)}.bk2.fill{background:var(--grad);color:#fff;border-color:transparent;padding:9px 16px}.bk2:active{transform:scale(.97)}
+.bk2{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--tint);background:var(--surface);color:var(--accent);font:inherit;font-weight:700;font-size:15px;padding:9px 16px 9px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 16px rgba(var(--shc),.14)}.bk2.fill{background:var(--grad);color:#fff;border-color:transparent;padding:9px 16px}.bk2:active{transform:scale(.97)}
 .lock{position:relative}.lock>.lk{filter:blur(6px);opacity:.75;pointer-events:none;user-select:none}.lock>.lkb{position:absolute;inset:0;display:grid;place-items:center}.oferta{background:var(--grad);color:#fff;border:0}.oferta .pl{display:grid;gap:8px;margin:10px 0}.oferta .pl>div{background:rgba(255,255,255,.18);border-radius:14px;padding:10px 14px}.oferta .pl>div.best{background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.7)}.oferta .pl .pr2{font-family:var(--f-display);font-size:22px;font-weight:700}.oferta .pl .pr2 small{font-family:inherit;font-size:13px;font-weight:500}.card.oferta .btn{background:#fff!important;color:var(--accent)!important;box-shadow:0 6px 16px rgba(0,0,0,.12)!important}
 </style>
 
@@ -602,7 +616,7 @@ const STEPS={
 };
 const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
-const DEF=()=>({nome:'',ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
+const DEF=()=>({nome:'',avatar:'',ident:'',ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
@@ -684,7 +698,7 @@ function getR0(){
   r.nota=nota;return r;
 }
 function infoAny(k){return S.rot?[...S.rot.manha,...S.rot.noite].find(x=>x.k===k)||null:null}
-function perfilBasico(){return (quizTxt()?`respostas do quiz detalhado: ${quizTxt()}; `:'')+`faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}; pele que ela sente como ${LBL[S.pele]||'não sabe'}; incômodos: ${S.pref.map(k=>LBL[k]).join(', ')||'nenhum informado'}; sensibilidade a produtos: ${LBL[S.sens]||'não informada'}`}
+function perfilBasico(){return (quizTxt()?`respostas do quiz detalhado: ${quizTxt()}; `:'')+`faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}; pele que a pessoa sente como ${LBL[S.pele]||'não sabe'}; incômodos: ${S.pref.map(k=>LBL[k]).join(', ')||'nenhum informado'}; sensibilidade a produtos: ${LBL[S.sens]||'não informada'}`}
 const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2});
 const mes=k=>{const [p,m]=P[k].t[S.tier];return p/m};
 const custoTier=t=>Math.round(routineKeys().reduce((a,x)=>{const [p,m]=P[x].t[t];return a+p/m},0));
@@ -991,7 +1005,7 @@ const sampleP=Promise.resolve({
 });
 
 /* privacidade (LGPD) */
-const VERSAO_PRIV='2026-11-09';
+const VERSAO_PRIV='2026-11-09.2';
 function precisaConsent(){return !AUTH.perfil||AUTH.perfil.consentimento_versao!==VERSAO_PRIV}
 function consentView(){
   const c=AUTH.c||(AUTH.c=[false,false]),ok=c.every(Boolean);
@@ -1084,14 +1098,14 @@ function proxCard(){
 function lockRow(per){return `<div class="lockr">${ic('clock',18)}<span>Libera às ${per==='m'?S.rem.m:S.rem.n}, em ${fmtDur(bloq(per))}</span><button class="chip" data-act="unl|${per}" style="font-size:12px;padding:5px 10px">Fazer agora</button></div>`}
 let _mk=nowMin();setInterval(()=>{const x=nowMin();if(x===_mk)return;_mk=x;const a=document.activeElement;if(S.ob.done&&(S.tab==='hoje'||S.tab==='rotina')&&!S.cele&&!(a&&/INPUT|TEXTAREA/.test(a.tagName)))render()},15000);
 
-const LIVRES=['tema','quiz','plano','medalhas','conta','privacidade'];
+const LIVRES=['tema','quiz','plano','medalhas','conta','privacidade','perfil'];
 function ofertaPlus(titulo){return `<div class="card oferta"><h3 style="color:#fff">${titulo||'Libere a análise completa e a sua rotina'}</h3>
   <div class="small" style="opacity:.95">Notas completas, prioridades, rotina de manhã e noite, produtos, cabelo, scanner e mais.</div>
   <div class="pl"><div class="best"><span class="pr2">R$ 149,90 <small>/ano</small></span><div class="small">Equivale a R$ 12,49 por mês · melhor valor</div></div><div><span class="pr2">R$ 34,90 <small>/mês</small></span></div></div>
   <button class="btn" data-act="plus-toggle" style="width:100%">${ic('crown',18)}Assinar agora</button>
   <p class="small" style="opacity:.9;margin:8px 0 0">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</p></div>`}
 function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Momento+.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Momento+</button></div>`}
-function precisaAnalise(t){return `<div class="card pw"><span class="tile">${ic('face',24)}</span><h3>Primeiro, a análise da pele</h3><p class="small muted">${t||'A rotina é montada a partir da foto analisada. Sem a análise, ela não pode ser gerada.'}</p><button class="btn" data-go="pele|analise">${ic('camera',18)}Fazer a análise agora</button></div>`}
+function precisaAnalise(t){return `<div class="card pw"><span class="tile">${ic('face',24)}</span><h3>Primeiro, a análise da pele</h3><p class="small muted">${t||'A rotina é montada a partir da foto analisada. Sem a análise, a rotina não pode ser gerada.'}</p><button class="btn" data-go="pele|analise">${ic('camera',18)}Fazer a análise agora</button></div>`}
 function viewPaywall(){
   const perks=[['face','Avaliação da pele por foto'],['routine','Rotina de manhã e noite feita para você'],['hair','Análise do cabelo e cronograma'],['bottle','Produtos por faixa de preço'],['scan','Scanner de produtos'],['chart','Diário e antes e depois']];
   const logo=LOGO.replace('class="logo"','class="logo" style="width:64px;height:64px"');
@@ -1314,7 +1328,7 @@ function viewHoje(){
   }
   const falta=NMd?NMd.d-st:0;
   return `<div class="stack">
-  <div class="greet"><span class="av">${esc((S.nome||'M').trim().charAt(0).toUpperCase())}</span><div class="gt2"><b>${hi}, ${esc(S.nome)}</b><span class="small muted">${st?`${st} ${st===1?'dia seguido':'dias seguidos'}`:'Comece o seu momento hoje'}</span></div>
+  <div class="greet">${avatarHtml('av')}<div class="gt2"><b>${hi}, ${esc(S.nome)}</b><span class="small muted">${st?`${st} ${st===1?'dia seguido':'dias seguidos'}`:'Comece o seu momento hoje'}</span></div>
     <button class="ptsb" data-go="mais|medalhas" aria-label="Pontos e medalhas">${ic('star',15)}<b>${S.xp}</b><span>pts</span></button></div>
   <div class="wk7b">${days.map(d=>`<div class="wd ${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}"><i>${d.on?ic('check',15):d.n}</i><span>${d.w}</span></div>`).join('')}</div>
   <div class="hero2">${hero}</div>
@@ -1383,7 +1397,7 @@ function welcomeArt(){
   const star=(x,y,r,o)=>`<path d="M${x} ${y-r}Q${x} ${y} ${x+r} ${y}Q${x} ${y} ${x} ${y+r}Q${x} ${y} ${x-r} ${y}Q${x} ${y} ${x} ${y-r}Z" fill="var(--accent)" opacity="${o}"/>`;
   const drop=(x,y,k,o)=>`<path transform="translate(${x} ${y}) scale(${k})" d="M0-14C6-6 10-1 10 5A10 10 0 0 1-10 5C-10-1-6-6 0-14Z" fill="var(--accent)" opacity="${o}"/>`;
   const leaf=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})"><path d="M0 0C-12-14-10-34 0-48C10-34 12-14 0 0Z" fill="var(--sage)" opacity=".85"/><path d="M0 0V-40" stroke="var(--tint)" stroke-width="1.5" opacity=".7"/></g>`;
-  return `<svg viewBox="0 0 360 250" role="img" aria-label="Ilustração de uma mulher com a pele radiante" style="display:block;width:100%;height:auto">
+  return `<svg viewBox="0 0 360 250" role="img" aria-label="Ilustração de uma pessoa com a pele radiante" style="display:block;width:100%;height:auto">
   <defs>
     <radialGradient id="wg" cx="50%" cy="46%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
     <linearGradient id="wk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7D5C2"/><stop offset="1" stop-color="#EDB9A1"/></linearGradient>
@@ -1440,6 +1454,7 @@ function viewMais(){
   if(!sub)return `<div class="stack"><h2>Mais</h2>
     ${row('dicas','sparkle','Dicas para a pele','Alimentação, estação e maquiagem')}
     ${row('medalhas','star','Medalhas e pontos',`${MEDALS.filter(m=>S.badges[m.id]).length} de ${MEDALS.length} medalhas · ${S.xp} pts`)}
+    ${row('perfil','face','Perfil e avatar',S.avatar===''||S.avatar==null?'Escolha avatar, cor e identidade':'Avatar escolhido')}
     ${row('tema','sparkle','Aparência',(TEMAS.find(t=>t[0]===(S.tema||'rosa'))||TEMAS[0])[1])}
     ${row('quiz','spot','Quiz da pele',Object.keys(S.quiz||{}).length?Object.keys(S.quiz).length+' de '+QZ.length+' respondidas':'10 perguntas rápidas')}
     ${row('lembretes','clock','Horários e lembretes',`Manhã ${S.rem.m} · Noite ${S.rem.n}`)}
@@ -1453,7 +1468,7 @@ function viewMais(){
     ${row('privacidade','lock','Privacidade e dados','Política, baixar dados, apagar conta')}
     ${row('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
     ${S.askDel?`<div class="card" style="text-align:center;display:grid;gap:10px"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:row('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"')}</div>`;
-  const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
+  const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,perfil:vPerfil,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
   const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Momento+','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
   return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-go="hoje">${ic('back',18)}Voltar</button></div>${V()}</div>`;
 }
@@ -1576,7 +1591,7 @@ function vCom(){
     <p class="note">Sem dados pessoais. Aqui são dicas, não diagnóstico.</p></div>
   ${POSTS===null?'<p class="small muted" style="text-align:center">Carregando…</p>':POSTS.length?`<div class="pl2">${POSTS.map(x=>`<div class="post"><div class="chips" style="margin:0">${x.tipo?`<span style="color:var(--accent)">Pele ${esc(String(x.tipo).toLowerCase())}</span>`:''}${x.faixa?`<span style="color:var(--muted)">${esc(x.faixa)}</span>`:''}</div><p>${esc(x.t)}</p>
     <div class="pf"><button class="lk" data-like="${x.id}" aria-pressed="${(x.likes||[]).includes(CL.uid)}">${ic('heart',18)}${(x.likes||[]).length}</button>${meus(x)||CL.owner?`<button class="chip" data-delpost="${x.id}" style="font-size:12px">Apagar</button>`:''}</div></div>`).join('')}</div>`
-    :`<div class="card" style="text-align:center"><p class="small muted">Ninguém publicou ainda. Seja a primeira.</p></div>`}`;}
+    :`<div class="card" style="text-align:center"><p class="small muted">Ninguém publicou ainda. Seja a primeira pessoa.</p></div>`}`;}
 function vPlano(){
   const u=uso(),bar=(k,l,i_)=>`<div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="display:flex;gap:8px;align-items:center">${ic(i_,16)}${l}</b><span class="small muted">${S.plus?'ilimitado':u[k]+' de '+LIM[k]}</span></div><div class="use"><b style="width:${S.plus?100:Math.min(100,u[k]/LIM[k]*100)}%"></b></div></div>`;
   return `<div class="plus">${head('crown','Momento+').replace('class="tile"','class="tile" style="background:rgba(255,255,255,.2);color:#fff"')}
@@ -1627,13 +1642,26 @@ function vQuiz(){
   <div class="row" style="justify-content:space-between;flex-wrap:nowrap">${i>0?`<button class="bk2" data-act="qz-volta">${ic('back',16)}Voltar</button>`:'<span></span>'}<button class="back" data-act="qz-pula">Pular</button></div>`;
 }
 
-const TEMAS=[['rosa','Rosa vibrante','Rosa e branco com degradê, ícones coloridos e mais vida.',['#FFF2F7','#FF6B9D','#D6246E','#2F8A6E']],['ouro','Rosa e dourado','Vibrante, com dourado nas recompensas: sequência, nível e conquistas.',['#FFF2F7','#D6246E','#C58B1F','#2F8A6E']],['salvia','Sálvia','Verde calmo, com dourado nas recompensas.',['#F7F9F7','#3E7B67','#C58B1F','#AD4A6C']],['suave','Rosa suave','Visual claro e minimalista, só com toques de rosa.',['#FAF7F6','#AD4A6C','#AD4A6C','#2F8A6E']]];
+
+/* ---------- Perfil: avatares, cor e identidade (tudo opcional) ---------- */
+const AVS=[['#F1C9A5','#3B2A20','long','#FFD6E6'],['#8D5A3C','#1C1411','curly','#E1EFFF'],['#F6D7B8','#C9822B','short','#FFE9C2'],['#5C3A28','#0E0A08','buzz','#E4F6EC'],['#E7B48C','#5A2E1A','bun','#F1EAFF'],['#C68A60','#2A1B14','long','#FFE0D3'],['#FBE0C8','#7A7A82','short','#E3EEF9'],['#7A4A32','#1A110D','curly','#FFF3C4'],['#EFC9A8','#D14A3A','bun','#DDF3F1'],['#A8704D','#151010','none','#F6E1F2']];
+function avSvg(i,sz){const a=AVS[i];if(!a)return '';const[sk,hr,st,bg]=a;
+  const back=st==='long'?`<path d="M15 28c0-12 7-18 17-18s17 6 17 18v22H15z" fill="${hr}"/>`:st==='curly'?`<g fill="${hr}"><circle cx="20" cy="22" r="8"/><circle cx="32" cy="16" r="9"/><circle cx="44" cy="22" r="8"/><circle cx="17" cy="32" r="6"/><circle cx="47" cy="32" r="6"/></g>`:st==='bun'?`<circle cx="32" cy="11" r="6" fill="${hr}"/>`:'';
+  const front=st==='long'||st==='short'||st==='bun'?`<path d="M19 30c0-9 5-14 13-14s13 5 13 14c-3-5-8-7-13-7s-10 2-13 7z" fill="${hr}"/>`:st==='curly'?`<path d="M19 28c2-8 7-11 13-11s11 3 13 11c-4-3-8-4-13-4s-9 1-13 4z" fill="${hr}"/>`:st==='buzz'?`<path d="M20 28c1-8 6-12 12-12s11 4 12 12c-3-3-7-4-12-4s-9 1-12 4z" fill="${hr}" opacity=".85"/>`:'';
+  return `<svg viewBox="0 0 64 64" ${sz?`width="${sz}" height="${sz}"`:''} role="img" aria-hidden="true"><rect width="64" height="64" fill="${bg}"/>${back}<path d="M10 64c0-10 9-16 22-16s22 6 22 16z" fill="${hr}" opacity=".35"/><rect x="27" y="42" width="10" height="9" rx="4" fill="${sk}"/><ellipse cx="32" cy="32" rx="12" ry="13.5" fill="${sk}"/>${front}<circle cx="27.5" cy="33" r="1.4" fill="#2A1A14"/><circle cx="36.5" cy="33" r="1.4" fill="#2A1A14"/><path d="M28.5 39.5q3.5 3 7 0" stroke="#2A1A14" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`}
+function avatarHtml(cls){const i=S.avatar;return i===''||i==null?`<span class="${cls}">${esc((S.nome||'M').trim().charAt(0).toUpperCase())}</span>`:`<span class="${cls}" style="background:none;padding:0;overflow:hidden">${avSvg(+i,'100%')}</span>`}
+const IDS=[['mulher','Mulher'],['homem','Homem'],['nb','Não binário'],['outro','Outra identidade'],['','Prefiro não dizer']];
+function perfilPick(){return `<div style="display:grid;gap:14px;text-align:left">
+  <div><label>Escolha a cor do app</label><div class="cors" style="margin-top:6px">${[['rosa','Rosa','linear-gradient(145deg,#FF6B9D,#D6246E)'],['azul','Azul','linear-gradient(145deg,#4DA3FF,#1F6FD6)'],['arco','Arco-íris','linear-gradient(135deg,#E5484D,#E88A1F,#2FA36B,#2D7FDB,#8B5CF6)']].map(([k,n,g])=>`<button class="cor" data-tema="${k}" aria-pressed="${(S.tema||'rosa')===k}"><i style="background:${g}"></i>${n}</button>`).join('')}</div></div>
+  <div><label>Escolha um avatar</label><div class="avs" style="margin-top:6px"><button class="avb" data-av="" aria-pressed="${S.avatar===''||S.avatar==null}" aria-label="Inicial do nome"><span class="av" style="width:100%;height:100%;border-radius:0;box-shadow:none">${esc((S.nome||'M').trim().charAt(0).toUpperCase())}</span></button>${AVS.map((_,i)=>`<button class="avb" data-av="${i}" aria-pressed="${String(S.avatar)===String(i)}" aria-label="Avatar ${i+1}">${avSvg(i)}</button>`).join('')}</div></div>
+  <div><label>Como você se identifica? <span class="small muted">(opcional)</span></label><div class="idg" style="margin-top:6px">${IDS.map(([k,n])=>`<button data-id="${k}" aria-pressed="${(S.ident||'')===k}">${n}</button>`).join('')}</div><p class="note" style="margin-top:6px">${ic('lock',12)} Só para personalizar o app. Não é enviado à IA e você pode mudar quando quiser.</p></div></div>`}
+function vPerfil(){return `<div class="card">${head('face','Perfil e avatar')}<div style="display:flex;justify-content:center;margin:12px 0">${avatarHtml('av').replace('class="av"','class="av" ')}</div>${perfilPick()}</div>`}
+const TEMAS=[['rosa','Rosa vibrante','Rosa e branco com degradê, ícones coloridos e mais vida.',['#FFF2F7','#FF6B9D','#D6246E','#2F8A6E']],['ouro','Rosa e dourado','Vibrante, com dourado nas recompensas: sequência, nível e conquistas.',['#FFF2F7','#D6246E','#C58B1F','#2F8A6E']],['salvia','Sálvia','Verde calmo, com dourado nas recompensas.',['#F7F9F7','#3E7B67','#C58B1F','#AD4A6C']],['azul','Azul','Azul claro e limpo, com o mesmo visual do app.',['#F3F8FF','#4DA3FF','#1F6FD6','#2F8A6E']],['arco','Arco-íris','Degradê com todas as cores, para celebrar todas as pessoas.',['#FAF8FF','#E5484D','#2D7FDB','#8B5CF6']],['suave','Rosa suave','Visual claro e minimalista, só com toques de rosa.',['#FAF7F6','#AD4A6C','#AD4A6C','#2F8A6E']]];
 function vTema(){
   const sel=S.tema||'rosa';
   return `<div class="card">${head('sparkle','Aparência')}<p class="small muted" style="margin-top:6px">Toque para testar. Muda o app todo.</p></div>
   ${TEMAS.map(([k,n,d,c])=>`<button class="tm" data-tema="${k}" aria-pressed="${sel===k}"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b style="font-family:var(--f-display);font-size:17px">${n}</b>${sel===k?`<span class="badge">${ic('check',12)} Em uso</span>`:''}</div><span class="small muted">${d}</span>
-    <div class="pv"><div class="sw3">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</div><b style="background:${k==='suave'||k==='salvia'?c[1]:'linear-gradient(145deg,'+c[1]+','+c[2]+')'}">Ação</b><u style="background:${k==='rosa'?c[1]+'22':c[2]+'2e'};color:${k==='rosa'?c[1]:c[2]}">Nv 2 · 5 dias</u></div></button>`).join('')}
-  <p class="note">Qual versão você acha melhor? Se for publicar, vale testar com usuárias reais.</p>`;
+    <div class="pv"><div class="sw3">${c.map(x=>`<i style="background:${x}"></i>`).join('')}</div><b style="background:${k==='suave'||k==='salvia'?c[1]:(k==='arco'?'linear-gradient(135deg,#E5484D,#E88A1F,#2FA36B,#2D7FDB,#8B5CF6)':'linear-gradient(145deg,'+c[1]+','+c[2]+')')}">Ação</b><u style="background:${k==='rosa'?c[1]+'22':c[2]+'2e'};color:${k==='rosa'?c[1]:c[2]}">Nv 2 · 5 dias</u></div></button>`).join('')}`;
 }
 
 /* ---------- Cabelo ---------- */
@@ -1641,7 +1669,7 @@ const HQ=[['obj','Qual é o seu maior objetivo?','sparkle',[['cresc','Crescer e 
 const hqDone=()=>HQ.every(([k])=>S.hq&&S.hq[k]);
 const HQL={obj:{cresc:'quer crescer e fortalecer o cabelo',hid:'quer hidratar o cabelo',frizz:'quer controlar o frizz',def:'quer definir cachos ou ondas',oleo:'quer reduzir a oleosidade',rep:'quer reparar danos'},couro:{normal:'couro cabeludo normal',oleoso:'couro cabeludo oleoso',seco:'couro cabeludo seco',caspa:'couro cabeludo com caspa ou coceira'},queda:{normal:'queda de cabelo normal',mais:'queda maior que o normal'},quim:{nao:'sem química',tint:'com tintura',alis:'com alisamento ou progressiva'},calor:{nunca:'quase nunca usa calor',as:'usa calor às vezes',sempre:'usa calor sempre'},lav:{'1':'lava 1 a 2 vezes por semana','3':'lava 3 a 4 vezes por semana','5':'lava 5 ou mais vezes por semana'},corte:{rec:'cortou as pontas há menos de 3 meses',med:'cortou as pontas há 3 a 6 meses',velho:'não corta as pontas há mais de 6 meses'},agua:{nao:'quase não pega sol, piscina ou mar',as:'pega sol, piscina ou mar às vezes',freq:'pega sol, piscina ou mar com frequência'}};
 const hqTxt=()=>Object.keys(S.hq).filter(k=>S.hq[k]&&HQL[k]&&HQL[k][S.hq[k]]).map(k=>HQL[k][S.hq[k]]).join('; ');
-const promptHair=()=>`Você é uma especialista em cuidados capilares que avalia o cabelo em uma foto, só para cuidados cosméticos. A pessoa informou: faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}${hqTxt()?'; '+hqTxt():''}.
+const promptHair=()=>`Você é uma especialista em cuidados capilares que avalia o cabelo em uma foto, só para cuidados cosméticos. Use linguagem neutra, sem marcar gênero. A pessoa informou: faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}${hqTxt()?'; '+hqTxt():''}.
 Responda SOMENTE com um JSON.
 Se não houver cabelo visível, ou a foto estiver escura ou borrada, responda {"erro":"frase curta em português pedindo outra foto"}.
 Caso contrário, use este formato:
@@ -1789,12 +1817,13 @@ function viewCabelo(){
 function viewOnboarding(){
   const st=S.ob.step,n=QS.length;
   if(st===0)return `<div class="ob">
-    <div class="brand" style="font-size:24px;flex-direction:column;gap:6px;text-align:center">${LOGO.replace('class="logo"','class="logo" style="width:68px;height:68px;filter:drop-shadow(0 8px 14px rgba(214,36,110,.35))"')}<span class="wm big">Meu Momento</span></div>
+    <div class="brand" style="font-size:24px;flex-direction:column;gap:6px;text-align:center">${LOGO.replace('class="logo"','class="logo" style="width:68px;height:68px;filter:drop-shadow(0 8px 14px rgba(var(--shc),.35))"')}<span class="wm big">Meu Momento</span></div>
     <div class="welcome">${welcomeArt()}</div>
     <h1>Que bom ter você aqui.</h1>
     <div class="steps3"><div class="st"><span class="tile">${ic('face',24)}</span>Pele</div><span class="ar">${ic('chev',18)}</span><div class="st"><span class="tile">${ic('routine',24)}</span>Rotina</div><span class="ar">${ic('chev',18)}</span><div class="st"><span class="tile">${ic('bottle',24)}</span>Produtos</div></div>
     <div><label for="nome" style="margin-top:6px">Como podemos te chamar?</label>
     <input id="nome" type="text" autocomplete="given-name" placeholder="Seu nome" value="${esc(S.nome)}"></div>
+    ${perfilPick()}
     <button class="btn" id="ob-go" data-act="ob-next" ${S.nome.trim()?'':'disabled'}>Começar</button>
     <p class="note">${ic('clock',12)} 1 minuto · ${n} perguntas</p>
     ${CL.ok?`<p class="small muted" style="text-align:center">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;text-decoration:underline">Entrar</button></p>`:''}</div>`;
@@ -1876,10 +1905,12 @@ document.addEventListener('click',e=>{
   else if(d.act==='qz-volta'){S.qi=Math.max(0,(S.qi||0)-1);render()}
   else if(d.act==='qz-refazer'){S.quiz={};S.qi=0;render()}
   else if(d.act==='ob-quiz'){S.ob.done=true;S.tab='mais';S.maisSub='quiz';S.qi=0;gameCheck();render();window.scrollTo(0,0)}
-  else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Bem-vinda de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
+  else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Boas-vindas de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
   else if(d.hq){const [k,v]=d.hq.split('|');S.hq[k]=S.hq[k]===v?null:v;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='analisar-cabelo'){analisarCabelo()}
+  else if(d.av!==undefined){S.avatar=d.av;const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.id!==undefined){S.ident=d.id;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.tema){S.tema=d.tema;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='abrir-mais'){S.tab='mais';S.maisSub=null;render();window.scrollTo(0,0)}
   else if(d.act==='mais-voltar'){S.maisSub=null;render();window.scrollTo(0,0)}
@@ -1972,7 +2003,7 @@ const ERR={
   invalid_json:'A resposta veio incompleta. Toque em analisar de novo.',
   cancelled:''
 };
-const promptIA=()=>`Você é uma esteticista que avalia a pele do rosto em uma foto, só para cuidados cosméticos. A pessoa informou: ${perfilBasico()}.
+const promptIA=()=>`Você é uma esteticista que avalia a pele do rosto em uma foto, só para cuidados cosméticos. Use linguagem neutra, sem marcar gênero. A pessoa informou: ${perfilBasico()}.
 Responda SOMENTE com um JSON.
 Se não houver um rosto visível, ou a foto estiver escura, borrada ou com filtro forte, responda {"erro":"frase curta em português pedindo outra foto"}.
 Caso contrário, responda neste formato:
@@ -1998,7 +2029,7 @@ async function analisar(){
   S.analyzing=false;gameCheck();render();
   if(ok){toast('Avaliação da pele concluída');window.scrollTo(0,0);if(S.plus)montarRotina()}
 }
-const promptRot=L=>`Você é uma esteticista. Escreva os textos da rotina de cuidados do rosto de ${S.nome}. Perfil: ${perfilTxt()}. Resultado da análise da foto: tipo ${S.result.tipo}; ${S.result.resumo}. Prioridades: ${S.result.prioridades.join(' | ')}.
+const promptRot=L=>`Você é uma esteticista. Use linguagem neutra, sem marcar gênero. Escreva os textos da rotina de cuidados do rosto de ${S.nome}. Perfil: ${perfilTxt()}. Resultado da análise da foto: tipo ${S.result.tipo}; ${S.result.resumo}. Prioridades: ${S.result.prioridades.join(' | ')}.
 Os produtos JÁ FORAM ESCOLHIDOS pelas notas da análise. Não adicione, não remova e não troque nenhum. Manhã: ${L.manha.map(x=>x.k).join(', ')}. Noite: ${L.noite.map(x=>x.k).join(', ')}.
 Chaves: limpador, vitc (vitamina C), niacina (niacinamida), retinol (retinoide), bha (ácido salicílico), hialu (ácido hialurônico), calmante (creme calmante), hidr (hidratante), fps (protetor solar).
 Para cada produto escreva "como" (instrução curta de uso) e "motivo" (por que serve a esta pele, citando a nota ou o incômodo da pessoa, em uma frase).
@@ -2021,7 +2052,7 @@ async function montarRotina(){
 function perfilTxt(){
   const rs=S.result;
   const rot=routineKeys().map(k=>P[k].n).join(', ');
-  return `${perfilBasico()}${rs?`; tipo de pele ${rs.tipo}; notas de 0 a 100: oleosidade ${rs.oleo}, hidratação ${rs.hid} (alto é bom), poros ${rs.poros}, manchas ${rs.manchas}, linhas finas ${rs.linhas}, vermelhidão ${rs.verm}`:''}${S.gest==='sim'?'; está grávida, tentando engravidar ou amamentando (avise sobre retinoides e outros ativos não indicados)':''}${S.ing.evitar.length?'; ingredientes que ela evita ou tem alergia: '+S.ing.evitar.join(', '):''}${S.ing.fav.length?'; ingredientes favoritos: '+S.ing.fav.join(', '):''}; rotina atual no app: ${rot}`;
+  return `${perfilBasico()}${rs?`; tipo de pele ${rs.tipo}; notas de 0 a 100: oleosidade ${rs.oleo}, hidratação ${rs.hid} (alto é bom), poros ${rs.poros}, manchas ${rs.manchas}, linhas finas ${rs.linhas}, vermelhidão ${rs.verm}`:''}${S.gest==='sim'?'; está grávida, tentando engravidar ou amamentando (avise sobre retinoides e outros ativos não indicados)':''}${S.ing.evitar.length?'; ingredientes que a pessoa evita ou tem alergia: '+S.ing.evitar.join(', '):''}${S.ing.fav.length?'; ingredientes favoritos: '+S.ing.fav.join(', '):''}; rotina atual no app: ${rot}`;
 }
 const promptProd=()=>`Você é uma esteticista que avalia se um produto de cuidados com a pele combina com uma pessoa. Perfil da pessoa: ${perfilTxt()}.
 A imagem mostra a embalagem de um produto, frente e/ou lista de ingredientes. Leia o que estiver legível: nome, tipo, ativos e ingredientes. O rótulo pode estar em coreano, japonês ou outro idioma: leia, traduza os ingredientes para o português e avalie normalmente.
