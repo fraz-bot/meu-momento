@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794241042";</script>
+<script>window.MM_VER="1794241241";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1091,6 +1091,7 @@ function ofertaPlus(titulo){return `<div class="card oferta"><h3 style="color:#f
   <button class="btn" data-act="plus-toggle" style="width:100%">${ic('crown',18)}Assinar agora</button>
   <p class="small" style="opacity:.9;margin:8px 0 0">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</p></div>`}
 function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Momento+.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Momento+</button></div>`}
+function precisaAnalise(t){return `<div class="card pw"><span class="tile">${ic('face',24)}</span><h3>Primeiro, a análise da pele</h3><p class="small muted">${t||'A rotina é montada a partir da foto analisada. Sem a análise, ela não pode ser gerada.'}</p><button class="btn" data-go="pele|analise">${ic('camera',18)}Fazer a análise agora</button></div>`}
 function viewPaywall(){
   const perks=[['face','Avaliação da pele por foto'],['routine','Rotina de manhã e noite feita para você'],['hair','Análise do cabelo e cronograma'],['bottle','Produtos por faixa de preço'],['scan','Scanner de produtos'],['chart','Diário e antes e depois']];
   const logo=LOGO.replace('class="logo"','class="logo" style="width:64px;height:64px"');
@@ -1101,7 +1102,7 @@ function viewPaywall(){
   ${ofertaPlus('Assine para começar')}
   ${typeof atualizaPlano==='function'?`<button class="back" data-act="plus-refresh" style="align-self:center">Já sou assinante: atualizar</button>`:''}
   <p class="note">As respostas do cadastro ficam salvas. Para apagar sua conta e seus dados, vá em Mais.</p>`}
-function gate(){if(S.plus)return null;
+function gate(){if(S.plus)return S.tab==='rotina'&&!S.result?precisaAnalise():null;
   if(S.tab!=='mais')return viewPaywall();
   if(S.tab==='rotina')return paywall('Rotina personalizada','routine','Passo a passo de manhã e à noite, com lembretes e sequência.');
   if(S.tab==='escanear')return paywall('Scanner de produtos','scan','Fotografe o rótulo e veja se combina com a sua pele.');
@@ -1303,7 +1304,8 @@ function viewHoje(){
     ${ks.map(k=>{const ex=(P[k].t[S.tier][3]||[])[0],on=isDone(per,k);return `<button class="rr ${on?'on':''}" data-done="${per}|${k}" aria-pressed="${on}"><span class="tile">${ic(P[k].ic,20)}</span><span class="rn"><b>${P[k].n}</b><span>${esc(ex||P[k].a)}</span></span><span class="rk">${ic('check',16)}</span></button>`}).join('')}</div>`};
   const nb=Object.keys(S.badges).length,wc=weekCount(),NMd=nextMedal();
   let hero;
-  if(S.plus){
+  const temRot=S.plus&&!!S.result;
+  if(temRot){
     const pi=proxInfo();
     hero=pi.open?`<div class="hs">Hora da sua rotina da ${NM[pi.per]}</div><div class="hbig">Agora</div><button class="hpill" data-go="rotina|${pi.per}">Começar${ic('chev',16)}</button>`
     :`<div class="hs">Sua rotina da ${NM[pi.per]} em</div><div class="hbig">${fmtDur(pi.min)}</div><button class="hpill" data-go="rotina|${pi.per}">Ver rotina${ic('chev',16)}</button>`;
@@ -1323,13 +1325,13 @@ function viewHoje(){
       <span class="small muted">Meta da semana: ${Math.min(wc,5)} de 5 dias · ${nb} conquistas</span></span>${ic('chev',16)}</button>
   <div class="row" style="justify-content:space-between"><h3 class="pv">Pra você · Hoje</h3></div>
   <div class="pv3">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','pele|cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>
-  ${S.plus&&!nx.done?`<div class="cta go"><div class="gt">${nx.t}</div><button class="btn" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',18)}</button></div>`:''}
+  ${temRot&&!nx.done?`<div class="cta go"><div class="gt">${nx.t}</div><button class="btn" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',18)}</button></div>`:''}
   ${S.plus?'':paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.')}
   ${S.fase&&S.fase!=='padrao'&&FASES[S.fase]?`<button class="alertc" style="border-color:var(--accent)" data-go="mais|fase">${ic(FASES[S.fase].i,22)}<span><b>Modo: ${FASES[S.fase].t}</b><span class="small muted" style="display:block">Rotina ajustada</span></span></button>`:''}
   ${soon.length?`<button class="alertc" data-go="produtos|shelf">${ic('alert',22)}<span><b>${soon.length===1?'1 produto vence':soon.length+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}
-  ${S.plus?`${[['m','sun','Manhã'],['n','moon','Noite']].filter(([per])=>feito(per)).map(([per,i_,nm])=>`<button class="doneb" data-go="rotina|${per}">${ic('checkc',18)}<span>${nm} concluída</span>${ic('chev',16)}</button>`).join('')}`:''}
-  ${S.plus?`${card('m',R_.m,'sun','Manhã')}`:''}
-  ${S.plus?`${card('n',R_.n,'moon','Noite')}`:''}
+  ${temRot?`${[['m','sun','Manhã'],['n','moon','Noite']].filter(([per])=>feito(per)).map(([per,i_,nm])=>`<button class="doneb" data-go="rotina|${per}">${ic('checkc',18)}<span>${nm} concluída</span>${ic('chev',16)}</button>`).join('')}`:''}
+  ${temRot?`${card('m',R_.m,'sun','Manhã')}`:''}
+  ${temRot?`${card('n',R_.n,'moon','Noite')}`:''}
   <div class="short">${[['clock','Horários','lembretes'],['cal','Fase','fase'],['leaf','Ingredientes','ingredientes'],['coin','Gastos','gastos'],['file','Relatório','relatorio'],['crown','Plano','plano']].map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span class="tile">${ic(i_,20)}</span>${t}</button>`).join('')}</div>
   ${S.plus?`<div class="cnts">${[['image','Antes/depois',S.fotos.length,'ba'],['chart','Diário',S.diary.length,'evo'],['face','Análises',S.analises.length,'analise'],['routine','Registros',S.diary.length+S.analises.length+S.prods.length,'reg']].map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,20)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}
   <div class="tip"><div class="kick">Dica do dia</div><b>${tip[0]}</b><span class="small muted">${tip[1]}</span></div>
@@ -1452,7 +1454,7 @@ function viewMais(){
     ${row('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
     ${S.askDel?`<div class="card" style="text-align:center;display:grid;gap:10px"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:row('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"')}</div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
-  const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Momento+','crown','Disponível para quem assina.'):V0;
+  const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Momento+','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
   return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-go="hoje">${ic('back',18)}Voltar</button></div>${V()}</div>`;
 }
 const head=(i_,t)=>`<h2 style="display:flex;align-items:center;gap:10px"><span class="tile" style="width:38px;height:38px">${ic(i_,20)}</span>${t}</h2>`;
@@ -1559,7 +1561,7 @@ function vRel(){
   const li=(i_,t)=>`<div class="trow"><b>${ic(i_,16)}${t[0]}</b><span class="small muted" style="text-align:right;max-width:55%">${t[1]}</span></div>`;
   return `<div class="card">${head('file','Relatório para a consulta')}
     ${li('face',['Pele',LBL[S.pele]||'-'])}${li('spot',['Incômodos',S.pref.map(k=>LBL[k]).join(', ')||'-'])}
-    ${li('chart',['Análise',rs?`${esc(rs.tipo)} · ${fmtD(rs.d)}`:'Sem análise'])}${li('routine',['Rotina',`${getR().m.length} de manhã, ${getR().n.length} à noite`])}
+    ${li('chart',['Análise',rs?`${esc(rs.tipo)} · ${fmtD(rs.d)}`:'Sem análise'])}${li('routine',['Rotina',S.result&&S.rot?`${getR().m.length} de manhã, ${getR().n.length} à noite`:'Sem rotina (falta a análise da pele)'])}
     ${li('bottle',['Produtos',S.shelf.length+' na prateleira'])}${li('spot',['Quiz',quizTxt()?'respondido':'-'])}${li('alert',['Evito',S.ing.evitar.join(', ')||'-'])}${li('image',['Fotos',F.length+' guardadas'])}${li('drops',['Diário',d.length+' registros'])}</div>
   <button class="btn" data-act="rel-salvar">${ic('down',18)}Salvar relatório</button>
   <button class="btn ghost" data-act="rel-copiar">${ic('copy',18)}Copiar resumo</button>
