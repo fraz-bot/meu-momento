@@ -952,6 +952,13 @@ async function entrou(u){
   }catch(e){}
   AUTH.ready=true;render();
 }
+let _lastPf=0;
+async function atualizaPlano(){
+  if(!AUTH.user||Date.now()-_lastPf<15000)return;_lastPf=Date.now();
+  const antes=S.plus;await carregaPerfil();if(S.plus!==antes){render();toast(S.plus?'Momento+ ativado':'Plano atualizado')}
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)atualizaPlano()});
+window.addEventListener('focus',atualizaPlano);
 async function authInit(){
   try{
     sb.auth.onAuthStateChange((ev,ses)=>{
@@ -973,7 +980,7 @@ const sampleP=Promise.resolve({
     else{corpo.contexto=o.ctx||'';const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
-      const cod=j&&j.codigo;throw {code:'srv',msg:(j&&j.erro)||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
+      const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',msg:(j&&j.erro)||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
     if(!data||data.ok!==true)throw {code:'srv',msg:'Algo deu errado. Tente de novo.'};
     return data.resultado;
   }
