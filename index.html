@@ -983,15 +983,14 @@ const sampleP=Promise.resolve({
 const VERSAO_PRIV='2026-11-09';
 function precisaConsent(){return !AUTH.perfil||AUTH.perfil.consentimento_versao!==VERSAO_PRIV}
 function consentView(){
-  const c=AUTH.c||(AUTH.c=[false,false,false]),ok=c.every(Boolean);
+  const c=AUTH.c||(AUTH.c=[false,false]),ok=c.every(Boolean);
   const logo=LOGO.replace('class="logo"','class="logo" style="width:64px;height:64px"');
   const it=(i,tx)=>`<div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px"><button data-act="cons-${i}" role="checkbox" aria-checked="${c[i]}" aria-label="Marcar" style="flex:none;width:28px;height:28px;border-radius:9px;border:2px solid ${c[i]?'var(--accent)':'var(--tint)'};background:${c[i]?'var(--grad)':'#fff'};color:#fff;display:grid;place-items:center;padding:0;cursor:pointer">${c[i]?ic('check',16):''}</button><span style="font-size:14px;line-height:1.45;color:var(--ink);min-width:0">${tx}</span></div>`;
   return `<div class="ob" style="gap:12px"><div style="text-align:center">${logo}<h1>Sua privacidade</h1>
     <p class="muted small">Antes de começar, precisamos do seu aceite. É rápido.</p></div>
-    <div class="card small" style="line-height:1.5">Para analisar sua pele e cabelo, usamos suas respostas e a foto que você escolher. A foto vai ao nosso servidor e a uma IA (fora do Brasil) para gerar o resultado, e <b>não fica guardada</b>. Você pode baixar seus dados ou apagar sua conta quando quiser.</div>
-    ${it(0,'Li e aceito a <a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--accent)">Política de Privacidade</a> e os <a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--accent)">Termos de Uso</a>.')}
+    <div class="card small" style="line-height:1.5">Suas respostas e a foto que você escolher são usadas para gerar a análise. A foto <b>não fica guardada</b>. Você pode baixar seus dados ou apagar sua conta quando quiser.</div>
+    ${it(0,'Li e aceito a <a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--accent)">Política de Privacidade</a> e os <a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--accent)">Termos de Uso</a>, e autorizo o uso das minhas respostas e fotos para gerar as análises com IA.')}
     ${it(1,'Tenho 18 anos ou mais.')}
-    ${it(2,'Autorizo o uso das minhas respostas de saúde e beleza (como pele, gravidez e sensibilidade) e o envio das minhas fotos a um provedor de IA nos Estados Unidos para gerar as análises.')}
     ${AUTH.cerr?`<p class="note" role="alert" style="color:var(--alert)">${esc(AUTH.cerr)}</p>`:''}
     <button class="btn" data-act="aceitar-consent" ${ok&&!AUTH.csave?'':'disabled'}>${AUTH.csave?'Salvando…':'Continuar'}</button>
     <button class="btn ghost" data-act="sair-conta">Sair</button></div>`;
@@ -1837,7 +1836,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='analisar-prod'){analisarProduto()}
   else if(d.act==='montar-rotina'){montarRotina()}
   else if(d.act==='login-google'){loginGoogle()}
-  else if(/^cons-[012]$/.test(d.act)){const i=+d.act[5];AUTH.c=AUTH.c||[false,false,false];AUTH.c[i]=!AUTH.c[i];render()}
+  else if(/^cons-[01]$/.test(d.act)){const i=+d.act[5];AUTH.c=AUTH.c||[false,false];AUTH.c[i]=!AUTH.c[i];render()}
   else if(d.act==='aceitar-consent'){aceitarConsent()}
   else if(d.act==='baixar-dados'){baixarDados()}
   else if(d.act==='conta-apagar-ask'){S.askConta=true;AUTH.derr=null;render()}
