@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794236125";</script>
+<script>window.MM_VER="1794238004";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -766,6 +766,7 @@ function toggleStep(per,k){
   gameCheck();render();
 }
 function goTab(t,sub){
+  if(t!=='pele'&&t!=='analise'&&t!=='diario')S.okMsg=null;
   if(t==='analise'){S.tab='pele';S.peleSub='analise'}
   else if(t==='diario'){S.tab='pele';S.peleSub='evo'}
   else{S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.area='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos')S.prodSub=sub==='shelf'?'shelf':'rec'}
@@ -1108,12 +1109,12 @@ function viewAnalise(){
           <input class="sr" id="foto-gal" type="file" accept="image/*"><label for="foto-gal" class="btn ghost" style="cursor:pointer">${ic('image')}Galeria</label>
         </div>
         <button class="btn" data-act="analisar" ${S.analyzing||!S.file?'disabled':''} style="width:100%">${ic('sparkle')}${S.analyzing?'Analisando a sua pele…':S.file?'Analisar minha pele':'Tire uma foto para analisar'}</button>
-        ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:'<p class="note">Sua foto não é guardada.</p>'}
+        ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:S.file&&!S.analyzing&&S.okMsg!=='pele'?`<p class="note" style="color:var(--sage);font-weight:600">${ic('check',12)} Foto pronta. Toque em Analisar minha pele.</p>`:'<p class="note">Sua foto não é guardada.</p>'}
       </div>
     </div></div>`;
   if(!rs)return `<div class="stack">${card1}
     <div class="card"><div class="row" style="gap:8px">${['Oleosidade','Hidratação','Poros','Manchas','Linhas finas','Vermelhidão'].map(x=>`<span class="badge">${x}</span>`).join('')}</div></div></div>`;
-  return `<div class="stack">${card1}
+  return `<div class="stack">${S.okMsg==='pele'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Avaliação da pele concluída, ${nome}!</b><div class="small muted" style="margin-top:2px">Veja o resultado abaixo. Em seguida, a sua rotina é montada com base nele.</div></div></div>`:''}${card1}
   <div class="card">
     <div class="row" style="justify-content:space-between"><h3>Tipo de pele</h3><b style="font-family:var(--f-display);font-size:20px">${esc(rs.tipo)}</b></div>
     <p class="small muted" style="margin:4px 0 8px">${esc(rs.resumo)}</p>
@@ -1616,9 +1617,10 @@ function vTema(){
 }
 
 /* ---------- Cabelo ---------- */
-const HQ=[['quim','Química no cabelo','flask',[['nao','Nenhuma'],['tint','Tintura'],['alis','Alisamento']]],['calor','Uso de calor (secador, chapinha)','sun',[['nunca','Quase nunca'],['as','Às vezes'],['sempre','Sempre']]],['lav','Lavagens por semana','drops',[['1','1 a 2'],['3','3 a 4'],['5','5 ou mais']]]];
-const HQL={quim:{nao:'sem química',tint:'com tintura',alis:'com alisamento ou progressiva'},calor:{nunca:'quase nunca usa calor',as:'usa calor às vezes',sempre:'usa calor sempre'},lav:{'1':'lava 1 a 2 vezes por semana','3':'lava 3 a 4 vezes por semana','5':'lava 5 ou mais vezes por semana'}};
-const hqTxt=()=>Object.keys(S.hq).filter(k=>S.hq[k]).map(k=>HQL[k][S.hq[k]]).join('; ');
+const HQ=[['obj','Qual é o seu maior objetivo?','sparkle',[['cresc','Crescer e fortalecer'],['hid','Hidratar'],['frizz','Controlar o frizz'],['def','Definir cachos ou ondas'],['oleo','Reduzir a oleosidade'],['rep','Reparar danos']]],['couro','Como é o seu couro cabeludo?','drop',[['normal','Normal'],['oleoso','Oleoso'],['seco','Seco'],['caspa','Caspa ou coceira']]],['queda','Queda de cabelo','alert',[['normal','Normal'],['mais','Maior que o normal']]],['quim','Química no cabelo','flask',[['nao','Nenhuma'],['tint','Tintura'],['alis','Alisamento']]],['calor','Uso de calor (secador, chapinha)','sun',[['nunca','Quase nunca'],['as','Às vezes'],['sempre','Sempre']]],['lav','Lavagens por semana','drops',[['1','1 a 2'],['3','3 a 4'],['5','5 ou mais']]],['corte','Último corte das pontas','clock',[['rec','Menos de 3 meses'],['med','3 a 6 meses'],['velho','Mais de 6 meses']]],['agua','Sol, piscina ou mar','sun',[['nao','Quase nunca'],['as','Às vezes'],['freq','Com frequência']]]];
+const hqDone=()=>HQ.every(([k])=>S.hq&&S.hq[k]);
+const HQL={obj:{cresc:'quer crescer e fortalecer o cabelo',hid:'quer hidratar o cabelo',frizz:'quer controlar o frizz',def:'quer definir cachos ou ondas',oleo:'quer reduzir a oleosidade',rep:'quer reparar danos'},couro:{normal:'couro cabeludo normal',oleoso:'couro cabeludo oleoso',seco:'couro cabeludo seco',caspa:'couro cabeludo com caspa ou coceira'},queda:{normal:'queda de cabelo normal',mais:'queda maior que o normal'},quim:{nao:'sem química',tint:'com tintura',alis:'com alisamento ou progressiva'},calor:{nunca:'quase nunca usa calor',as:'usa calor às vezes',sempre:'usa calor sempre'},lav:{'1':'lava 1 a 2 vezes por semana','3':'lava 3 a 4 vezes por semana','5':'lava 5 ou mais vezes por semana'},corte:{rec:'cortou as pontas há menos de 3 meses',med:'cortou as pontas há 3 a 6 meses',velho:'não corta as pontas há mais de 6 meses'},agua:{nao:'quase não pega sol, piscina ou mar',as:'pega sol, piscina ou mar às vezes',freq:'pega sol, piscina ou mar com frequência'}};
+const hqTxt=()=>Object.keys(S.hq).filter(k=>S.hq[k]&&HQL[k]&&HQL[k][S.hq[k]]).map(k=>HQL[k][S.hq[k]]).join('; ');
 const promptHair=()=>`Você é uma especialista em cuidados capilares que avalia o cabelo em uma foto, só para cuidados cosméticos. A pessoa informou: faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}${hqTxt()?'; '+hqTxt():''}.
 Responda SOMENTE com um JSON.
 Se não houver cabelo visível, ou a foto estiver escura ou borrada, responda {"erro":"frase curta em português pedindo outra foto"}.
@@ -1630,24 +1632,34 @@ Não faça diagnóstico, não cite doenças, não tente identificar a pessoa. Um
 /* Plano capilar montado pelas notas da foto (as regras escolhem, a IA só sugere marcas) */
 function hairPlan(r){
   const q=S.hq||{},ct=r.tipo==='Cacheado'||r.tipo==='Crespo',T=55;
+  const cl=v=>Math.max(0,Math.min(100,v));
+  // a foto mostra só o dia; o questionário completa o quadro (E = nota ajustada, usada só nas decisões)
+  const E={raiz:cl(r.raiz+(q.couro==='oleoso'?12:q.couro==='seco'?-10:0)+(q.obj==='oleo'?5:0)),pontas:cl(r.pontas+(q.corte==='velho'?10:q.corte==='rec'?-5:0)),poro:cl(r.poro+(q.agua==='freq'?6:0)),danos:cl(r.danos+(q.agua==='freq'?6:0)+(q.obj==='rep'?6:0)),frizz:cl(r.frizz+(q.obj==='frizz'?8:0))};
   const pr=[],push=(s,t)=>{if(s>=T||t.f)pr.push({s,t:t.t||t})};
   const calorS=q.calor==='sempre',alis=q.quim==='alis',tint=q.quim==='tint';
-  const h=r.pontas*.5+r.frizz*.3+(ct?15:0)+(calorS?10:0);
-  const n=r.pontas*.4+r.frizz*.3+(r.tipo==='Crespo'?20:r.tipo==='Cacheado'?10:0)-(r.raiz>=70?15:0);
-  const rc=r.danos*.6+r.poro*.25+(alis?15:tint?10:0)+(calorS?10:0);
+  const h=E.pontas*.5+E.frizz*.3+(ct?15:0)+(calorS?10:0)+(q.obj==='hid'?12:0);
+  const n=E.pontas*.4+E.frizz*.3+(r.tipo==='Crespo'?20:r.tipo==='Cacheado'?10:0)-(E.raiz>=70?15:0);
+  const rc=E.danos*.6+E.poro*.25+(alis?15:tint?10:0)+(calorS?10:0)+(q.obj==='rep'?10:0);
   // prioridades
   const C=[];
-  if(r.danos>=T)C.push([r.danos,`Reduzir a quebra (danos em ${r.danos}/100): menos calor e uma máscara de reconstrução a cada 15 dias.`]);
-  if(r.pontas>=T)C.push([r.pontas,`Pontas ressecadas (${r.pontas}/100): hidrate e nutria as pontas e corte pontas duplas a cada 3 meses.`.replace('nutria','nutra')]);
-  if(r.raiz>=T)C.push([r.raiz,`Raiz oleosa (${r.raiz}/100): lave só a raiz com shampoo e passe o condicionador do meio às pontas.`]);
-  if(r.frizz>=T)C.push([r.frizz,`Frizz em ${r.frizz}/100: use leite ou creme de pentear e seque sem esfregar, com toalha de microfibra ou camiseta.`]);
-  if(r.poro>=T)C.push([r.poro,`Porosidade alta (${r.poro}/100): finalize com leave-in e use água morna ou fria no último enxágue, para segurar a hidratação.`]);
+  if(E.danos>=T)C.push([r.danos,`Reduzir a quebra (danos em ${r.danos}/100): menos calor e uma máscara de reconstrução a cada 15 dias.`]);
+  if(E.pontas>=T)C.push([r.pontas,`Pontas ressecadas (${r.pontas}/100): hidrate e nutria as pontas e corte pontas duplas a cada 3 meses.`.replace('nutria','nutra')]);
+  if(E.raiz>=T)C.push([r.raiz,`Raiz oleosa (${r.raiz}/100): lave só a raiz com shampoo e passe o condicionador do meio às pontas.`]);
+  if(E.frizz>=T)C.push([r.frizz,`Frizz em ${r.frizz}/100: use leite ou creme de pentear e seque sem esfregar, com toalha de microfibra ou camiseta.`]);
+  if(E.poro>=T)C.push([r.poro,`Porosidade alta (${r.poro}/100): finalize com leave-in e use água morna ou fria no último enxágue, para segurar a hidratação.`]);
   if(calorS)C.push([60,'Você usa calor sempre: reduza a frequência e passe protetor térmico antes do secador ou da chapinha.']);
   if(alis)C.push([58,'Cabelo alisado: evite sulfato forte e reforce a hidratação.']);
   if(tint)C.push([57,'Cabelo tingido: use shampoo para cabelos coloridos e proteja do sol para a cor durar.']);
-  if(q.lav==='5'&&r.raiz<70)C.push([56,'Você lava o cabelo com muita frequência: se puder, espace as lavagens para não ressecar.']);
+  if(q.lav==='5'&&E.raiz<70)C.push([56,'Você lava o cabelo com muita frequência: se puder, espace as lavagens para não ressecar.']);
+  if(q.couro==='caspa')C.push([66,'Couro cabeludo com caspa ou coceira: use shampoo anti-caspa 2 a 3 vezes por semana. Se durar mais de 3 semanas, procure um dermatologista.']);
+  if(q.couro==='seco')C.push([57,'Couro cabeludo seco: espace as lavagens e evite água muito quente.']);
+  if(q.queda==='mais')C.push([70,'Queda maior que o normal: evite puxar o cabelo e reduza o calor. Se durar mais de 2 a 3 meses ou aparecerem falhas, procure um dermatologista ou tricologista.']);
+  if(q.obj==='cresc')C.push([59,'Para crescer e fortalecer: massageie o couro cabeludo ao lavar, corte as pontas duplas e evite penteados que puxem.']);
+  if(q.obj==='def'&&r.tipo!=='Liso')C.push([59,'Para definir cachos ou ondas: finalize com creme de pentear ou gel, com o cabelo bem molhado, e não mexa até secar.']);
+  if(q.corte==='velho')C.push([58,'Faz mais de 6 meses do último corte: cortar as pontas reduz a quebra e o frizz.']);
+  if(q.agua==='freq')C.push([58,'Sol, piscina ou mar com frequência: enxágue logo depois, use proteção com filtro UV e faça uma limpeza profunda a cada 15 dias.']);
   C.sort((a,b)=>b[0]-a[0]);
-  const prior=C.slice(0,3).map(x=>x[1]);
+  const prior=C.slice(0,4).map(x=>x[1]);
   if(!prior.length)prior.push('Seu cabelo está equilibrado: mantenha limpeza suave, condicionador e uma máscara a cada 15 dias.');
   // cronograma de 4 semanas
   const slots=[null,null,null,null];
@@ -1661,38 +1673,42 @@ function hairPlan(r){
   const P_=[],nt=(v,l)=>`${l} ${v}/100`;
   // shampoo
   {let b,por;
-   if(r.raiz>=70){b='Shampoo de limpeza profunda ou antirresíduo, usado só na raiz; sem óleos pesados.';por=nt(r.raiz,'Raiz muito oleosa')}
-   else if(r.raiz>=55){b='Shampoo de limpeza equilibrada para raiz oleosa, sem sulfato forte, só na raiz.';por=nt(r.raiz,'Raiz oleosa')}
-   else if(r.danos>=60){b='Shampoo suave com proteínas (queratina, aminoácidos), baixo sulfato.';por=nt(r.danos,'Danos e quebra')}
-   else if(r.pontas>=60||ct||alis){b='Shampoo suave, sem sulfato forte (tipo low poo), que não resseca.';por=r.pontas>=60?nt(r.pontas,'Pontas ressecadas'):ct?'Cabelo '+r.tipo.toLowerCase()+' ressecam com facilidade':'Cabelo alisado'}
+   if(q.couro==='caspa'){b='Shampoo anti-caspa (piritionato de zinco, cetoconazol ou ácido salicílico), 2 a 3 vezes por semana, só no couro cabeludo.';por='Você relatou caspa ou coceira'}
+   else if(E.raiz>=70){b='Shampoo de limpeza profunda ou antirresíduo, usado só na raiz; sem óleos pesados.';por=nt(r.raiz,'Raiz muito oleosa')}
+   else if(E.raiz>=55){b='Shampoo de limpeza equilibrada para raiz oleosa, sem sulfato forte, só na raiz.';por=nt(r.raiz,'Raiz oleosa')}
+   else if(q.couro==='seco'){b='Shampoo suave e hidratante, sem sulfato forte, para couro cabeludo seco.';por='Couro cabeludo seco'}
+   else if(E.danos>=60){b='Shampoo suave com proteínas (queratina, aminoácidos), baixo sulfato.';por=nt(r.danos,'Danos e quebra')}
+   else if(E.pontas>=60||ct||alis){b='Shampoo suave, sem sulfato forte (tipo low poo), que não resseca.';por=E.pontas>=60?nt(r.pontas,'Pontas ressecadas'):ct?'Cabelo '+r.tipo.toLowerCase()+' ressecam com facilidade':'Cabelo alisado'}
    else{b='Shampoo neutro de uso regular, equilibrado.';por='Raiz e pontas sem problema forte'}
    if(tint)b+=' De preferência próprio para cabelo colorido.';
    P_.push({k:'shampoo',passo:'Shampoo',busca:b,por});}
   // limpeza profunda ocasional
-  if(r.raiz>=70||(r.poro>=70&&r.danos<50&&r.pontas<70))P_.push({k:'clarif',passo:'Shampoo de limpeza profunda',busca:'Antirresíduo, 1 vez a cada 15 dias, para tirar acúmulo de produto e oleosidade.',por:r.raiz>=70?nt(r.raiz,'Raiz muito oleosa'):nt(r.poro,'Porosidade alta')+', acumula resíduo'});
+  if(E.raiz>=70||q.agua==='freq'||(E.poro>=70&&E.danos<50&&E.pontas<70))P_.push({k:'clarif',passo:'Shampoo de limpeza profunda',busca:'Antirresíduo, 1 vez a cada 15 dias, para tirar acúmulo de produto e oleosidade.',por:E.raiz>=70?nt(r.raiz,'Raiz muito oleosa'):nt(r.poro,'Porosidade alta')+', acumula resíduo'});
   // condicionador
   {let b,por;
-   if(r.frizz>=65){b='Condicionador anti-frizz, com óleos leves ou silicone solúvel, do meio às pontas.';por=nt(r.frizz,'Frizz')}
-   else if(r.danos>=60){b='Condicionador reconstrutor leve, com proteínas, do meio às pontas.';por=nt(r.danos,'Danos e quebra')}
-   else if(r.pontas>=60||ct){b='Condicionador cremoso e rico, com óleos ou manteigas, do meio às pontas.';por=r.pontas>=60?nt(r.pontas,'Pontas ressecadas'):'Cabelo '+r.tipo.toLowerCase()+' precisa de mais nutrição'}
-   else if(r.raiz>=60){b='Condicionador leve, só do meio às pontas, sem tocar a raiz.';por=nt(r.raiz,'Raiz oleosa')}
+   if(E.frizz>=65){b='Condicionador anti-frizz, com óleos leves ou silicone solúvel, do meio às pontas.';por=nt(r.frizz,'Frizz')}
+   else if(E.danos>=60){b='Condicionador reconstrutor leve, com proteínas, do meio às pontas.';por=nt(r.danos,'Danos e quebra')}
+   else if(E.pontas>=60||ct){b='Condicionador cremoso e rico, com óleos ou manteigas, do meio às pontas.';por=E.pontas>=60?nt(r.pontas,'Pontas ressecadas'):'Cabelo '+r.tipo.toLowerCase()+' precisa de mais nutrição'}
+   else if(E.raiz>=60){b='Condicionador leve, só do meio às pontas, sem tocar a raiz.';por=nt(r.raiz,'Raiz oleosa')}
    else{b='Condicionador com ação desembaraçante.';por='Cabelo equilibrado'}
    P_.push({k:'cond',passo:'Condicionador',busca:b,por});}
   // máscaras do cronograma
   const MT={hid:'hidratação (glicerina, pantenol, aloe)',nut:'nutrição (óleos e manteigas: argan, karité, coco)',rec:'reconstrução (queratina, aminoácidos)'};
   P_.push({k:'mascara',passo:'Máscara de tratamento',busca:'Tenha '+(usados.length>1?'uma de cada: ':'uma de ')+usados.map(x=>MT[x]).join(' e ')+'.',por:'Seu cronograma de 4 semanas usa '+usados.map(x=>({hid:'hidratação',nut:'nutrição',rec:'reconstrução'}[x])).join(', ').replace(/, ([^,]*)$/,' e $1')});
   // reparador de ligações (dano alto)
-  if(r.danos>=70)P_.push({k:'ligacao',passo:'Tratamento reparador de ligações',busca:'Ampola ou máscara com ativos que reconstroem as ligações do fio (bond builder), 1 vez por semana ou a cada 15 dias.',por:nt(r.danos,'Danos e quebra')+', fio frágil'});
+  if(E.danos>=70)P_.push({k:'ligacao',passo:'Tratamento reparador de ligações',busca:'Ampola ou máscara com ativos que reconstroem as ligações do fio (bond builder), 1 vez por semana ou a cada 15 dias.',por:nt(r.danos,'Danos e quebra')+', fio frágil'});
   // leave-in
-  if(r.frizz>=50||(ct&&r.pontas>=50)||r.poro>=60)P_.push({k:'leave',passo:'Leave-in ou creme de pentear',busca:ct?'Creme de pentear ou leave-in hidratante, aplicado com o cabelo úmido.':r.poro>=60?'Leave-in leve com ativos que selam o fio, aplicado com o cabelo úmido.':'Leave-in leve, só nas pontas, com o cabelo úmido.',por:r.frizz>=50?nt(r.frizz,'Frizz'):r.poro>=60?nt(r.poro,'Porosidade alta'):nt(r.pontas,'Pontas ressecadas')});
+  if(E.frizz>=50||(ct&&E.pontas>=50)||E.poro>=60)P_.push({k:'leave',passo:'Leave-in ou creme de pentear',busca:ct?'Creme de pentear ou leave-in hidratante, aplicado com o cabelo úmido.':E.poro>=60?'Leave-in leve com ativos que selam o fio, aplicado com o cabelo úmido.':'Leave-in leve, só nas pontas, com o cabelo úmido.',por:E.frizz>=50?nt(r.frizz,'Frizz'):E.poro>=60?nt(r.poro,'Porosidade alta'):nt(r.pontas,'Pontas ressecadas')});
   // óleo ou sérum de pontas
-  if(r.pontas>=65)P_.push({k:'oleo',passo:'Óleo ou sérum para as pontas',busca:ct?'Óleo vegetal ou sérum nutritivo, 2 gotas só nas pontas, para selar a hidratação.':'Sérum leve para pontas, 1 gota, sem passar na raiz.',por:nt(r.pontas,'Pontas ressecadas')});
+  if(E.pontas>=65)P_.push({k:'oleo',passo:'Óleo ou sérum para as pontas',busca:ct?'Óleo vegetal ou sérum nutritivo, 2 gotas só nas pontas, para selar a hidratação.':'Sérum leve para pontas, 1 gota, sem passar na raiz.',por:nt(r.pontas,'Pontas ressecadas')});
   // proteção
   if(q.calor==='sempre'||q.calor==='as')P_.push({k:'termico',passo:'Protetor térmico',busca:'Spray com proteção térmica, antes do secador ou da chapinha.',por:q.calor==='sempre'?'Você usa calor sempre':'Você usa calor às vezes'});
-  if(tint||alis)P_.push({k:'solar',passo:'Protetor solar ou de cor para o cabelo',busca:'Spray ou leave-in com filtro UV, para proteger a cor e o fio do sol.',por:tint?'Cabelo tingido':'Cabelo alisado'});
+  if(tint||alis||q.agua==='freq')P_.push({k:'solar',passo:'Protetor solar ou de cor para o cabelo',busca:'Spray ou leave-in com filtro UV, para proteger a cor e o fio do sol.',por:tint?'Cabelo tingido':alis?'Cabelo alisado':'Sol, piscina ou mar com frequência'});
   // couro cabeludo
-  if(r.raiz>=70)P_.push({k:'esfol',passo:'Esfoliante de couro cabeludo',busca:'Esfoliante suave, 1 vez por semana, para soltar a oleosidade acumulada.',por:nt(r.raiz,'Raiz muito oleosa')});
-  return{prior,crono,produtos:P_};
+  if(E.raiz>=70)P_.push({k:'esfol',passo:'Esfoliante de couro cabeludo',busca:'Esfoliante suave, 1 vez por semana, para soltar a oleosidade acumulada.',por:nt(r.raiz,'Raiz muito oleosa')});
+  if(q.obj==='def'&&r.tipo!=='Liso')P_.push({k:'defin',passo:'Creme ou gel para definição',busca:'Creme modelador ou gel sem álcool, aplicado com o cabelo bem molhado, para marcar cachos e ondas.',por:'Seu objetivo: definir cachos ou ondas'});
+  if(q.queda==='mais')P_.push({k:'tonico',passo:'Tônico para o couro cabeludo',busca:'Loção ou tônico capilar com cafeína ou pantenol, como cuidado de apoio. Não trata queda: se persistir, procure um profissional.',por:'Você relatou queda maior que o normal'});
+  return{prior,crono,produtos:P_,aviso:q.queda==='mais'?'Você relatou queda maior que o normal. O app não avalia queda: se durar ou aparecerem falhas, procure um dermatologista ou tricologista.':null};
 }
 const promptHairMarcas=(r,pl)=>`Cabelo ${r.tipo}${hqTxt()?'; '+hqTxt():''}. Notas da foto (0 a 100): raiz oleosa ${r.raiz}, pontas ressecadas ${r.pontas}, porosidade ${r.poro}, danos ${r.danos}, frizz ${r.frizz}. Para cada produto abaixo, sugira um por faixa de preço (econ, mid, prem), escolhendo o produto que atende ao motivo indicado.
 Produtos: ${pl.produtos.map(x=>x.k+' = '+x.passo+' ('+x.busca+') Motivo: '+x.por).join(' | ')}.
@@ -1713,33 +1729,35 @@ async function analisarCabelo(){
         atencao:r.atencao?String(r.atencao):null,marcas:{}};
       try{const pl=hairPlan(S.hres),m=await sf.json(promptHairMarcas(S.hres,pl),{tipo:'texto'}),mm=(m&&m.marcas)||{};
         pl.produtos.forEach(x=>{const y=mm[x.k];if(y)S.hres.marcas[x.k]={econ:String(y.econ||''),mid:String(y.mid||''),prem:String(y.prem||'')}})}catch(e){}
-      xp(40,'Análise do cabelo','hair')}
+      xp(40,'Análise do cabelo','hair');S.okMsg='cabelo'}
   }catch(e){const c=e&&e.code;S.hErr=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
   S.hBusy=false;render();
+  if(S.okMsg==='cabelo'){toast('Análise do cabelo concluída');window.scrollTo(0,0)}
 }
 function viewCabelo(){
   const r=S.hres,q=S.hq;
   const bar=(l,v,i_)=>`<div class="meter"><span class="ml">${ic(i_,16)}${l}</span><div class="bar"><b class="${(100-v)>=60?'hi':''}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`;
   const box=S.hPhoto?`<div class="face"><img class="photo" src="${S.hPhoto}" alt="Foto do cabelo">${S.hBusy?'<div class="scan"></div>':''}</div>`:`<div class="face" style="display:grid;place-items:center;color:var(--accent)">${ic('hair',64)}</div>`;
-  const inp=`<div class="card">
+  const QCARD=`<div class="card"><div class="row" style="justify-content:space-between"><h3>Questionário do cabelo</h3><span class="badge">${HQ.filter(([k])=>q[k]).length} de ${HQ.length}</span></div><p class="small muted" style="margin:4px 0 6px">A foto mostra só o dia de hoje. Suas respostas completam a análise.</p>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px;margin-top:8px">${ic(i_==='flask'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t_])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t_}</button>`).join('')}</div>`).join('')}</div>`;
+  const inp=`${QCARD}<div class="card">
     <div class="row" style="justify-content:space-between"><h2>${r?'Seu cabelo':'Vamos ver o seu cabelo'}</h2>${r?`<span class="badge">${fmtD(r.d)}</span>`:''}</div>
     <div class="face-wrap" style="margin-top:12px">${box}<div>
       <p class="small muted">Cabelo solto, de frente ou de lado, com luz natural.</p>
       <div class="row" style="gap:8px;margin:10px 0 8px">
         <input class="sr" id="hair-cam" type="file" accept="image/*" capture="user"><label for="hair-cam" class="btn" style="cursor:pointer">${ic('camera')}Tirar foto</label>
         <input class="sr" id="hair-gal" type="file" accept="image/*"><label for="hair-gal" class="btn ghost" style="cursor:pointer">${ic('image')}Galeria</label></div>
-      <button class="btn" data-act="analisar-cabelo" ${S.hBusy||!S.hFile?'disabled':''} style="width:100%">${ic('sparkle')}${S.hBusy?'Analisando o cabelo…':S.hFile?'Analisar meu cabelo':'Tire uma foto para analisar'}</button>
-      ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:'<p class="note">Sua foto não é guardada.</p>'}</div></div></div>
-    <div class="card"><h3>Conte um pouco</h3>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px">${ic(i_==='flask'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t}</button>`).join('')}</div>`).join('')}</div>`;
+      <button class="btn" data-act="analisar-cabelo" ${S.hBusy||!S.hFile||!hqDone()?'disabled':''} style="width:100%">${ic('sparkle')}${S.hBusy?'Analisando o cabelo…':!hqDone()?'Responda o questionário':S.hFile?'Analisar meu cabelo':'Tire uma foto para analisar'}</button>
+      ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:S.hFile&&!S.hBusy&&S.okMsg!=='cabelo'?`<p class="note" style="color:var(--sage);font-weight:600">${ic('check',12)} Foto pronta. ${hqDone()?'Toque em Analisar meu cabelo.':'Falta responder o questionário.'}</p>`:'<p class="note">Sua foto não é guardada.</p>'}</div></div></div>
+    `;
   if(!r)return `<div class="stack">${inp}</div>`;
   const tier=S.tier,tn={econ:'Econômico',mid:'Intermediário',prem:'Premium'},pl=hairPlan(r),mk=r.marcas||{};
-  return `<div class="stack">${inp}
+  return `<div class="stack">${S.okMsg==='cabelo'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Análise do cabelo concluída!</b><div class="small muted" style="margin-top:2px">Veja abaixo o seu resultado, os produtos e o cronograma capilar.</div></div></div>`:''}${inp}
   <div class="card"><div class="row" style="justify-content:space-between"><h3>Tipo de cabelo</h3><b style="font-family:var(--f-display);font-size:20px">${esc(r.tipo)}</b></div>
     <p class="small muted" style="margin:4px 0 8px">${esc(r.resumo)}</p>
     ${bar('Oleosidade da raiz',r.raiz,'drop')}${bar('Ressecamento das pontas',r.pontas,'sun')}${bar('Porosidade',r.poro,'drops')}${bar('Danos e quebra',r.danos,'alert')}${bar('Frizz',r.frizz,'flame')}
     <p class="note">Notas de 0 a 100, estimadas pela foto.</p></div>
   <div class="card"><h3>Prioridades para você</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.prior.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
-    ${r.atencao?`<p class="note" style="color:var(--warn)">${esc(r.atencao)}</p>`:''}</div>
+    ${r.atencao?`<p class="note" style="color:var(--warn)">${esc(r.atencao)}</p>`:''}${pl.aviso?`<p class="note" style="color:var(--warn)">${esc(pl.aviso)}</p>`:''}</div>
   ${pl.produtos.length?`<div class="card"><h3>Produtos para o seu cabelo</h3>
     <div class="seg" role="group" aria-label="Faixa de preço" style="margin:10px 0">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${l}</button>`).join('')}</div>
     ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier];return `<div class="vp"><span class="tile">${ic('bottle',18)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>`}).join('')}
@@ -1955,8 +1973,9 @@ async function analisar(){
     else{S.result={d:hoje(),tipo:String(r.tipo||'Normal'),resumo:r.resumo?String(r.resumo):'',oleo:num(r.oleo),hid:num(r.hid),poros:num(r.poros),manchas:num(r.manchas),linhas:num(r.linhas),verm:num(r.verm),
       prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
   }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
+  if(ok)S.okMsg='pele';
   S.analyzing=false;gameCheck();render();
-  if(ok)montarRotina();
+  if(ok){toast('Avaliação da pele concluída');window.scrollTo(0,0);montarRotina()}
 }
 const promptRot=L=>`Você é uma esteticista. Escreva os textos da rotina de cuidados do rosto de ${S.nome}. Perfil: ${perfilTxt()}. Resultado da análise da foto: tipo ${S.result.tipo}; ${S.result.resumo}. Prioridades: ${S.result.prioridades.join(' | ')}.
 Os produtos JÁ FORAM ESCOLHIDOS pelas notas da análise. Não adicione, não remova e não troque nenhum. Manhã: ${L.manha.map(x=>x.k).join(', ')}. Noite: ${L.noite.map(x=>x.k).join(', ')}.
