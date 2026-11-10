@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794270662";</script>
+<script>window.MM_VER="1794272601";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -347,14 +347,18 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 .kr{display:flex;gap:12px;align-items:center;background:var(--soft);border:1px solid var(--accent);border-radius:18px;padding:14px}
 .kr .tile{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);flex:none}
 .kr b{display:block;font-size:15px;color:var(--ink)}.kr span:not(.tile){display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
-.vs{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
-.vsh,.vsr{display:grid;grid-template-columns:1fr 1fr}
-.vsh>span{padding:10px 12px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
-.vsh>span+span{background:var(--grad);color:#fff}
-.vsr{border-top:1px solid var(--line)}
-.vsr>span{padding:11px 12px;font-size:13px;line-height:1.3;display:flex;gap:6px;align-items:flex-start}
-.vsr svg{flex:none;margin-top:2px}
-.vsr .no{color:var(--muted)}.vsr .yes{background:var(--soft);color:var(--ink);font-weight:600}.vsr .yes svg{color:var(--sage)}
+.vhero{text-align:center;display:grid;gap:8px;justify-items:center;padding:4px 0 2px}
+.vhero h1{font-size:28px;line-height:1.15}
+.vhero p{color:var(--muted);font-size:15px;margin:0}
+.vbadge{display:inline-flex;align-items:center;gap:6px;background:var(--grad);color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;border-radius:99px;box-shadow:0 6px 14px rgba(var(--shc),.3)}
+.vs{border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:0 14px 32px rgba(var(--shc),.22);border:2px solid var(--accent)}
+.vsh,.vsr{display:grid;grid-template-columns:.82fr 1fr}
+.vsh>span{padding:14px 12px;font-size:13px;font-weight:800;color:var(--muted);display:flex;align-items:center;gap:8px}
+.vsh>span+span{background:var(--grad);color:#fff;font-family:var(--f-display);font-size:18px}
+.vsr>span{padding:13px 12px;font-size:13px;line-height:1.3;display:flex;gap:8px;align-items:flex-start;border-top:1px solid var(--line)}
+.vsr i{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;margin-top:-1px}
+.vsr .no{color:var(--muted);background:var(--bg)}.vsr .no i{background:var(--line);color:var(--muted)}
+.vsr .yes{background:var(--grad);color:#fff;font-weight:700;font-size:14px;border-top-color:rgba(255,255,255,.22)}.vsr .yes i{background:#fff;color:var(--g2)}
 .tri{background:var(--grad);color:#fff;border-radius:22px;padding:20px 18px;text-align:center;display:grid;gap:8px}
 .tri b{font-family:var(--f-display);font-size:44px;line-height:1}
 .tri span{font-size:14px;opacity:.96}
@@ -1826,13 +1830,13 @@ function viewOnboarding(){
     <p class="note">${ic('clock',12)} 1 minuto · ${n} perguntas</p>
     ${CL.ok?`<p class="small muted" style="text-align:center">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;text-decoration:underline">Entrar</button></p>`:''}</div>`;
   if(st===n+1){
-    const C=[['Rotina igual para todo mundo','Rotina montada a partir da sua foto'],['Você escolhe produtos no escuro','Produtos indicados para a sua pele e o seu bolso'],['Rótulo difícil de entender','Scanner que diz se o produto serve para você'],['Pele e cabelo em lugares separados','Pele, cabelo e produtos no mesmo lugar'],['Você esquece e desiste','Lembretes, sequência e medalhas para manter o hábito'],['Não dá para ver se melhorou','Diário e antes e depois para acompanhar']];
+    const C=[['Muitos usam rotina igual para todo mundo','Rotina montada a partir da sua foto'],['Indicam produtos sem olhar o seu bolso','Produtos para a sua pele e o seu bolso'],['Nem sempre leem o rótulo do produto','Scanner que diz se o produto serve para você'],['Costumam cuidar só da pele ou só do cabelo','Pele, cabelo e produtos no mesmo lugar'],['Poucos ajudam a manter o hábito','Lembretes, sequência e medalhas'],['Nem sempre mostram a sua evolução','Diário e antes e depois']];
     return `<div class="ob">
     <button class="bk2" data-act="ob-back">${ic('back',18)}Voltar</button>
-    <div class="kick">Por que o Mavie Skin</div>
-    <h1 style="font-size:26px">${esc(S.nome)}, veja a diferença</h1>
-    <div class="vs"><div class="vsh"><span>Sem o Mavie Skin</span><span>Com o Mavie Skin</span></div>
-      ${C.map(([a,b])=>`<div class="vsr"><span class="no">${ic('x',14)}${a}</span><span class="yes">${ic('check',14)}${b}</span></div>`).join('')}</div>
+    <div class="vhero"><span class="vbadge">${ic('crown',14)}Feito para você</span><h1>${esc(S.nome)}, veja a diferença</h1><p>O que muda quando você cuida da pele com o Mavie Skin.</p></div>
+    <div class="vs"><div class="vsh"><span>Outros apps</span><span>${LOGO.replace('class="logo"','class="logo" style="width:26px;height:26px;flex:none"')}Mavie Skin</span></div>
+      ${C.map(([a,b])=>`<div class="vsr"><span class="no"><i>${ic('x',12)}</i>${a}</span><span class="yes"><i>${ic('check',12)}</i>${b}</span></div>`).join('')}</div>
+    <p class="small muted" style="text-align:center;margin-top:-6px">Comparação geral. Os recursos variam de app para app.</p>
     <div class="tri"><b>3 em 1</b><span>Pele, cabelo e produtos em um só app, para cuidar da sua rotina inteira.</span>
       <div class="tri3"><i>${ic('face',20)}Pele</i><i>${ic('hair',20)}Cabelo</i><i>${ic('bottle',20)}Produtos</i></div></div>
     <button class="btn" data-act="ob-next">Continuar</button></div>`}
