@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794272601";</script>
+<script>window.MM_VER="1794360434";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -22,6 +22,7 @@
 :root{
   --bg:#FFF2F7; --surface:#FFFFFF; --ink:#2A1420; --muted:#7A5B6B; --line:#F8D3E3;
   --g1:#FF6B9D; --g2:#D6246E; --grad:linear-gradient(145deg,var(--g1),var(--g2)); --accent:#D6246E; --accent-ink:#FFFFFF; --alert:#B3261E; --sage:#2F8A6E; --warn:#B86A06; --soft:#FFE3EE; --tint:#FFC6DD; --hd:#FFFFFF; --hdink:#D6246E;
+  --shc:214,36,110;
   --f-display:'Fraunces',Georgia,'Times New Roman',serif;
   --f-body:'Figtree','Segoe UI',system-ui,sans-serif;
 }
@@ -364,6 +365,11 @@ a.btn{text-decoration:none;display:flex;align-items:center;justify-content:cente
 .tri span{font-size:14px;opacity:.96}
 .tri3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
 .tri3 i{font-style:normal;font-size:12px;font-weight:700;background:rgba(255,255,255,.18);border-radius:14px;padding:10px 4px;display:grid;justify-items:center;gap:4px}
+.hp{padding:10px 0;border-top:1px solid var(--line)}.hp:first-of-type{border-top:0}
+.hpb{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0 48px}
+.hpb .rg{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;padding:6px 11px}
+.hpb .rg[disabled]{opacity:.75}
+.seg.psg button{flex-direction:row;gap:6px;font-size:13px;padding:11px 4px}
 .suave-tokens{}
 :root[data-tema=suave]:not([data-theme=dark]){--bg:#FAF7F6;--ink:#211B1D;--muted:#7E7276;--line:#EEE7E5;--g1:#CC6788;--g2:#AD4A6C;--accent:#AD4A6C;--soft:#F8EDF0;--tint:#F1DCE3;--hdink:#AD4A6C}
 /* tema suave: estrutura clara */
@@ -465,6 +471,40 @@ nav button.fab[aria-current="page"],:root:not([data-tema=suave]) nav button.fab[
 .wm.big{font-size:38px}
 .bk2{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--tint);background:var(--surface);color:var(--accent);font:inherit;font-weight:700;font-size:15px;padding:9px 16px 9px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 16px rgba(214,36,110,.14)}.bk2.fill{background:var(--grad);color:#fff;border-color:transparent;padding:9px 16px}.bk2:active{transform:scale(.97)}
 .lock{position:relative}.lock>.lk{filter:blur(6px);opacity:.75;pointer-events:none;user-select:none}.lock>.lkb{position:absolute;inset:0;display:grid;place-items:center}.oferta{background:var(--grad);color:#fff;border:0}.oferta .pl{display:grid;gap:8px;margin:10px 0}.oferta .pl>div{background:rgba(255,255,255,.18);border-radius:14px;padding:10px 14px}.oferta .pl>div.best{background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.7)}.oferta .pl .pr2{font-family:var(--f-display);font-size:22px;font-weight:700}.oferta .pl .pr2 small{font-family:inherit;font-size:13px;font-weight:500}.card.oferta .btn{background:#fff!important;color:var(--accent)!important;box-shadow:0 6px 16px rgba(0,0,0,.12)!important}
+/* ===== visual 2026-11: mais limpo e moderno ===== */
+:root{--f-display:'Plus Jakarta Sans','Inter','Figtree',system-ui,sans-serif;--bg:#FFF9FB;--line:#F5E3EA;--soft:#FFEBF2;--sh:0 1px 2px rgba(42,20,32,.04),0 10px 30px rgba(42,20,32,.07)}
+h1,h2,h3{letter-spacing:-.025em;font-weight:800}
+h1{line-height:1.12}h2{font-size:21px}h3{font-size:16.5px;letter-spacing:-.015em}
+:root:not([data-tema=suave]) body{background:radial-gradient(85% 34% at 100% 0%,#FFE1EC 0%,transparent 62%),radial-gradient(70% 26% at 0% 4%,#FFF0F5 0%,transparent 60%),var(--bg);background-attachment:fixed}
+:root:not([data-tema=suave]) .card,:root:not([data-tema=suave]) .rc,:root:not([data-tema=suave]) .nextc,:root:not([data-tema=suave]) .short button,:root:not([data-tema=suave]) .mrow,:root:not([data-tema=suave]) .tm,:root:not([data-tema=suave]) .doneb{box-shadow:var(--sh);border-color:transparent}
+.card{border-radius:24px;padding:20px}
+.mrow{border-radius:20px;padding:14px 16px}
+.btn{border-radius:999px;min-height:50px;font-weight:700;letter-spacing:-.01em;padding:0 22px}
+:root:not([data-tema=suave]) .btn{box-shadow:0 8px 20px rgba(214,36,110,.24)}
+.btn.ghost,:root:not([data-tema=suave]) .btn.ghost{background:var(--surface);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.tile{border-radius:14px}
+.badge{letter-spacing:.06em;font-weight:700}
+.seg button{border-radius:16px;border-color:transparent;box-shadow:var(--sh);font-weight:700}
+.rg{border-color:transparent}
+.opt{border-radius:18px;border-color:transparent;box-shadow:var(--sh)}
+input[type=text]{border-radius:16px;border-width:1.5px}
+.step{padding:15px 0}
+.pv3 button{border:0;background:var(--surface);box-shadow:var(--sh);border-radius:22px}
+.bk2{border-color:transparent;box-shadow:var(--sh)}
+.wm{font-family:var(--f-display);font-weight:800;letter-spacing:-.04em;font-size:22px;filter:none}
+.wm.big{font-size:34px}
+header{padding:16px 0 12px}
+.pill{font-weight:800}
+.hero2{border:0;border-radius:28px;box-shadow:var(--sh);background:linear-gradient(160deg,#FFE4EE,#FFF6FA)}
+.comp,.ptsb,.alertc,.nextc{border-color:transparent!important;box-shadow:var(--sh)}
+.comp{border-radius:22px}
+.cta{border-radius:24px}
+/* barra de navegação flutuante */
+.app{padding-bottom:118px}
+nav,:root:not([data-tema=suave]) nav{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:496px;margin:0 auto;border:1px solid rgba(255,255,255,.8);border-radius:28px;padding:6px;background:rgba(255,255,255,.84);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 14px 36px rgba(42,20,32,.16)}
+nav button{border-radius:20px;padding:8px 0 7px;font-size:10.5px;font-weight:700;transition:background .18s,color .18s}
+nav button[aria-current="page"],:root:not([data-tema=suave]) nav button[aria-current="page"]{background:var(--soft);color:var(--accent)}
+@media (prefers-reduced-motion:reduce){nav button{transition:none}}
 </style>
 
 <div class="app">
@@ -532,9 +572,9 @@ const IC={
   citrus:'<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M6.300 6.300l11.400 11.400M17.700 6.300L6.300 17.700"/>'
 };
 const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
-const ICONS={hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('bottle',22),escanear:ic('scan',22),mais:ic('more',22)};
+const ICONS={hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('bottle',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22)};
 const LOGO=`<svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lgmL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7FB0"/><stop offset="1" stop-color="#D6246E"/></linearGradient><linearGradient id="lgwL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#FFD3E6"/></linearGradient><linearGradient id="cgL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9A0"/><stop offset="1" stop-color="#F2B33D"/></linearGradient></defs><rect width="48" height="48" rx="15" fill="url(#lgmL)"/><g fill="none" stroke="url(#lgwL)" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="3.9" d="M5.1 31.5 C6.8 31.8 7.8 28.8 8.3 24 C8.7 19.6 9.4 16.2 11 16.2 C13 16.2 12.4 27.4 14.3 29.1 C16.2 30.8 15.5 17.6 18.4 16.9 C20.4 16.4 19.9 27.8 21.6 29.4 C22.8 32.4 25 33.8 29 33.8 C36 33.8 41.8 31 41.2 26.5 C40.6 22 31 22.6 31.2 17.6 C31.5 12 39.5 11.2 41 15.5"/><path stroke-width="1.2" stroke="#fff" stroke-opacity=".5" d="M8.9 21 C9.2 18 9.8 16.8 10.8 16.9"/></g><g transform="translate(23 9.6) scale(.9)"><path d="M-7.5 3.2 L-8.6 -3.8 L-3.8 -0.4 L0 -6 L3.8 -0.4 L8.6 -3.8 L7.5 3.2 Z" fill="url(#cgL)" stroke="#FFF3C9" stroke-width=".7" stroke-linejoin="round"/><circle cx="0" cy="-6.2" r="1.1" fill="#FFF3C9"/><circle cx="-8.6" cy="-4" r="1" fill="#FFF3C9"/><circle cx="8.6" cy="-4" r="1" fill="#FFF3C9"/></g><g transform="translate(7.6 8.2) scale(.62)"><g fill="#FFE3EE"><circle cx="0" cy="-3.4" r="2.5"/><circle cx="3.2" cy="-1" r="2.5"/><circle cx="2" cy="2.7" r="2.5"/><circle cx="-2" cy="2.7" r="2.5"/><circle cx="-3.2" cy="-1" r="2.5"/></g><circle r="1.9" fill="#FFC857"/></g><path transform="translate(14 41) scale(.7)" fill="#FFE3EE" d="M0 -1.6c-.9-1.9-3.8-1.4-3.8.8 0 1.7 2.1 3 3.8 4.6 1.7-1.6 3.8-2.9 3.8-4.6 0-2.2-2.9-2.7-3.8-.8z"/></svg>`;
-const TABS=[['hoje','Hoje'],['pele','Pele'],['escanear','Escanear'],['rotina','Rotina'],['produtos','Produtos'],['mais','Mais']];
+const TABS=[['hoje','Hoje'],['pele','Pele'],['cabelo','Cabelo'],['rotina','Rotina'],['produtos','Produtos'],['mais','Mais']];
 const AGES=[['20','Até 29 anos'],['30','30 a 39 anos'],['40','40 a 49 anos'],['50','50 anos ou mais']];
 const TIERS=[['econ','Econômico'],['mid','Intermediário'],['prem','Premium']];
 
@@ -620,7 +660,7 @@ const STEPS={
 };
 const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
-const DEF=()=>({nome:'',ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
+const DEF=()=>({nome:'',hrot:[],ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
@@ -788,7 +828,7 @@ function goTab(t,sub){
   if(t!=='pele'&&t!=='analise'&&t!=='diario')S.okMsg=null;
   if(t==='analise'){S.tab='pele';S.peleSub='analise'}
   else if(t==='diario'){S.tab='pele';S.peleSub='evo'}
-  else{S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.area='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos')S.prodSub=sub==='shelf'?'shelf':'rec'}
+  else{S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos')S.prodSub=sub==='shelf'?'shelf':'rec'}
   render();window.scrollTo(0,0);
 }
 function nextStep(){
@@ -804,7 +844,7 @@ function renderChrome(){
   document.querySelector('header').hidden=on;document.querySelector('nav').hidden=on;$('#ages').hidden=true;
   $('#tag').innerHTML=on?'':`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span><span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
-  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${S.tab===k?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
+  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
   document.documentElement.dataset.tema=S.tema||'rosa';
   const c=S.cele,el=$('#cele');
   el.hidden=!c;
@@ -1172,6 +1212,17 @@ function viewAnalise(){
 
 const inRot=(i,per)=>String(i.rot||'').includes(per);
 const shDone=(per,id)=>{const l=S.log[hoje()];return !!(l&&l['x'+per]&&l['x'+per].includes(id))};
+const hInRot=k=>(S.hrot||[]).includes(k);
+const hDone=k=>{const l=S.log[hoje()];return !!(l&&l.xh&&l.xh.includes(k))};
+function hairRot(){
+  if(!S.hres)return `<div class="card"><div class="row" style="flex-wrap:nowrap;gap:12px"><span class="tile" style="flex:none">${ic('hair',20)}</span><div><h3>Cabelo na rotina</h3><p class="small muted" style="margin-top:2px">Analise o seu cabelo para receber os cuidados e incluir aqui.</p></div></div><button class="btn ghost" data-go="cabelo" style="margin-top:10px;width:100%">${ic('hair',18)}Analisar meu cabelo</button></div>`;
+  const pl=hairPlan(S.hres),mk=S.hres.marcas||{},meus=pl.produtos.filter(x=>hInRot(x.k));
+  if(!meus.length)return `<div class="card"><div class="row" style="flex-wrap:nowrap;gap:12px"><span class="tile" style="flex:none">${ic('hair',20)}</span><div><h3>Cabelo na rotina</h3><p class="small muted" style="margin-top:2px">Inclua os cuidados indicados para o seu cabelo ${esc(String(S.hres.tipo).toLowerCase())}.</p></div></div><button class="btn" data-act="hrot-all" style="margin-top:10px;width:100%">${ic('routine',18)}Incluir o cuidado do cabelo</button></div>`;
+  return `<div class="card"><div class="row" style="justify-content:space-between"><h3>Cabelo</h3><span class="small muted">${meus.filter(x=>hDone(x.k)).length} de ${meus.length} hoje</span></div>
+    <p class="small muted" style="margin-top:2px">Marque nos dias em que usar. Nem todo cuidado é diário.</p>
+    ${meus.map(x=>{const mt=(mk[x.k]||{})[S.tier];return `<div class="step ${hDone(x.k)?'done':''}"><button class="ck" data-hdone="${x.k}" aria-label="Marcar ${esc(x.passo)}" aria-pressed="${hDone(x.k)}">${ic('check',16)}</button>
+      <div><div class="tt">${ic('hair',16)}${esc(x.passo)}<button class="chip" data-hrot="${x.k}" style="margin-left:auto;font-size:12px">Tirar</button></div><div class="small muted">${esc(x.busca)}</div>${mt?`<div class="small" style="margin-top:4px;color:var(--accent);font-weight:600">${esc(mt)}</div>`:''}</div></div>`}).join('')}
+    <button class="back" data-go="cabelo" style="margin-top:8px">Ver cronograma capilar</button></div>`}
 function shelfRot(per){
   const meus=S.shelf.filter(i=>inRot(i,per)),fora=S.shelf.filter(i=>!inRot(i,per)),nm=per==='m'?'manhã':'noite';
   return `<div class="card"><div class="row" style="justify-content:space-between"><h3>Meus produtos</h3><span class="small muted">${meus.length?meus.filter(i=>shDone(per,i.id)).length+' de '+meus.length+' hoje':'da prateleira'}</span></div>
@@ -1207,14 +1258,15 @@ function viewRotina(){
       <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}</div></div>`}).join('')}
   </div>
   ${shelfRot(per)}
+  ${hairRot()}
   ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
 }
 
 const exList=a=>a&&a.length?`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('bottle',16)}${esc(n)}</li>`).join('')}</ul>`:'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
-const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.prodSub!=='shelf'}">${ic('routine',18)}Da rotina</button><button data-psub="shelf" aria-pressed="${S.prodSub==='shelf'}">${ic('bottle',18)}Minha prateleira</button>`;
+const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('bottle',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button>`;
 function viewShelf(){
   const it=S.shelf,soon=shelfSoon().length;
-  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado;return `<div class="sh"><span class="sn2 ${v[0]}">${i.nota}</span><div class="si"><b>${esc(i.n)}</b><div class="exp ${f.cls}">${f.txt}</div>
+  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado;return `<div class="sh"><span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}<div class="exp ${f.cls}">${f.txt}</div>
 </div>
     <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
     <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
@@ -1225,15 +1277,15 @@ function viewShelf(){
     ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`;
 }
 function viewProdutos(){
-  if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack"><div class="seg two" role="group" aria-label="Seção">${subSeg()}</div>${paywall('Prateleira','bottle','Guarde os seus produtos e acompanhe a validade.')}</div>`;
-  if(S.prodSub==='shelf')return `<div class="stack"><div class="seg two" role="group" aria-label="Seção">${subSeg()}</div>${viewShelf().replace('<div class="stack">','').replace(/<\/div>$/,'')}</div>`;
-  if(!S.result)return `<div class="stack"><div class="seg two" role="group" aria-label="Seção">${subSeg()}</div>
+  if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>${paywall('Prateleira','bottle','Guarde os seus produtos e acompanhe a validade.')}</div>`;
+  if(S.prodSub==='shelf')return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>${viewShelf().replace('<div class="stack">','').replace(/<\/div>$/,'')}</div>`;
+  if(!S.result)return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
   <div class="card" style="text-align:center;display:grid;justify-items:center;gap:10px;padding:26px 18px"><span class="tile" style="width:56px;height:56px;border-radius:18px">${ic('face',28)}</span><h2>Primeiro, a análise da pele</h2>
   <p class="small muted">Os produtos e o custo do tratamento são escolhidos de acordo com a sua pele. Faça a análise para ver.</p>
   <button class="btn" data-go="pele|analise">${ic('face',18)}Analisar a minha pele</button></div></div>`;
   const ks=routineKeys(),R_k=getR();
   const mensal=ks.reduce((s,k)=>s+mes(k),0);
-  return `<div class="stack"><div class="seg two" role="group" aria-label="Seção">${subSeg()}</div>
+  return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
   <div class="card"><h2>Produtos da rotina</h2><p class="small muted" style="margin-top:6px">Custo por mês de uso.</p></div>
   <div class="seg" role="group" aria-label="Faixa de preço">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[k],18)}${l}<small>${brl(Math.round(ks.reduce((s,x)=>{const [p,m]=P[x].t[k];return s+p/m},0)))}/mês</small></button>`).join('')}</div>
   <div class="total"><div class="small">${ic('tag',16)} Custo da rotina completa (estimativa)</div>
@@ -1308,7 +1360,7 @@ function viewEscanear(){
     <p class="note">${r.lista_lida===false?'Não consegui ler a lista de ingredientes; a avaliação usa só o tipo do produto. ':''}Não é diagnóstico. Teste em uma área pequena antes.</p></div>`})()
     :'';
   const hist=S.prods.length?`<div class="card"><h3>Já escaneados</h3>${S.prods.map(p=>`<div class="entry"><div class="wk">${fmtD(p.d)}</div><div><div class="small"><b>${esc(p.produto||'Produto')}</b></div><div class="small muted">${(VERD[p.veredito]||VERD.cuidado)[1]} · nota ${p.nota}</div></div></div>`).join('')}</div>`:'';
-  return `<div class="stack">
+  return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
   <div class="card">
     <h2>Esse produto serve para mim?</h2>
     <p class="small muted" style="margin:6px 0 12px">Fotografe o rótulo com os ingredientes.</p>
@@ -1355,7 +1407,7 @@ function viewHoje(){
       <span class="cbar"><i style="width:${NMd?Math.min(100,st/NMd.d*100):100}%"></i></span>
       <span class="small muted">Meta da semana: ${Math.min(wc,5)} de 5 dias · ${nb} conquistas</span></span>${ic('chev',16)}</button>
   <div class="row" style="justify-content:space-between"><h3 class="pv">Pra você · Hoje</h3></div>
-  <div class="pv3">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','pele|cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>
+  <div class="pv3">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>
   ${temRot&&!nx.done?`<div class="cta go"><div class="gt">${nx.t}</div><button class="btn" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',18)}</button></div>`:''}
   ${S.plus?'':paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.')}
   ${S.fase&&S.fase!=='padrao'&&FASES[S.fase]?`<button class="alertc" style="border-color:var(--accent)" data-go="mais|fase">${ic(FASES[S.fase].i,22)}<span><b>Modo: ${FASES[S.fase].t}</b><span class="small muted" style="display:block">Rotina ajustada</span></span></button>`:''}
@@ -1371,11 +1423,8 @@ function viewHoje(){
     <div class="bgrid">${BADGES.map(b=>{const u=!!S.badges[b.id];return `<div class="bd ${u?'':'lock'}"><span class="tile">${ic(u?b.i:'lock',18)}</span><div style="min-width:0"><b>${b.n}</b><span class="d">${b.d}</span></div></div>`}).join('')}</div>
   </div></div>`;
 }
-function viewPele(){
-  const sw=`<div class="seg two" role="group" aria-label="Área"><button data-area="pele" aria-pressed="${S.area!=='cabelo'}">${ic('face',18)}Pele</button><button data-area="cabelo" aria-pressed="${S.area==='cabelo'}">${ic('hair',18)}Cabelo</button></div>`;
-  if(S.area==='cabelo')return `<div class="stack">${sw}${S.plus?viewCabelo():paywall('Análise do cabelo','hair','Tipo de fio, porosidade, cronograma capilar e produtos para o seu cabelo.')}</div>`;
-  return `<div class="stack">${sw}${viewPele0()}</div>`;
-}
+function viewPele(){return `<div class="stack">${viewPele0()}</div>`}
+function viewCabeloTab(){return viewCabelo()}
 function viewPele0(){
   const sub=S.peleSub,SUBS=[['analise','face','Análise'],['evo','chart','Evolução'],['ba','image','Antes/depois'],['reg','routine','Registros']];
   return `<div class="stack"><div class="seg four" role="group" aria-label="Seção da pele">${SUBS.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}${l}</button>`).join('')}</div>
@@ -1802,7 +1851,7 @@ function viewCabelo(){
     `;
   if(!r)return `<div class="stack">${inp}</div>`;
   const tier=S.tier,tn={econ:'Econômico',mid:'Intermediário',prem:'Premium'},pl=hairPlan(r),mk=r.marcas||{};
-  return `<div class="stack">${S.okMsg==='cabelo'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Análise do cabelo concluída!</b><div class="small muted" style="margin-top:2px">Veja abaixo o seu resultado, os produtos e o cronograma capilar.</div></div></div>`:''}${inp}
+  return `<div class="stack">${S.okMsg==='cabelo'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Análise do cabelo concluída!</b><div class="small muted" style="margin-top:2px">Veja abaixo o seu resultado, os produtos e o cronograma capilar.</div></div></div>`:''}
   <div class="card"><div class="row" style="justify-content:space-between"><h3>Tipo de cabelo</h3><b style="font-family:var(--f-display);font-size:20px">${esc(r.tipo)}</b></div>
     <p class="small muted" style="margin:4px 0 8px">${esc(r.resumo)}</p>
     ${bar('Oleosidade da raiz',r.raiz,'drop')}${bar('Ressecamento das pontas',r.pontas,'sun')}${bar('Porosidade',r.poro,'drops')}${bar('Danos e quebra',r.danos,'alert')}${bar('Frizz',r.frizz,'flame')}
@@ -1811,9 +1860,12 @@ function viewCabelo(){
     ${r.atencao?`<p class="note" style="color:var(--warn)">${esc(r.atencao)}</p>`:''}${pl.aviso?`<p class="note" style="color:var(--warn)">${esc(pl.aviso)}</p>`:''}</div>
   ${pl.produtos.length?`<div class="card"><h3>Produtos para o seu cabelo</h3>
     <div class="seg" role="group" aria-label="Faixa de preço" style="margin:10px 0">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${l}</button>`).join('')}</div>
-    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier];return `<div class="vp"><span class="tile">${ic('bottle',18)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>`}).join('')}
+    <button class="btn" data-act="hrot-all" style="width:100%;margin-bottom:6px">${ic('routine',18)}${pl.produtos.every(x=>hInRot(x.k))?'Cuidados do cabelo já estão na rotina':'Incluir o cuidado do cabelo na rotina'}</button>
+    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier],nm=mt||x.passo,naP=S.shelf.some(i=>i.n===nm);return `<div class="hp"><div class="vp"><span class="tile">${ic('bottle',18)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>
+      <div class="hpb"><button class="rg" data-hrot="${x.k}" aria-pressed="${hInRot(x.k)}">${ic(hInRot(x.k)?'check':'routine',14)}${hInRot(x.k)?'Na rotina':'Pôr na rotina'}</button><button class="rg" data-hshelf="${x.k}" aria-pressed="${naP}" ${naP?'disabled':''}>${ic(naP?'check':'bottle',14)}${naP?'Na prateleira':'Guardar na prateleira'}</button></div></div>`}).join('')}
     <p class="note">Exemplos de marcas, sem preço fixo. Confira a lista de ingredientes no rótulo.</p></div>`:''}
   ${pl.crono.length?`<div class="card"><h3>Cronograma capilar</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.crono.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
+  <h3 style="margin:6px 4px -4px">Refazer a análise</h3>${inp}
   <p class="note">Não é diagnóstico. Queda forte, falhas ou coceira que não passa: procure um dermatologista ou tricologista.</p></div>`;
 }
 
@@ -1879,7 +1931,7 @@ function render(){
   ajustaRot();
   renderChrome();
   const g=S.ob.done?gate():null;
-  $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,mais:viewMais}[S.tab]();
+  $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   save();
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,2200)}
@@ -1902,8 +1954,12 @@ document.addEventListener('click',e=>{
   else if(d.act==='editar-reg'){S.editReg=true;const e=S.diary.find(x=>x.d===hoje());if(e)S.reg={...regNew(),...Object.fromEntries(Object.entries(e).filter(([k])=>k in regNew()))};render()}
   else if(d.rmf){S.fotos=S.fotos.filter(f=>f.d!==d.rmf);render()}
   else if(d.ptier){const [k,x]=d.ptier.split('|');S.ptier=S.ptier||{};S.ptier[k]=x;const y=window.scrollY;render();window.scrollTo(0,y)}
-  else if(d.psub){S.prodSub=d.psub;render();window.scrollTo(0,0)}
+  else if(d.psub){S.tab='produtos';S.prodSub=d.psub;render();window.scrollTo(0,0)}
   else if(d.pao){const [id,m]=d.pao.split('|');const it=S.shelf.find(i=>i.id===id);if(it){it.meses=+m;render()}}
+  else if(d.hrot){const a=S.hrot||(S.hrot=[]),ix=a.indexOf(d.hrot);if(ix>=0)a.splice(ix,1);else a.push(d.hrot);toast(ix>=0?'Tirado da rotina':'Adicionado à rotina');const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.act==='hrot-all'&&S.hres){const ks=hairPlan(S.hres).produtos.map(x=>x.k);S.hrot=[...new Set([...(S.hrot||[]),...ks])];toast('Cuidados do cabelo incluídos na rotina');const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.hdone){const l=dayLog(),a=l.xh||(l.xh=[]),ix=a.indexOf(d.hdone);if(ix>=0)a.splice(ix,1);else a.push(d.hdone);const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.hshelf&&S.hres){const x=hairPlan(S.hres).produtos.find(z=>z.k===d.hshelf);if(x){const n=((S.hres.marcas||{})[x.k]||{})[S.tier]||x.passo;if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,cat:'cabelo',nota:null,v:'serve',aberto:hoje(),meses:12});toast('Guardado na prateleira')}}const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.shrot){const [id,per]=d.shrot.split('|');const it=S.shelf.find(i=>i.id===id);if(it){const r=String(it.rot||'');it.rot=r.includes(per)?r.replace(per,''):r+per;toast(it.rot.includes(per)?'Adicionado à rotina da '+(per==='m'?'manhã':'noite'):'Tirado da rotina');const y=window.scrollY;render();window.scrollTo(0,y)}}
   else if(d.shdone){const [per,id]=d.shdone.split('|');const l=dayLog(),a=l['x'+per]||(l['x'+per]=[]),ix=a.indexOf(id);if(ix>=0)a.splice(ix,1);else a.push(id);const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
@@ -2113,7 +2169,7 @@ async function analisarProduto(){
 }
 gameCheck();render();
 /* fontes carregam depois, sem travar a primeira tela */
-try{const f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Pacifico&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600&display=swap';document.head.appendChild(f)}catch(e){}
+try{const f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap';document.head.appendChild(f)}catch(e){}
 
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
