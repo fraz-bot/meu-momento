@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794360434";</script>
+<script>window.MM_VER="1794360597";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1908,7 +1908,6 @@ function viewOnboarding(){
     <h1>${esc(S.nome)}, veja o que o app faz por você</h1>
     <div class="vlist">${B.map(([i_,t,d])=>`<div class="vb"><span class="tile">${ic(i_,22)}</span><div><b>${t}</b><span>${d}</span></div></div>`).join('')}</div>
     <div class="kr"><span class="tile">${ic('scan',22)}</span><div><b>Tem produtos coreanos? Sem problema.</b><span>Escaneamos o rótulo e vemos o que é melhor para o seu rosto, para a sua pele.</span></div></div>
-    <div class="card"><div class="kick" style="margin-bottom:8px">Prévia da sua rotina da manhã</div>${prev}<p class="small muted" style="margin-top:8px">Fica mais precisa depois da análise da foto.</p></div>
     <button class="btn" data-act="ob-fim">${ic('sparkle')}Analisar minha pele</button>
     <button class="btn ghost" data-act="ob-quiz">${ic('spot',18)}Quiz detalhado (10 perguntas)</button>
     <button class="back" data-act="apagar" style="align-self:center">Apagar meus dados e recomeçar</button></div>`;
