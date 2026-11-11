@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794360597";</script>
+<script>window.MM_VER="1794360963";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -662,10 +662,10 @@ const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
 const DEF=()=>({nome:'',hrot:[],ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
-  prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
+  prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['nome','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn'];
-function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush()}
+const KEY='mm_v1',SAVED=['nome','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif'];
+function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
 const hoje=()=>{const t=new Date();return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate())};
@@ -1522,7 +1522,7 @@ function viewMais(){
     ${row('medalhas','star','Medalhas e pontos',`${MEDALS.filter(m=>S.badges[m.id]).length} de ${MEDALS.length} medalhas · ${S.xp} pts`)}
     ${row('tema','sparkle','Aparência',(TEMAS.find(t=>t[0]===(S.tema||'rosa'))||TEMAS[0])[1])}
     ${row('quiz','spot','Quiz da pele',Object.keys(S.quiz||{}).length?Object.keys(S.quiz).length+' de '+QZ.length+' respondidas':'10 perguntas rápidas')}
-    ${row('lembretes','clock','Horários e lembretes',`Manhã ${S.rem.m} · Noite ${S.rem.n}`)}
+    ${row('lembretes','bell','Horários e notificações',`Manhã ${S.rem.m} · Noite ${S.rem.n} · avisos ${S.notif&&S.notif.on?'ligados':'desligados'}`)}
     ${row('fase','cal','Fase da pele',FASES[S.fase||'padrao'].t)}
     ${row('ingredientes','leaf','Meus ingredientes',`${S.ing.evitar.length} evito · ${S.ing.fav.length} favoritos`)}
     ${row('conflitos','alert','Combinações de ativos',nc?`${nc} para cuidar`:'Tudo certo')}
@@ -1596,7 +1596,41 @@ function vDicas(){
   }
   return `<div class="card">${head('sparkle','Dicas para a sua pele')}<div class="seg three" role="group" aria-label="Tipo de dica" style="margin-top:12px">${TB.map(([k,i_,l])=>`<button data-dtab="${k}" aria-pressed="${tb===k}">${ic(i_,18)}${l}</button>`).join('')}</div></div>${body}`;
 }
-function vLembretes(){const r=S.rem;
+/* ---------- Notificações (agendadas no aparelho quando o app é empacotado para as lojas) ---------- */
+const NT=[['rot','sun','Hora da rotina','Um aviso de manhã e outro à noite, nos seus horários.'],['seq','flame','Sequência em risco','Quando falta só uma rotina para manter os dias seguidos.'],['volta','heart','Saudade de você','Se você ficar 3, 7 ou 14 dias sem abrir o app.'],['val','bottle','Validade dos produtos','Quando um produto da prateleira estiver perto de vencer.'],['foto','face','Nova análise','Uma vez por mês, para acompanhar a evolução da pele.']];
+const NMSG={
+  m:['Bom dia! Agora é o seu momento de se cuidar.','Sua rotina da manhã está te esperando.','5 minutinhos para a sua pele? Comece a rotina do dia.','Comece o dia cuidando de você.'],
+  n:['Seu momento chegou. Hora da rotina da noite.','Antes de dormir, um carinho na sua pele.','Sua rotina da noite está te esperando.','Feche o dia cuidando de você.'],
+  seq:['Falta só a rotina da noite para manter a sua sequência.'],
+  volta:{3:['Faz 3 dias que você não aparece. Não deixe de cuidar de você, você merece!'],7:['Sentimos a sua falta. Se cuidar é o seu maior patrimônio.'],14:['Sua rotina continua aqui, do jeitinho que você deixou. Vamos retomar?']},
+  val:['Um produto da sua prateleira está perto de vencer. Dê uma olhada.'],
+  foto:['Já faz um mês da sua última análise. Que tal ver como a sua pele evoluiu?']};
+const ntOn=k=>!!(S.notif&&S.notif.on&&S.notif[k]!==false);
+const nativoNotif=()=>{try{return window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.LocalNotifications||null}catch(e){return null}};
+/* Lista do que deve ser agendado nos próximos 14 dias: [{id,at:Date,title,body}] */
+function notifPlan(){
+  if(!S.notif||!S.notif.on||!S.ob.done)return [];
+  const out=[],now=new Date(),pick=(a,i)=>a[i%a.length],T='Mavie Skin';
+  const at=(dias,hhmm)=>{const [h,mi]=String(hhmm).split(':').map(Number),d=new Date(now);d.setDate(d.getDate()+dias);d.setHours(h||0,mi||0,0,0);return d};
+  if(ntOn('rot')&&S.plus&&S.result)for(let i=0;i<14;i++){
+    [['m',S.rem.m],['n',S.rem.n]].forEach(([p,h],j)=>{const d=at(i,h);if(d>now)out.push({id:1000+i*2+j,at:d,title:T,body:pick(NMSG[p],i+now.getDate())})})}
+  if(ntOn('seq')&&S.plus&&S.result&&streak()>=2){const [h,mi]=String(S.rem.n).split(':').map(Number),d=at(0,(h+1>23?23:h+1)+':'+(mi||0));const l=S.log[hoje()]||{};if(d>now&&!l.nOk)out.push({id:2000,at:d,title:T,body:NMSG.seq[0]})}
+  if(ntOn('volta'))[3,7,14].forEach((n,i)=>out.push({id:3000+i,at:at(n,'19:00'),title:T,body:NMSG.volta[n][0]}));
+  if(ntOn('val')&&S.plus){const v=S.shelf.map(i=>shelfInfo(i).dias).filter(x=>x>7&&x<=21).sort((a,b)=>a-b)[0];if(v!=null)out.push({id:4000,at:at(v-7,'10:00'),title:T,body:NMSG.val[0]})}
+  if(ntOn('foto')&&S.plus&&S.result&&S.result.d){const d0=new Date(S.result.d+'T10:00:00'),d=new Date(d0);d.setDate(d.getDate()+30);if(d>now&&(d-now)<14*864e5)out.push({id:5000,at:d,title:T,body:NMSG.foto[0]})}
+  return out}
+/* Reagenda tudo. No site não faz nada; no app das lojas usa as notificações locais do aparelho. */
+let _ntT=null;
+function agendarNotif(){clearTimeout(_ntT);_ntT=setTimeout(async()=>{const LN=nativoNotif();if(!LN)return;
+  try{const pend=await LN.getPending();if(pend&&pend.notifications&&pend.notifications.length)await LN.cancel({notifications:pend.notifications.map(n=>({id:n.id}))});
+    const pl=notifPlan();if(pl.length)await LN.schedule({notifications:pl.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true}}))})}catch(e){}},600)}
+async function notifToggle(){
+  const N=S.notif||(S.notif={on:false});
+  if(N.on){N.on=false;agendarNotif();render();return}
+  const LN=nativoNotif();
+  if(LN){try{const r=await LN.requestPermissions();if(r&&r.display!=='granted'){toast('Ative as notificações do Mavie Skin nos ajustes do celular.');return}}catch(e){toast('Não foi possível ativar agora.');return}}
+  N.on=true;agendarNotif();render();toast(LN?'Notificações ativadas':'Preferência salva. Os avisos chegam no app das lojas.')}
+function vLembretes(){const r=S.rem,N=S.notif||{on:false},nat=!!nativoNotif();
   return `<div class="card">${head('clock','Horários da rotina')}
     <p class="small muted" style="margin:6px 0 4px">A rotina libera 30 min antes. A aba Hoje mostra quanto falta para a próxima.</p>
     <div class="trow"><b>${ic('sun',18)}Manhã</b><input type="time" id="rem-m" value="${r.m}"></div>
@@ -1604,7 +1638,11 @@ function vLembretes(){const r=S.rem;
     <div class="card"><h3>Avisar no celular</h3><p class="small muted" style="margin:4px 0 12px">Cria um evento diário na sua agenda, com alarme.</p>
     <div class="stack" style="gap:8px"><a class="btn" target="_blank" rel="noopener" href="${gcal('Rotina da manhã · Mavie Skin',r.m)}">${ic('cal',18)}Agenda: manhã ${r.m}</a>
     <a class="btn ghost" target="_blank" rel="noopener" href="${gcal('Rotina da noite · Mavie Skin',r.n)}">${ic('cal',18)}Agenda: noite ${r.n}</a></div>
-    <p class="note">A contagem para a próxima rotina aparece na aba Hoje. Avisos no celular chegam com o app das lojas.</p></div>`;}
+    <p class="note">A contagem para a próxima rotina aparece na aba Hoje.</p></div>
+    <div class="card">${head('bell','Notificações')}
+    <div class="trow" style="border-top:0;margin-top:6px"><b>${ic('bell',18)}Receber notificações</b><button class="sw" role="switch" aria-checked="${!!N.on}" aria-label="Receber notificações" data-act="notif-toggle"></button></div>
+    ${NT.map(([k,i_,t,d])=>`<div class="trow"><span style="display:flex;gap:10px;align-items:flex-start;min-width:0">${ic(i_,18)}<span><b style="display:block">${t}</b><span class="small muted">${d}</span></span></span><button class="sw" role="switch" aria-checked="${ntOn(k)}" aria-label="${t}" data-ntk="${k}" ${N.on?'':'disabled style="opacity:.45"'}></button></div>`).join('')}
+    <p class="note">${nat?'Você pode desligar quando quiser. No máximo dois avisos de rotina por dia.':'Suas escolhas ficam salvas. Os avisos começam a chegar quando o app estiver nas lojas.'}</p></div>`;}
 function vFase(){return `<div class="card">${head('cal','Fase da pele')}<p class="small muted" style="margin-top:6px">A rotina se ajusta.</p></div>
   <div class="fase">${Object.entries(FASES).map(([k,f])=>`<button data-fase="${k}" aria-pressed="${(S.fase||'padrao')===k}"><span class="tile">${ic(f.i,18)}</span><b>${f.t}</b><span class="d">${f.d}</span></button>`).join('')}</div>
   ${faseNota()?`<div class="ins">${esc(faseNota())}</div>`:''}`;}
@@ -1983,6 +2021,8 @@ document.addEventListener('click',e=>{
   else if(d.act==='abrir-mais'){S.tab='mais';S.maisSub=null;render();window.scrollTo(0,0)}
   else if(d.act==='mais-voltar'){S.maisSub=null;render();window.scrollTo(0,0)}
   else if(d.mais){S.maisSub=d.mais;if(d.mais==='comunidade')commStart();render();window.scrollTo(0,0)}
+  else if(d.act==='notif-toggle'){notifToggle()}
+  else if(d.ntk){const N=S.notif||(S.notif={on:false});if(N.on){N[d.ntk]=N[d.ntk]===false;agendarNotif();const y=window.scrollY;render();window.scrollTo(0,y)}}
   else if(d.act==='rem-toggle'){S.rem.on=!S.rem.on;render()}
   else if(d.dtab){S.dtab=d.dtab;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.fase){S.fase=d.fase;const y=window.scrollY;render();window.scrollTo(0,y)}
@@ -2046,7 +2086,7 @@ document.addEventListener('change',e=>{
     S.prodFile=f;S.prodResult=null;S.prodErr=null;
     const r=new FileReader();r.onload=()=>{S.prodPhoto=r.result;render()};r.readAsDataURL(f);
   }
-  if(e.target.id==='rem-m'||e.target.id==='rem-n'){S.rem[e.target.id==='rem-m'?'m':'n']=e.target.value||S.rem[e.target.id==='rem-m'?'m':'n'];save();return}
+  if(e.target.id==='rem-m'||e.target.id==='rem-n'){S.rem[e.target.id==='rem-m'?'m':'n']=e.target.value||S.rem[e.target.id==='rem-m'?'m':'n'];save();agendarNotif();return}
   if(e.target.id==='cmp-a'){S.cmpA=e.target.value;render();return}
   if(e.target.id==='cmp-b'){S.cmpB=e.target.value;render();return}
   if((e.target.id==='evo-cam'||e.target.id==='evo-gal')&&e.target.files[0]){
