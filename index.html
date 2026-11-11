@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794360963";</script>
+<script>window.MM_VER="1794390186";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -499,6 +499,8 @@ header{padding:16px 0 12px}
 .comp,.ptsb,.alertc,.nextc{border-color:transparent!important;box-shadow:var(--sh)}
 .comp{border-radius:22px}
 .cta{border-radius:24px}
+.gcard{background:var(--surface);border-radius:24px;padding:18px 16px 14px;box-shadow:var(--sh)}
+.gtt{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
 /* barra de navegação flutuante */
 .app{padding-bottom:118px}
 nav,:root:not([data-tema=suave]) nav{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:496px;margin:0 auto;border:1px solid rgba(255,255,255,.8);border-radius:28px;padding:6px;background:rgba(255,255,255,.84);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 14px 36px rgba(42,20,32,.16)}
@@ -1929,6 +1931,25 @@ function viewOnboarding(){
     <p class="small muted" style="text-align:center;margin-top:-6px">Comparação geral. Os recursos variam de app para app.</p>
     <div class="tri"><b>3 em 1</b><span>Pele, cabelo e produtos em um só app, para cuidar da sua rotina inteira.</span>
       <div class="tri3"><i>${ic('face',20)}Pele</i><i>${ic('hair',20)}Cabelo</i><i>${ic('bottle',20)}Produtos</i></div></div>
+    <button class="btn" data-act="ob-next">Continuar</button></div>`}
+  if(st===n+2){
+    return `<div class="ob">
+    <button class="bk2" data-act="ob-back">${ic('back',18)}Voltar</button>
+    <div class="vhero"><span class="vbadge">${ic('coin',14)}Mais cuidado, menos desperdício</span><h1>Invista em você!</h1></div>
+    <div class="gcard"><div class="gtt">Sua rotina ao longo do tempo</div>
+      <svg viewBox="0 0 320 170" role="img" aria-label="Ilustração: com o Mavie Skin a rotina evolui, sem acompanhamento ela oscila" style="display:block;width:100%;height:auto">
+        <defs><linearGradient id="gfa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2418A" stop-opacity=".28"/><stop offset="1" stop-color="#F2418A" stop-opacity="0"/></linearGradient></defs>
+        <path d="M10 150H310" stroke="#EAD9E0" stroke-width="1.5"/>
+        <path d="M10 128 C40 126 55 118 80 112 C110 104 120 92 150 84 C180 76 195 62 225 54 C255 46 275 36 306 26 L306 150 L10 150 Z" fill="url(#gfa)"/>
+        <path d="M10 128 C40 126 55 118 80 112 C110 104 120 92 150 84 C180 76 195 62 225 54 C255 46 275 36 306 26" fill="none" stroke="#E0347E" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M10 126 C30 120 42 132 62 128 C84 124 92 136 114 132 C136 128 146 140 168 136 C190 132 200 142 222 139 C246 136 256 144 278 141 C290 140 298 143 306 142" fill="none" stroke="#B9A7AF" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="306" cy="26" r="6" fill="#fff" stroke="#E0347E" stroke-width="3"/><circle cx="306" cy="142" r="5.5" fill="#fff" stroke="#B9A7AF" stroke-width="3"/>
+        <text x="296" y="16" text-anchor="end" font-size="12" font-weight="700" fill="#D6246E">com o Mavie Skin</text>
+        <text x="296" y="126" text-anchor="end" font-size="12" font-weight="600" fill="#8E7B84">sem acompanhamento</text>
+      </svg>
+      <p class="small muted" style="margin-top:4px">Ilustração. O resultado varia de pessoa para pessoa.</p></div>
+    <p style="text-align:center;font-size:16px;line-height:1.4;margin:0">Com a rotina certa para a sua pele, você cuida melhor de você e gasta só com o que funciona.</p>
+    <div class="vlist">${[['tag','Compre só o que serve para você','O scanner avisa antes da compra se o produto combina com a sua pele.'],['coin','Saiba quanto vai gastar','Custo da rotina por mês, em três faixas de preço.'],['bottle','Use até o fim','A prateleira avisa a validade, para nada estragar no armário.']].map(([i_,t,d])=>`<div class="vb"><span class="tile">${ic(i_,22)}</span><div><b>${t}</b><span>${d}</span></div></div>`).join('')}</div>
     <button class="btn" data-act="ob-next">Continuar</button></div>`}
   if(st>n){
     const R_=getR(),foco=S.pref.length?S.pref.map(k=>(LBL[k]||k).toLowerCase()).slice(0,2).join(' e '):'saúde da pele';
