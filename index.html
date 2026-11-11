@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794390186";</script>
+<script>window.MM_VER="1794391485";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1420,10 +1420,7 @@ function viewHoje(){
   <div class="short">${[['clock','Horários','lembretes'],['cal','Fase','fase'],['leaf','Ingredientes','ingredientes'],['coin','Gastos','gastos'],['file','Relatório','relatorio'],['crown','Plano','plano']].map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span class="tile">${ic(i_,20)}</span>${t}</button>`).join('')}</div>
   ${S.plus?`<div class="cnts">${[['image','Antes/depois',S.fotos.length,'ba'],['chart','Diário',S.diary.length,'evo'],['face','Análises',S.analises.length,'analise'],['routine','Registros',S.diary.length+S.analises.length+S.prods.length,'reg']].map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,20)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}
   <div class="tip"><div class="kick">Dica do dia</div><b>${tip[0]}</b><span class="small muted">${tip[1]}</span></div>
-  <div class="card">
-    <div class="row" style="justify-content:space-between"><h3>Conquistas</h3><span class="small muted">${nb} de ${BADGES.length}</span></div>
-    <div class="bgrid">${BADGES.map(b=>{const u=!!S.badges[b.id];return `<div class="bd ${u?'':'lock'}"><span class="tile">${ic(u?b.i:'lock',18)}</span><div style="min-width:0"><b>${b.n}</b><span class="d">${b.d}</span></div></div>`}).join('')}</div>
-  </div></div>`;
+  <button class="mrow" data-go="mais|medalhas"><span class="tile">${ic('star',20)}</span><span class="mt"><b>Conquistas</b><span>${nb} de ${BADGES.length} conquistadas · toque para ver</span></span>${ic('chev',18)}</button></div>`;
 }
 function viewPele(){return `<div class="stack">${viewPele0()}</div>`}
 function viewCabeloTab(){return viewCabelo()}
@@ -1521,7 +1518,7 @@ function viewMais(){
   const row=(k,i_,t,d,attr)=>`<button class="mrow" ${attr||`data-mais="${k}"`}><span class="tile">${ic(i_,20)}</span><span class="mt"><b>${t}</b><span>${!S.plus&&k&&!LIVRES.includes(k)?'Mavie Skin+':d}</span></span>${ic('chev',18)}</button>`;
   if(!sub)return `<div class="stack"><h2>Mais</h2>
     ${row('dicas','sparkle','Dicas para a pele','Alimentação, estação e maquiagem')}
-    ${row('medalhas','star','Medalhas e pontos',`${MEDALS.filter(m=>S.badges[m.id]).length} de ${MEDALS.length} medalhas · ${S.xp} pts`)}
+    ${row('medalhas','star','Medalhas e conquistas',`${MEDALS.filter(m=>S.badges[m.id]).length} de ${MEDALS.length} medalhas · ${S.xp} pts`)}
     ${row('tema','sparkle','Aparência',(TEMAS.find(t=>t[0]===(S.tema||'rosa'))||TEMAS[0])[1])}
     ${row('quiz','spot','Quiz da pele',Object.keys(S.quiz||{}).length?Object.keys(S.quiz).length+' de '+QZ.length+' respondidas':'10 perguntas rápidas')}
     ${row('lembretes','bell','Horários e notificações',`Manhã ${S.rem.m} · Noite ${S.rem.n} · avisos ${S.notif&&S.notif.on?'ligados':'desligados'}`)}
@@ -1549,6 +1546,8 @@ function vMedalhas(){
     <p class="small muted" style="margin-top:10px">${N?(N.d>st?`Continue por mais ${N.d-st} ${N.d-st===1?'dia':'dias'} e ganhe a medalha ${N.nm}.`:`A medalha ${N.nm} chega na sua próxima rotina.`):'Você conquistou todas as medalhas. Parabéns!'} Cumpra 5 dias na semana e ganhe 50 pts extras.</p></div>
   <div class="card"><h3>Medalhas de sequência</h3><p class="small muted" style="margin:4px 0 0">Faça a rotina todos os dias, sem pular.</p>
     <div class="mgrid">${MEDALS.map(m=>{const u=!!S.badges[m.id];return `<div class="md ${u?'':'lock'}">${medalSvg(m,u,64)}<b>${m.nm}</b><span>${m.d} dias${u?' · '+fmtD(S.badges[m.id]):''}</span></div>`}).join('')}</div></div>
+  <div class="card"><div class="row" style="justify-content:space-between"><h3>Conquistas</h3><span class="small muted">${BADGES.filter(b=>S.badges[b.id]).length} de ${BADGES.length}</span></div>
+    <div class="bgrid">${BADGES.map(b=>{const u=!!S.badges[b.id];return `<div class="bd ${u?'':'lock'}"><span class="tile">${ic(u?b.i:'lock',18)}</span><div style="min-width:0"><b>${b.n}</b><span class="d">${b.d}</span></div></div>`}).join('')}</div></div>
   <div class="card"><h3>Como ganhar pontos</h3><ul class="small muted" style="margin:8px 0 0;padding-left:18px;display:grid;gap:4px"><li>Passo da rotina: +10</li><li>Registro no diário: +15</li><li>Produto escaneado: +15</li><li>Análise da pele: +50</li><li>Cada medalha e conquista: de +25 a +200</li></ul></div>`;
 }
 
