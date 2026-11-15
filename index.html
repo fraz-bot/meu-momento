@@ -924,6 +924,12 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes suspP{0%,35%{opacity:0;transform:translateY(6px)}60%,100%{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.susp .sf::before,.susp .sf::after,.susp .sf svg,.susp .sd i{animation:none}.susp .sp{animation:none;opacity:1}}
 .prr .prb{filter:blur(6px);-webkit-filter:blur(6px);user-select:none;-webkit-user-select:none;pointer-events:none;display:block}
+.ofx{position:fixed;inset:0;z-index:60;background:rgba(58,30,16,.55);display:flex;align-items:flex-end;justify-content:center;animation:ofi .3s ease}
+.ofc{width:100%;max-width:520px;background:#FCFAF6;border-radius:28px 28px 0 0;padding:26px 22px calc(22px + env(safe-area-inset-bottom));text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;animation:ofu .4s cubic-bezier(.2,.8,.2,1)}
+.ofc h2{margin:4px 0 0;font-size:28px;letter-spacing:-.02em;line-height:1.15}
+.ofp{margin:0;color:var(--muted);line-height:1.45;font-size:16px}
+.ofv{display:flex;flex-direction:column;align-items:center;line-height:1.1}.ofv s{color:var(--muted);font-size:17px}.ofv b{font-size:46px;letter-spacing:-.03em;color:#4A2A1E}.ofv small{color:#A76F5C;font-weight:600;font-size:14px;margin-top:4px}
+@keyframes ofi{from{opacity:0}to{opacity:1}}@keyframes ofu{from{transform:translateY(40px)}to{transform:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1595,16 +1601,17 @@ function ofertaPlus(titulo){return `<div class="card oferta"><h3 style="color:va
   <p class="small" style="opacity:.9;margin:8px 0 0">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</p></div>`}
 function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Pellie+.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Pellie+</button></div>`}
 function precisaAnalise(t){return `<div class="card pw"><span class="tile">${ic('face',24)}</span><h3>Primeiro, a análise da pele</h3><p class="small muted">${t||'A rotina é montada a partir da foto analisada. Sem a análise, ela não pode ser gerada.'}</p><button class="btn" data-go="pele|analise">${ic('camera',18)}Fazer a análise agora</button></div>`}
+const PAN=()=>S.oferta?{p:'R$ 119,90',m:'R$ 9,99',e:'83%'}:{p:'R$ 149,90',m:'R$ 12,49',e:'79%'};
 function viewPaywall(){
-  const an=S.planSel!=='mes';
+  const an=S.planSel!=='mes',PA=PAN();
   return `<div class="pwx">
     <div style="text-align:center"><span class="vbadge">${ic('crown',14)}Pellie+</span></div>
     <h1 class="obh" style="text-align:center"><span style="font-weight:500">${S.nome?esc(S.nome)+', a':'A'} sua rotina de skincare</span><br>está a um passo.</h1>
     <p class="obs">Análise da pele e do cabelo por foto, rotina, produtos e scanner, tudo liberado.</p>
     <div class="pwm">${obPhone()}</div>
-    <div class="pwp"><div class="pwb"><b>${an?'R$ 12,49':'R$ 59,90'}</b><span>/mês</span></div><div class="small muted">${an?'R$ 149,90 cobrado por ano. Cancele quando quiser.':'Cobrado todo mês. Cancele quando quiser.'}</div></div>
+    <div class="pwp"><div class="pwb"><b>${an?PA.m:'R$ 59,90'}</b><span>/mês</span></div><div class="small muted">${an?PA.p+' cobrado por ano. Cancele quando quiser.':'Cobrado todo mês. Cancele quando quiser.'}</div></div>
     <div class="pls" role="radiogroup" aria-label="Plano">
-      <button role="radio" aria-checked="${an}" data-plan="ano"><em>Economize 79%</em><i></i><span>Plano anual</span><b>R$ 149,90<small>por ano</small></b></button>
+      <button role="radio" aria-checked="${an}" data-plan="ano"><em>${S.oferta?'Oferta exclusiva · ':''}Economize ${PA.e}</em><i></i><span>Plano anual</span><b>${PA.p}<small>por ano</small></b></button>
       <button role="radio" aria-checked="${!an}" data-plan="mes"><i></i><span>Plano mensal</span><b>R$ 59,90<small>por mês</small></b></button></div>
     <button class="btn obc" data-act="plus-toggle" style="width:100%;text-transform:uppercase;letter-spacing:.06em">Quero meu plano agora</button>
     <p class="small muted" style="text-align:center;margin:0">Renova automaticamente. Cancele quando quiser, nos ajustes da loja.</p>
@@ -3030,18 +3037,18 @@ function viewOnboarding(){PFI=0;
     <div style="text-align:center;margin-top:12px"><h1 class="obh" style="font-size:36px">O que você leva</h1><p class="obs" style="margin-top:8px">Tudo para cuidar da sua pele e do seu cabelo, num só lugar.</p></div>
     <div class="lv">${[['face','Análise de pele','Acompanhe a evolução da sua pele.'],['hair','Análise de cabelo','Praticidade para o seu dia a dia.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['bottle','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:62px;height:62px">${ic(i_,26)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     ${cta('Vamos começar',true,'ob-next')}</div>`;
-  if(st==='pronta'){const L=(S.result&&rotinaPorAnalise())||null,ks=(L?L.manha.map(x=>x.k):(R[S.age]||R['30']).m),TT={limpador:'Limpeza',hidr:'Hidratação',fps:'Proteção'};
-    return `<div class="ob obx" style="text-align:center"><button data-act="ob-pular" aria-label="Fechar" style="position:absolute;right:16px;top:14px;width:40px;height:40px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center">${ic('x',18)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
+  if(st==='pronta'){const PA=PAN(),L=(S.result&&rotinaPorAnalise())||null,ks=(L?L.manha.map(x=>x.k):(R[S.age]||R['30']).m),TT={limpador:'Limpeza',hidr:'Hidratação',fps:'Proteção'};
+    return `<div class="ob obx" style="text-align:center"><button data-act="ob-fechar" aria-label="Fechar" style="position:absolute;right:16px;top:14px;width:40px;height:40px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center">${ic('x',18)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
     <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
     <div class="card prc" style="text-align:left;padding:18px 22px"><div class="row" style="justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)"><span class="obk" style="display:flex;gap:8px;align-items:center">${ic('sun',15)}Manhã</span><span class="small muted" style="display:flex;gap:6px;align-items:center">${ic('lock',13)}${ks.length} passos</span></div>
       ${ks.map((k,j)=>`<div class="prr"><span class="pimg" style="width:46px">${pimg(k,46)}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small class="prb" aria-label="Disponível após ativar o plano">${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
     <div><p class="small muted" style="margin:0 0 12px;font-size:16px">Tudo que sua pele precisa está aqui.</p>
       <div class="pwo-g" role="radiogroup" aria-label="Plano">
-        <button class="pwo ${S.planSel!=='mes'?'on':''}" role="radio" aria-checked="${S.planSel!=='mes'}" data-plan="ano"><i></i><span><b>Anual</b><small>R$ 12,49 por mês</small></span><span class="pwp2">R$ 149,90<small>por ano</small></span><em>Melhor valor · economize 79%</em></button>
+        <button class="pwo ${S.planSel!=='mes'?'on':''}" role="radio" aria-checked="${S.planSel!=='mes'}" data-plan="ano"><i></i><span><b>Anual</b><small>${PA.m} por mês</small></span><span class="pwp2">${PA.p}<small>por ano</small></span><em>${S.oferta?'Oferta exclusiva · economize ':'Melhor valor · economize '}${PA.e}</em></button>
         <button class="pwo ${S.planSel==='mes'?'on':''}" role="radio" aria-checked="${S.planSel==='mes'}" data-plan="mes"><i></i><span><b>Mensal</b><small>Cancele quando quiser</small></span><span class="pwp2">R$ 59,90<small>por mês</small></span></button>
       </div></div>
     <div class="obf" style="flex-direction:column;align-items:center;gap:8px;width:100%"><button class="btn obc fill" data-act="ob-plano" style="width:100%">Ativar meu plano</button>
-    <p class="small" style="margin:0;display:flex;gap:22px;justify-content:center"><a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--ink)">Termos</a><a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--ink)">Privacidade</a><a href="#" data-act="plus-refresh" style="color:var(--ink)">Restaurar compra</a></p></div></div>`}
+    <p class="small" style="margin:0;display:flex;gap:22px;justify-content:center"><a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--ink)">Termos</a><a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--ink)">Privacidade</a><a href="#" data-act="plus-refresh" style="color:var(--ink)">Restaurar compra</a></p></div>${S.ofOpen?`<div class="ofx" role="dialog" aria-modal="true" aria-labelledby="oft"><div class="ofc"><span class="vbadge">${ic('crown',14)}Oferta única</span><h2 id="oft">${S.nome?esc(S.nome)+', e':'E'}spera um pouco!</h2><p class="ofp">Sua rotina já está montada e é feita só para a sua pele. Liberamos um desconto que não aparece de novo: o plano anual por</p><div class="ofv"><s>R$ 149,90</s><b>R$ 119,90</b><small>por ano · só R$ 9,99 por mês</small></div><p class="ofp" style="font-size:14px">Menos de R$ 0,35 por dia para cuidar da pele que você acabou de analisar.</p><button class="btn obc fill" data-act="of-ok" style="width:100%">Garantir por R$ 119,90</button><button class="back" data-act="of-no" style="padding:12px;color:var(--muted)">Não, obrigada</button></div></div>`:''}</div>`}
   if(st==='pele'||st==='sens'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">${q.t}</h1>${q.s?`<p class="obs">${q.s}</p>`:''}
     <div class="stack" style="gap:10px">${q.o.map(o=>`<button class="op2" data-opt="${q.k}|${o[0]}" aria-pressed="${S[q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
@@ -3116,6 +3123,9 @@ document.addEventListener('click',e=>{
   else if(d.hper){S.obHp=d.hper;render()}
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
   else if(d.act==='ob-pular'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
+  else if(d.act==='ob-fechar'){if(S.ofVisto){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje'}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
+  else if(d.act==='of-no'){S.ofOpen=false;S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
+  else if(d.act==='of-ok'){S.ofOpen=false;S.oferta=true;S.planSel='ano';S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='ob-plano'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
   else if(d.act==='cam-snap'){const u=OBCAM.snapNow&&OBCAM.snapNow();if(u)camFinish(u)}
