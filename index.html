@@ -869,6 +869,13 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .trg .b{background:var(--terra);border-color:var(--terra)}.trg .b small,.trg .b b{color:#fff}
 .trg .e{background:var(--terra-soft);border-color:var(--terra)}.trg .r b{color:var(--muted);font-weight:500}
 .cmpt{margin:2px 0 0;display:grid;gap:6px}.cmpt b{font-size:19px;font-weight:600;line-height:1.3;color:var(--ol)}.cmpt small{font-size:12.5px;color:var(--muted)}
+/* tutorial 3D do scanner */
+.tut{position:relative;width:min(300px,74vw);margin:6px auto 0}.tutr{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.tutr path{fill:none;stroke-width:3;stroke-linecap:round}.tutr .bg{stroke:rgba(90,46,20,.12)}#tut-r{stroke:#D9788F;transition:none}
+.tut .f3d{min-height:0}.tutt{margin:10px 0 0;font-size:19px;font-weight:600;color:var(--ol);min-height:28px}.tutt.in{animation:tutin .45s ease both}
+@keyframes tutin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.tutd{display:flex;gap:7px;justify-content:center;margin:10px 0 4px}.tutd i{width:8px;height:8px;border-radius:50%;background:rgba(90,46,20,.16);transition:background .3s,transform .3s}.tutd i.on{background:#D9788F;transform:scale(1.15)}
+.cmesh{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2462,7 +2469,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise',...(S.result&&desafio()&&desafio().forte?['analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','tutor','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise',...(S.result&&desafio()&&desafio().forte?['analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2534,6 +2541,15 @@ function f3fem(P){const n=P.length/3,ss=(a,b,x)=>{const t=Math.max(0,Math.min(1,
     E.forEach(a=>{P[Y(a)]=cy+(P[Y(a)]-cy)*1.16;P[X(a)]=cx+(P[X(a)]-cx)*1.05})});  // olhos maiores
   [70,63,105,66,107,336,296,334,293,300,46,53,52,65,55,285,295,282,283,276].forEach(a=>{P[Y(a)]+=.24});  // sobrancelhas mais altas
   for(let i=0;i<n;i++)P[X(i)]*=.965}
+/* tutorial: o rosto 3D executa os movimentos do escaneamento, um de cada vez */
+const TUT=[['Olhe para a frente',0,0],['Vire devagar para a esquerda',.55,0],['Volte ao centro',0,0],['Agora, vire para a direita',-.55,0],['Incline o rosto para cima',0,-.3],['Incline o rosto para baixo',0,.28],['Volte à posição inicial',0,0]];
+const TUTD=2.6,TUTM=1.3;
+function tutorPose(t){const n=TUT.length,c=((t%(n*TUTD))+n*TUTD)%(n*TUTD),i=Math.floor(c/TUTD),u=Math.min(1,(c-i*TUTD)/TUTM),e=.5-.5*Math.cos(Math.PI*u),a=TUT[(i+n-1)%n],b=TUT[i];
+  const y=a[1]+(b[1]-a[1])*e,x=a[2]+(b[2]-a[2])*e,br=Math.sin(t*1.6)*.006;return{i,y,x:x+br,z:-y*.07,prog:c/(n*TUTD)}}
+let TUTI=-1;
+function tutorUI(tp){if(tp.i!==TUTI){TUTI=tp.i;const el=document.getElementById('tut-t');if(el){el.classList.remove('in');void el.offsetWidth;el.textContent=TUT[tp.i][0];el.classList.add('in')}
+  document.querySelectorAll('.tutd i').forEach((d,k)=>d.classList.toggle('on',k<=tp.i))}
+  const r=document.getElementById('tut-r');if(r)r.setAttribute('stroke-dashoffset',(100-tp.prog*100).toFixed(1))}
 function f3load(){
   if(F3D.p)return F3D.p;
   F3D.p=Promise.all([new Promise((ok,no)=>{const s=document.createElement('script');s.src='three.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)}),fetch('face-mesh.json').then(r=>{if(!r.ok)throw 0;return r.json()})]).then(([_,m])=>{
@@ -2550,13 +2566,13 @@ function f3load(){
     const cv=rn.domElement;cv.className='f3c';cv.setAttribute('role','img');cv.setAttribute('aria-label','Rosto em 3D com as regiões da pele');
     const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;let raf=0,t0=performance.now();
     const paint=()=>{const z=F3D.zs||{};for(let i=0;i<n;i++){let w=0;for(const k in z){const x=W[k]?W[k][i]*z[k]:0;if(x>w)w=x}w=Math.min(1,w);w=w*w*(3-2*w);C[i*3]=.87+(.72-.87)*w;C[i*3+1]=.77+(.40-.77)*w;C[i*3+2]=.71+(.32-.71)*w}geo.attributes.color.needsUpdate=true};
-    const frame=()=>{if(!cv.isConnected){raf=0;return}const t=(performance.now()-t0)/1000;g.rotation.y=still?0:Math.sin(t*.55)*.24;g.rotation.x=still?0:-.03+Math.sin(t*.38)*.035;rn.render(sc,cam);raf=requestAnimationFrame(frame)};
+    const frame=()=>{if(!cv.isConnected){raf=0;return}const t=(performance.now()-t0)/1000;const tut=F3D.host&&F3D.host.dataset.f3d==='tutor';if(tut&&!still){const tp=tutorPose(t);g.rotation.set(tp.x,tp.y,tp.z);tutorUI(tp)}else{g.rotation.z=0;g.rotation.y=still?0:Math.sin(t*.55)*.24;g.rotation.x=still?0:-.03+Math.sin(t*.38)*.035}wire.material.color.setHex(tut?0xE7A9B8:0xfff1e6);wire.material.opacity=tut?.78:.5;rn.render(sc,cam);raf=requestAnimationFrame(frame)};
     const size=()=>{const h=F3D.host;if(!h)return;const w=Math.max(120,Math.min(h.clientWidth||300,360)),ht=Math.round(w*1.2);rn.setSize(w,ht,false);cv.style.width=w+'px';cv.style.height=ht+'px'};
     cv.addEventListener('click',e=>{const h=F3D.host;if(!h||h.dataset.f3d!=='tap')return;const b=cv.getBoundingClientRect(),ray=new T.Raycaster();ray.setFromCamera(new T.Vector2((e.clientX-b.left)/b.width*2-1,-((e.clientY-b.top)/b.height*2-1)),cam);
       const hit=ray.intersectObject(mesh)[0];if(!hit)return;let bk=null,bw=.3;for(const k in W){const x=Math.max(W[k][hit.face.a],W[k][hit.face.b],W[k][hit.face.c]);if(x>bw){bw=x;bk=k}}if(!bk)return;
       const zz=S.zonas||(S.zonas=[]),ix=zz.indexOf(bk);if(ix>=0)zz.splice(ix,1);else zz.push(bk);const y=window.scrollY;render();window.scrollTo(0,y)});
     window.addEventListener('resize',size);
-    Object.assign(F3D,{ok:true,cv,paint,size,start:()=>{if(!raf)raf=requestAnimationFrame(frame)}});
+    Object.assign(F3D,{ok:true,cv,wire,paint,size,start:()=>{if(!raf)raf=requestAnimationFrame(frame)}});
   });
   return F3D.p}
 function f3scan(){const h=document.querySelector('[data-f3d]');if(!h)return;
@@ -2620,6 +2636,12 @@ function loadMP(){return new Promise((ok,no)=>{
   const go=()=>{try{const fm=new window.FaceMesh({locateFile:f=>'mediapipe/'+f});fm.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.5,minTrackingConfidence:.5});fm.onResults(r=>{OBCAM.res=r});fm.initialize().then(()=>{OBCAM.fm=fm;ok(fm)}).catch(no)}catch(e){no(e)}};
   if(window.FaceMesh)return go();
   const sc=document.createElement('script');sc.src='mediapipe/face_mesh.js';sc.onload=go;sc.onerror=()=>no(new Error('mp'));document.head.appendChild(sc)})}
+function meshDraw(lm){const c=document.getElementById('cam-mesh'),v=document.getElementById('cam-v');if(!c||!v)return;
+  const w=c.clientWidth,h=c.clientHeight,d=Math.min(2,window.devicePixelRatio||1);if(c.width!==Math.round(w*d)){c.width=Math.round(w*d);c.height=Math.round(h*d)}
+  const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,w,h);if(!lm||!OBCAM.tri||!v.videoWidth)return;
+  const s=Math.max(w/v.videoWidth,h/v.videoHeight),ox=(w-v.videoWidth*s)/2,oy=(h-v.videoHeight*s)/2,X=i=>lm[i].x*v.videoWidth*s+ox,Y=i=>lm[i].y*v.videoHeight*s+oy,f=OBCAM.tri;
+  x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=.7;x.beginPath();
+  for(let i=0;i<f.length;i+=3){const a=f[i],b=f[i+1],e=f[i+2];x.moveTo(X(a),Y(a));x.lineTo(X(b),Y(b));x.lineTo(X(e),Y(e));x.lineTo(X(a),Y(a))}x.stroke()}
 function camFinish(url){camStop();fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;S.result=null;S.err=null;obIr('scan');render();startScan()})}
 function camSync(){
   const on=!S.ob.done&&obStepAtual()==='camera';
@@ -2638,6 +2660,7 @@ async function camLoop(){
   const run=++OBCAM.run;OBCAM.lit=new Uint8Array(72);OBCAM.base=null;OBCAM.bs=-1;OBCAM.best=null;OBCAM.t0=Date.now();OBCAM.trk=true;
   const cv=document.createElement('canvas');cv.width=cv.height=64;const cx=cv.getContext('2d',{willReadFrequently:true});const big=document.createElement('canvas');
   const sk=document.getElementById('cam-skip');
+  if(!OBCAM.tri)fetch('face-mesh.json').then(r=>r.json()).then(m=>{OBCAM.tri=m.f}).catch(()=>{});
   let fm=null;try{fm=await loadMP()}catch(e){OBCAM.trk=false}
   if(run!==OBCAM.run)return;
   if(!fm){const pl=document.getElementById('cam-pill');if(pl)pl.textContent='Rastreamento indisponível. Olhe para a câmera e toque em Tirar foto.';const k=document.getElementById('cam-skip');if(k){k.hidden=false;k.textContent='Tirar foto'}}
@@ -2657,7 +2680,7 @@ async function camLoop(){
     let txt=ok?'Encaixe o rosto no oval':'Procure um lugar mais iluminado';
     if(fm){
       OBCAM.res=null;await fm.send({image:v});if(run!==OBCAM.run)return;
-      const lm=OBCAM.res&&OBCAM.res.multiFaceLandmarks&&OBCAM.res.multiFaceLandmarks[0],hp=lm&&headPose(lm);
+      const lm=OBCAM.res&&OBCAM.res.multiFaceLandmarks&&OBCAM.res.multiFaceLandmarks[0],hp=lm&&headPose(lm);meshDraw(lm);
       if(!hp){txt=ok?'Não achei seu rosto. Encaixe no oval':txt}
       else if(hp.w<.16){txt='Aproxime o rosto'}
       else if(hp.w>.85){txt='Afaste um pouco o rosto'}
@@ -2839,6 +2862,13 @@ function viewOnboarding(){
       <div class="zn big" style="left:81.500%;top:84%"><span class="cic on">${ic('sparkle',30)}</span><div class="l" style="right:34px;width:190px"><b>Passo 3</b><small>sua meta: ${T[2]}</small></div></div>
     </div>
     <p class="small muted" style="text-align:center;margin:0">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
+  if(st==='tutor')return `<div class="ob obx" style="text-align:center">${back}
+    <h1 class="obh">Vamos preparar seu escaneamento facial.</h1>
+    <p class="obs">Observe os movimentos do rosto e siga as orientações para uma análise mais precisa.</p>
+    <div class="tut"><svg class="tutr" viewBox="0 0 300 360" aria-hidden="true"><path class="bg" d="M150 8A142 172 0 1 1 149.9 8" pathLength="100"/><path id="tut-r" d="M150 8A142 172 0 1 1 149.9 8" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/></svg>${face3d('tutor',{},faceMap(false))}</div>
+    <p class="tutt" id="tut-t" aria-live="polite">${TUT[0][0]}</p>
+    <div class="tutd" aria-hidden="true">${TUT.map((_,i)=>`<i${i===0?' class="on"':''}></i>`).join('')}</div>
+    ${cta('Continuar')}</div>`;
   if(st==='foto')return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">Agora vamos analisar<br>a sua pele</h1>
     <div style="position:relative;width:150px;margin:0 auto" aria-hidden="true">${ringSvg(150,72,92,112)}<svg viewBox="0 0 300 360" width="150" style="position:absolute;inset:0"><ellipse cx="150" cy="180" rx="72" ry="92" fill="none" stroke="#5A2E14" stroke-width="2.500"/><circle cx="128" cy="165" r="3" fill="#5A2E14"/><circle cx="172" cy="165" r="3" fill="#5A2E14"/><path d="M150 172v22h-6M132 212q18 12 36 0" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round"/></svg></div>
@@ -2858,7 +2888,7 @@ function viewOnboarding(){
       <button class="back" data-act="ob-back" style="display:block;margin:6px auto 0;padding:10px;color:var(--muted)">Cancelar</button></div></div>`}
   if(st==='camera')return `<div class="camx">
     <div class="camt"><button class="cbtn" data-act="cam-ajuda" aria-label="Ajuda">?</button><span class="cchip" id="cam-st">${OBCAM.msg||'Abrindo a câmera…'}</span><button class="cbtn" data-act="cam-fechar" aria-label="Fechar">${ic('x',16)}</button></div>
-    <div class="camr"><div class="camring">${ringSvg(340,0,142,170)}<div class="camo"><video id="cam-v" playsinline muted autoplay></video>${OBCAM.fail?`<p class="small" style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;margin:0">Não consegui abrir a câmera. Libere o acesso ou escolha uma foto.</p>`:''}</div></div></div>
+    <div class="camr"><div class="camring">${ringSvg(340,0,142,170)}<div class="camo"><video id="cam-v" playsinline muted autoplay></video><canvas id="cam-mesh" class="cmesh"></canvas>${OBCAM.fail?`<p class="small" style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;margin:0">Não consegui abrir a câmera. Libere o acesso ou escolha uma foto.</p>`:''}</div></div></div>
     <div class="cams"><div class="campill" id="cam-pill">Encaixe o rosto no oval</div>
       <input class="sr" id="ob-cam" type="file" accept="image/*" capture="user"><input class="sr" id="ob-gal" type="file" accept="image/*">
       <button class="campb" id="cam-skip" data-act="cam-snap" hidden></button><label for="ob-gal" class="campb">${ic('image',16)}Escolher da galeria</label></div></div>`;
