@@ -2066,7 +2066,7 @@ function viewCabelo(){
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
 const DEPO=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',txt:'Minha pele mudou quando comecei a entender o que ela realmente precisava. Com o Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario',...(DEPO.length?['comunidade']:[]),'leva',...(S.plus?[]:['pronta'])];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva',...(S.plus?[]:['pronta'])];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2326,9 +2326,9 @@ function viewOnboarding(){
     <div class="obk" style="text-align:center">${Q.e}</div><h1 class="obh" style="text-align:center">${Q.t}</h1>
     <div class="stack" style="gap:10px">${Q.o.map(o=>`<button class="op2" data-obq="${Q.k}|${o[0]}" aria-pressed="${S[Q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
     ${cta('Continuar',S[Q.k]!=null)}</div>`}
-  if(st==='horario'){const per=S.obHp||'m',h=S.rem[per];return `<div class="ob obx" style="text-align:center">${back}
+  if(st==='horario'||st==='horario2'){const per=st==='horario'?'m':'n',h=S.rem[per];return `<div class="ob obx" style="text-align:center">${back}
     <h1 class="obh">${nome?nome+', que':'Que'} horas você quer fazer sua rotina ${per==='m'?'da manhã':'da noite'}?</h1><p class="obs">A gente te lembra na hora certa.</p>
-    <div class="sgm" role="group" aria-label="Período"><button data-hper="m" aria-pressed="${per==='m'}">${ic('sun',16)}Manhã</button><button data-hper="n" aria-pressed="${per==='n'}">${ic('moon',16)}Noite</button></div>
+    <div class="sgm" aria-label="Período"><button aria-pressed="true" tabindex="-1" style="pointer-events:none">${ic(per==='m'?'sun':'moon',16)}${per==='m'?'Manhã':'Noite'}</button></div>
     <div class="whl ln"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
     <p class="small muted" id="rem-txt" style="display:flex;gap:8px;justify-content:center;align-items:center;margin-top:auto">${ic('bell',15)}<span>Lembrete todos os dias às ${h}</span></p>
     ${cta('Continuar')}</div>`}
