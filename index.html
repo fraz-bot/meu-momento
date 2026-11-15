@@ -64,6 +64,8 @@
 @keyframes sbin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.sbot{animation:none}}
 .pimg{flex:none;display:grid;place-items:center}
+.sbot.want{opacity:.5;filter:grayscale(.35)}
+.sh.gone{opacity:.62}
 .pwo-g{display:grid;gap:12px;text-align:left;margin-bottom:6px}
 .pwo{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1.5px solid var(--oll);background:transparent;border-radius:20px;padding:16px;font:inherit;color:var(--ink);cursor:pointer}
 .pwo.on{border:2px solid var(--ol);background:var(--soft);padding:15px}
@@ -819,9 +821,9 @@ const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
 const DEF=()=>({nome:'',convite:'',sol:null,acido:null,gestT:null,hrot:[],meta:null,zonas:[],idade:25,ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
-  prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
+  prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade'];
+const KEY='mm_v1',SAVED=['nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -923,7 +925,7 @@ const BADGES=[
  {id:'duplo',n:'Manhã e noite',d:'Fez as duas rotinas no mesmo dia',i:'moon',t:()=>Object.values(S.log).some(l=>l.mOk&&l.nOk)},
  {id:'diario',n:'Diário em dia',d:'3 registros no diário',i:'chart',t:()=>S.diary.length>=3},
  {id:'sol',n:'Escudo solar',d:'Passou protetor solar em 5 dias',i:'sun',t:()=>Object.values(S.log).filter(l=>l.m&&l.m.includes('fps')).length>=5},
- {id:'prat',n:'Prateleira em dia',d:'3 produtos na prateleira',i:'bottle',t:()=>S.shelf.length>=3},
+ {id:'prat',n:'Prateleira em dia',d:'3 produtos na prateleira',i:'bottle',t:()=>temP().length>=3},
  {id:'antes',n:'Antes e depois',d:'Guardou 2 fotos para comparar',i:'image',t:()=>S.fotos.length>=2},
  {id:'s3',n:'3 dias seguidos',d:'Cuidou da pele por 3 dias seguidos',i:'flame',t:()=>streak()>=3},
  {id:'s7',n:'Semana de viço',d:'7 dias seguidos de cuidado',i:'star',t:()=>streak()>=7},
@@ -1004,7 +1006,7 @@ function renderChrome(){
   document.querySelector('header').hidden=on;document.querySelector('nav').hidden=on;$('#ages').hidden=true;
   $('#tag').innerHTML=on||!gameOn()?'':`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span><span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
-  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
+  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
   document.documentElement.dataset.tema=S.tema||'rosa';
   const c=S.cele,el=$('#cele');
   el.hidden=!c;
@@ -1049,7 +1051,9 @@ const tipHoje=()=>{const d=new Date();return TIPS[Math.floor((d-new Date(d.getFu
 const dtOf=k=>new Date(k+'T00:00:00');
 function shelfInfo(it){const exp=new Date(dtOf(it.aberto));exp.setMonth(exp.getMonth()+it.meses);const dias=Math.round((exp-new Date())/864e5);
   return{dias,txt:dias<0?'Vencido':dias<=30?`Vence em ${dias} ${dias===1?'dia':'dias'}`:`Vence em ${Math.round(dias/30)} meses`,cls:dias<0?'out':dias<=30?'soon':''}}
-const shelfSoon=()=>S.shelf.filter(i=>shelfInfo(i).dias<=30);
+const stOf=i=>i.st||'tenho';
+const temP=()=>S.shelf.filter(i=>stOf(i)==='tenho');
+const shelfSoon=()=>temP().filter(i=>shelfInfo(i).dias<=30);
 function putEntry(e){const i=S.diary.findIndex(x=>x.d===e.d);if(i>=0)S.diary[i]={...S.diary[i],...e};else{S.diary.push(e);S.diary.sort((a,b)=>a.d<b.d?-1:1)}}
 /* ---------- Diário: fatores ---------- */
 const FAT=[['sono','Sono',[['<6','Menos de 6h'],['6-8','6 a 8h'],['8+','Mais de 8h']],'moon'],['est','Estresse',[['baixo','Baixo'],['medio','Médio'],['alto','Alto']],'flame'],['agua','Água',[['<4','Poucos copos'],['4-8','4 a 8 copos'],['8+','8 ou mais']],'drops'],['sol','Sol',[['baixo','Pouco'],['medio','Médio'],['alto','Muito']],'sun']];
@@ -1111,7 +1115,7 @@ function relTexto(){
   L.push('Rotina manhã: '+R_.m.map(k=>P[k].n).join(', '));
   L.push('Rotina noite: '+R_.n.map(k=>P[k].n).join(', '));
   if(S.ativos.length)L.push('Outros ativos em uso: '+S.ativos.map(k=>ACTN[k]).join(', '));
-  if(S.shelf.length)L.push('Produtos em uso: '+S.shelf.map(i=>i.n).join(', '));
+  if(temP().length)L.push('Produtos em uso: '+temP().map(i=>i.n).join(', '));
   if(d.length){const a=d[0],z=d[d.length-1];L.push('Diário ('+d.length+' registros, '+fmtD(a.d)+' a '+fmtD(z.d)+'): hidratação '+a.hid+' → '+z.hid+', oleosidade '+a.oleo+' → '+z.oleo+', irritação '+a.irr+' → '+z.irr)}
   return L.join('\n');
 }
@@ -1124,7 +1128,7 @@ function relHTML(){
   +(rs?'<h2>Última análise por foto ('+fmtD(rs.d)+')</h2><p>Tipo: <b>'+esc(rs.tipo)+'</b></p><table><tr><th>Oleosidade</th><th>Hidratação</th><th>Poros</th><th>Manchas</th><th>Linhas</th><th>Vermelhidão</th></tr><tr><td>'+rs.oleo+'</td><td>'+rs.hid+'</td><td>'+rs.poros+'</td><td>'+rs.manchas+'</td><td>'+rs.linhas+'</td><td>'+rs.verm+'</td></tr></table><small>Notas de 0 a 100 estimadas por foto.</small>':'')
   +'<h2>Rotina atual</h2><p><b>Manhã:</b> '+esc(R_.m.map(k=>P[k].n).join(', '))+'<br><b>Noite:</b> '+esc(R_.n.map(k=>P[k].n).join(', '))+'</p>'
   +(S.ativos.length?'<p><b>Outros ativos:</b> '+esc(S.ativos.map(k=>ACTN[k]).join(', '))+'</p>':'')
-  +(S.shelf.length?'<h2>Produtos em uso</h2><ul>'+li(S.shelf.map(i=>i.n))+'</ul>':'')
+  +(temP().length?'<h2>Produtos em uso</h2><ul>'+li(temP().map(i=>i.n))+'</ul>':'')
   +(d.length?'<h2>Diário</h2><table><tr><th>Data</th><th>Hidratação</th><th>Oleosidade</th><th>Irritação</th><th>Fatores</th></tr>'+d.slice(-14).map(e=>'<tr><td>'+fmtD(e.d)+'</td><td>'+e.hid+'</td><td>'+e.oleo+'</td><td>'+e.irr+'</td><td>'+esc(entTxt(e))+'</td></tr>').join('')+'</table>':'')
   +(F.length>=2?'<h2>Antes e depois</h2><img src="'+F[0].img+'" alt="Antes"> <img src="'+F[F.length-1].img+'" alt="Depois"><br><small>'+fmtD(F[0].d)+' e '+fmtD(F[F.length-1].d)+'</small>':'')
   +'</body></html>';
@@ -1141,7 +1145,7 @@ function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fot
 async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&(!S.ob.done||S.ob.fresh)){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}if(S.ob)S.ob.fresh=false;}catch(e){}}
 function cloudPush(now){if(!CL.ok||!S.cloud)return;clearTimeout(CL.t);CL.t=setTimeout(()=>cloudNow().catch(()=>{}),now?0:3000)}
 async function cloudNow(){const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
-const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie+.',limite_gratis:'Esse recurso é do Pellie+.',limite_mes:'Você chegou ao limite de análises deste mês.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
+const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie+.',limite_gratis:'Esse recurso é do Pellie+.',limite_mes:'Você chegou ao limite de análises deste mês.',limite_dia:'Você já usou o SOS Espinha 3 vezes hoje. Tente de novo amanhã.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
 function authView(){
@@ -1396,13 +1400,13 @@ function hairRot(){
       <div><div class="tt">${ic('hair',16)}${esc(x.passo)}<button class="chip" data-hrot="${x.k}" style="margin-left:auto;font-size:12px">Tirar</button></div><div class="small muted">${esc(x.busca)}</div>${mt?`<div class="small" style="margin-top:4px;color:var(--accent);font-weight:600">${esc(mt)}</div>`:''}</div></div>`}).join('')}
     <button class="back" data-go="cabelo" style="margin-top:8px">Ver cronograma capilar</button></div>`}
 function shelfRot(per){
-  const meus=S.shelf.filter(i=>inRot(i,per)),fora=S.shelf.filter(i=>!inRot(i,per)),nm=per==='m'?'manhã':'noite';
+  const meus=temP().filter(i=>inRot(i,per)),fora=temP().filter(i=>!inRot(i,per)),nm=per==='m'?'manhã':'noite';
   return `<div class="card"><div class="row" style="justify-content:space-between"><h3>Meus produtos</h3><span class="small muted">${meus.length?meus.filter(i=>shDone(per,i.id)).length+' de '+meus.length+' hoje':'da prateleira'}</span></div>
     ${meus.map(i=>`<div class="step ${shDone(per,i.id)?'done':''}"><button class="ck" data-shdone="${per}|${i.id}" aria-label="Marcar ${esc(i.n)}" aria-pressed="${shDone(per,i.id)}">${ic('check',16)}</button>
       <div><div class="tt">${ic('bottle',16)}${esc(i.n)}<button class="chip" data-shrot="${i.id}|${per}" style="margin-left:auto;font-size:12px">Tirar</button></div>${i.v==='evitar'?`<div class="small" style="color:var(--alert);margin-top:4px">O scanner sugeriu evitar este produto para a sua pele.</div>`:i.v==='cuidado'?`<div class="small muted" style="margin-top:4px">O scanner pediu cuidado com este produto. Comece aos poucos.</div>`:''}</div></div>`).join('')}
     ${fora.length?`<p class="small muted" style="margin-top:${meus.length?12:6}px">Toque para usar na rotina da ${nm}:</p><div class="regg" style="gap:6px;margin-top:6px">${fora.map(i=>`<button class="rg" style="font-size:13px" data-shrot="${i.id}|${per}">+ ${esc(i.n)}</button>`).join('')}</div>`
-      :S.shelf.length?'':`<p class="small muted" style="margin-top:6px">Guarde um produto na prateleira para usar aqui na sua rotina.</p>`}
-    ${S.shelf.length?'':`<button class="btn ghost" data-go="escanear" style="margin-top:10px;width:100%">${ic('scan',18)}Escanear um produto</button>`}
+      :temP().length?'':`<p class="small muted" style="margin-top:6px">Guarde um produto na prateleira para usar aqui na sua rotina.</p>`}
+    ${temP().length?'':`<button class="btn ghost" data-go="escanear" style="margin-top:10px;width:100%">${ic('scan',18)}Escanear um produto</button>`}
     ${meus.length?`<p class="note" style="margin-top:10px">Produtos que você adicionou. Eles não mudam os passos indicados pela análise.</p>`:''}</div>`}
 function viewRotina(){
   const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n;
@@ -1440,22 +1444,23 @@ function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
   for(const [r,k] of T)if(r.test(t))return k;return 'hidr'}
 // Prateleira ilustrada: cresce uma tábua a cada 4 produtos
-function shelfViz(it){const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
+function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot" title="${esc(x.n)}">${pimg(shelfKey(x),58)}</div>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${pimg(shelfKey(x),58)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
   return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
 function viewShelf(){
-  const it=S.shelf,soon=shelfSoon().length;
-  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado;return `<div class="sh"><span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}<div class="exp ${f.cls}">${f.txt}</div>
+  const it=S.shelf,soon=shelfSoon().length,nT=temP().length,nQ=it.filter(i=>stOf(i)==='quero').length;
+  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}"><span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
 </div>
     <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
-    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
-    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Na rotina:</span>${[['m','Manhã'],['n','Noite']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}">${t}</button>`).join('')}</div></div>`};
-  return `<div class="stack">${it.length?`${shelfViz(it)}<div class="card"><div class="row" style="justify-content:space-between"><h3>Minha prateleira</h3><span class="small muted">${it.length} ${it.length===1?'produto':'produtos'}${soon?` · ${soon} vencendo`:''}</span></div>
-    <p class="note" style="margin-top:2px">Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>${it.map(row).join('')}</div>`
+    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shst="${i.id}|${k}" aria-pressed="${stOf(i)===k}">${t}</button>`).join('')}</div>
+    ${tm?`    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
+    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Na rotina:</span>${[['m','Manhã'],['n','Noite']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}">${t}</button>`).join('')}</div>`:''}</div>`};
+  return `<div class="stack">${it.length?`${shelfViz(it)}<div class="card"><div class="row" style="justify-content:space-between"><h3>Minha prateleira</h3><span class="small muted">${nT} ${nT===1?'produto':'produtos'}${nQ?` · ${nQ} para comprar`:''}${soon?` · ${soon} vencendo`:''}</span></div>
+    <p class="note" style="margin-top:2px">Marque se você tem, quer comprar ou o produto acabou. Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>${it.map(row).join('')}</div>`
     :`<div class="card" style="text-align:center;padding:28px 18px"><div style="margin:-6px -6px 14px">${shelfViz([])}</div><h3>Sua prateleira está vazia</h3><p class="small muted" style="margin-top:4px">Escaneie um produto e guarde aqui.</p></div>`}
     ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`;
 }
@@ -1535,7 +1540,7 @@ function viewEscanear(){
   const img=S.prodPhoto?`<img class="prodimg" src="${S.prodPhoto}" alt="Foto do produto">`:'';
   const res=r?(()=>{const v=VERD[r.veredito]||VERD.cuidado;return `<div class="card">
     <div class="score ${v[0]}"><div class="sn">${num(r.nota)}<small>de 100</small></div><div style="min-width:0"><h3>${v[1]}</h3><div class="small muted">${esc(r.produto||'Produto sem nome legível')}</div>${r.evitar&&r.evitar.length?`<div class="chips">${r.evitar.map(x=>`<span style="color:var(--alert)">${ic('alert',12)} Contém ${esc(x)}</span>`).join('')}</div>`:''}${r.favs&&r.favs.length?`<div class="chips">${r.favs.map(x=>`<span>${ic('heart',12)} ${esc(x)}</span>`).join('')}</div>`:''}${r.perfis&&r.perfis.length?`<div class="chips">${r.perfis.map(x=>`<span>${ic('check',12)} ${esc(x)}</span>`).join('')}</div>`:''}</div></div>
-    ${S.shelf.some(i=>i.n===(r.produto||'Produto'))?`<div class="small" style="margin-top:12px;color:var(--sage);font-weight:700">${ic('checkc',16)} Está na sua prateleira</div>`:`<button class="btn" data-act="shelf-add" style="margin-top:12px;width:100%">${ic('plus',18)}Guardar na minha prateleira</button>`}
+    ${S.shelf.some(i=>i.n===(r.produto||'Produto'))?`<div class="small" style="margin-top:12px;color:var(--sage);font-weight:700">${ic('checkc',16)} Está na sua prateleira</div>`:`<div class="row" style="gap:8px;margin-top:12px;flex-wrap:nowrap"><button class="btn" data-act="shelf-add" style="flex:1">${ic('plus',18)}Já tenho</button><button class="btn ghost" data-act="shelf-want" style="flex:1">${ic('tag',18)}Quero comprar</button></div>`}
     ${r.ativos.length?`<p class="small" style="margin-top:12px"><b>Ativos:</b> ${r.ativos.map(esc).join(', ')}</p>`:''}
     ${r.motivos.length?`<h3 style="margin-top:14px">A favor</h3><ul class="list small">${r.motivos.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''}
     ${r.cuidados.length?`<h3 style="margin-top:14px">Atenção</h3><ul class="list small">${r.cuidados.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''}
@@ -1557,6 +1562,61 @@ function viewEscanear(){
   </div>${res}${hist}
   ${r?guia('Quer testar outro produto?','Escanear outro','data-act="novo-prod"'):''}
   ${guia('Tudo certo por aqui','Voltar ao início','data-go="hoje"')}</div>`;
+}
+
+/* ---------- SOS Espinha: foto + o que fazer agora com os produtos que a pessoa tem ---------- */
+const sosHoje=()=>(S.sosHist||[]).filter(h=>Date.now()-h.ts<864e5).length;
+function viewSos(){
+  const r=S.sosRes,tem=temP(),n=sosHoje();
+  const img=S.sosPhoto?`<img class="prodimg" src="${S.sosPhoto}" alt="Foto da espinha">`:'';
+  const res=r?`<div class="card">
+    <div class="row" style="gap:10px;flex-wrap:nowrap"><span class="tile" style="flex:none">${ic('spot',22)}</span><div><h3 style="text-transform:capitalize">${esc(r.aspecto||'Sua pele')}</h3><p class="small muted" style="margin-top:2px">${esc(r.resumo)}</p></div></div>
+    ${r.medico?`<div class="alertc" style="margin-top:12px;border-color:var(--alert)">${ic('alert',22)}<span><b>Vale falar com um dermatologista</b><span class="small muted" style="display:block">${esc(r.medico)}</span></span></div>`:''}
+    ${r.agora.length?`<h3 style="margin-top:16px">Faça agora</h3><ul class="list small">${r.agora.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    ${r.usar.length?`<h3 style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${pimg(shelfKey(u.it),46)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
+      :`<h3 style="margin-top:16px">Dos seus produtos</h3><p class="small muted">${tem.length?'Nenhum dos seus produtos é indicado para este caso.':'Você ainda não marcou nenhum produto como Tenho.'}</p>`}
+    ${r.faltou?`<p class="small" style="margin-top:10px">${ic('tag',14)} <b>O que ajudaria:</b> ${esc(r.faltou)}. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Minha prateleira</button></p>`:''}
+    ${r.evitar.length?`<h3 style="margin-top:16px">Evite agora</h3><ul class="list small">${r.evitar.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    ${r.acompanhar.length?`<h3 style="margin-top:16px">Acompanhe</h3>${r.acompanhar.map(a=>`<div class="entry"><div class="wk">${esc(a.quando)}</div><div class="small">${esc(a.o_que)}</div></div>`).join('')}`:''}
+    <p class="note">Orientação cosmética geral, não é diagnóstico. Não esprema. Se doer muito, espalhar ou não melhorar em 2 semanas, procure um dermatologista.</p></div>
+    ${guia('Quer acompanhar daqui a pouco?','Nova foto','data-act="sos-novo"')}`:'';
+  return `<div class="stack">
+  <div class="card"><h2>SOS Espinha</h2>
+    <p class="small muted" style="margin:6px 0 12px">Fotografe de perto, com boa luz. Você recebe o que fazer agora, com os produtos que já tem.</p>
+    <div class="small" style="margin-bottom:12px">${ic('bottle',14)} ${tem.length?`Vou usar os seus <b>${tem.length}</b> ${tem.length===1?'produto marcado':'produtos marcados'} como Tenho.`:`Nenhum produto marcado como Tenho. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Abrir prateleira</button>`}</div>
+    ${img}
+    <div class="row" style="gap:8px;margin:12px 0 8px">
+      <input class="sr" id="sos-cam" type="file" accept="image/*" capture="environment"><label for="sos-cam" class="btn" style="cursor:pointer">${ic('camera')}Fotografar</label>
+      <input class="sr" id="sos-gal" type="file" accept="image/*"><label for="sos-gal" class="btn ghost" style="cursor:pointer">${ic('image')}Galeria</label>
+    </div>
+    <button class="btn" data-act="sos-analisar" ${S.sosBusy||!S.sosFile?'disabled':''} style="width:100%">${ic('sparkle')}${S.sosBusy?'Olhando a foto…':S.sosFile?'Ver o que fazer':'Fotografe a espinha para começar'}</button>
+    ${S.sosErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.sosErr)}</p>`:`<p class="note">${n?`Você usou ${n} de 3 hoje. `:''}A foto é enviada só para a análise e não fica guardada.</p>`}
+  </div>${res}
+  ${guia('Tudo certo por aqui','Voltar ao início','data-go="hoje"')}</div>`;
+}
+async function analisarSos(){
+  if(!S.sosFile||S.sosBusy)return;
+  if(!podeUsar('sos'))return limite();
+  if(sosHoje()>=3){S.sosErr='Você já usou o SOS Espinha 3 vezes hoje. Tente de novo amanhã.';render();return}
+  S.sosBusy=true;S.sosErr=null;render();
+  const sf=await sampleP;
+  try{
+    if(!sf)throw {code:'images_unavailable'};
+    const tem=temP().slice(0,12);
+    const ctx=(perfilBasico()+(S.gest==='sim'?'; está grávida, tentando engravidar ou amamentando':'')+(S.ing.evitar.length?'; evita ou tem alergia a: '+S.ing.evitar.join(', '):'')+'; produtos que TEM em casa: '+(tem.length?tem.map(i=>i.n).join(' | '):'nenhum informado')).slice(0,1900);
+    const r=await sf.json('',{tipo:'espinha',ctx,images:S.sosFile});
+    if(!r||r.erro){S.sosErr=(r&&r.erro)||'Não consegui ler a foto. Tente outra, mais perto e com boa luz.'}
+    else{
+      const arr=(a,m)=>(Array.isArray(a)?a:[]).slice(0,m).map(String).filter(Boolean);
+      const norm=t=>String(t||'').toLowerCase().replace(/\s+/g,' ').trim();
+      const usar=(Array.isArray(r.usar)?r.usar:[]).map(u=>{const it=tem.find(i=>norm(i.n)===norm(u&&u.produto))||tem.find(i=>norm(u&&u.produto)&&(norm(i.n).includes(norm(u.produto))||norm(u.produto).includes(norm(i.n))));return it&&u.como?{it,como:String(u.como)}:null}).filter(Boolean).slice(0,3);
+      S.sosRes={d:hoje(),aspecto:r.aspecto?String(r.aspecto).slice(0,40):'',resumo:r.resumo?String(r.resumo):'',agora:arr(r.agora,4),usar,evitar:arr(r.evitar,3),
+        acompanhar:(Array.isArray(r.acompanhar)?r.acompanhar:[]).slice(0,3).map(a=>({quando:String(a&&a.quando||''),o_que:String(a&&a.o_que||'')})).filter(a=>a.quando&&a.o_que),
+        faltou:r.faltou?String(r.faltou):null,medico:r.medico?String(r.medico):null};
+      S.sosHist=[{ts:Date.now(),d:hoje(),aspecto:S.sosRes.aspecto},...(S.sosHist||[])].slice(0,10);
+    }
+  }catch(e){const c=e&&e.code;S.sosErr=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em ver de novo.')}
+  S.sosBusy=false;render();window.scrollTo(0,0);
 }
 
 function viewHoje(){
@@ -1590,6 +1650,7 @@ function viewHoje(){
       <span class="cbar"><i style="width:${NMd?Math.min(100,st/NMd.d*100):100}%"></i></span>
       <span class="small muted">Meta da semana: ${Math.min(wc,5)} de 5 dias · ${nb} conquistas</span></span>${ic('chev',16)}</button>
   <div class="row" style="justify-content:space-between"><h3 class="pv">Pra você · Hoje</h3></div>
+  <button class="alertc" data-go="sos" style="border-color:var(--accent)">${ic('spot',22)}<span><b>SOS Espinha</b><span class="small muted" style="display:block">Apareceu uma? Fotografe e veja o que fazer agora</span></span></button>
   <div class="pv3">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>
   ${temRot&&!nx.done?`<div class="cta go"><div class="gt">${nx.t}</div><button class="btn" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',18)}</button></div>`:''}
   ${S.plus?'':paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.')}
@@ -1798,7 +1859,7 @@ function notifPlan(){
     [['m',S.rem.m],['n',S.rem.n]].forEach(([p,h],j)=>{const d=at(i,h);if(d>now)out.push({id:1000+i*2+j,at:d,title:T,body:pick(NMSG[p],i+now.getDate())})})}
   if(ntOn('seq')&&S.plus&&S.result&&streak()>=2){const [h,mi]=String(S.rem.n).split(':').map(Number),d=at(0,(h+1>23?23:h+1)+':'+(mi||0));const l=S.log[hoje()]||{};if(d>now&&!l.nOk)out.push({id:2000,at:d,title:T,body:NMSG.seq[0]})}
   if(ntOn('volta'))[3,7,14].forEach((n,i)=>out.push({id:3000+i,at:at(n,'19:00'),title:T,body:NMSG.volta[n][0]}));
-  if(ntOn('val')&&S.plus){const v=S.shelf.map(i=>shelfInfo(i).dias).filter(x=>x>7&&x<=21).sort((a,b)=>a-b)[0];if(v!=null)out.push({id:4000,at:at(v-7,'10:00'),title:T,body:NMSG.val[0]})}
+  if(ntOn('val')&&S.plus){const v=temP().map(i=>shelfInfo(i).dias).filter(x=>x>7&&x<=21).sort((a,b)=>a-b)[0];if(v!=null)out.push({id:4000,at:at(v-7,'10:00'),title:T,body:NMSG.val[0]})}
   if(ntOn('foto')&&S.plus&&S.result&&S.result.d){const d0=new Date(S.result.d+'T10:00:00'),d=new Date(d0);d.setDate(d.getDate()+30);if(d>now&&(d-now)<14*864e5)out.push({id:5000,at:d,title:T,body:NMSG.foto[0]})}
   return out}
 /* Reagenda tudo. No site não faz nada; no app das lojas usa as notificações locais do aparelho. */
@@ -1854,7 +1915,7 @@ function vGastos(){
   <div class="total"><div class="small">${ic('tag',16)} Por mês</div><div class="price">${brl(cur)}</div><div class="small">${brl(cur*12)} por ano</div></div>
   <div class="card"><h3>Onde vai o dinheiro</h3>${rows.map(r=>`<div class="gb"><span>${ic(P[r.k].ic,14)} ${P[r.k].n.split(' ')[0]}</span><i><b style="width:${r.v/max*100}%"></b></i><span><b>${brl(Math.round(r.v))}</b></span></div>`).join('')}</div>
   ${cur>econ&&sav&&sav.s>1?`<div class="ins">${ic('sparkle',14)} Economize ${brl(Math.round(sav.s))} por mês trocando <b>${P[sav.k].n}</b> pelo econômico. Tudo no econômico: ${brl(econ)} por mês.</div>`:''}
-  ${S.shelf.length?`<div class="card"><h3>Prateleira</h3><p class="small muted" style="margin-top:4px">${S.shelf.length} ${S.shelf.length===1?'produto':'produtos'}${shelfSoon().length?`, ${shelfSoon().length} vencendo`:''}.</p></div>`:''}
+  ${temP().length?`<div class="card"><h3>Prateleira</h3><p class="small muted" style="margin-top:4px">${temP().length} ${temP().length===1?'produto':'produtos'}${shelfSoon().length?`, ${shelfSoon().length} vencendo`:''}.</p></div>`:''}
   <p class="note">Valores estimados pelo preço do frasco e pelo tempo que ele dura.</p>`;}
 function vRel(){
   const rs=S.result,d=S.diary,F=S.fotos;
@@ -2485,7 +2546,7 @@ function render(){
   renderChrome();
   if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||(a==='analise'&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
-  $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
+  $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
   f3scan();camSync();
@@ -2541,6 +2602,12 @@ document.addEventListener('click',e=>{
   else if(d.act==='shelf-add'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto';
     if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
     gameCheck();render()}
+  else if(d.act==='shelf-want'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto';
+    if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12,st:'quero'});toast('Na sua lista de compras')}
+    render()}
+  else if(d.shst){const [id,st]=d.shst.split('|');const it=S.shelf.find(x=>x.id===id);if(it){it.st=st;if(st==='tenho'&&!it.aberto)it.aberto=hoje();toast({tenho:'Marcado como Tenho',quero:'Na lista de compras',acabou:'Marcado como Acabou'}[st]);const y=window.scrollY;render();window.scrollTo(0,y)}}
+  else if(d.act==='sos-analisar'){analisarSos()}
+  else if(d.act==='sos-novo'){S.sosRes=null;S.sosPhoto=null;S.sosFile=null;S.sosErr=null;render();window.scrollTo(0,0)}
   else if(d.act==='guardar-foto'){guardarFoto()}
   else if(d.act==='novo-prod'){S.prodResult=null;S.prodPhoto=null;S.prodFile=null;S.prodErr=null;render();window.scrollTo(0,0)}
   else if(d.qz){const [k,v]=d.qz.split('|');S.quiz[k]=v;S.qi=(S.qi||0)+1;if(S.qi>=QZ.length)xp(30,'Quiz da pele','quiz');render();window.scrollTo(0,0)}
@@ -2618,6 +2685,9 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('change',e=>{
   if((e.target.id==='hair-cam'||e.target.id==='hair-gal')&&e.target.files[0]){const f=e.target.files[0];S.hFile=f;S.hErr=null;const r=new FileReader();r.onload=()=>{S.hPhoto=r.result;render()};r.readAsDataURL(f)}
+  if((e.target.id==='sos-cam'||e.target.id==='sos-gal')&&e.target.files[0]){
+    const f=e.target.files[0];S.sosFile=f;S.sosRes=null;S.sosErr=null;
+    const r=new FileReader();r.onload=()=>{S.sosPhoto=r.result;render()};r.readAsDataURL(f);e.target.value='';return}
   if((e.target.id==='prod-cam'||e.target.id==='prod-gal')&&e.target.files[0]){
     const f=e.target.files[0];
     S.prodFile=f;S.prodResult=null;S.prodErr=null;
