@@ -848,6 +848,26 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .qiw{width:100%}.qa{display:block;width:100%;height:auto;aspect-ratio:96/64;border-radius:15px}
 .qg3 button:has(.qiw) b{font-size:13px;min-height:2.4em;display:grid;align-items:center}
 .qg3 button[aria-pressed=true] .qa{box-shadow:0 0 0 2px var(--terra)}
+/* tratamentos da rotina */
+.trw0 h3{margin:0}
+.trt{border:1px solid var(--oll);border-radius:18px;background:var(--surface);margin-top:10px;overflow:hidden}
+.trt.open{border-color:var(--terra);background:linear-gradient(180deg,#fff,var(--terra-soft))}
+.trh{all:unset;box-sizing:border-box;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;width:100%;padding:13px 14px;cursor:pointer}
+.trn{width:28px;height:28px;border-radius:50%;background:var(--ol);color:#FBF6EE;font-weight:700;font-size:14px;display:grid;place-items:center}
+.trm b{display:block;font-size:16px;color:var(--ol)}.trm small{display:block;font-size:13px;color:var(--terra-ink);margin-top:1px}
+.trc{color:var(--muted);display:grid;transition:transform .25s}.trt.open .trc{transform:rotate(90deg)}
+.trb{padding:0 14px 14px}
+.trf{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.trf span{background:var(--surface);border:1px solid var(--oll);border-radius:12px;padding:8px 10px}
+.trf small{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:700}.trf b{font-size:14px;color:var(--ol);font-weight:600}
+.trb ol{margin:0;padding-left:20px;display:grid;gap:7px;font-size:14.5px;line-height:1.45;color:var(--ink)}
+.trb .trw{display:flex;gap:8px;align-items:flex-start;margin:12px 0 0;font-size:13.5px;line-height:1.4;color:var(--att-deep,#8A4A2D);background:#F6E7DF;border-radius:12px;padding:9px 11px}.trb .trw .ic{flex:none;margin-top:2px}
+.trs{margin-top:16px}.trs h4{margin:0 0 8px;font-size:15px;color:var(--ol)}
+.trg{display:grid;gap:6px}
+.trg div{display:grid;grid-template-columns:44px 1fr;align-items:center;border-radius:12px;padding:8px 12px;background:var(--surface);border:1px solid var(--oll)}
+.trg small{font-size:12px;font-weight:700;color:var(--muted)}.trg b{font-size:14px;font-weight:600;color:var(--ol)}
+.trg .a{background:var(--ol);border-color:var(--ol)}.trg .a small,.trg .a b{color:#FBF6EE}
+.trg .b{background:var(--terra);border-color:var(--terra)}.trg .b small,.trg .b b{color:#fff}
+.trg .e{background:var(--terra-soft);border-color:var(--terra)}.trg .r b{color:var(--muted);font-weight:500}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1609,6 +1629,73 @@ function shelfRot(per){
       :temP().length?'':`<p class="small muted" style="margin-top:6px">Guarde um produto na prateleira para usar aqui na sua rotina.</p>`}
     ${temP().length?'':`<button class="btn ghost" data-go="escanear" style="margin-top:10px;width:100%">${ic('scan',18)}Escanear um produto</button>`}
     ${meus.length?`<p class="note" style="margin-top:10px">Produtos que você adicionou. Eles não mudam os passos indicados pela análise.</p>`:''}</div>`}
+/* ---------- Tratamentos específicos, montados pelo scanner facial ---------- */
+function tratamentos(){
+  const rs=S.result;if(!rs)return null;
+  const has=k=>S.pref.includes(k),cl=v=>Math.max(0,Math.min(100,v)),T=55;
+  const o=cl(rs.oleo+(has('acne')||has('oleo')?15:0)),p=cl(rs.poros+(has('poros')?15:0)),mc=cl(rs.manchas+(has('manchas')?15:0)),
+    l=cl(rs.linhas+(has('linhas')?15:0)+(S.age==='40'?8:S.age==='50'?12:0)),hd=cl(rs.hid-(has('resseca')?15:0)),v=cl(rs.verm+(has('verm')?15:0));
+  const forte=S.sens==='alta',sens=forte||S.sens==='media'||S.acido==='irr'||rs.tipo==='Sensível',gest=['sim','tent','amam','grav'].includes(S.gest);
+  const calm=v>=60||(forte&&v>=45),evita=(S.ing&&S.ing.evitar||[]).join(' ').toLowerCase();
+  const ok=re=>!re.test(evita);
+  const reg=k=>{const a=(rs.zonas&&Array.isArray(rs.zonas[k])?rs.zonas[k]:[]).map(x=>(ZONAS.find(q=>q[0]===x)||[0,''])[1]).filter(Boolean);return a.length?' · '+a.join(', '):''};
+  const L=[];
+  if(calm||v>=45)L.push({id:'verm',pr:calm?200:v,ttl:'Acalmar a pele',alvo:`Vermelhidão ${v}/100${reg('verm')}`,per:'Manhã e noite',prazo:'2 a 4 semanas',
+    passos:['Pause ácidos e retinoide por 2 semanas, até a pele acalmar.','Limpe com água morna (não quente), sem esfregar.','Use creme com pantenol, centella ou ceramidas, sem fragrância.','Só volte aos ativos um de cada vez, a cada 1 semana.'],
+    cuidado:'Vermelhidão com ardor, carocinhos ou que vai e volta pode ser rosácea ou dermatite: vale consultar um dermatologista.'});
+  if(mc>=T)L.push({id:'mc',pr:mc,ttl:'Uniformizar as manchas',alvo:`Manchas ${mc}/100${reg('manchas')}`,per:'Manhã e noite',prazo:'8 a 12 semanas',
+    passos:[...(!calm&&ok(/vitamina c|asc[oó]rbico/)?['Manhã: sérum de vitamina C (10 a 20%) no rosto limpo.']:[]),
+      ...(ok(/azel/)?['Noite: ácido azelaico 10% em camada fina, nas áreas manchadas.']:['Noite: niacinamida 5% no rosto todo.']),
+      'Todo dia: protetor FPS 50+, reaplicado a cada 2 a 3 horas se você estiver ao sol. Sem isso, nenhum clareador funciona.'],
+    cuidado:'Mancha que cresce, sangra, tem borda irregular ou muda de cor: procure um dermatologista.'+(gest?' Evite hidroquinona sem orientação médica.':'')});
+  if(!calm&&(o>=60||(has('acne')&&o>=45))){const bha=!gest&&!forte&&ok(/salic|bha/);
+    L.push({id:'acne',pr:o,ttl:has('acne')?'Controlar acne e oleosidade':'Controlar a oleosidade',alvo:`Oleosidade ${o}/100`,per:'Manhã e noite',prazo:'6 a 8 semanas',noites:2,ativo:bha?'Ácido salicílico (BHA)':'Ácido azelaico',
+      passos:[bha?'Noite: ácido salicílico (BHA) 2%, em 2 noites por semana. Se não irritar, suba para 3.':'Noite: ácido azelaico 10%, em camada fina, 2 noites por semana. Suba aos poucos.',
+        'Manhã: niacinamida 5% para equilibrar o brilho.',...(has('acne')?['Espinha pontual: adesivo hidrocoloide. Não esprema.']:[]),'Não use dois ativos fortes na mesma noite.'],
+      cuidado:'Acne com nódulos dolorosos, cicatrizes ou sem melhora em 8 semanas: consulte um dermatologista.'})}
+  if(!calm&&p>=60&&!(o>=60))L.push({id:'poros',pr:p,ttl:'Refinar os poros',alvo:`Poros ${p}/100${reg('poros')}`,per:'Manhã e noite',prazo:'8 semanas',
+    passos:['Niacinamida 5%, de manhã ou à noite, no rosto seco.','Limpeza suave todo dia, sem esfregar.','Argila 1 vez por semana, só na zona T.'],
+    cuidado:'Poros não fecham: o tratamento melhora o aspecto, e a genética conta.'});
+  if(!calm&&l>=T){const ret=!gest&&!sens&&ok(/retin/);
+    L.push({id:'linhas',pr:l,ttl:ret?'Suavizar linhas finas':'Linhas finas, sem irritar',alvo:`Linhas finas ${l}/100`,per:'Noite',prazo:'12 semanas',noites:2,ativo:ret?'Retinoide':'Peptídeos',
+      passos:ret?['Noite: retinoide do tamanho de uma ervilha, em pele seca, 2 noites por semana por 2 semanas.','Depois 3 noites, e por fim noites alternadas.','Se arder, passe hidratante antes e depois (método sanduíche).','De manhã, protetor FPS 50+ sempre.']
+        :['Noite: sérum com peptídeos ou bakuchiol, em 2 noites por semana, subindo aos poucos.','Hidratante rico por cima.','De manhã, protetor FPS 50+ sempre.'],
+      cuidado:gest?'Retinoide não pode na gestação nem na amamentação: aqui entra uma alternativa suave.':ret?'Pode descamar nas 2 primeiras semanas. Sem protetor solar, o retinoide piora as manchas.':'Como sua pele é sensível, o retinoide fica para depois.'})}
+  if(hd<=45||has('resseca'))L.push({id:'hid',pr:100-hd,ttl:'Hidratação profunda',alvo:`Hidratação ${rs.hid}/100`,per:'Manhã e noite',prazo:'1 a 2 semanas',
+    passos:['Ácido hialurônico na pele ainda úmida, depois o creme com ceramidas.','À noite, camada generosa de creme, nas áreas mais secas.','Máscara hidratante 1 vez por semana.','Banho e rosto com água morna, nunca quente.'],
+    cuidado:'Pele que descama e coça sem melhorar em 2 semanas: consulte um dermatologista.'});
+  if(has('olheiras')||(S.zonas||[]).includes('olhos'))L.push({id:'olho',pr:52,ttl:'Cuidar das olheiras',alvo:'Região dos olhos',per:'Manhã',prazo:'4 a 8 semanas',
+    passos:['Contorno dos olhos com cafeína ou vitamina K, de manhã, geladinho da geladeira.','Protetor solar até o osso da órbita.','Dormir 7 a 8 horas e beber água ajuda de verdade.'],
+    cuidado:'Olheiras escuras costumam ser genéticas, e cosmético só clareia um pouco.'});
+  if(has('textura'))L.push({id:'tex',pr:50,ttl:'Alisar a textura',alvo:'Textura irregular',per:'Noite, 1 vez por semana',prazo:'4 semanas',semanal:'Esfoliação suave',
+    passos:['Domingo à noite: esfoliante com ácido mandélico ou lático (5 a 10%), 10 minutos e enxágue.','Não use no mesmo dia que BHA ou retinoide.','Hidratante por cima, sempre.'],
+    cuidado:gest?'Na gestação ou amamentação, converse com seu médico antes de esfoliar.':'Pele sensível: comece com 1 vez a cada 15 dias.'});
+  if(S.sol==='2'||S.sol==='3')L.push({id:'sol',pr:48,ttl:'Reforçar a proteção solar',alvo:S.sol==='3'?'Mais de 3 horas de sol por dia':'1 a 3 horas de sol por dia',per:'Manhã',prazo:'Desde o 1º dia',
+    passos:['FPS 50+ resistente à água, 2 dedos de produto no rosto e pescoço.','Reaplique a cada 2 a 3 horas.','Boné ou chapéu e sombra nas horas de pico.'],cuidado:'Protetor passado de manhã não dura o dia todo.'});
+  L.sort((a,b)=>b.pr-a.pr);
+  // BHA e retinoide não entram juntos (mesma regra da rotina): fica o de maior nota
+  {const a=L.find(x=>x.ativo&&/salic/.test(x.ativo)),b=L.find(x=>x.ativo==='Retinoide');if(a&&b)L.splice(L.indexOf(a.pr>=b.pr?b:a),1)}
+  const lista=L.slice(0,calm?3:4);
+  // cronograma semanal das noites com ativo
+  const ativos=lista.filter(x=>x.noites),extra=lista.find(x=>x.semanal)||(!calm&&p>=60?{semanal:'Argila na zona T'}:null)||(hd<=45?{semanal:'Máscara hidratante'}:null);
+  const D=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],sem=D.map(d=>({d,t:'Só hidratar e descansar',c:'r'}));
+  if(ativos[0]){sem[0]={d:'Seg',t:ativos[0].ativo,c:'a'};sem[3]={d:'Qui',t:ativos[0].ativo,c:'a'}}
+  if(ativos[1]){sem[1]={d:'Ter',t:ativos[1].ativo,c:'b'};sem[4]={d:'Sex',t:ativos[1].ativo,c:'b'}}
+  if(extra)sem[6]={d:'Dom',t:extra.semanal,c:'e'};
+  return{lista,sem:ativos.length||extra?sem:null,calm}}
+function tratRot(per){
+  const X=tratamentos();if(!X||!X.lista.length)return '';
+  const mostra=X.lista.filter(t=>per==='m'?/Manhã/.test(t.per):/Noite|Manhã e noite/.test(t.per));
+  if(!mostra.length&&!(per==='n'&&X.sem))return '';
+  S.trOpen=S.trOpen||{};
+  const card=(t,i)=>{const op=S.trOpen[t.id]!==undefined?S.trOpen[t.id]:i===0;return `<div class="trt${op?' open':''}"><button class="trh" data-tr="${t.id}" aria-expanded="${op}"><span class="trn">${i+1}</span><span class="trm"><b>${esc(t.ttl)}</b><small>${esc(t.alvo)}</small></span><span class="trc">${ic('chev',18)}</span></button>
+    ${op?`<div class="trb"><div class="trf"><span><small>Quando</small><b>${esc(t.per)}</b></span><span><small>Resultado em</small><b>${esc(t.prazo)}</b></span></div>
+      <ol>${t.passos.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="trw">${ic('alert',14)}<span>${esc(t.cuidado)}</span></p></div>`:''}</div>`};
+  const cron=per==='n'&&X.sem?`<div class="trs"><h4>Suas noites da semana</h4><div class="trg">${X.sem.map(s=>`<div class="${s.c}"><small>${s.d}</small><b>${esc(s.t)}</b></div>`).join('')}</div><p class="small muted">Manhã, todo dia: limpar, hidratar e protetor solar.</p></div>`:'';
+  return `<div class="card trw0"><div class="row" style="justify-content:space-between"><h3>Tratamentos para o seu rosto</h3><span class="badge">Pela sua análise</span></div>
+    <p class="small muted" style="margin:6px 0 10px">${X.calm?'Sua pele está sensível agora, então o foco é acalmar antes de tratar.':'Escolhidos pelas notas do scanner facial, do mais importante para o menos.'}</p>
+    ${mostra.map(card).join('')}${cron}
+    <p class="small muted" style="margin:10px 0 0">Orientações gerais, que não substituem a avaliação de um dermatologista.</p></div>`}
 function viewRotina(){
   const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n;
   const id=k=>per+k;
@@ -1634,6 +1721,7 @@ function viewRotina(){
       <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
       <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}</div></div>`}).join('')}
   </div>
+  ${tratRot(per)}
   ${shelfRot(per)}
   ${hairRot()}
   ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
@@ -2869,6 +2957,7 @@ document.addEventListener('click',e=>{
   }
   else if(d.plan){S.planSel=d.plan;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.meta){S.meta=d.meta;render()}
+  else if(d.tr){S.trOpen=S.trOpen||{};const cur=S.trOpen[d.tr];const X=tratamentos();const first=X&&X.lista[0]&&X.lista[0].id===d.tr;S.trOpen[d.tr]=cur===undefined?!first:!cur;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.zona){const z=S.zonas||(S.zonas=[]),ix=z.indexOf(d.zona);if(ix>=0)z.splice(ix,1);else z.push(d.zona);const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.gest){S.gestT=d.gest;S.gest=d.gest==='nao'?'nao':'sim';S.ans.gest=true;render()}
   else if(d.obq){const [k,v]=d.obq.split('|');S[k]=v;render()}
