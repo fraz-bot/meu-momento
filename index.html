@@ -943,8 +943,10 @@ function proxInfo(){
   if(n<m){per='m';min=m-n}else if(n<nt&&!feito('n')){per='n';min=nt-n}else{per='m';min=1440-n+m}
   return{open:false,per,min};
 }
-function celebrate(o){o.id=Date.now()+'-'+Math.random();if(S.cele)S.celeQ.push(o);else S.cele=o}
+const gameOn=()=>!!S.plus;
+function celebrate(o){if(!gameOn())return;o.id=Date.now()+'-'+Math.random();if(S.cele)S.celeQ.push(o);else S.cele=o}
 function xp(n,why,once){
+  if(!gameOn())return false;
   if(once){const k=once+'|'+hoje();if(S.once[k])return false;S.once[k]=1}
   const before=lvl();S.xp=Math.max(0,S.xp+n);
   if(n>0&&why)toast('+'+n+' XP · '+why);
@@ -952,6 +954,7 @@ function xp(n,why,once){
   return true;
 }
 function gameCheck(){
+  if(!gameOn())return;
   BADGES.forEach(b=>{if(!S.badges[b.id]&&b.t()){const x=b.x||25;S.badges[b.id]=hoje();xp(x);celebrate({k:b.id[0]==='s'&&/^s\d/.test(b.id)?'Nova medalha':'Nova conquista',t:b.n,s:b.d,i:b.i,xp:x})}});
   {const ws=ymd(weekStart()),k='sem|'+ws;if(weekCount()>=5&&!S.once[k]){S.once[k]=1;xp(50);celebrate({k:'Meta da semana',t:'5 dias de cuidado',s:'Você cumpriu a meta desta semana.',i:'crown',xp:50})}}
   const l=S.log[hoje()];
@@ -984,7 +987,7 @@ function nextStep(){
 function renderChrome(){
   const on=!S.ob.done;
   document.querySelector('header').hidden=on;document.querySelector('nav').hidden=on;$('#ages').hidden=true;
-  $('#tag').innerHTML=on?'':`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span><span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`;
+  $('#tag').innerHTML=on||!gameOn()?'':`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span><span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
   $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
   document.documentElement.dataset.tema=S.tema||'rosa';
@@ -1120,20 +1123,21 @@ function cdoc(){return{
   async set(v){const {error}=await sb.from('app_state').upsert({user_id:CL.uid,dados:v,atualizado_em:new Date().toISOString()});if(error)throw error},
   async delete(){const {error}=await sb.from('app_state').delete().eq('user_id',CL.uid);if(error)throw error}}}
 function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus'&&o[k]!==undefined)S[k]=o[k]})}
-async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&!S.ob.done){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}}catch(e){}}
+async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&(!S.ob.done||S.ob.fresh)){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}if(S.ob)S.ob.fresh=false;}catch(e){}}
 function cloudPush(now){if(!CL.ok||!S.cloud)return;clearTimeout(CL.t);CL.t=setTimeout(()=>cloudNow().catch(()=>{}),now?0:3000)}
 async function cloudNow(){const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
 const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie+.',limite_gratis:'Esse recurso é do Pellie+.',limite_mes:'Você chegou ao limite de análises deste mês.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
 function authView(){
-  if(AUTH.user&&AUTH.ready){return precisaConsent()&&S.ob.done?consentView():null}
+  if(!S.ob.done&&!AUTH.want)return null;
+  if(AUTH.user&&AUTH.ready){AUTH.want=false;return precisaConsent()&&S.ob.done?consentView():null}
   const logo=LOGO.replace('class="logo"','class="logo" style="width:84px;height:84px;filter:drop-shadow(0 10px 18px rgba(122,99,82,.35))"');
   if(!AUTH.ready)return `<div class="ob" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"><p class="small muted" style="margin-top:8px">Carregando…</p></div></div>`;
   return `<div class="ob" style="text-align:center;gap:14px"><div class="brand" style="flex-direction:column;gap:6px;margin-top:18px"><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"></div>
     <div class="welcome">${welcomeArt()}</div>
-    <h1>Que bom ter você aqui.</h1>
-    <p class="muted">Entre para analisar a sua pele e montar a sua rotina.</p>
+    <h1>Falta só criar sua conta.</h1>
+    <p class="muted">Entre para salvar sua análise e sua rotina em segurança.</p>
     <button class="btn" data-act="login-google" style="background:#fff;color:#2C2118;border:1.5px solid var(--tint);box-shadow:0 6px 16px rgba(122,99,82,.15)">${GLOGO}Entrar com Google</button>
     ${AUTH.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(AUTH.err)}</p>`:''}
     <p class="note">${ic('lock',12)} Sua foto é enviada só para gerar a análise e não fica guardada.</p>
@@ -1148,10 +1152,11 @@ async function entrou(u){
   if(_setting===u.id)return;_setting=u.id;
   try{
     const prev=localStorage.getItem('mm_uid');
-    if(prev&&prev!==u.id){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,DEF());try{localStorage.removeItem(KEY)}catch(e){}}
+    if(prev&&prev!==u.id&&!S.ob.fresh){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,DEF());try{localStorage.removeItem(KEY)}catch(e){}}
     try{localStorage.setItem('mm_uid',u.id)}catch(e){}
     AUTH.user=u;CL.ok=true;CL.uid=u.id;S.cloud=true;
     await cloudBoot();await carregaPerfil();
+    if(precisaConsent()&&S.ob&&S.ob.cons===VERSAO_PRIV){try{const {data}=await sb.from('profiles').update({consentimento_versao:VERSAO_PRIV,consentimento_em:new Date().toISOString()}).eq('id',u.id).select('*');if(data&&data.length){AUTH.perfil=data[0];aplicaPerfil()}}catch(e){}}
     if(!S.nome&&!S.ob.done){const n=(u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||'';S.nome=String(n).trim().split(/\s+/)[0]||''}
   }catch(e){}
   AUTH.ready=true;render();
@@ -1181,7 +1186,7 @@ const sampleP=Promise.resolve({
   async json(prompt,o){
     o=o||{};const corpo={tipo:o.tipo};
     if(o.tipo==='texto')corpo.prompt=prompt;
-    else{corpo.contexto=o.ctx||'';const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}
+    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
       const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',msg:(j&&j.erro)||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
@@ -1208,6 +1213,7 @@ function consentView(){
 }
 async function aceitarConsent(){
   if(!(AUTH.c||[]).every(Boolean)||AUTH.csave)return;
+  if(!AUTH.user){S.ob.cons=VERSAO_PRIV;render();return}
   AUTH.csave=true;AUTH.cerr=null;render();
   try{
     const {data,error}=await sb.from('profiles').update({consentimento_versao:VERSAO_PRIV,consentimento_em:new Date().toISOString()}).eq('id',AUTH.user.id).select('nome,plano,plus_ate,consentimento_versao');
@@ -1548,7 +1554,7 @@ function viewHoje(){
   const falta=NMd?NMd.d-st:0;
   return `<div class="stack">
   <div class="greet"><span class="av">${esc((S.nome||'M').trim().charAt(0).toUpperCase())}</span><div class="gt2"><b>${hi}, ${esc(S.nome)}</b><span class="small muted">${st?`${st} ${st===1?'dia seguido':'dias seguidos'}`:'Comece o seu momento hoje'}</span></div>
-    <button class="ptsb" data-go="mais|medalhas" aria-label="Pontos e medalhas">${ic('star',15)}<b>${S.xp}</b><span>pts</span></button></div>
+    ${gameOn()?`<button class="ptsb" data-go="mais|medalhas" aria-label="Pontos e medalhas">${ic('star',15)}<b>${S.xp}</b><span>pts</span></button>`:''}</div>
   <div class="wk7b">${days.map(d=>`<div class="wd ${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}"><i>${d.on?ic('check',15):d.n}</i><span>${d.w}</span></div>`).join('')}</div>
   <div class="hero2">${hero}</div>
   <button class="comp" data-go="mais|medalhas">
@@ -2058,9 +2064,9 @@ function viewCabelo(){
 
 /* ---------- Cadastro (onboarding) ---------- */
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
-const DEPO=[];   /* [{nome:'Nome', txt:'Depoimento real'}] */
+const DEPO=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',txt:'Minha pele mudou quando comecei a entender o que ela realmente precisava. Com o Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario',...(DEPO.length?['comunidade']:[]),'leva',...(S.plus?[]:['pronta'])];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario',...(DEPO.length?['comunidade']:[]),'leva',...(S.plus?[]:['pronta'])];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2262,7 +2268,7 @@ function viewOnboarding(){
     ${obPhone()}
     <h1 class="obh">A rotina certa<br>para a sua pele.</h1><p class="obs">Feita especialmente para você.</p>
     ${cta('Analisar minha pele')}
-    ${CL.ok?`<p class="small muted">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p>`:''}</div>`;
+    <p class="small muted">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p></div>`;
   if(st==='nome')return `<div class="ob obx obm" style="text-align:center">
     <h1 class="obh">Como você quer ser chamada?</h1><p class="obs">Esse nome aparece na tela inicial do app.</p>
     <input id="nome" class="obin" type="text" autocomplete="given-name" placeholder="Seu nome" aria-label="Seu nome" value="${nome}">
@@ -2336,9 +2342,9 @@ function viewOnboarding(){
       <b style="grid-column:1/3;font-size:16px;margin-top:6px">Baixa compatibilidade</b><span class="small muted" style="grid-column:1/3">Exemplo ilustrativo.</span></div>
     ${cta('Quero saber o que usar')}</div>`;
   if(st==='comunidade')return `<div class="ob obx">${back}
-    <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Mulheres que já cuidam da pele com a Pellie</h1>
-    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card"><b>${esc(d.nome)}</b><p class="small muted" style="margin:6px 0 0">${esc(d.txt)}</p></div>`).join('')}</div>
-    <p class="small muted" style="text-align:center">Depoimentos publicados com autorização. Resultados individuais variam.</p>${cta('Montar minha rotina')}</div>`;
+    <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Veja quem já cuida da pele com a Pellie</h1>
+    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card" style="display:flex;gap:14px;align-items:flex-start;border-radius:24px;padding:18px"><img src="${esc(d.foto)}" alt="Foto de ${esc(d.nome)}" loading="lazy" style="flex:none;width:64px;height:64px;border-radius:50%;object-fit:cover"><div><b style="font-size:17px">${esc(d.nome)}</b><div class="small muted">${esc(d.leg||'')}</div><p style="margin:8px 0 0;font-size:15px;line-height:1.45">“${esc(d.txt)}”</p></div></div>`).join('')}</div>
+    <p class="small muted" style="text-align:center">Depoimento publicado com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`;
   if(st==='transf'){const a=ANTESDEPOIS[0];return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh" style="margin-top:18px">O antes e depois<br>de quem usa a Pellie.</h1>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><figure style="margin:0"><img src="${esc(a.antes)}" alt="Foto de antes, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Antes</figcaption></figure><figure style="margin:0"><img src="${esc(a.depois)}" alt="Foto de depois, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Depois</figcaption></figure></div>
@@ -2471,14 +2477,14 @@ document.addEventListener('click',e=>{
   else if(d.obq){const [k,v]=d.obq.split('|');S[k]=v;render()}
   else if(d.hper){S.obHp=d.hper;render()}
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
-  else if(d.act==='ob-pular'){S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
-  else if(d.act==='ob-plano'){S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
+  else if(d.act==='ob-pular'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
+  else if(d.act==='ob-plano'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
   else if(d.act==='cam-snap'){const u=OBCAM.snapNow&&OBCAM.snapNow();if(u)camFinish(u)}
   else if(d.act==='cam-fechar'){camStop();obIr('foto');render()}
   else if(d.act==='scan-retry'){S.err=null;startScan()}
   else if(d.act==='scan-outra'){S.err=null;S.file=null;S.photo=null;obIr('camera');render()}
-  else if(d.act==='ob-fim2'){S.ob.done=true;S.tab='rotina';render();window.scrollTo(0,0);if(S.result)montarRotina()}
+  else if(d.act==='ob-fim2'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='rotina';render();window.scrollTo(0,0);if(S.result)montarRotina()}
   else if(d.act==='ob-next'){S.ob.step++;render();window.scrollTo(0,0)}
   else if(d.act==='ob-back'){S.ob.step=Math.max(0,S.ob.step-1);render();window.scrollTo(0,0)}
   else if(d.act==='ob-fim'){S.ob.done=true;S.tab='pele';S.peleSub='analise';gameCheck();render();window.scrollTo(0,0)}
@@ -2510,6 +2516,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='qz-volta'){S.qi=Math.max(0,(S.qi||0)-1);render()}
   else if(d.act==='qz-refazer'){S.quiz={};S.qi=0;render()}
   else if(d.act==='ob-quiz'){S.ob.done=true;S.tab='mais';S.maisSub='quiz';S.qi=0;gameCheck();render();window.scrollTo(0,0)}
+  else if(d.act==='entrar'&&!AUTH.user){AUTH.want=true;render()}
   else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Bem-vinda de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
   else if(d.hq){const [k,v]=d.hq.split('|');S.hq[k]=S.hq[k]===v?null:v;const y=window.scrollY;render();window.scrollTo(0,y)}
