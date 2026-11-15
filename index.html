@@ -3124,7 +3124,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
   else if(d.act==='ob-pular'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
   else if(d.act==='ob-fechar'){if(S.ofVisto){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje'}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
-  else if(d.act==='of-no'){S.ofOpen=false;S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
+  else if(d.act==='of-no'){S.ofOpen=false;S.ob.done=false;obIr('intro');render();window.scrollTo(0,0)}
   else if(d.act==='of-ok'){S.ofOpen=false;S.oferta=true;S.planSel='ano';S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='ob-plano'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
