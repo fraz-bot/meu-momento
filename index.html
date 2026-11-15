@@ -1240,8 +1240,8 @@ function proxInfo(){
   const open=bloq('m')===0&&!feito('m')?'m':bloq('n')===0&&!feito('n')?'n':null;
   if(open)return{open:true,per:open};
   let per,min;
-  if(n<m){per='m';min=m-n}else if(n<nt&&!feito('n')){per='n';min=nt-n}else{per='m';min=1440-n+m}
-  return{open:false,per,min};
+  if(n<m){per='m';min=bloq('m')}else if(n<nt&&!feito('n')){per='n';min=bloq('n')}else{per='m';min=bloq('m')}
+  return{open:false,per,min:Math.max(min,1)};
 }
 const gameOn=()=>!!S.plus&&!!S.ob.done;
 function celebrate(o){if(!gameOn())return;o.id=Date.now()+'-'+Math.random();if(S.cele)S.celeQ.push(o);else S.cele=o}
@@ -1575,22 +1575,23 @@ const fmtDur=m=>{const h=Math.floor(m/60),mm=m%60;return h?(mm?`${h}h ${mm}min`:
 const feito=per=>{const ks=getR()[per];return ks.length>0&&ks.every(k=>isDone(per,k))};
 function bloq(per){
   if(S.unl&&S.unl[hoje()+per])return 0;
-  const n=nowMin(),m=hm(S.rem.m),nt=hm(S.rem.n),T=30;
-  if(per==='m')return n>=m-T&&n<nt?0:(n<m-T?m-n:1440-n+m);
-  return n>=nt-T?0:nt-n;
+  const n=nowMin(),m=hm(S.rem.m),nt=hm(S.rem.n),T=30,mid=Math.max(m+60,Math.round((m+nt)/2));
+  if(per==='m')return n>=m-T&&n<mid?0:(n<m-T?m-T-n:1440-n+m-T);
+  return n>=nt-T?0:nt-T-n;
 }
 function proxCard(){
   const n=nowMin(),m=hm(S.rem.m),nt=hm(S.rem.n),NM={m:'manhã',n:'noite'};
   const open=bloq('m')===0&&!feito('m')?'m':bloq('n')===0&&!feito('n')?'n':null;
   if(open)return `<div class="nextc now"><span class="tile">${ic(open==='m'?'sun':'moon',22)}</span><div class="nt"><span class="small">Hora da rotina</span><b>Rotina da ${NM[open]}</b></div><button class="btn" data-go="rotina|${open}">Começar</button></div>`;
   let per,min;
-  if(n<m){per='m';min=m-n}
-  else if(n<nt&&!feito('n')){per='n';min=nt-n}
-  else{per='m';min=1440-n+m}
+  if(n<m){per='m';min=bloq('m')||1}
+  else if(n<nt&&!feito('n')){per='n';min=bloq('n')||1}
+  else{per='m';min=bloq('m')||1}
   const at=per==='m'?S.rem.m:S.rem.n;
   return `<div class="nextc"><span class="tile">${ic(per==='m'?'sun':'moon',22)}</span><div class="nt"><span class="small muted">Próxima rotina</span><b>Rotina da ${NM[per]} às ${at}</b></div><div class="cd">em ${fmtDur(min)}</div></div>`;
 }
-function lockRow(per){return `<div class="lockr">${ic('clock',18)}<span>Libera às ${per==='m'?S.rem.m:S.rem.n}, em ${fmtDur(bloq(per))}</span><button class="chip" data-act="unl|${per}" style="font-size:12px;padding:5px 10px">Fazer agora</button></div>`}
+const libHora=per=>{const t=((hm(per==='m'?S.rem.m:S.rem.n)-30)+1440)%1440;return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};
+function lockRow(per){return `<div class="lockr">${ic('clock',18)}<span>Libera às ${libHora(per)}, em ${fmtDur(bloq(per))}</span><button class="chip" data-act="unl|${per}" style="font-size:12px;padding:5px 10px">Fazer agora</button></div>`}
 let _mk=nowMin();setInterval(()=>{const x=nowMin();if(x===_mk)return;_mk=x;const a=document.activeElement;if(S.ob.done&&(S.tab==='hoje'||S.tab==='rotina')&&!S.cele&&!(a&&/INPUT|TEXTAREA/.test(a.tagName)))render()},15000);
 
 const LIVRES=['tema','quiz','plano','medalhas','conta','privacidade'];
@@ -3202,7 +3203,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='fechar-cele'){S.cele=S.celeQ.shift()||null;render()}
   else if(d.per){S.period=d.per;render()}
   else if(d.tier){S.tier=d.tier;render()}
-  else if(d.done){const [per,k]=d.done.split('|');const bl=bloq(per);if(bl&&!isDone(per,k)){toast('Libera às '+(per==='m'?S.rem.m:S.rem.n)+', em '+fmtDur(bl));return}toggleStep(per,k)}
+  else if(d.done){const [per,k]=d.done.split('|');const bl=bloq(per);if(bl&&!isDone(per,k)){toast('Libera às '+libHora(per)+', em '+fmtDur(bl));return}toggleStep(per,k)}
   else if(d.act&&d.act.startsWith('unl|')){S.unl[hoje()+d.act.slice(4)]=true;render()}
   else if(d.act==='analisar'){analisar()}
   else if(d.act==='analisar-prod'){analisarProduto()}
