@@ -882,6 +882,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .fimg img{display:block;width:100%;height:100%;-webkit-mask-image:linear-gradient(#000 80%,transparent),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(#000 80%,transparent),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-composite:intersect;user-select:none;-webkit-user-drag:none}
 .fimg .fim-o{position:absolute;inset:0;-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}.fimg svg{display:block;width:100%;height:100%}
 .fimg[data-fimg=tap]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.tut .tut3{display:grid;place-items:center;min-height:0}.tut3fb{width:100%;height:auto;display:block}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2619,7 +2620,38 @@ document.addEventListener('click',e=>{const h=e.target.closest('.fimg[data-fimg=
   for(let i=0;i<pt.length;i++){const dx=pt[i][0]*FW-x,dy=pt[i][1]*FH-y,q=dx*dx+dy*dy;if(q<bd){bd=q;bi=i}}
   if(bi<0||Math.sqrt(bd)>70)return;let bk=null,bw=.3;for(const k in FIMG.d.W){const v=FIMG.d.W[k][bi];if(v>bw){bw=v;bk=k}}if(!bk)return;
   const zz=S.zonas||(S.zonas=[]),ix=zz.indexOf(bk);if(ix>=0)zz.splice(ix,1);else zz.push(bk);const sy=window.scrollY;render();window.scrollTo(0,sy)});
-function face3d(modo,z,fallback){if(modo!=='tutor')return fimgHtml(modo,z);return `<div class="f3d" data-f3d="${modo}" data-z='${JSON.stringify(z)}'><div class="f3fb" hidden>${fallback||''}</div></div>`}
+/* tutorial: a foto da modelo projetada sobre a malha 3D (UV vindos do rastreamento), para a cabeça girar de verdade */
+const TUT3={p:null,d:null,cv:null,raf:0};
+const T3FIT={a:35.724,b:455.264,c:-34.018,d:542.176};
+function tut3Load(){if(TUT3.p)return TUT3.p;
+  const three=window.THREE?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement('script');s.src='three.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+  TUT3.p=Promise.all([three,fetch('face-mesh.json').then(r=>{if(!r.ok)throw 0;return r.json()}),fetch('rosto-pts.json').then(r=>{if(!r.ok)throw 0;return r.json()}),new Promise((ok,no)=>{const im=new Image();im.onload=()=>ok(im);im.onerror=no;im.src='rosto-base.webp'})]).then(([_,m,pt,im])=>{
+    const T=window.THREE,tex=new T.Texture(im);tex.needsUpdate=true;tex.generateMipmaps=true;tex.minFilter=T.LinearMipmapLinearFilter;
+    const n=m.v.length/3,gf=new T.BufferGeometry(),uv=new Float32Array(n*2);for(let i=0;i<n;i++){uv[i*2]=pt[i][0];uv[i*2+1]=1-pt[i][1]}
+    gf.setAttribute('position',new T.BufferAttribute(new Float32Array(m.v),3));gf.setAttribute('uv',new T.BufferAttribute(uv,2));gf.setIndex(m.f);
+    const vs0=`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
+    const fs0=`uniform sampler2D map;varying vec2 vUv;void main(){vec4 c=texture2D(map,vUv);gl_FragColor=vec4(c.rgb,1.0);}`;
+    const fit=`const float A=${T3FIT.a.toFixed(3)},B=${T3FIT.b.toFixed(3)},C=${T3FIT.c.toFixed(3)},D=${T3FIT.d.toFixed(3)};`;
+    const vs1=fit+`varying vec2 vUv;varying float nz;varying float py;void main(){vUv=vec2((A*position.x+B)/900.0,1.0-(C*position.y+D)/1125.0);nz=normal.z;py=position.y;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
+    const fs1=`uniform sampler2D map;uniform vec3 base;uniform float fade;varying vec2 vUv;varying float nz;varying float py;void main(){vec4 t=texture2D(map,vUv);float f=smoothstep(0.05,0.4,nz);
+      if(f>0.5&&t.a<0.5)discard;vec3 col=mix(base*(0.72+0.28*clamp(nz+0.3,0.0,1.0)),t.rgb,f);float al=1.0;if(fade>0.5)al=smoothstep(-17.0,-12.5,py);gl_FragColor=vec4(col,al);}`;
+    const M=(vs,fs,base,fade,off)=>{const x=new T.ShaderMaterial({uniforms:{map:{value:tex},base:{value:new T.Color(base[0],base[1],base[2])},fade:{value:fade}},vertexShader:vs,fragmentShader:fs,transparent:fade>0.5});if(off){x.polygonOffset=true;x.polygonOffsetFactor=off;x.polygonOffsetUnits=off*2}return x};
+    const sc=new T.Scene(),cam=new T.PerspectiveCamera(26,1/1.2,1,300);cam.position.set(0,-1.2,76);cam.lookAt(0,-1.2,0);
+    const g=new T.Group(),face=new T.Mesh(gf,M(vs0,fs0,[1,1,1],0,0));
+    const sg=new T.SphereGeometry(1,64,48);sg.scale(9.4,12.4,9.6);sg.translate(0,3,-5.6);sg.computeVertexNormals();const skull=new T.Mesh(sg,M(vs1,fs1,[.63,.52,.42],0,3));
+    const ng=new T.CylinderGeometry(1,1.12,10.5,48,1,true);ng.scale(5.3,1,4.7);ng.rotateX(-.04);ng.translate(0,-12,-2.6);ng.computeVertexNormals();const neck=new T.Mesh(ng,M(vs1,fs1,[.80,.66,.57],1,2));
+    const wire=new T.LineSegments(new T.WireframeGeometry(gf),new T.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.32}));wire.scale.setScalar(1.004);
+    g.add(skull);g.add(neck);g.add(face);g.add(wire);g.position.y=.5;sc.add(g);
+    const rn=new T.WebGLRenderer({antialias:true,alpha:true});rn.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    const cv=rn.domElement;cv.className='f3c';cv.setAttribute('role','img');cv.setAttribute('aria-label','Rosto em 3D girando para mostrar os movimentos do escaneamento');
+    const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;let t0=performance.now();
+    const frame=()=>{if(!cv.isConnected){TUT3.raf=0;return}const t=(performance.now()-t0)/1000,tp=tutorPose(t);if(!still){g.rotation.set(tp.x,tp.y,tp.z)}tutorUI(tp);rn.render(sc,cam);TUT3.raf=requestAnimationFrame(frame)};
+    const size=h=>{const w=Math.max(150,Math.min(h.clientWidth||300,320)),ht=Math.round(w*1.2);rn.setSize(w,ht,false);cv.style.width=w+'px';cv.style.height=ht+'px'};
+    TUT3.d={cv,size,start:()=>{if(!TUT3.raf)TUT3.raf=requestAnimationFrame(frame)}};return TUT3.d});
+  return TUT3.p}
+function tut3Scan(){const h=document.querySelector('[data-tut3]');if(!h)return;
+  tut3Load().then(d=>{if(!h.isConnected)return;const fb=h.querySelector('.tut3fb');if(fb)fb.remove();h.appendChild(d.cv);d.size(h);d.start()}).catch(()=>{const fb=h.querySelector('.tut3fb');if(fb)fb.hidden=false})}
+function face3d(modo,z,fallback){if(modo==='tutor')return `<div class="f3d tut3" data-tut3="1"><img class="tut3fb" src="rosto-base.webp" alt="Rosto feminino de frente" hidden></div>`;if(modo!=='tutor')return fimgHtml(modo,z);return `<div class="f3d" data-f3d="${modo}" data-z='${JSON.stringify(z)}'><div class="f3fb" hidden>${fallback||''}</div></div>`}
 const zonasSel=()=>{const o={};(S.zonas||[]).forEach(k=>o[k]=1);return o};
 /* regiões destacadas a partir do resultado da análise */
 function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=Math.max(o[k]||0,v)}),L=[];
@@ -3018,7 +3050,7 @@ function render(){
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  f3scan();fimgScan();camSync();
+  f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;v.classList.remove('vin');void v.offsetWidth;v.classList.add('vin');clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin'),1300)}}
   save();
 }
