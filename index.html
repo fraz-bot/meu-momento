@@ -895,6 +895,19 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pft span:nth-child(1){animation-delay:0s}.pft span:nth-child(2){animation-delay:2s}.pft span:nth-child(3){animation-delay:4s}.pft span:nth-child(4){animation-delay:6s}.pft span:nth-child(5){animation-delay:8s}.pft span:nth-child(6){animation-delay:10s}.pft span:nth-child(7){animation-delay:12s}
 @keyframes pftx{0%{opacity:0;transform:translateY(5px)}2%,12%{opacity:1;transform:none}14%,100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.pfa .tk,.pfa .pfm,.pfa .pfh,.pft span{animation:none}.pft span:first-child{opacity:1}}
+/* 1, 2, 3: linha animada que liga os passos, um por vez */
+.fst2>div{position:relative}
+.fst2>div:not(:last-child)::before,.fst2>div:not(:last-child)::after{content:"";position:absolute;left:15px;top:36px;bottom:-12px;width:2px;border-radius:2px}
+.fst2>div:not(:last-child)::before{background:rgba(90,46,20,.14)}
+.fst2>div:not(:last-child)::after{background:#C77A8B;transform:scaleY(0);transform-origin:top;animation:fsl1 9s ease-in-out infinite}
+.fst2>div:nth-child(2)::after{animation-name:fsl2}
+.fst2 .n{background:#fff;animation:fsn1 9s ease-in-out infinite}.fst2>div:nth-child(2) .n{animation-name:fsn2}.fst2>div:nth-child(3) .n{animation-name:fsn3}
+@keyframes fsn1{0%,3%{background:#fff;color:var(--ol);border-color:var(--ol)}7%,90%{background:#C77A8B;color:#fff;border-color:#C77A8B}96%,100%{background:#fff;color:var(--ol);border-color:var(--ol)}}
+@keyframes fsn2{0%,27%{background:#fff;color:var(--ol);border-color:var(--ol)}31%,90%{background:#C77A8B;color:#fff;border-color:#C77A8B}96%,100%{background:#fff;color:var(--ol);border-color:var(--ol)}}
+@keyframes fsn3{0%,53%{background:#fff;color:var(--ol);border-color:var(--ol)}57%,90%{background:#C77A8B;color:#fff;border-color:#C77A8B}96%,100%{background:#fff;color:var(--ol);border-color:var(--ol)}}
+@keyframes fsl1{0%,8%{transform:scaleY(0)}24%,90%{transform:scaleY(1)}96%,100%{transform:scaleY(1);opacity:0}}
+@keyframes fsl2{0%,34%{transform:scaleY(0)}50%,90%{transform:scaleY(1)}96%,100%{transform:scaleY(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.fst2 .n,.fst2>div::after{animation:none!important}.fst2 .n{background:#C77A8B;color:#fff;border-color:#C77A8B}.fst2>div:not(:last-child)::after{transform:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2951,7 +2964,7 @@ function viewOnboarding(){PFI=0;
     <h1 class="obh" style="text-align:center">Agora vamos analisar<br>a sua pele</h1>
     <div class="pfa" style="position:relative;width:150px;margin:0 auto" aria-hidden="true">${ringSvg(150,0,92,112).replace(/<line class="tk"/g,()=>`<line style="--i:${PFI++}" class="tk"`)}<svg viewBox="0 0 300 360" width="150" style="position:absolute;inset:0;overflow:visible"><ellipse class="pfh" cx="150" cy="180" rx="72" ry="92" fill="none" stroke="#5A2E14" stroke-width="2.500"/><g class="pfm"><circle cx="128" cy="165" r="3" fill="#5A2E14"/><circle cx="172" cy="165" r="3" fill="#5A2E14"/><path d="M150 172v22h-6M132 212q18 12 36 0" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round"/></g></svg></div>
     <p class="pft" aria-hidden="true"><span>Olhe para a frente</span><span>Vire para a esquerda</span><span>Volte ao centro</span><span>Vire para a direita</span><span>Olhe para cima</span><span>Olhe para baixo</span><span>Volte ao centro</span></p>
-    <div class="card fst2">${[['Encaixe o rosto no círculo','Olhe para a câmera, com o rosto inteiro dentro do círculo.',1],['Gire a cabeça devagar','Faça um círculo: para cima, para os lados e para baixo.',2],['Continue até fechar o anel','Cada parte acende quando você olha para ela.',3]].map(([t,d,k])=>`<div class="${k===2?'on':''}"><span class="n">${k===1?ic('check',16):k}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+    <div class="card fst2">${[['Encaixe o rosto no círculo','Olhe para a câmera, com o rosto inteiro dentro do círculo.',1],['Gire a cabeça devagar','Faça um círculo: para cima, para os lados e para baixo.',2],['Continue até fechar o anel','Cada parte acende quando você olha para ela.',3]].map(([t,d,k])=>`<div><span class="n">${k===1?ic('check',16):k}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     <p class="obs">Para uma análise mais precisa:</p>
     <div class="ftp">${[['sun','Boa iluminação'],['sparkle','Sem maquiagem'],['hair','Cabelo preso'],['face','Sem óculos']].map(([i_,t])=>`<div><span>${ic(i_,20)}</span>${t}</div>`).join('')}</div>
     ${cta('Abrir câmera')}</div>`;
