@@ -2158,8 +2158,20 @@ function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=
 function qIcon(k){const sv=d=>`<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
   return {olheiras:sv('<path d="M3 15c3.500-5.500 8-8 12-8s8.500 2.500 12 8c-3.500 5.500-8 8-12 8S6.500 20.500 3 15z"/><circle cx="15" cy="15" r="3.500"/>'),textura:sv('<path d="M5 9h4M12 9h4M19 9h4M5 15h4M12 15h4M19 15h4M5 21h4M12 21h4M19 21h4"/>'),
     oleo:ic('drop',30),acne:ic('spot',30),manchas:sv('<circle cx="9" cy="9" r="3"/><circle cx="20" cy="12" r="3"/><circle cx="12" cy="21" r="3"/>'),linhas:ic('waves',30),poros:ic('pores',30),resseca:sv('<circle cx="15" cy="15" r="10"/><path d="M15 5l-3 6 5 3-4 5 2 6"/>'),outro:ic('plus',30)}[k]||''}
-const OBCAM={stream:null,msg:'',fail:false,p:0,t:0,best:null,bs:-1,iv:null,busy:false};
-function camStop(){if(OBCAM.iv){clearInterval(OBCAM.iv);OBCAM.iv=null}if(OBCAM.stream){OBCAM.stream.getTracks().forEach(t=>t.stop());OBCAM.stream=null}OBCAM.p=0;OBCAM.t=0;OBCAM.best=null;OBCAM.bs=-1;OBCAM.msg=''}
+const OBCAM={stream:null,msg:'',fail:false,busy:false,run:0,lit:null,base:null,bs:-1,best:null,t0:0,trk:true,fm:null,res:null};
+function camStop(){OBCAM.run++;if(OBCAM.iv){clearInterval(OBCAM.iv);OBCAM.iv=null}if(OBCAM.stream){OBCAM.stream.getTracks().forEach(t=>t.stop());OBCAM.stream=null}OBCAM.lit=null;OBCAM.base=null;OBCAM.best=null;OBCAM.bs=-1;OBCAM.msg=''}
+// Pose da cabeça a partir dos pontos do rosto (MediaPipe Face Mesh): yaw = nariz entre as bochechas; pitch = nariz entre olhos e queixo
+function headPose(lm){const g=i=>lm[i];if(!g(454)||!g(234)||!g(1))return null;const w=g(454).x-g(234).x;if(!(w>0))return null;
+  const yaw=(g(1).x-(g(234).x+g(454).x)/2)/w,eyeY=(g(33).y+g(263).y)/2,pit=(g(1).y-eyeY)/Math.max(.01,g(152).y-g(10).y);return{yaw,pit,w}}
+// ângulo no anel (0 = topo, sentido horário) para o desvio da cabeça; null se ainda está de frente. A imagem é espelhada.
+function ringAngle(yaw,pit,base){const dx=-(yaw-base.yaw)/.08,dy=-(pit-base.pit)/.06;if(Math.hypot(dx,dy)<1)return null;let a=Math.atan2(dx,dy);if(a<0)a+=Math.PI*2;return a}
+function ringLight(lit,a){const c=Math.round(a/(Math.PI*2)*72)%72;for(let k=-4;k<=4;k++)lit[(c+k+72)%72]=1}
+function loadMP(){return new Promise((ok,no)=>{
+  if(OBCAM.fm)return ok(OBCAM.fm);
+  const go=()=>{try{const fm=new window.FaceMesh({locateFile:f=>'mediapipe/'+f});fm.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.5,minTrackingConfidence:.5});fm.onResults(r=>{OBCAM.res=r});fm.initialize().then(()=>{OBCAM.fm=fm;ok(fm)}).catch(no)}catch(e){no(e)}};
+  if(window.FaceMesh)return go();
+  const sc=document.createElement('script');sc.src='mediapipe/face_mesh.js';sc.onload=go;sc.onerror=()=>no(new Error('mp'));document.head.appendChild(sc)})}
+function camFinish(url){camStop();fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;S.result=null;S.err=null;obIr('scan');render();startScan()})}
 function camSync(){
   const on=!S.ob.done&&obStepAtual()==='camera';
   if(!on){if(OBCAM.stream||OBCAM.iv)camStop();OBCAM.fail=false;return}
@@ -2173,25 +2185,48 @@ function camSync(){
     OBCAM.stream=st;const vv=document.getElementById('cam-v');if(vv){vv.srcObject=st;vv.play&&vv.play().catch(()=>{})}
     camLoop()}).catch(()=>{OBCAM.busy=false;OBCAM.fail=true;if(obStepAtual()==='camera')render()});
 }
-function camLoop(){
-  const cv=document.createElement('canvas');cv.width=cv.height=64;const cx=cv.getContext('2d',{willReadFrequently:true});
-  const big=document.createElement('canvas');
-  OBCAM.iv=setInterval(()=>{
-    const v=document.getElementById('cam-v');if(!v||!v.videoWidth)return;
-    cx.drawImage(v,0,0,64,64);const d=cx.getImageData(0,0,64,64).data;let sum=0,g=new Float32Array(4096);
+async function camLoop(){
+  const run=++OBCAM.run;OBCAM.lit=new Uint8Array(72);OBCAM.base=null;OBCAM.bs=-1;OBCAM.best=null;OBCAM.t0=Date.now();OBCAM.trk=true;
+  const cv=document.createElement('canvas');cv.width=cv.height=64;const cx=cv.getContext('2d',{willReadFrequently:true});const big=document.createElement('canvas');
+  const sk=document.getElementById('cam-skip');
+  let fm=null;try{fm=await loadMP()}catch(e){OBCAM.trk=false}
+  if(run!==OBCAM.run)return;
+  if(!fm){const pl=document.getElementById('cam-pill');if(pl)pl.textContent='Rastreamento indisponível. Olhe para a câmera e toque em Tirar foto.';const k=document.getElementById('cam-skip');if(k){k.hidden=false;k.textContent='Tirar foto'}}
+  let cal=[],busy=false;
+  const snap=v=>{big.width=Math.min(720,v.videoWidth);big.height=Math.round(big.width*v.videoHeight/v.videoWidth);big.getContext('2d').drawImage(v,0,0,big.width,big.height);return big.toDataURL('image/jpeg',.85)};
+  OBCAM.snapNow=()=>{const v=document.getElementById('cam-v');return OBCAM.best||(v&&v.videoWidth?snap(v):null)};
+  OBCAM.iv=setInterval(async()=>{
+    if(busy||run!==OBCAM.run)return;
+    const v=document.getElementById('cam-v');if(!v||!v.videoWidth||v.readyState<2)return;
+    busy=true;
+    try{
+    cx.drawImage(v,0,0,64,64);const d=cx.getImageData(0,0,64,64).data;const g=new Float32Array(4096);let sum=0;
     for(let i=0;i<4096;i++){const y=.299*d[i*4]+.587*d[i*4+1]+.114*d[i*4+2];g[i]=y;sum+=y}
     const br=sum/4096;let sh=0;for(let y=1;y<63;y++)for(let x=1;x<63;x++){const l=4*g[y*64+x]-g[y*64+x-1]-g[y*64+x+1]-g[(y-1)*64+x]-g[(y+1)*64+x];sh+=l*l}sh/=3844;
-    const st=document.getElementById('cam-st'),pill=document.getElementById('cam-pill');
-    const ok=br>=70&&br<=215;
+    const st=document.getElementById('cam-st'),pill=document.getElementById('cam-pill'),ok=br>=70&&br<=215;
     OBCAM.msg=br<70?'Pouca luz':br>215?'Luz demais':'Boa iluminação';if(st)st.textContent=OBCAM.msg;
-    if(!ok){OBCAM.t=Math.max(0,OBCAM.t-.5);}else{OBCAM.t+=.25}
-    OBCAM.p=Math.min(1,OBCAM.t/7);
-    if(pill)pill.textContent=OBCAM.p>0.02?'Gire a cabeça devagar para fechar o anel':ok?'Encaixe o rosto no oval':'Procure um lugar mais iluminado';
-    const lit=Math.round(OBCAM.p*72);document.querySelectorAll('.camring .tk').forEach((n,i)=>n.classList.toggle('on',i<lit));
-    if(ok&&sh>OBCAM.bs&&OBCAM.p>.1){OBCAM.bs=sh;big.width=Math.min(720,v.videoWidth);big.height=Math.round(big.width*v.videoHeight/v.videoWidth);big.getContext('2d').drawImage(v,0,0,big.width,big.height);OBCAM.best=big.toDataURL('image/jpeg',.85)}
-    if(OBCAM.p>=1&&OBCAM.best){const url=OBCAM.best;camStop();
-      fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;S.result=null;S.err=null;obIr('scan');render();startScan()})}
-  },250);
+    let txt=ok?'Encaixe o rosto no oval':'Procure um lugar mais iluminado';
+    if(fm){
+      OBCAM.res=null;await fm.send({image:v});if(run!==OBCAM.run)return;
+      const lm=OBCAM.res&&OBCAM.res.multiFaceLandmarks&&OBCAM.res.multiFaceLandmarks[0],hp=lm&&headPose(lm);
+      if(!hp){txt=ok?'Não achei seu rosto. Encaixe no oval':txt}
+      else if(hp.w<.16){txt='Aproxime o rosto'}
+      else if(hp.w>.85){txt='Afaste um pouco o rosto'}
+      else if(!OBCAM.base){cal.push(hp);txt='Olhe para a câmera, parada';if(cal.length>=8){OBCAM.base={yaw:cal.reduce((a,x)=>a+x.yaw,0)/8,pit:cal.reduce((a,x)=>a+x.pit,0)/8}}}
+      else if(ok){
+        const a=ringAngle(hp.yaw,hp.pit,OBCAM.base);if(a!==null)ringLight(OBCAM.lit,a);
+        const frontal=a===null;if(frontal&&sh>OBCAM.bs){OBCAM.bs=sh;OBCAM.best=snap(v)}
+        txt='Gire a cabeça devagar para fechar o anel';
+      }
+      const n=OBCAM.lit.reduce((x,y)=>x+y,0);
+      document.querySelectorAll('.camring .tk').forEach((t,i)=>t.classList.toggle('on',!!OBCAM.lit[i]));
+      if(pill)pill.textContent=txt;
+      if(n>=72&&OBCAM.best){camFinish(OBCAM.best);return}
+      if(sk&&Date.now()-OBCAM.t0>25000&&n>=24&&OBCAM.best){sk.hidden=false;sk.textContent='Continuar assim'}
+    }else if(pill&&!OBCAM.trk){}
+    }catch(e){}
+    busy=false;
+  },90);
 }
 let SCANIV=null;
 function startScan(){
@@ -2311,7 +2346,7 @@ function viewOnboarding(){
   if(st==='foto')return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">Agora vamos analisar<br>a sua pele</h1>
     <div style="position:relative;width:150px;margin:0 auto" aria-hidden="true">${ringSvg(150,72,92,112)}<svg viewBox="0 0 300 360" width="150" style="position:absolute;inset:0"><ellipse cx="150" cy="180" rx="72" ry="92" fill="none" stroke="#5A2E14" stroke-width="2.500"/><circle cx="128" cy="165" r="3" fill="#5A2E14"/><circle cx="172" cy="165" r="3" fill="#5A2E14"/><path d="M150 172v22h-6M132 212q18 12 36 0" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round"/></svg></div>
-    <div class="card fst2">${[['Encaixe o rosto no círculo','Olhe para a câmera, com o rosto inteiro dentro do círculo.',1],['Gire a cabeça devagar','Faça um círculo: para cima, para os lados e para baixo.',2],['Continue até fechar o anel','O anel acende enquanto a câmera registra o seu rosto.',3]].map(([t,d,k])=>`<div class="${k===2?'on':''}"><span class="n">${k===1?ic('check',16):k}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+    <div class="card fst2">${[['Encaixe o rosto no círculo','Olhe para a câmera, com o rosto inteiro dentro do círculo.',1],['Gire a cabeça devagar','Faça um círculo: para cima, para os lados e para baixo.',2],['Continue até fechar o anel','Cada parte acende quando você olha para ela.',3]].map(([t,d,k])=>`<div class="${k===2?'on':''}"><span class="n">${k===1?ic('check',16):k}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     <p class="obs">Para uma análise mais precisa:</p>
     <div class="ftp">${[['sun','Boa iluminação'],['sparkle','Sem maquiagem'],['hair','Cabelo preso'],['face','Sem óculos']].map(([i_,t])=>`<div><span>${ic(i_,20)}</span>${t}</div>`).join('')}</div>
     ${cta('Abrir câmera')}</div>`;
@@ -2328,9 +2363,9 @@ function viewOnboarding(){
   if(st==='camera')return `<div class="camx">
     <div class="camt"><button class="cbtn" data-act="cam-ajuda" aria-label="Ajuda">?</button><span class="cchip" id="cam-st">${OBCAM.msg||'Abrindo a câmera…'}</span><button class="cbtn" data-act="cam-fechar" aria-label="Fechar">${ic('x',16)}</button></div>
     <div class="camr"><div class="camring">${ringSvg(340,0,142,170)}<div class="camo"><video id="cam-v" playsinline muted autoplay></video>${OBCAM.fail?`<p class="small" style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;margin:0">Não consegui abrir a câmera. Libere o acesso ou escolha uma foto.</p>`:''}</div></div></div>
-    <div class="cams"><div class="campill" id="cam-pill">${OBCAM.p?'Gire a cabeça devagar para fechar o anel':'Encaixe o rosto no oval'}</div>
+    <div class="cams"><div class="campill" id="cam-pill">Encaixe o rosto no oval</div>
       <input class="sr" id="ob-cam" type="file" accept="image/*" capture="user"><input class="sr" id="ob-gal" type="file" accept="image/*">
-      <label for="ob-gal" class="campb">${ic('image',16)}Escolher da galeria</label></div></div>`;
+      <button class="campb" id="cam-skip" data-act="cam-snap" hidden></button><label for="ob-gal" class="campb">${ic('image',16)}Escolher da galeria</label></div></div>`;
   if(st==='scan'){const fim=!!S.result&&!S.analyzing;return `<div class="ob obx" style="text-align:center">
     <div class="obk">Scan de pele</div>
     <div class="scr"><svg viewBox="0 0 260 260" width="100%" aria-hidden="true"><circle cx="130" cy="130" r="127" fill="none" stroke="#EBD7CB" stroke-width="1.5"/><circle cx="130" cy="130" r="115" fill="none" stroke="#EBD7CB" stroke-width="1.500"/><circle id="scarc" cx="130" cy="130" r="115" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round" stroke-dasharray="722.600" stroke-dashoffset="722.600" transform="rotate(-90 130 130)"/></svg><div class="scn"><b id="scn">0</b><small>%</small></div></div>
@@ -2350,7 +2385,7 @@ function viewOnboarding(){
     <div class="lv">${[['face','Análise de pele com IA','Acompanhe a evolução da sua pele.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['bottle','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:62px;height:62px">${ic(i_,26)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     ${cta('Vamos começar',true,S.plus?'ob-fim2':'ob-next')}</div>`;
   if(st==='pronta'){const L=(S.result&&rotinaPorAnalise())||null,ks=(L?L.manha.map(x=>x.k):(R[S.age]||R['30']).m),TT={limpador:'Limpeza',hidr:'Hidratação',fps:'Proteção'};
-    return `<div class="ob obx" style="text-align:center"><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
+    return `<div class="ob obx" style="text-align:center"><button data-act="ob-pular" aria-label="Fechar" style="position:absolute;right:16px;top:14px;width:40px;height:40px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center">${ic('x',18)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
     <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
     <div class="card prc" style="text-align:left;padding:18px 22px"><div class="row" style="justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)"><span class="obk" style="display:flex;gap:8px;align-items:center">${ic('sun',15)}Manhã</span><span class="small muted" style="display:flex;gap:6px;align-items:center">${ic('lock',13)}${ks.length} passos</span></div>
       ${ks.map((k,j)=>`<div class="prr"><span class="cic" style="width:46px;height:46px;font-size:18px">${j+1}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small>${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
@@ -2426,8 +2461,10 @@ document.addEventListener('click',e=>{
   else if(d.obq){const [k,v]=d.obq.split('|');S[k]=v;render()}
   else if(d.hper){S.obHp=d.hper;render()}
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
+  else if(d.act==='ob-pular'){S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
   else if(d.act==='ob-plano'){S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
+  else if(d.act==='cam-snap'){const u=OBCAM.snapNow&&OBCAM.snapNow();if(u)camFinish(u)}
   else if(d.act==='cam-fechar'){camStop();obIr('foto');render()}
   else if(d.act==='scan-retry'){S.err=null;startScan()}
   else if(d.act==='scan-outra'){S.err=null;S.file=null;S.photo=null;obIr('camera');render()}
