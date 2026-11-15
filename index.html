@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794704883";</script>
+<script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -560,12 +560,39 @@ header{padding:16px 0 12px}
 .pls em{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-style:normal;background:var(--grad);color:var(--ongrad);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:99px;white-space:nowrap}
 .pwm .mph{width:min(46%,170px)}.pwm .mph-r:nth-child(n+6){display:none}
 .fhalo{background:radial-gradient(closest-side,var(--tint) 0%,transparent 72%);padding:6px 0}.fhalo .fmap{width:min(72%,250px)}
+.f3d{display:grid;place-items:center;min-height:120px}.f3c{display:block;margin:0 auto;touch-action:manipulation}
+[data-f3d=tap] .f3c{cursor:pointer}
+.fhalo .f3d{max-width:250px;margin:0 auto}
+.mleg{display:grid;gap:6px;text-align:left;margin:6px 0 2px}.mleg span{display:flex;gap:8px;align-items:center;font-size:14px}.mleg i{flex:none;width:12px;height:12px;border-radius:50%;background:#F26FA6}
 /* barra de navegação flutuante */
 .app{padding-bottom:118px}
 nav,:root:not([data-tema=suave]) nav{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:496px;margin:0 auto;border:1px solid rgba(255,255,255,.8);border-radius:28px;padding:6px;background:rgba(255,255,255,.84);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 14px 36px rgba(42,20,32,.16)}
 nav button{border-radius:20px;padding:8px 0 7px;font-size:10.5px;font-weight:700;transition:background .18s,color .18s}
 nav button[aria-current="page"],:root:not([data-tema=suave]) nav button[aria-current="page"]{background:var(--soft);color:var(--accent)}
 @media (prefers-reduced-motion:reduce){nav button{transition:none}}
+/* ===== contorno fino, na lógica do logo ===== */
+:root{--ol:#5A2E14;--oll:#D9C2AC}
+svg.ic{stroke-width:1.5}
+.btn,.hpill,.obc{background:transparent!important;color:var(--ol)!important;border:1.5px solid var(--ol)!important;box-shadow:none!important}
+.btn.ghost{border-color:var(--oll)!important}
+.card,.rc,.nextc,.short button,.mrow,.tm,.doneb,.comp,.ptsb,.alertc,.pv3 button,.op2,.qg button,.opt,.evo,.gcard,.bk2,.seg button,.cnts button{box-shadow:none!important;border:1px solid var(--oll)!important;background:var(--surface)}
+.tile,.short .tile,.vb .tile,.vp .tile,.pw .tile,.av,.fst em,.ftp span,.mph-r em{background:transparent!important;color:var(--ol)!important;border:1.3px solid var(--ol)!important;box-shadow:none!important}
+.badge,.vbadge,.pls em,.mph-h u,.pill{background:var(--surface)!important;color:var(--ol)!important;border:1px solid var(--ol)!important;box-shadow:none!important}
+.hhero,.hero2,.cta.go,.cta,.oferta,.tri,.plus,.tip{background:var(--surface)!important;color:var(--ink)!important;border:1px solid var(--ol)!important;box-shadow:none!important}
+.hhero h2,.hhero h2 em,.hhero .lvrow,.plus h2,.plus .perk,.oferta h3{color:var(--ink)!important}
+.hero2::before,.hero2::after{display:none}
+.card.oferta .btn,.plus .btn,.cta.go .btn{background:transparent!important;color:var(--ol)!important;box-shadow:none!important}
+.oferta .pl>div,.tri3 i{background:transparent!important;border:1px solid var(--oll)}.oferta .pl>div.best{border:1.5px solid var(--ol)!important}
+.seg button[aria-pressed="true"],.rg[aria-pressed="true"],.op2[aria-pressed=true],.qg button[aria-pressed=true],.opt[aria-pressed="true"],.zch button[aria-pressed=true],.pls button[aria-checked=true]{background:var(--soft)!important;color:var(--ol)!important;border:1.5px solid var(--ol)!important;box-shadow:none!important}
+.rg,.zch button{background:transparent!important;border:1px solid var(--oll)!important;color:var(--ink)}
+nav button[aria-current="page"]{background:transparent!important;color:var(--ol)!important;box-shadow:inset 0 0 0 1.3px var(--ol)}
+.step.done button.ck,.rr.on .rk,.wd.on i{background:transparent!important;color:var(--ol)!important;border:1.5px solid var(--ol)!important;box-shadow:none!important}
+.vsh>span+span,.vsr .yes{background:var(--soft)!important;color:var(--ink)!important}
+.bar b,.lvbar b,.use b{background:var(--ol)!important}
+.sw[aria-checked="true"]{background:var(--ol)}
+h1,h2,h3,.obh{font-weight:700}
+.mph{background:transparent;border:1.5px solid var(--ol);box-shadow:none}.mph-n{background:var(--ol)}.mph-s{background:var(--surface)}.mph-r{box-shadow:none;border:1px solid var(--oll)}
+.pwb,.pls button b,.kick{color:var(--ol)!important}
 </style>
 
 <div class="app">
@@ -1256,6 +1283,10 @@ function viewAnalise(){
   if(!rs)return `<div class="stack">${card1}
     <div class="card"><div class="row" style="gap:8px">${['Oleosidade','Hidratação','Poros','Manchas','Linhas finas','Vermelhidão'].map(x=>`<span class="badge">${x}</span>`).join('')}</div></div></div>`;
   return `<div class="stack">${S.okMsg==='pele'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Avaliação da pele concluída, ${nome}!</b><div class="small muted" style="margin-top:2px">Veja o resultado abaixo. Em seguida, a sua rotina é montada com base nele.</div></div></div>`:''}${card1}
+  ${(()=>{const m=zonasAnalise(rs);return `<div class="card" style="text-align:center"><div class="row" style="justify-content:space-between"><h3>Mapa da sua pele</h3><span class="badge">3D</span></div>
+    ${face3d('view',m.z,'')}
+    ${m.leg.length?`<div class="mleg">${m.leg.map(x=>`<span><i></i>${esc(x)}</span>`).join('')}</div>`:'<p class="small muted">Nenhuma região com nota alta nesta análise.</p>'}
+    <p class="note" style="text-align:left">As áreas em rosa mostram onde as notas da análise pedem mais atenção. Modelo ilustrativo, não é o seu rosto.</p></div>`})()}
   <div class="card">
     <div class="row" style="justify-content:space-between"><h3>Tipo de pele</h3><b style="font-family:var(--f-display);font-size:20px">${esc(rs.tipo)}</b></div>
     <p class="small muted" style="margin:4px 0 8px">${esc(rs.resumo)}</p>
@@ -2024,6 +2055,48 @@ function faceMap(tap){
       <path d="M124 240 C134 252 166 252 176 240 C166 244 134 244 124 240Z" fill="#C9BFB7"/>
       <path d="M124 240 C140 243 160 243 176 240" fill="none" stroke="#857B73" stroke-width="1.2"/>
     </g></svg>`}
+/* ---------- Rosto 3D: malha facial de código aberto (modelo canônico do MediaPipe, Apache-2.0) + Three.js ---------- */
+const F3REG={testa:{a:[10,151,9,67,297,69,299],s:2.5},olhos:{a:[230,450,119,348,231,451],s:1.35},nariz:{a:[1,4,5,195,197,6,48,278,98,327],s:1.35},bochechas:{a:[50,280,205,425,187,411],s:1.8},queixo:{a:[152,175,199,18],s:1.8}};
+const F3D={p:null,ok:false,cv:null,zs:null,host:null};
+function f3load(){
+  if(F3D.p)return F3D.p;
+  F3D.p=Promise.all([new Promise((ok,no)=>{const s=document.createElement('script');s.src='three.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)}),fetch('face-mesh.json').then(r=>{if(!r.ok)throw 0;return r.json()})]).then(([_,m])=>{
+    const T=window.THREE,geo=new T.BufferGeometry(),P=new Float32Array(m.v),n=P.length/3;
+    geo.setAttribute('position',new T.BufferAttribute(P,3));geo.setIndex(m.f);geo.computeVertexNormals();
+    const W={};Object.keys(F3REG).forEach(k=>{const r=F3REG[k],w=W[k]=new Float32Array(n);for(let i=0;i<n;i++){let b=0;for(const a of r.a){const dx=P[i*3]-P[a*3],dy=P[i*3+1]-P[a*3+1],dz=P[i*3+2]-P[a*3+2],e=Math.exp(-(dx*dx+dy*dy+dz*dz)/(2*r.s*r.s));if(e>b)b=e}w[i]=b}});
+    const C=new Float32Array(n*3);geo.setAttribute('color',new T.BufferAttribute(C,3));
+    const rn=new T.WebGLRenderer({antialias:true,alpha:true});rn.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    const sc=new T.Scene(),cam=new T.PerspectiveCamera(26,1/1.2,1,200);cam.position.set(0,-.4,50);
+    sc.add(new T.HemisphereLight(0xffffff,0x6f6964,.82));const d1=new T.DirectionalLight(0xffffff,.55);d1.position.set(5,8,14);sc.add(d1);const d2=new T.DirectionalLight(0xffffff,.2);d2.position.set(-9,-2,6);sc.add(d2);
+    const g=new T.Group(),mesh=new T.Mesh(geo,new T.MeshStandardMaterial({vertexColors:true,roughness:.78,metalness:.02,side:T.DoubleSide}));
+    const wire=new T.LineSegments(new T.WireframeGeometry(geo),new T.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.62}));wire.scale.setScalar(1.004);
+    g.add(mesh);g.add(wire);g.position.y=.6;sc.add(g);
+    const cv=rn.domElement;cv.className='f3c';cv.setAttribute('role','img');cv.setAttribute('aria-label','Rosto em 3D com as regiões da pele');
+    const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;let raf=0,t0=performance.now();
+    const paint=()=>{const z=F3D.zs||{};for(let i=0;i<n;i++){let w=0;for(const k in z){const x=W[k]?W[k][i]*z[k]:0;if(x>w)w=x}w=Math.min(1,w);w=w*w*(3-2*w);C[i*3]=.69+(.98-.69)*w;C[i*3+1]=.68+(.50-.68)*w;C[i*3+2]=.68+(.72-.68)*w}geo.attributes.color.needsUpdate=true};
+    const frame=()=>{if(!cv.isConnected){raf=0;return}const t=(performance.now()-t0)/1000;g.rotation.y=still?0:Math.sin(t*.55)*.24;g.rotation.x=still?0:-.03+Math.sin(t*.38)*.035;rn.render(sc,cam);raf=requestAnimationFrame(frame)};
+    const size=()=>{const h=F3D.host;if(!h)return;const w=Math.max(120,Math.min(h.clientWidth||300,360)),ht=Math.round(w*1.2);rn.setSize(w,ht,false);cv.style.width=w+'px';cv.style.height=ht+'px'};
+    cv.addEventListener('click',e=>{const h=F3D.host;if(!h||h.dataset.f3d!=='tap')return;const b=cv.getBoundingClientRect(),ray=new T.Raycaster();ray.setFromCamera(new T.Vector2((e.clientX-b.left)/b.width*2-1,-((e.clientY-b.top)/b.height*2-1)),cam);
+      const hit=ray.intersectObject(mesh)[0];if(!hit)return;let bk=null,bw=.3;for(const k in W){const x=Math.max(W[k][hit.face.a],W[k][hit.face.b],W[k][hit.face.c]);if(x>bw){bw=x;bk=k}}if(!bk)return;
+      const zz=S.zonas||(S.zonas=[]),ix=zz.indexOf(bk);if(ix>=0)zz.splice(ix,1);else zz.push(bk);const y=window.scrollY;render();window.scrollTo(0,y)});
+    window.addEventListener('resize',size);
+    Object.assign(F3D,{ok:true,cv,paint,size,start:()=>{if(!raf)raf=requestAnimationFrame(frame)}});
+  });
+  return F3D.p}
+function f3scan(){const h=document.querySelector('[data-f3d]');if(!h)return;
+  f3load().then(()=>{if(!h.isConnected)return;let z={};try{z=JSON.parse(h.dataset.z||'{}')}catch(e){}
+    const fb=h.querySelector('.f3fb');if(fb)fb.remove();F3D.host=h;F3D.zs=z;h.appendChild(F3D.cv);F3D.size();F3D.paint();F3D.start()}).catch(()=>{})}
+/* marcador do rosto 3D; enquanto carrega (ou sem WebGL), mostra o desenho */
+function face3d(modo,z,fallback){return `<div class="f3d" data-f3d="${modo}" data-z='${JSON.stringify(z)}'><div class="f3fb">${fallback||''}</div></div>`}
+const zonasSel=()=>{const o={};(S.zonas||[]).forEach(k=>o[k]=1);return o};
+/* regiões destacadas a partir do resultado da análise */
+function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=Math.max(o[k]||0,v)}),L=[];
+  const zz=r.zonas||{};
+  if(r.oleo>=60){add(['testa','nariz','queixo'],r.oleo/100);L.push('Oleosidade: testa, nariz e queixo')}
+  if(r.poros>=60){add(['nariz','bochechas'],r.poros/100);L.push('Poros: nariz e bochechas')}
+  if(r.linhas>=50){add(['testa','olhos'],r.linhas/100);L.push('Linhas finas: testa e área dos olhos')}
+  [['manchas','Manchas'],['verm','Vermelhidão']].forEach(([k,t])=>{const a=(Array.isArray(zz[k])?zz[k]:[]).filter(x=>F3REG[x]);if(r[k]>=50&&a.length){add(a,r[k]/100);L.push(t+': '+a.map(x=>(ZONAS.find(q=>q[0]===x)||[0,x])[1]).join(', '))}});
+  return{z:o,leg:L}}
 function obPhone(){return `<div class="mph" aria-hidden="true"><div class="mph-s"><div class="mph-n"></div>
   <div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i><u>${ic('sun',12)}Começar</u></div>
   ${[['Limpador suave','Gel de limpeza'],['Sérum','Niacinamida'],['Hidratante','Com ceramidas'],['Protetor solar','FPS 50+']].map(([a,b],i)=>`<div class="mph-r"><em>${i+1}</em><span>${ic('bottle',14)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
@@ -2066,11 +2139,11 @@ function viewOnboarding(){
     ${cta('Continuar',S.pref.length>0)}</div>`;
   if(st==='zonas')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Sua pele</div><h1 class="obh" style="text-align:center">Toque nas regiões do rosto que mais incomodam</h1>
-    ${faceMap(true)}
+    ${face3d('tap',zonasSel(),faceMap(true))}
     <div class="zch">${ZONAS.map(([k,t])=>`<button data-zona="${k}" aria-pressed="${(S.zonas||[]).includes(k)}">${t.charAt(0).toUpperCase()+t.slice(1)}</button>`).join('')}</div>
     ${cta('Continuar',(S.zonas||[]).length>0)}</div>`;
   if(st==='foco')return `<div class="ob obx" style="text-align:center">${back}
-    <div class="obk">Sua pele</div><div class="fhalo">${faceMap(false)}</div>
+    <div class="obk">Sua pele</div><div class="fhalo">${face3d('view',zonasSel(),faceMap(false))}</div>
     <h1 class="obh">Seu foco: ${esc(zonasTxt())}.</h1><p class="obs">A análise da sua foto vai olhar com mais atenção para ${(S.zonas||[]).length>1?'essas regiões':'essa região'}.</p>
     ${cta('Quero ver minha pele')}</div>`;
   if(st==='idade')return `<div class="ob obx" style="text-align:center">${back}
@@ -2113,6 +2186,7 @@ function render(){
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
+  f3scan();
   save();
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,2200)}
@@ -2278,7 +2352,7 @@ async function analisar(){
     const r=await sf.json(promptIA(),{tipo:'pele',ctx:perfilBasico(),images:S.file});
     if(!r||r.erro){S.err=(r&&r.erro)||'Não consegui ler a foto. Tente outra.'}
     else{S.result={d:hoje(),tipo:String(r.tipo||'Normal'),resumo:r.resumo?String(r.resumo):'',oleo:num(r.oleo),hid:num(r.hid),poros:num(r.poros),manchas:num(r.manchas),linhas:num(r.linhas),verm:num(r.verm),
-      prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
+      prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null,zonas:(r.zonas&&typeof r.zonas==='object')?{manchas:(Array.isArray(r.zonas.manchas)?r.zonas.manchas:[]).map(String).slice(0,5),verm:(Array.isArray(r.zonas.verm)?r.zonas.verm:[]).map(String).slice(0,5)}:null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
   }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
   if(ok)S.okMsg='pele';
   S.analyzing=false;gameCheck();render();
