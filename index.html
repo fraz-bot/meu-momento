@@ -908,6 +908,21 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes fsl1{0%,8%{transform:scaleY(0)}24%,90%{transform:scaleY(1)}96%,100%{transform:scaleY(1);opacity:0}}
 @keyframes fsl2{0%,34%{transform:scaleY(0)}50%,90%{transform:scaleY(1)}96%,100%{transform:scaleY(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){.fst2 .n,.fst2>div::after{animation:none!important}.fst2 .n{background:#C77A8B;color:#fff;border-color:#C77A8B}.fst2>div:not(:last-child)::after{transform:none}}
+/* suspense antes dos resultados */
+.susp{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;gap:18px}
+.susp .sf{position:relative;width:150px;height:150px;display:grid;place-items:center}
+.susp .sf::before,.susp .sf::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #C98F7C;opacity:0;animation:suspR 2.4s ease-out infinite}
+.susp .sf::after{animation-delay:1.2s}
+.susp .sf svg{animation:suspF 2.4s ease-in-out infinite}
+.susp h1{font-size:28px;margin:0;letter-spacing:-.02em;line-height:1.2}
+.susp .sd{display:flex;gap:8px}.susp .sd i{width:9px;height:9px;border-radius:50%;background:#A76F5C;animation:suspD 1.2s ease-in-out infinite}
+.susp .sd i:nth-child(2){animation-delay:.2s}.susp .sd i:nth-child(3){animation-delay:.4s}
+.susp .sp{opacity:0;animation:suspP 3s ease forwards;font-size:15px;color:var(--muted)}
+@keyframes suspR{0%{transform:scale(.55);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+@keyframes suspF{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.12) rotate(18deg)}}
+@keyframes suspD{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-5px)}}
+@keyframes suspP{0%,35%{opacity:0;transform:translateY(6px)}60%,100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.susp .sf::before,.susp .sf::after,.susp .sf svg,.susp .sd i{animation:none}.susp .sp{animation:none;opacity:1}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2501,7 +2516,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise',...(S.result&&desafio()&&desafio().forte?['analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','susp','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2991,6 +3006,11 @@ function viewOnboarding(){PFI=0;
     ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:`<p class="obs">Leva só alguns segundos. Não feche o app.</p>`}
     <p class="scst" id="scst" data-i="${scanSt()}">${SCANTXT[scanSt()]}</p><div class="dots" aria-hidden="true">${[0,1,2,3].map(k=>`<i id="scd${k}" class="${k>scanSt()?'w':''}"></i>`).join('')}</div>
     <div class="obf" style="flex-direction:column;align-items:center;gap:6px">${S.err?`<button class="btn obc" data-act="scan-retry">Tentar de novo</button><button class="back" data-act="scan-outra" style="padding:10px;font-weight:600;color:var(--ink)">Tirar outra foto</button>${S.result?`<button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Continuar com a análise anterior</button>`:''}`:`<button class="btn obc" id="scan-go" data-act="ob-next" style="${fim?'':'opacity:.35;pointer-events:none'}" ${fim?'':'disabled'}>Ver resultado</button>`}</div></div>`}
+  if(st==='susp'||st==='susp2'){const a=st==='susp';return `<div class="ovl rose"><div class="ob obx"><div class="susp" role="status" aria-live="polite">
+    <div class="sf"><svg viewBox="0 0 120 100" width="72" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(k=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${k} 60 50)"/>`).join('')}</g></svg></div>
+    <h1>${a?(nome?nome+', sua':'Sua')+' análise ficou pronta.':'Mas olha só o que encontramos…'}</h1>
+    <p class="sp">${a?'Vamos te mostrar o que a sua pele precisa mais.':'Tem algo que a sua pele faz muito bem.'}</p>
+    <div class="sd" aria-hidden="true"><i></i><i></i><i></i></div></div></div></div>`}
   if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',tart:'a sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
     <div class="obk">Sua análise</div><h1 class="obh">${nome?nome+', seu':'Seu'} maior desafio hoje é ${dn.tart||dn.t}.</h1>
     <div class="card big" style="padding:30px 18px"><svg viewBox="0 0 120 100" width="64" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg>
@@ -3065,7 +3085,8 @@ function render(){
   {const a=authView();if(a){document.querySelector('header').hidden=true;document.querySelector('nav').hidden=true;$('#view').innerHTML=a;return}}
   ajustaRot();
   renderChrome();
-  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||(a==='analise'&&!S.result))obIr('foto')}
+  clearTimeout(render._su);if(!S.ob.done){const a=obStepAtual();if(a==='susp'||a==='susp2')render._su=setTimeout(()=>{if(!S.ob.done&&obStepAtual()===a){S.ob.step++;render();window.scrollTo(0,0)}},3200)}
+  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='susp')&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
