@@ -883,6 +883,8 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .fimg .fim-o{position:absolute;inset:0;-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}.fimg svg{display:block;width:100%;height:100%}
 .fimg[data-fimg=tap]{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .tut .tut3{display:grid;place-items:center;min-height:0}.tut3fb{width:100%;height:auto;display:block}
+.tutm{width:min(210px,54vw);margin:4px auto 0}.tuts{font-size:16px;margin:6px 0 10px;text-align:center;min-height:24px}
+.ftp{margin-bottom:96px}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2943,7 +2945,8 @@ function viewOnboarding(){
     ${cta('Continuar')}</div>`;
   if(st==='foto')return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">Agora vamos analisar<br>a sua pele</h1>
-    <div style="position:relative;width:150px;margin:0 auto" aria-hidden="true">${ringSvg(150,72,92,112)}<svg viewBox="0 0 300 360" width="150" style="position:absolute;inset:0"><ellipse cx="150" cy="180" rx="72" ry="92" fill="none" stroke="#5A2E14" stroke-width="2.500"/><circle cx="128" cy="165" r="3" fill="#5A2E14"/><circle cx="172" cy="165" r="3" fill="#5A2E14"/><path d="M150 172v22h-6M132 212q18 12 36 0" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round"/></svg></div>
+    <div class="tut tutm" aria-hidden="true"><svg class="tutr" viewBox="0 0 300 360"><path class="bg" d="M150 8A142 172 0 1 1 149.9 8" pathLength="100"/><path id="tut-r" d="M150 8A142 172 0 1 1 149.9 8" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/></svg>${face3d('tutor',{},'')}</div>
+    <p class="tutt tuts" id="tut-t" aria-live="off">${TUT[0][0]}</p>
     <div class="card fst2">${[['Encaixe o rosto no círculo','Olhe para a câmera, com o rosto inteiro dentro do círculo.',1],['Gire a cabeça devagar','Faça um círculo: para cima, para os lados e para baixo.',2],['Continue até fechar o anel','Cada parte acende quando você olha para ela.',3]].map(([t,d,k])=>`<div class="${k===2?'on':''}"><span class="n">${k===1?ic('check',16):k}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     <p class="obs">Para uma análise mais precisa:</p>
     <div class="ftp">${[['sun','Boa iluminação'],['sparkle','Sem maquiagem'],['hair','Cabelo preso'],['face','Sem óculos']].map(([i_,t])=>`<div><span>${ic(i_,20)}</span>${t}</div>`).join('')}</div>
