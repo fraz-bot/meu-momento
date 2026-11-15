@@ -2488,7 +2488,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','tutor','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise',...(S.result&&desafio()&&desafio().forte?['analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise',...(S.result&&desafio()&&desafio().forte?['analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2947,13 +2947,6 @@ function viewOnboarding(){PFI=0;
       <div class="zn big" style="left:81.500%;top:84%"><span class="cic on">${ic('sparkle',30)}</span><div class="l" style="right:34px;width:190px"><b>Passo 3</b><small>sua meta: ${T[2]}</small></div></div>
     </div>
     <p class="small muted" style="text-align:center;margin:0">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
-  if(st==='tutor')return `<div class="ob obx" style="text-align:center">${back}
-    <h1 class="obh">Vamos preparar seu escaneamento facial.</h1>
-    <p class="obs">Observe os movimentos do rosto e siga as orientações para uma análise mais precisa.</p>
-    <div class="tut"><svg class="tutr" viewBox="0 0 300 360" aria-hidden="true"><path class="bg" d="M150 8A142 172 0 1 1 149.9 8" pathLength="100"/><path id="tut-r" d="M150 8A142 172 0 1 1 149.9 8" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/></svg>${face3d('tutor',{},faceMap(false))}</div>
-    <p class="tutt" id="tut-t" aria-live="polite">${TUT[0][0]}</p>
-    <div class="tutd" aria-hidden="true">${TUT.map((_,i)=>`<i${i===0?' class="on"':''}></i>`).join('')}</div>
-    ${cta('Continuar')}</div>`;
   if(st==='foto')return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">Agora vamos analisar<br>a sua pele</h1>
     <div class="pfa" style="position:relative;width:150px;margin:0 auto" aria-hidden="true">${ringSvg(150,0,92,112).replace(/<line class="tk"/g,()=>`<line style="--i:${PFI++}" class="tk"`)}<svg viewBox="0 0 300 360" width="150" style="position:absolute;inset:0;overflow:visible"><ellipse class="pfh" cx="150" cy="180" rx="72" ry="92" fill="none" stroke="#5A2E14" stroke-width="2.500"/><g class="pfm"><circle cx="128" cy="165" r="3" fill="#5A2E14"/><circle cx="172" cy="165" r="3" fill="#5A2E14"/><path d="M150 172v22h-6M132 212q18 12 36 0" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round"/></g></svg></div>
