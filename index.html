@@ -2551,7 +2551,7 @@ function f3fem(P){const n=P.length/3,ss=(a,b,x)=>{const t=Math.max(0,Math.min(1,
   [70,63,105,66,107,336,296,334,293,300,46,53,52,65,55,285,295,282,283,276].forEach(a=>{P[Y(a)]+=.24});  // sobrancelhas mais altas
   for(let i=0;i<n;i++)P[X(i)]*=.965}
 /* tutorial: o rosto 3D executa os movimentos do escaneamento, um de cada vez */
-const TUT=[['Olhe para a frente',0,0],['Vire devagar para a esquerda',.55,0],['Volte ao centro',0,0],['Agora, vire para a direita',-.55,0],['Incline o rosto para cima',0,-.3],['Incline o rosto para baixo',0,.28],['Volte à posição inicial',0,0]];
+const TUT=[['Olhe para a frente',0,0],['Vire devagar para a esquerda',.36,0],['Volte ao centro',0,0],['Agora, vire para a direita',-.36,0],['Incline o rosto para cima',0,-.17],['Incline o rosto para baixo',0,.17],['Volte à posição inicial',0,0]];
 const TUTD=2.6,TUTM=1.3;
 function tutorPose(t){const n=TUT.length,c=((t%(n*TUTD))+n*TUTD)%(n*TUTD),i=Math.floor(c/TUTD),u=Math.min(1,(c-i*TUTD)/TUTM),e=.5-.5*Math.cos(Math.PI*u),a=TUT[(i+n-1)%n],b=TUT[i];
   const y=a[1]+(b[1]-a[1])*e,x=a[2]+(b[2]-a[2])*e,br=Math.sin(t*1.6)*.006;return{i,y,x:x+br,z:-y*.07,prog:c/(n*TUTD)}}
@@ -2636,7 +2636,7 @@ function tut3Load(){if(TUT3.p)return TUT3.p;
     const fit=`const float A=${T3FIT.a.toFixed(3)},B=${T3FIT.b.toFixed(3)},C=${T3FIT.c.toFixed(3)},D=${T3FIT.d.toFixed(3)};`;
     const vs1=fit+`varying vec2 vUv;varying float nz;varying float py;void main(){vUv=vec2((A*position.x+B)/900.0,1.0-(C*position.y+D)/1125.0);nz=normal.z;py=position.y;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
     const fs1=`uniform sampler2D map;uniform vec3 base;uniform float fade;varying vec2 vUv;varying float nz;varying float py;void main(){vec4 t=texture2D(map,vUv);float f=smoothstep(0.05,0.4,nz);
-      if(f>0.5&&t.a<0.5)discard;vec3 col=mix(base*(0.72+0.28*clamp(nz+0.3,0.0,1.0)),t.rgb,f);float al=1.0;if(fade>0.5)al=smoothstep(-17.0,-12.5,py);gl_FragColor=vec4(col,al);}`;
+      if(fade<0.5&&f>0.5&&t.a<0.5)discard;if(fade>0.5)f=f*smoothstep(0.2,0.6,t.a);vec3 col=mix(base*(0.72+0.28*clamp(nz+0.3,0.0,1.0)),t.rgb,f);float al=1.0;if(fade>0.5)al=smoothstep(-17.0,-12.5,py);gl_FragColor=vec4(col,al);}`;
     const M=(vs,fs,base,fade,off)=>{const x=new T.ShaderMaterial({uniforms:{map:{value:tex},base:{value:new T.Color(base[0],base[1],base[2])},fade:{value:fade}},vertexShader:vs,fragmentShader:fs,transparent:fade>0.5});if(off){x.polygonOffset=true;x.polygonOffsetFactor=off;x.polygonOffsetUnits=off*2}return x};
     const sc=new T.Scene(),cam=new T.PerspectiveCamera(26,1/1.2,1,300);cam.position.set(0,-1.2,76);cam.lookAt(0,-1.2,0);
     const g=new T.Group(),face=new T.Mesh(gf,M(vs0,fs0,[1,1,1],0,0));
