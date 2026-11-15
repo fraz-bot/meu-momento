@@ -8,7 +8,56 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
+<style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}
+/* onboarding v2 (prints) */
+.qg3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.qg3 button{border:1px solid var(--oll);background:var(--surface);border-radius:20px;padding:16px 4px 12px;display:grid;justify-items:center;gap:8px;font:inherit;color:var(--ol);cursor:pointer;min-height:104px}
+.qg3 button b{font-weight:500;font-size:14px;color:var(--ink);line-height:1.2}
+.qg3 button[aria-pressed=true]{background:var(--soft);border:2px solid var(--ol)}
+.qi{display:grid;place-items:center;color:var(--ol)}
+.cvin{width:100%;text-align:center;font:inherit;font-size:22px;letter-spacing:.08em;padding:18px;border-radius:20px;border:1.5px solid var(--ol);background:transparent;color:var(--ink);margin-top:10px}
+.cvp{display:inline-flex;gap:8px;align-items:center;justify-content:center;margin:6px auto 0;border:1.5px solid var(--oll);background:transparent;color:var(--ink);font:inherit;font-weight:600;padding:10px 20px;border-radius:999px;cursor:pointer}
+.sgm{display:flex;border:1.5px solid var(--oll);border-radius:999px;padding:4px;width:max-content;margin:0 auto}
+.sgm button{display:inline-flex;gap:8px;align-items:center;border:0;background:transparent;font:inherit;font-weight:600;color:var(--muted);padding:10px 22px;border-radius:999px;cursor:pointer}
+.sgm button[aria-pressed=true]{background:var(--ol);color:#fff}
+.whl.ln .whb{background:transparent;border-top:1px solid var(--oll);border-bottom:1px solid var(--oll);border-radius:0}
+.zz{position:relative;height:440px;width:100%;max-width:358px;margin:0 auto}
+.zn{position:absolute;width:0;height:0}.zn>span.cic{position:absolute;left:-23px;top:-23px;background:var(--bg)}
+.zn.big>span.cic{width:62px;height:62px;left:-31px;top:-31px}.zn .cic.on{background:var(--ol);color:#fff;border-color:var(--ol)}
+.zn>div{position:absolute;top:-20px;width:140px;text-align:left}.zn>div.l{text-align:right}
+.zn b{display:block;font-weight:600;font-size:15px}.zn small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.fst2{display:grid;gap:14px;padding:18px!important}.fst2>div{display:flex;gap:14px;align-items:flex-start}
+.fst2 .n{flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ol);display:grid;place-items:center;font-weight:600;color:var(--ol)}
+.fst2 .on .n{background:var(--ol);color:#fff}.fst2 b{display:block;font-weight:600}.fst2 small{display:block;color:var(--muted);font-size:14px;line-height:1.35}
+.tk{stroke:#E6D3C6;stroke-width:3;stroke-linecap:round}.tk.on{stroke:#5A2E14}
+.sheetbg{position:fixed;inset:0;background:rgba(42,26,16,.45);display:flex;align-items:flex-end;z-index:80}
+.sheet{width:100%;max-height:92dvh;overflow:auto;background:#E8D5C8;border-radius:28px 28px 0 0;padding:10px 22px 26px}
+.grab{display:block;width:44px;height:5px;border-radius:9px;background:#C9AE9E;margin:4px auto 6px}
+.ckb{flex:none;width:26px;height:26px;border-radius:8px;border:1.5px solid var(--ol);background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;padding:0}
+.ckb.on{background:var(--ol)}
+.camx{position:fixed;inset:0;z-index:70;background:#2A1A10;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 20px)}
+.camt{display:flex;width:100%;justify-content:space-between;align-items:center}
+.cbtn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:18px;display:grid;place-items:center;cursor:pointer}
+.cchip{border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:9px 18px;font-size:14px}
+.camr{display:grid;place-items:center;width:100%}
+.camring{position:relative;width:min(340px,86vw)}.camring svg{width:100%}
+.camring .tk{stroke:rgba(255,255,255,.25)}.camring .tk.on{stroke:#F2D9C4}
+.camo{position:absolute;left:23.3%;right:23.3%;top:25.3%;bottom:25.3%;border-radius:50%;overflow:hidden;background:#1a0f08}
+.camo video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.cams{display:grid;gap:14px;justify-items:center;width:100%}
+.campill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:12px 20px;font-size:15px;text-align:center}
+.campb{display:inline-flex;gap:8px;align-items:center;color:#fff;opacity:.85;font-size:14px;padding:8px 14px;cursor:pointer}
+.scr{position:relative;width:min(280px,76vw);margin:8px auto}.scn{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.scn b{font-size:68px;font-weight:300;line-height:1;color:var(--ol)}.scn small{font-size:16px;color:var(--muted)}
+.dots{display:flex;gap:10px;justify-content:center}.dots i{width:9px;height:9px;border-radius:50%;background:var(--ol)}.dots i.w{opacity:.3}
+.ovl.rose{background:#F3DDD2;margin:-10px -18px 0;padding:0 18px;min-height:100dvh}
+.pillo{display:inline-block;margin-top:12px;border:1px solid var(--ol);border-radius:999px;padding:7px 16px;font-size:14px;color:var(--ol)}
+.lv{display:grid;gap:18px;margin:14px 0}.lv>div{display:flex;gap:16px;align-items:center}.lv b{display:block;font-weight:600;font-size:17px}.lv small{display:block;color:var(--muted);font-size:14px}
+.prc{display:grid;gap:0}.prr{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.prr:last-child{border:0}
+.prr b{display:block;font-weight:600}.prr small{display:block;color:var(--muted);font-size:14px}
+.rd{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--oll)}
+.btn.fill{background:var(--ol)!important;color:#fff!important;border:0!important}
+</style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
@@ -775,7 +824,7 @@ const QS=[
  {k:'gest',t:'Alguns ativos precisam ser evitados. Você está:',s:'Sua segurança',o:[['nao','Nenhuma das opções'],['tent','Tentando engravidar'],['amam','Amamentando'],['grav','Grávida']]}
 ];
 const QI={'20':'sparkle','30':'sparkle','40':'sparkle','50':'sparkle',oleosa:'drop',mista:'drops',seca:'sun',normal:'checkc','nao-sei':'face',acne:'spot',manchas:'sun',linhas:'waves',poros:'pores',resseca:'leaf',verm:'flame',alta:'alert',media:'drops',baixa:'checkc',sim:'heart',nao:'checkc',nd:'lock',econ:'coin',mid:'sparkle',prem:'star'};
-const LBL={oleosa:'Oleosa',mista:'Mista',seca:'Seca',normal:'Normal','nao-sei':'Ainda não sei',acne:'Espinhas',manchas:'Manchas',linhas:'Linhas finas',poros:'Poros dilatados',resseca:'Ressecamento',verm:'Vermelhidão',
+const LBL={oleo:'Oleosidade',olheiras:'Olheiras',textura:'Textura irregular',outro:'Outro',oleosa:'Oleosa',mista:'Mista',seca:'Seca',normal:'Normal','nao-sei':'Ainda não sei',acne:'Espinhas',manchas:'Manchas',linhas:'Linhas finas',poros:'Poros dilatados',resseca:'Ressecamento',verm:'Vermelhidão',
   alta:'Reage com frequência',media:'Reage às vezes',baixa:'Raramente reage',econ:'Econômico',mid:'Intermediário',prem:'Premium'};
 const PRIOR={acne:'Controlar a oleosidade e as espinhas com limpeza suave e niacinamida.',manchas:'Usar protetor solar todos os dias para não escurecer as manchas.',
   linhas:'Hidratar bem e proteger do sol; retinoide entra aos poucos, se você puder usar.',poros:'Niacinamida e limpeza regular melhoram o aspecto dos poros.',
@@ -785,7 +834,7 @@ const rotSig=()=>JSON.stringify([S.result&&[S.result.d,S.result.oleo,S.result.hi
 function rotinaPorAnalise(){
   const rs=S.result;if(!rs)return null;
   const has=k=>S.pref.includes(k),clamp=v=>Math.max(0,Math.min(100,v));
-  const o=clamp(rs.oleo+(has('acne')?15:0)),p=clamp(rs.poros+(has('poros')?15:0)),mc=clamp(rs.manchas+(has('manchas')?15:0)),
+  const o=clamp(rs.oleo+(has('acne')||has('oleo')?15:0)),p=clamp(rs.poros+(has('poros')?15:0)),mc=clamp(rs.manchas+(has('manchas')?15:0)),
     l=clamp(rs.linhas+(has('linhas')?15:0)+(S.age==='40'?8:S.age==='50'?12:0)),hd=clamp(rs.hid-(has('resseca')?15:0)),v=clamp(rs.verm+(has('verm')?15:0));
   const forte=S.sens==='alta',sens=forte||S.sens==='media'||S.acido==='irr'||rs.tipo==='Sensível',gest=S.gest==='sim',T=55;
   const calm=v>=60||(forte&&v>=45);
@@ -992,7 +1041,7 @@ const entTxt=e=>[e.sono&&'Sono '+e.sono+'h',e.est&&'Estresse '+e.est,e.agua&&'Á
 const ymM=()=>hoje().slice(0,7);
 function uso(){if(!S.uso||S.uso.ym!==ymM())S.uso={ym:ymM(),an:0,sc:0};return S.uso}
 const LIM={an:3,sc:5};
-const podeUsar=k=>!!S.plus;
+const podeUsar=k=>!!S.plus||(k==='an'&&!S.ob.done);
 function limite(){toast('Esse recurso é do Pellie+');S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
 /* ---------- Fase da pele ---------- */
 const FASES={
@@ -1077,7 +1126,7 @@ const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso 
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
 function authView(){
-  if(AUTH.user&&AUTH.ready){return precisaConsent()?consentView():null}
+  if(AUTH.user&&AUTH.ready){return precisaConsent()&&S.ob.done?consentView():null}
   const logo=LOGO.replace('class="logo"','class="logo" style="width:84px;height:84px;filter:drop-shadow(0 10px 18px rgba(122,99,82,.35))"');
   if(!AUTH.ready)return `<div class="ob" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"><p class="small muted" style="margin-top:8px">Carregando…</p></div></div>`;
   return `<div class="ob" style="text-align:center;gap:14px"><div class="brand" style="flex-direction:column;gap:6px;margin-top:18px"><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"></div>
@@ -2010,9 +2059,11 @@ function viewCabelo(){
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
 const DEPO=[];   /* [{nome:'Nome', txt:'Depoimento real'}] */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','sol','acido','gest','horario','scanner',...(DEPO.length?['comunidade']:[]),...(ANTESDEPOIS.length?['transf']:[]),'caminho',S.plus?'foto':'pronta'];
-const METAS=[['vidro','Pele de vidro','lisa e iluminada'],['limpa','Pele limpa','sem espinhas nem marcas'],['radiante','Pele radiante','viço e tom uniforme'],['firme','Pele firme','menos linhas finas']];
-const ZONAS=[['testa','testa'],['olhos','área dos olhos'],['nariz','nariz'],['bochechas','bochechas'],['queixo','queixo']];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario',...(DEPO.length?['comunidade']:[]),'leva',...(S.plus?[]:['pronta'])];
+const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
+const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
+const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
+const ZONAS=[['testa','testa'],['olhos','olheiras'],['nariz','nariz'],['bochechas','bochechas'],['queixo','queixo']];
 const zonasTxt=()=>{const a=ZONAS.filter(([k])=>(S.zonas||[]).includes(k)).map(z=>z[1]);return a.length>1?a.slice(0,-1).join(', ')+' e '+a[a.length-1]:a[0]||''};
 const idadeFaixa=n=>n<30?'20':n<40?'30':n<50?'40':'50';
 function skinDot(k){
@@ -2104,6 +2155,56 @@ function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=
   if(r.linhas>=50){add(['testa','olhos'],r.linhas/100);L.push('Linhas finas: testa e área dos olhos')}
   [['manchas','Manchas'],['verm','Vermelhidão']].forEach(([k,t])=>{const a=(Array.isArray(zz[k])?zz[k]:[]).filter(x=>F3REG[x]);if(r[k]>=50&&a.length){add(a,r[k]/100);L.push(t+': '+a.map(x=>(ZONAS.find(q=>q[0]===x)||[0,x])[1]).join(', '))}});
   return{z:o,leg:L}}
+function qIcon(k){const sv=d=>`<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  return {olheiras:sv('<path d="M3 15c3.500-5.500 8-8 12-8s8.500 2.500 12 8c-3.500 5.500-8 8-12 8S6.500 20.500 3 15z"/><circle cx="15" cy="15" r="3.500"/>'),textura:sv('<path d="M5 9h4M12 9h4M19 9h4M5 15h4M12 15h4M19 15h4M5 21h4M12 21h4M19 21h4"/>'),
+    oleo:ic('drop',30),acne:ic('spot',30),manchas:sv('<circle cx="9" cy="9" r="3"/><circle cx="20" cy="12" r="3"/><circle cx="12" cy="21" r="3"/>'),linhas:ic('waves',30),poros:ic('pores',30),resseca:sv('<circle cx="15" cy="15" r="10"/><path d="M15 5l-3 6 5 3-4 5 2 6"/>'),outro:ic('plus',30)}[k]||''}
+const OBCAM={stream:null,msg:'',fail:false,p:0,t:0,best:null,bs:-1,iv:null,busy:false};
+function camStop(){if(OBCAM.iv){clearInterval(OBCAM.iv);OBCAM.iv=null}if(OBCAM.stream){OBCAM.stream.getTracks().forEach(t=>t.stop());OBCAM.stream=null}OBCAM.p=0;OBCAM.t=0;OBCAM.best=null;OBCAM.bs=-1;OBCAM.msg=''}
+function camSync(){
+  const on=!S.ob.done&&obStepAtual()==='camera';
+  if(!on){if(OBCAM.stream||OBCAM.iv)camStop();OBCAM.fail=false;return}
+  const v=document.getElementById('cam-v');if(!v)return;
+  if(OBCAM.stream){if(v.srcObject!==OBCAM.stream)v.srcObject=OBCAM.stream;return}
+  if(OBCAM.busy||OBCAM.fail)return;
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){OBCAM.fail=true;render();return}
+  OBCAM.busy=true;
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:1280}},audio:false}).then(st=>{
+    OBCAM.busy=false;if(S.ob.done||obStepAtual()!=='camera'){st.getTracks().forEach(t=>t.stop());return}
+    OBCAM.stream=st;const vv=document.getElementById('cam-v');if(vv){vv.srcObject=st;vv.play&&vv.play().catch(()=>{})}
+    camLoop()}).catch(()=>{OBCAM.busy=false;OBCAM.fail=true;if(obStepAtual()==='camera')render()});
+}
+function camLoop(){
+  const cv=document.createElement('canvas');cv.width=cv.height=64;const cx=cv.getContext('2d',{willReadFrequently:true});
+  const big=document.createElement('canvas');
+  OBCAM.iv=setInterval(()=>{
+    const v=document.getElementById('cam-v');if(!v||!v.videoWidth)return;
+    cx.drawImage(v,0,0,64,64);const d=cx.getImageData(0,0,64,64).data;let sum=0,g=new Float32Array(4096);
+    for(let i=0;i<4096;i++){const y=.299*d[i*4]+.587*d[i*4+1]+.114*d[i*4+2];g[i]=y;sum+=y}
+    const br=sum/4096;let sh=0;for(let y=1;y<63;y++)for(let x=1;x<63;x++){const l=4*g[y*64+x]-g[y*64+x-1]-g[y*64+x+1]-g[(y-1)*64+x]-g[(y+1)*64+x];sh+=l*l}sh/=3844;
+    const st=document.getElementById('cam-st'),pill=document.getElementById('cam-pill');
+    const ok=br>=70&&br<=215;
+    OBCAM.msg=br<70?'Pouca luz':br>215?'Luz demais':'Boa iluminação';if(st)st.textContent=OBCAM.msg;
+    if(!ok){OBCAM.t=Math.max(0,OBCAM.t-.5);}else{OBCAM.t+=.25}
+    OBCAM.p=Math.min(1,OBCAM.t/7);
+    if(pill)pill.textContent=OBCAM.p>0.02?'Gire a cabeça devagar para fechar o anel':ok?'Encaixe o rosto no oval':'Procure um lugar mais iluminado';
+    const lit=Math.round(OBCAM.p*72);document.querySelectorAll('.camring .tk').forEach((n,i)=>n.classList.toggle('on',i<lit));
+    if(ok&&sh>OBCAM.bs&&OBCAM.p>.1){OBCAM.bs=sh;big.width=Math.min(720,v.videoWidth);big.height=Math.round(big.width*v.videoHeight/v.videoWidth);big.getContext('2d').drawImage(v,0,0,big.width,big.height);OBCAM.best=big.toDataURL('image/jpeg',.85)}
+    if(OBCAM.p>=1&&OBCAM.best){const url=OBCAM.best;camStop();
+      fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;S.result=null;S.err=null;obIr('scan');render();startScan()})}
+  },250);
+}
+let SCANIV=null;
+function startScan(){
+  if(SCANIV)clearInterval(SCANIV);let p=0;
+  SCANIV=setInterval(()=>{
+    const fim=!S.analyzing&&(!!S.result||!!S.err);
+    p=fim?(S.result?100:p):Math.min(92,p+(92-p)*.04+.3);
+    const a=document.getElementById('scarc'),n=document.getElementById('scn');
+    if(a)a.setAttribute('stroke-dashoffset',(722.6*(1-p/100)).toFixed(1));if(n)n.textContent=Math.round(p);
+    if(fim||obStepAtual()!=='scan'){clearInterval(SCANIV);SCANIV=null}
+  },120);
+  analisar();
+}
 function obPhone(){return `<div class="mph" aria-hidden="true"><div class="mph-s"><div class="mph-n"></div>
   <div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i><u>${ic('sun',12)}Começar</u></div>
   ${[['Limpador suave','Gel de limpeza'],['Sérum','Niacinamida'],['Hidratante','Com ceramidas'],['Protetor solar','FPS 50+']].map(([a,b],i)=>`<div class="mph-r"><em>${i+1}</em><span>${ic('bottle',14)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
@@ -2122,7 +2223,7 @@ function viewOnboarding(){
     <input id="nome" class="obin" type="text" autocomplete="given-name" placeholder="Seu nome" aria-label="Seu nome" value="${nome}">
     ${cta('Continuar',!!S.nome.trim())}</div>`;
   if(st==='meta')return `<div class="ob obx">${back}
-    <h1 class="obh" style="text-align:center">Qual é a pele dos seus sonhos?</h1>
+    <h1 class="obh" style="text-align:center">Qual a pele<br>dos seus sonhos?</h1>
     <div class="stack" style="gap:10px">${METAS.map(([k,t,d])=>`<button class="op2" data-meta="${k}" aria-pressed="${S.meta===k}"><span><b>${t}</b><small>${d}</small></span><i></i></button>`).join('')}</div>
     ${cta('Continuar',!!S.meta)}</div>`;
   if(st==='evo'){const mt=(METAS.find(m=>m[0]===S.meta)||METAS[2])[1].toLowerCase();return `<div class="ob obx">${back}
@@ -2141,8 +2242,8 @@ function viewOnboarding(){
       <div class="evl"><span><i></i>Com Pellie</span><span><i class="d"></i>Sem rotina</span></div><p class="small muted" style="text-align:center;margin:8px 0 0">Comparação ilustrativa. O resultado varia de pessoa para pessoa.</p></div>
     ${cta('Quero começar')}</div>`}
   if(st==='queixas')return `<div class="ob obx">${back}
-    <h1 class="obh" style="text-align:center">${nome}, o que mais incomoda na sua pele hoje?</h1><p class="obs">Escolha até 3. Vamos dar prioridade a isso na sua rotina.</p>
-    <div class="qg">${[['acne','Espinhas'],['manchas','Manchas'],['poros','Poros dilatados'],['linhas','Linhas finas'],['resseca','Ressecamento'],['verm','Vermelhidão']].map(([k,t])=>`<button data-opt="pref|${k}" aria-pressed="${S.pref.includes(k)}">${skinDot(k)}<b>${t}</b></button>`).join('')}</div>
+    <h1 class="obh" style="text-align:center">${nome?nome+', o':'O'} que mais te incomoda na sua pele hoje?</h1><p class="obs">Escolha até 3. Vamos priorizar isso na sua rotina.</p>
+    <div class="qg3">${[['acne','Acne'],['oleo','Oleosidade'],['manchas','Manchas'],['linhas','Rugas'],['poros','Poros dilatados'],['olheiras','Olheiras'],['resseca','Ressecamento'],['textura','Textura irregular'],['outro','Outro']].map(([k,t])=>`<button data-opt="pref|${k}" aria-pressed="${S.pref.includes(k)}"><span class="qi">${qIcon(k)}</span><b>${t}</b></button>`).join('')}</div>
     ${cta('Continuar',S.pref.length>0)}</div>`;
   if(st==='zonas')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Sua pele</div><h1 class="obh" style="text-align:center">Toque nas regiões do rosto que mais incomodam</h1>
@@ -2162,11 +2263,11 @@ function viewOnboarding(){
     <div class="obk" style="text-align:center">Sua segurança</div><h1 class="obh" style="text-align:center">Alguns ativos precisam ser evitados. Você está:</h1>
     <div class="stack" style="gap:10px">${QS.find(x=>x.k==='gest').o.map(o=>`<button class="op2" data-gest="${o[0]}" aria-pressed="${S.gestT===o[0]}"><span><b>${o[1]}</b></span><i></i></button>`).join('')}</div>
     ${cta('Continuar',!!S.gestT)}</div>`;
-  if(st==='convite')return `<div class="ob obx obm" style="text-align:center">${back}
-    <h1 class="obh">${nome?nome+', você':'Você'} tem um código de convite?</h1><p class="obs">Se uma amiga te convidou, digite o código que ela enviou.</p>
-    <input id="convite" class="obin" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="13" placeholder="PELLIE-XXXXXX" aria-label="Código de convite" value="${esc(S.convite||'')}">
-    <button class="btn ghost" data-act="convite-colar" style="align-self:center">${ic('copy',16)}Colar</button>
-    <div class="obf" style="flex-direction:column;align-items:center;gap:6px"><button class="btn obc" id="ob-go" data-act="ob-next" ${/^PELLIE-[A-Z0-9]{6}$/.test(S.convite||'')?'':'disabled'}>Continuar</button>
+  if(st==='convite')return `<div class="ob obx obm" style="text-align:center">
+    <h1 class="obh">${nome?nome+', você':'Você'} tem um código de convite?</h1><p class="obs">Se uma amiga te convidou,<br>digite o código que ela enviou.</p>
+    <input id="convite" class="cvin" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="13" placeholder="PELLIE-XXXXXX" aria-label="Código de convite" value="${esc(S.convite||'')}">
+    <button class="cvp" data-act="convite-colar">${ic('copy',16)}Colar</button>
+    <div class="obf" style="flex-direction:column;align-items:center;gap:6px;width:100%"><button class="btn obc" id="ob-go" data-act="ob-next" style="width:100%" ${/^PELLIE-[A-Z0-9]{6}$/.test(S.convite||'')?'':'disabled'}>Continuar</button>
     <button class="back" data-act="ob-next" style="padding:10px;font-weight:600;color:var(--ink)">Pular</button></div></div>`;
   if(st==='sol'||st==='acido'){const Q={sol:{k:'sol',e:'Sua rotina',t:'Quanto tempo você fica exposta ao sol por dia?',o:[['0','Quase nada'],['1','Menos de 1 hora'],['2','De 1 a 3 horas'],['3','Mais de 3 horas']]},
       acido:{k:'acido',e:'Sua rotina',t:'Você já usou ácidos ou retinol?',o:[['tol','Sim','e minha pele tolerou bem'],['irr','Sim','mas tive irritação'],['nao','Não'],['ns','Não sei']]}}[st];
@@ -2175,38 +2276,87 @@ function viewOnboarding(){
     <div class="stack" style="gap:10px">${Q.o.map(o=>`<button class="op2" data-obq="${Q.k}|${o[0]}" aria-pressed="${S[Q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
     ${cta('Continuar',S[Q.k]!=null)}</div>`}
   if(st==='horario'){const per=S.obHp||'m',h=S.rem[per];return `<div class="ob obx" style="text-align:center">${back}
-    <h1 class="obh">${nome?nome+', que':'Que'} horas você quer fazer sua rotina ${per==='m'?'da manhã':'da noite'}?</h1><p class="obs">Você muda isso depois, em Mais.</p>
-    <div class="seg two" role="group" aria-label="Período" style="max-width:300px;margin:0 auto;width:100%"><button data-hper="m" aria-pressed="${per==='m'}">${ic('sun',16)}Manhã</button><button data-hper="n" aria-pressed="${per==='n'}">${ic('moon',16)}Noite</button></div>
-    <div class="whl"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
-    <p class="small muted">${ic('bell',14)} Rotina ${per==='m'?'da manhã':'da noite'} às ${h}.</p>
+    <h1 class="obh">${nome?nome+', que':'Que'} horas você quer fazer sua rotina ${per==='m'?'da manhã':'da noite'}?</h1><p class="obs">A gente te lembra na hora certa.</p>
+    <div class="sgm" role="group" aria-label="Período"><button data-hper="m" aria-pressed="${per==='m'}">${ic('sun',16)}Manhã</button><button data-hper="n" aria-pressed="${per==='n'}">${ic('moon',16)}Noite</button></div>
+    <div class="whl ln"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
+    <p class="small muted" id="rem-txt" style="display:flex;gap:8px;justify-content:center;align-items:center;margin-top:auto">${ic('bell',15)}<span>Lembrete todos os dias às ${h}</span></p>
     ${cta('Continuar')}</div>`}
   if(st==='scanner')return `<div class="ob obx" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh">Nem todo produto combina com a sua pele.</h1>
-    <svg viewBox="0 0 220 190" width="220" height="190" style="margin:0 auto;display:block" role="img" aria-label="Ilustração de um frasco dentro da moldura do scanner"><g fill="none" stroke="#8A6A48" stroke-width="2.5" stroke-linecap="round"><path d="M18 46V22H44M176 22H202V46M18 144V168H44M176 168H202V144"/><rect x="82" y="58" width="56" height="86" rx="12"/><rect x="100" y="42" width="20" height="12"/><path d="M92 82h36M100 94h20M92 108h36" stroke-width="2"/></g></svg>
-    <div class="card" style="text-align:left"><div class="obk" style="margin-bottom:6px">Exemplo de análise</div><b style="font-size:17px">Nome do produto</b>
-      <p class="small muted" style="margin:6px 0 0">Você fotografa o rótulo e o Pellie diz se o produto combina com a sua pele, o que ele tem de bom e o que pode incomodar.</p></div>
+    <svg viewBox="0 0 260 300" width="170" style="margin:0 auto;display:block" role="img" aria-label="Ilustração de um frasco dentro da moldura do scanner"><g fill="none" stroke="#5A2E14" stroke-width="2" stroke-linecap="round"><path d="M4 40V4H40M220 4H256V40M4 262V298H40M220 298H256V262"/><rect x="84" y="60" width="92" height="190" rx="18"/><rect x="118" y="42" width="24" height="18"/><rect x="112" y="18" width="36" height="24"/><path d="M104 108h52M122 126h16M104 146h52"/></g></svg>
+    <div class="card" style="text-align:left;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center"><div class="obk" style="grid-column:1/3;display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
+      <b style="grid-column:1/3;font-size:19px;font-weight:500">Exemplo de produto</b>
+      <p class="small" style="margin:6px 0 0;color:var(--muted)">A espuma pode ressecar e causar efeito rebote na oleosidade.<br><br>Bons ativos, mas não os que sua pele precisa agora.</p>
+      <svg viewBox="0 0 64 64" width="64" height="64" aria-label="22%"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="2"/><circle cx="32" cy="32" r="28" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round" stroke-dasharray="38.700 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" fill="#5A2E14">22%</text></svg>
+      <b style="grid-column:1/3;font-size:16px;margin-top:6px">Baixa compatibilidade</b><span class="small muted" style="grid-column:1/3">Exemplo ilustrativo.</span></div>
     ${cta('Quero saber o que usar')}</div>`;
   if(st==='comunidade')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Mulheres que já cuidam da pele com a Pellie</h1>
     <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card"><b>${esc(d.nome)}</b><p class="small muted" style="margin:6px 0 0">${esc(d.txt)}</p></div>`).join('')}</div>
     <p class="small muted" style="text-align:center">Depoimentos publicados com autorização. Resultados individuais variam.</p>${cta('Montar minha rotina')}</div>`;
   if(st==='transf'){const a=ANTESDEPOIS[0];return `<div class="ob obx">${back}
-    <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh">O antes e depois de quem usa a Pellie.</h1>
+    <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh" style="margin-top:18px">O antes e depois<br>de quem usa a Pellie.</h1>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><figure style="margin:0"><img src="${esc(a.antes)}" alt="Foto de antes, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Antes</figcaption></figure><figure style="margin:0"><img src="${esc(a.depois)}" alt="Foto de depois, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Depois</figcaption></figure></div>
     <p class="small muted" style="text-align:center">${esc(a.nome)}, ${esc(a.leg)}. Com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`}
-  if(st==='caminho'){const p=S.pref[0]||'acne',T=CAMT[p]||CAMT.acne;return `<div class="ob obx">${back}
-    <div class="obk">Seu caminho</div><h1 class="obh">${T[0]}:<br><b>sua meta em 3 semanas.</b></h1><p class="obs" style="text-align:left">Montamos cada passo.</p>
-    <div class="cam">${[['face','Hoje: '+T[1],'foi o que você marcou'],['routine','Semana 1','rotina montada para o que sua pele precisa'],['bottle','Semana 2','produtos certos, com compatibilidade antes de comprar'],['sparkle','Semana 3','sua meta: '+T[2]]].map(([i_,t,d],k)=>`<div class="cs${k===3?' on':''}"><span class="cic">${ic(i_,22)}</span><div><b>${t}</b><small>${d}</small></div></div>`).join('')}</div>
-    <p class="small muted" style="text-align:center">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
-  if(st==='pronta'){const ks=(R[S.age]||R['30']).m,N={limpador:['Limpeza','gel de limpeza suave'],niacina:['Tratamento','sérum de niacinamida'],vitc:['Tratamento','sérum de vitamina C'],hidr:['Hidratação','hidratante para o seu tipo de pele'],fps:['Proteção','protetor solar']};
-    return `<div class="ob obx" style="text-align:center"><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:40px;width:auto"></div>
-    <h1 class="obh">A rotina perfeita para sua pele está quase pronta</h1>
-    <div class="card" style="text-align:left"><div class="row" style="justify-content:space-between"><span class="obk">${ic('sun',14)} Manhã</span><span class="small muted">${ic('lock',13)} ${ks.length} passos</span></div>
-      ${ks.map((k,j)=>{const n=N[k]||[k,''];return `<div class="cs" style="padding:12px 0;border-top:1px solid var(--line)"><span class="cic" style="width:34px;height:34px;font-size:14px;font-weight:700">${j+1}</span><div><b>${n[0]}</b><small>${n[1]}</small></div></div>`}).join('')}</div>
-    <p class="small muted">Prévia feita com as suas respostas. A rotina final sai da análise da sua foto.</p>
-    <div><div class="pwb" style="justify-content:center"><b>R$ 34,90</b><span>/mês</span></div><div class="small muted">ou R$ 149,90 por ano. Cancele quando quiser.</div></div>
-    <div class="obf" style="flex-direction:column;align-items:center;gap:6px"><button class="btn obc" data-act="ob-plano">Ativar meu plano</button>
-    <p class="small muted" style="margin:0"><a href="privacidade.html" target="_blank" rel="noopener" style="color:inherit">Privacidade</a></p></div></div>`}
+  if(st==='caminho'){const d=desafio(),T=CAMT[d?d.k:'oleo'];return `<div class="ob obx">${back}
+    <div class="obk">Seu caminho</div><h1 class="obh"><span style="font-weight:500">${T[0]}:</span><br>sua meta em 3 semanas.</h1><p class="obs" style="text-align:left">Montamos cada passo.</p>
+    <div class="zz">
+      <svg viewBox="0 0 358 440" width="100%" aria-hidden="true" style="position:absolute;inset:0"><g fill="none" stroke="#5A2E14" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="1.5 7"><path d="M64 52C92 96 150 104 178 122"/><path d="M192 170C208 204 236 216 245 236"/><path d="M252 290C262 322 284 336 290 346"/></g></svg>
+      <div class="zn" style="left:17%;top:4.500%"><span class="cic">${ic('face',24)}</span><div style="left:34px"><b>Hoje: ${T[1]}</b><small>foi o que sua análise mostrou</small></div></div>
+      <div class="zn" style="left:52%;top:31.500%"><span class="cic">${ic('routine',24)}</span><div style="left:34px;width:150px"><b>Semana 1</b><small>rotina montada para o que sua pele precisa</small></div></div>
+      <div class="zn" style="left:69%;top:58.500%"><span class="cic">${ic('bottle',24)}</span><div class="l" style="right:34px;width:170px"><b>Semana 2</b><small>produtos certos, com compatibilidade antes de comprar</small></div></div>
+      <div class="zn big" style="left:81.500%;top:84%"><span class="cic on">${ic('sparkle',30)}</span><div class="l" style="right:34px;width:190px"><b>Semana 3</b><small>sua meta: ${T[2]}</small></div></div>
+    </div>
+    <p class="small muted" style="text-align:center;margin:0">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
+  if(st==='foto')return `<div class="ob obx">${back}
+    <h1 class="obh" style="text-align:center">Agora vamos analisar<br>a sua pele</h1>
+    <div style="position:relative;width:150px;margin:0 auto" aria-hidden="true">${ringSvg(150,72,92,112)}<svg viewBox="0 0 300 360" width="150" style="position:absolute;inset:0"><ellipse cx="150" cy="180" rx="72" ry="92" fill="none" stroke="#5A2E14" stroke-width="2.500"/><circle cx="128" cy="165" r="3" fill="#5A2E14"/><circle cx="172" cy="165" r="3" fill="#5A2E14"/><path d="M150 172v22h-6M132 212q18 12 36 0" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round"/></svg></div>
+    <div class="card fst2">${[['Encaixe o rosto no círculo','Olhe para a câmera, com o rosto inteiro dentro do círculo.',1],['Gire a cabeça devagar','Faça um círculo: para cima, para os lados e para baixo.',2],['Continue até fechar o anel','O anel acende enquanto a câmera registra o seu rosto.',3]].map(([t,d,k])=>`<div class="${k===2?'on':''}"><span class="n">${k===1?ic('check',16):k}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+    <p class="obs">Para uma análise mais precisa:</p>
+    <div class="ftp">${[['sun','Boa iluminação'],['sparkle','Sem maquiagem'],['hair','Cabelo preso'],['face','Sem óculos']].map(([i_,t])=>`<div><span>${ic(i_,20)}</span>${t}</div>`).join('')}</div>
+    ${cta('Abrir câmera')}</div>`;
+  if(st==='consent'){const c=AUTH.c||(AUTH.c=[false,false]),ok=c.every(Boolean);
+    const bx=(i,tx)=>`<div style="display:flex;gap:14px;align-items:flex-start;text-align:left"><button data-act="cons-${i}" role="checkbox" aria-checked="${c[i]}" aria-label="Marcar" class="ckb${c[i]?' on':''}">${c[i]?ic('check',16):''}</button><span style="font-size:15px;line-height:1.45;color:var(--ink)">${tx}</span></div>`;
+    return `<div class="sheetbg"><div class="sheet"><i class="grab"></i>
+      <svg viewBox="0 0 120 100" width="120" style="display:block;margin:6px auto 0" aria-hidden="true"><g fill="none" stroke="#E4CFC2" stroke-width="1.5">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="26" rx="14" ry="22" transform="rotate(${a} 60 50)"/>`).join('')}</g><path d="M60 30l20 7v16c0 14-9 24-20 29-11-5-20-15-20-29V37z" fill="#FBF3EC" stroke="#5A2E14" stroke-width="2.500" stroke-linejoin="round"/><path d="M50 55l8 8 14-16" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h1 class="obh" style="text-align:center;margin:14px 0 6px">Sua pele. Seus dados.</h1>
+      <p class="obs" style="margin:0 0 14px">Suas fotos e dados de pele não são vendidos a ninguém, e você pode apagá-los quando quiser.</p>
+      <div class="stack" style="gap:12px">${bx(0,'Concordo com a análise das minhas fotos e dados de pele pela Pellie, inclusive com inteligência artificial de parceiros, conforme a <a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:inherit">Política de Privacidade</a> e os <a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:inherit">Termos de Uso</a>.')}${bx(1,'Tenho 18 anos ou mais.')}</div>
+      ${AUTH.cerr?`<p class="note" role="alert" style="color:var(--alert)">${esc(AUTH.cerr)}</p>`:''}
+      <button class="btn obc" data-act="aceitar-consent" style="width:100%;margin-top:16px" ${ok&&!AUTH.csave?'':'disabled'}>${AUTH.csave?'Salvando…':'Aceitar e continuar'}</button>
+      <button class="back" data-act="ob-back" style="display:block;margin:6px auto 0;padding:10px;color:var(--muted)">Cancelar</button></div></div>`}
+  if(st==='camera')return `<div class="camx">
+    <div class="camt"><button class="cbtn" data-act="cam-ajuda" aria-label="Ajuda">?</button><span class="cchip" id="cam-st">${OBCAM.msg||'Abrindo a câmera…'}</span><button class="cbtn" data-act="cam-fechar" aria-label="Fechar">${ic('x',16)}</button></div>
+    <div class="camr"><div class="camring">${ringSvg(340,0,142,170)}<div class="camo"><video id="cam-v" playsinline muted autoplay></video>${OBCAM.fail?`<p class="small" style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;margin:0">Não consegui abrir a câmera. Libere o acesso ou escolha uma foto.</p>`:''}</div></div></div>
+    <div class="cams"><div class="campill" id="cam-pill">${OBCAM.p?'Gire a cabeça devagar para fechar o anel':'Encaixe o rosto no oval'}</div>
+      <input class="sr" id="ob-cam" type="file" accept="image/*" capture="user"><input class="sr" id="ob-gal" type="file" accept="image/*">
+      <label for="ob-gal" class="campb">${ic('image',16)}Escolher da galeria</label></div></div>`;
+  if(st==='scan'){const fim=!!S.result&&!S.analyzing;return `<div class="ob obx" style="text-align:center">
+    <div class="obk">Scan de pele</div>
+    <div class="scr"><svg viewBox="0 0 260 260" width="100%" aria-hidden="true"><circle cx="130" cy="130" r="127" fill="none" stroke="#EBD7CB" stroke-width="1.5"/><circle cx="130" cy="130" r="115" fill="none" stroke="#EBD7CB" stroke-width="1.500"/><circle id="scarc" cx="130" cy="130" r="115" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round" stroke-dasharray="722.600" stroke-dashoffset="722.600" transform="rotate(-90 130 130)"/></svg><div class="scn"><b id="scn">0</b><small>%</small></div></div>
+    <h1 class="obh" style="font-size:28px">Montando seu relatório</h1>
+    ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:`<p class="obs">Leva só alguns segundos. Não feche o app.</p>`}
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i class="w"></i></div>
+    <div class="obf" style="flex-direction:column;align-items:center;gap:6px">${S.err?`<button class="btn obc" data-act="scan-retry">Tentar de novo</button><button class="back" data-act="scan-outra" style="padding:10px;font-weight:600;color:var(--ink)">Tirar outra foto</button>${S.result?`<button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Continuar com a análise anterior</button>`:''}`:`<button class="back" id="scan-go" data-act="ob-next" style="padding:12px;font-weight:600;color:var(--ink);${fim?'':'opacity:.35;pointer-events:none'}">Ver resultado</button>`}</div></div>`}
+  if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
+    <div class="obk">Sua análise</div><h1 class="obh">${nome?nome+', seu':'Seu'} maior desafio hoje é a ${dn.t}.</h1>
+    <div class="card big" style="padding:30px 18px"><svg viewBox="0 0 120 100" width="64" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg>
+      <div class="obk" style="margin:14px 0 4px">Ponto de atenção</div><div style="font-size:40px;font-weight:400;letter-spacing:-.02em;line-height:1.1">${dn.t}</div>${dn.pill?`<span class="pillo">${dn.pill}</span>`:''}</div>
+    ${dn.forte?`<div class="card" style="display:flex;gap:14px;align-items:center;text-align:left"><span class="cic" style="width:56px;height:56px">${ic('drop',24)}</span><div><div class="obk" style="font-size:11px">Ponto forte</div><b style="font-size:20px;font-weight:400">${dn.forte}</b></div></div>`:''}
+    ${cta('Ver meu caminho')}</div></div>`}
+  if(st==='leva')return `<div class="ob obx">${back}
+    <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
+    <div style="text-align:center;margin-top:12px"><h1 class="obh" style="font-size:36px">O que você leva</h1><p class="obs" style="margin-top:8px">Tudo para cuidar da sua pele, num só lugar.</p></div>
+    <div class="lv">${[['face','Análise de pele com IA','Acompanhe a evolução da sua pele.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['bottle','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:62px;height:62px">${ic(i_,26)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+    ${cta('Vamos começar',true,S.plus?'ob-fim2':'ob-next')}</div>`;
+  if(st==='pronta'){const L=(S.result&&rotinaPorAnalise())||null,ks=(L?L.manha.map(x=>x.k):(R[S.age]||R['30']).m),TT={limpador:'Limpeza',hidr:'Hidratação',fps:'Proteção'};
+    return `<div class="ob obx" style="text-align:center"><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
+    <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
+    <div class="card prc" style="text-align:left;padding:18px 22px"><div class="row" style="justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)"><span class="obk" style="display:flex;gap:8px;align-items:center">${ic('sun',15)}Manhã</span><span class="small muted" style="display:flex;gap:6px;align-items:center">${ic('lock',13)}${ks.length} passos</span></div>
+      ${ks.map((k,j)=>`<div class="prr"><span class="cic" style="width:46px;height:46px;font-size:18px">${j+1}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small>${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
+    <div><p class="small muted" style="margin:0 0 10px;font-size:16px">Tudo que sua pele precisa está aqui.</p><div style="font-size:44px;line-height:1">R$ 34,90<span style="font-size:18px;color:var(--muted)">/mês</span></div><p class="small muted" style="margin:6px 0 0">Cancele quando quiser</p><p class="small muted" style="margin:2px 0 0">ou R$ 149,90 por ano</p></div>
+    <div class="obf" style="flex-direction:column;align-items:center;gap:8px;width:100%"><button class="btn obc fill" data-act="ob-plano" style="width:100%">Ativar meu plano</button>
+    <p class="small" style="margin:0;display:flex;gap:22px;justify-content:center"><a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--ink)">Termos</a><a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--ink)">Privacidade</a><a href="#" data-act="plus-refresh" style="color:var(--ink)">Restaurar compra</a></p></div></div>`}
   if(st==='pele'||st==='sens'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">${q.t}</h1>${q.s?`<p class="obs">${q.s}</p>`:''}
     <div class="stack" style="gap:10px">${q.o.map(o=>`<button class="op2" data-opt="${q.k}|${o[0]}" aria-pressed="${S[q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
@@ -2219,15 +2369,19 @@ function viewOnboarding(){
       ${C.map(([a,b])=>`<div class="vsr"><span class="no"><i>${ic('x',12)}</i>${a}</span><span class="yes"><i>${ic('check',12)}</i>${b}</span></div>`).join('')}</div>
     <p class="small muted" style="text-align:center;margin-top:-6px">Comparação geral. Os recursos variam de app para app.</p>
     ${cta('Continuar')}</div>`}
-  return `<div class="ob obx">${back}
-    <h1 class="obh" style="text-align:center">Agora vamos analisar a sua pele</h1>
-    <div class="fring" aria-hidden="true"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="54" fill="none" stroke="#E0CFB9" stroke-width="5" stroke-dasharray="2 6" stroke-linecap="round"/><ellipse cx="60" cy="60" rx="30" ry="40" fill="var(--soft)"/><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"><path d="M48 52v.1M72 52v.1" stroke-width="6"/><path d="M61 56l-3 12h5M51 76q9 6 18 0"/></g></svg></div>
-    <div class="card fst">${[['Rosto inteiro na foto','De frente para a câmera, do queixo até a testa.'],['Luz no rosto','Perto de uma janela, sem sombra e sem filtro.'],['Uma foto basta','A análise leva poucos segundos. A foto não fica guardada.']].map(([t,d],k)=>`<div><em>${k+1}</em><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
-    <p class="obs">Para uma análise mais precisa:</p>
-    <div class="ftp">${[['sun','Boa iluminação'],['sparkle','Sem maquiagem'],['hair','Cabelo preso'],['face','Sem óculos']].map(([i_,t])=>`<div><span>${ic(i_,20)}</span>${t}</div>`).join('')}</div>
-    ${cta(S.plus?'Abrir câmera':'Continuar',true,'ob-fim')}</div>`;
+  return '';
 }
-const CAMT={acne:['Menos espinhas','espinhas','menos espinhas novas'],manchas:['Menos manchas','manchas','manchas mais discretas'],linhas:['Menos linhas finas','linhas finas','linhas finas mais suaves'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],resseca:['Menos ressecamento','ressecamento','pele mais confortável'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão']};
+function ringSvg(size,lit,rx,ry){const n=72,o=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2-Math.PI/2,c=Math.cos(a),sn=Math.sin(a),x1=150+(rx+6)*c,y1=180+(ry+6)*sn,x2=150+(rx+20)*c,y2=180+(ry+20)*sn;o.push(`<line class="tk${i<lit?' on':''}" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`)}return `<svg viewBox="0 0 300 360" width="${size}" style="display:block" aria-hidden="true">${o.join('')}</svg>`}
+function zt(a){const m=(Array.isArray(a)?a:[]).map(k=>(ZONAS.find(z=>z[0]===k)||[0,''])[1]).filter(Boolean);return m.length>1?m.slice(0,-1).join(', ')+' e '+m[m.length-1]:m[0]||''}
+function desafio(){const r=S.result;if(!r)return null;
+  const pf={poros:'poros',linhas:'linhas',manchas:'manchas',verm:'verm',resseca:'resseca',oleo:'oleo'};
+  const C=[['oleo','oleosidade',r.oleo,'testa, nariz e queixo'],['poros','poros dilatados',r.poros,'nariz e bochechas'],['linhas','linhas finas',r.linhas,'testa e olheiras'],['manchas','manchas',r.manchas,zt(r.zonas&&r.zonas.manchas)],['verm','vermelhidão',r.verm,zt(r.zonas&&r.zonas.verm)],['resseca','ressecamento',100-r.hid,'bochechas']];
+  C.sort((a,b)=>(b[2]+(S.pref.includes(pf[b[0]])?10:0))-(a[2]+(S.pref.includes(pf[a[0]])?10:0)));
+  const [k,t,v,reg]=C[0],nivel=v<35?'nível leve':v<65?'nível moderado':'nível alto';
+  const F=[['resseca',r.hid,'boa hidratação'],['oleo',100-r.oleo,'pouca oleosidade'],['poros',100-r.poros,'poros discretos'],['manchas',100-r.manchas,'tom uniforme'],['linhas',100-r.linhas,'poucas linhas finas'],['verm',100-r.verm,'pouca vermelhidão']].filter(x=>x[0]!==k).sort((a,b)=>b[1]-a[1]);
+  return{k,t,pill:nivel+(reg?' · '+reg:''),forte:F[0]&&F[0][1]>=55?F[0][2]:null}}
+const CAMT={oleo:['Menos oleosidade','oleosidade','menos sinais de oleosidade'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],linhas:['Linhas mais suaves','linhas finas','linhas finas mais suaves'],manchas:['Menos manchas','manchas','manchas mais discretas'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão'],resseca:['Mais hidratação','ressecamento','pele mais hidratada']};
+const OLD_CAMT={acne:['Menos espinhas','espinhas','menos espinhas novas'],manchas:['Menos manchas','manchas','manchas mais discretas'],linhas:['Menos linhas finas','linhas finas','linhas finas mais suaves'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],resseca:['Menos ressecamento','ressecamento','pele mais confortável'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão']};
 function horaSlots(per){const a=per==='m'?[5,12]:[19,24],o=[];for(let h=a[0];h<a[1];h++){o.push(pad(h)+':00');o.push(pad(h)+':30')}const c=S.rem[per];if(c&&!o.includes(c)){o.push(c);o.sort()}return o}
 function timeWheelInit(w){const H=52,per=w.dataset.per,it=[...w.children];
   const set=()=>{const k=Math.max(0,Math.min(it.length-1,Math.round(w.scrollTop/H)));S.rem[per]=it[k].dataset.t;
@@ -2246,11 +2400,12 @@ function render(){
   {const a=authView();if(a){document.querySelector('header').hidden=true;document.querySelector('nav').hidden=true;$('#view').innerHTML=a;return}}
   ajustaRot();
   renderChrome();
+  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||(a==='analise'&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  f3scan();
+  f3scan();camSync();
   save();
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,2200)}
@@ -2272,6 +2427,11 @@ document.addEventListener('click',e=>{
   else if(d.hper){S.obHp=d.hper;render()}
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
   else if(d.act==='ob-plano'){S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
+  else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
+  else if(d.act==='cam-fechar'){camStop();obIr('foto');render()}
+  else if(d.act==='scan-retry'){S.err=null;startScan()}
+  else if(d.act==='scan-outra'){S.err=null;S.file=null;S.photo=null;obIr('camera');render()}
+  else if(d.act==='ob-fim2'){S.ob.done=true;S.tab='rotina';render();window.scrollTo(0,0);if(S.result)montarRotina()}
   else if(d.act==='ob-next'){S.ob.step++;render();window.scrollTo(0,0)}
   else if(d.act==='ob-back'){S.ob.step=Math.max(0,S.ob.step-1);render();window.scrollTo(0,0)}
   else if(d.act==='ob-fim'){S.ob.done=true;S.tab='pele';S.peleSub='analise';gameCheck();render();window.scrollTo(0,0)}
@@ -2382,6 +2542,10 @@ document.addEventListener('change',e=>{
   if(e.target.id==='cmp-b'){S.cmpB=e.target.value;render();return}
   if((e.target.id==='evo-cam'||e.target.id==='evo-gal')&&e.target.files[0]){
     const r=new FileReader();r.onload=()=>addFoto(r.result);r.readAsDataURL(e.target.files[0]);e.target.value='';
+  }
+  if((e.target.id==='ob-cam'||e.target.id==='ob-gal')&&e.target.files[0]){
+    const f=e.target.files[0];S.file=f;S.result=null;S.err=null;camStop();
+    const r=new FileReader();r.onload=()=>{S.photo=r.result;obIr('scan');render();startScan()};r.readAsDataURL(f);return;
   }
   if((e.target.id==='foto-cam'||e.target.id==='foto-gal')&&e.target.files[0]){
     const f=e.target.files[0];
