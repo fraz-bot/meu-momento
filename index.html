@@ -2391,11 +2391,12 @@ function viewOnboarding(){
     ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:`<p class="obs">Leva só alguns segundos. Não feche o app.</p>`}
     <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i class="w"></i></div>
     <div class="obf" style="flex-direction:column;align-items:center;gap:6px">${S.err?`<button class="btn obc" data-act="scan-retry">Tentar de novo</button><button class="back" data-act="scan-outra" style="padding:10px;font-weight:600;color:var(--ink)">Tirar outra foto</button>${S.result?`<button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Continuar com a análise anterior</button>`:''}`:`<button class="btn obc" id="scan-go" data-act="ob-next" style="${fim?'':'opacity:.35;pointer-events:none'}" ${fim?'':'disabled'}>Ver resultado</button>`}</div></div>`}
-  if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
-    <div class="obk">Sua análise</div><h1 class="obh">${nome?nome+', seu':'Seu'} maior desafio hoje é a ${dn.t}.</h1>
+  if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',tart:'a sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
+    <div class="obk">Sua análise</div><h1 class="obh">${nome?nome+', seu':'Seu'} maior desafio hoje é ${dn.tart||dn.t}.</h1>
     <div class="card big" style="padding:30px 18px"><svg viewBox="0 0 120 100" width="64" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg>
       <div class="obk" style="margin:14px 0 4px">Ponto de atenção</div><div style="font-size:40px;font-weight:400;letter-spacing:-.02em;line-height:1.1">${dn.t}</div>${dn.pill?`<span class="pillo">${dn.pill}</span>`:''}</div>
     ${dn.forte?`<div class="card" style="display:flex;gap:14px;align-items:center;text-align:left"><span class="cic" style="width:56px;height:56px">${ic('drop',24)}</span><div><div class="obk" style="font-size:11px">Ponto forte</div><b style="font-size:20px;font-weight:400">${dn.forte}</b></div></div>`:''}
+    ${S.result&&S.result.resumo?`<p class="small" style="margin:0;color:var(--muted);line-height:1.5"><b style="color:var(--ink)">O que vimos na sua foto:</b> ${esc(S.result.resumo)}</p>`:''}
     ${cta('Ver meu caminho')}</div></div>`}
   if(st==='leva')return `<div class="ob obx">${back}
     <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
@@ -2427,12 +2428,12 @@ function viewOnboarding(){
 function ringSvg(size,lit,rx,ry){const n=72,o=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2-Math.PI/2,c=Math.cos(a),sn=Math.sin(a),x1=150+(rx+6)*c,y1=180+(ry+6)*sn,x2=150+(rx+20)*c,y2=180+(ry+20)*sn;o.push(`<line class="tk${i<lit?' on':''}" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`)}return `<svg viewBox="0 0 300 360" width="${size}" style="display:block" aria-hidden="true">${o.join('')}</svg>`}
 function zt(a){const m=(Array.isArray(a)?a:[]).map(k=>(ZONAS.find(z=>z[0]===k)||[0,''])[1]).filter(Boolean);return m.length>1?m.slice(0,-1).join(', ')+' e '+m[m.length-1]:m[0]||''}
 function desafio(){const r=S.result;if(!r)return null;
-  const pf={poros:'poros',linhas:'linhas',manchas:'manchas',verm:'verm',resseca:'resseca',oleo:'oleo'};
-  const C=[['oleo','oleosidade',r.oleo,'testa, nariz e queixo'],['poros','poros dilatados',r.poros,'nariz e bochechas'],['linhas','linhas finas',r.linhas,'testa e olheiras'],['manchas','manchas',r.manchas,zt(r.zonas&&r.zonas.manchas)],['verm','vermelhidão',r.verm,zt(r.zonas&&r.zonas.verm)],['resseca','ressecamento',100-r.hid,'bochechas']];
-  C.sort((a,b)=>(b[2]+(S.pref.includes(pf[b[0]])?10:0))-(a[2]+(S.pref.includes(pf[a[0]])?10:0)));
-  const [k,t,v,reg]=C[0],nivel=v<35?'nível leve':v<65?'nível moderado':'nível alto';
+  const N={oleo:['oleosidade','a oleosidade',r.oleo,'testa, nariz e queixo'],poros:['poros dilatados','os poros dilatados',r.poros,'nariz e bochechas'],linhas:['linhas finas','as linhas finas',r.linhas,'testa e olheiras'],manchas:['manchas','as manchas',r.manchas,zt(r.zonas&&r.zonas.manchas)],verm:['vermelhidão','a vermelhidão',r.verm,zt(r.zonas&&r.zonas.verm)],resseca:['ressecamento','o ressecamento',100-r.hid,'bochechas']};
+  const rk=Object.keys(N).sort((a,b)=>N[b][2]-N[a][2]);
+  const k=r.desafio&&N[r.desafio]?r.desafio:rk[0],[t,tart,v,regd]=N[k],nivel=v<35?'nível leve':v<65?'nível moderado':'nível alto';
+  const reg=(r.desafioReg&&r.desafioReg.length)?zt(r.desafioReg):regd;
   const F=[['resseca',r.hid,'boa hidratação'],['oleo',100-r.oleo,'pouca oleosidade'],['poros',100-r.poros,'poros discretos'],['manchas',100-r.manchas,'tom uniforme'],['linhas',100-r.linhas,'poucas linhas finas'],['verm',100-r.verm,'pouca vermelhidão']].filter(x=>x[0]!==k).sort((a,b)=>b[1]-a[1]);
-  return{k,t,pill:nivel+(reg?' · '+reg:''),forte:F[0]&&F[0][1]>=55?F[0][2]:null}}
+  return{k,t,tart,pill:nivel+(reg?' · '+reg:''),forte:r.forte||(F[0]&&F[0][1]>=55?F[0][2]:null)}}
 const CAMT={oleo:['Menos oleosidade','oleosidade','menos sinais de oleosidade'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],linhas:['Linhas mais suaves','linhas finas','linhas finas mais suaves'],manchas:['Menos manchas','manchas','manchas mais discretas'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão'],resseca:['Mais hidratação','ressecamento','pele mais hidratada']};
 const OLD_CAMT={acne:['Menos espinhas','espinhas','menos espinhas novas'],manchas:['Menos manchas','manchas','manchas mais discretas'],linhas:['Menos linhas finas','linhas finas','linhas finas mais suaves'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],resseca:['Menos ressecamento','ressecamento','pele mais confortável'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão']};
 function horaSlots(per){const a=per==='m'?[5,12]:[19,24],o=[];for(let h=a[0];h<a[1];h++){o.push(pad(h)+':00');o.push(pad(h)+':30')}const c=S.rem[per];if(c&&!o.includes(c)){o.push(c);o.sort()}return o}
@@ -2642,7 +2643,7 @@ async function analisar(){
     const r=await sf.json(promptIA(),{tipo:'pele',ctx:perfilBasico(),images:S.file});
     if(!r||r.erro){S.err=(r&&r.erro)||'Não consegui ler a foto. Tente outra.'}
     else{S.result={d:hoje(),tipo:String(r.tipo||'Normal'),resumo:r.resumo?String(r.resumo):'',oleo:num(r.oleo),hid:num(r.hid),poros:num(r.poros),manchas:num(r.manchas),linhas:num(r.linhas),verm:num(r.verm),
-      prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null,zonas:(r.zonas&&typeof r.zonas==='object')?{manchas:(Array.isArray(r.zonas.manchas)?r.zonas.manchas:[]).map(String).slice(0,5),verm:(Array.isArray(r.zonas.verm)?r.zonas.verm:[]).map(String).slice(0,5)}:null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
+      desafio:['oleo','poros','linhas','manchas','verm','resseca'].includes(r.desafio)?r.desafio:null,desafioReg:(Array.isArray(r.desafio_regioes)?r.desafio_regioes:[]).map(String).filter(x=>ZONAS.some(z=>z[0]===x)).slice(0,3),forte:r.ponto_forte?String(r.ponto_forte).slice(0,40):null,prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null,zonas:(r.zonas&&typeof r.zonas==='object')?{manchas:(Array.isArray(r.zonas.manchas)?r.zonas.manchas:[]).map(String).slice(0,5),verm:(Array.isArray(r.zonas.verm)?r.zonas.verm:[]).map(String).slice(0,5)}:null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
   }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
   if(ok)S.okMsg='pele';
   S.analyzing=false;gameCheck();render();
