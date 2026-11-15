@@ -768,6 +768,12 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .obf .back{align-self:stretch;width:100%;justify-content:center;align-items:center;min-height:56px;margin-top:6px;padding:10px 20px;font-size:17px;font-weight:600;color:var(--ol)!important;background:transparent;border:1.5px solid var(--ol);border-radius:14px}
 @media (prefers-reduced-motion:reduce){#view.vin,#view.vin .bar b,.scr::before,.scspin,.scst{animation:none}#scarc{transition:none}}
 
+/* depoimentos */
+.dep{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:start;border-radius:24px;padding:14px;text-align:left}
+.dep img{width:84px;height:84px;border-radius:20px;object-fit:cover;object-position:center;display:block}
+.dep b{display:block;font-size:17px;color:var(--ol)}.dep .small{display:block;text-transform:none;letter-spacing:0}
+.dep .d1{margin:8px 0 0;font-size:15px;line-height:1.4;font-weight:600;color:var(--ol)}
+.dep .d2{margin:6px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}
 /* exemplo do scanner */
 .exf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .exf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2289,11 +2295,11 @@ function viewCabelo(){
 
 /* ---------- Cadastro (onboarding) ---------- */
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
-const DEPO=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',txt:'Minha pele mudou quando comecei a entender o que ela realmente precisava. Com o Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg',antes:'foto-antes.jpg',depois:'foto-depois.jpg'},
-{nome:'Marina',leg:'27 anos',txt:'Finalmente entendi minha pele! Antes comprava produtos sem saber se eram adequados. Agora tenho uma rotina que realmente faz sentido para mim.',foto:'depo-marina.jpg'},
-{nome:'Camila',leg:'32 anos',txt:'Meu cuidado ficou muito mais simples. A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'}];   /* depoimentos reais, com autorização */
+const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:'Antes comprava produtos sem saber se eram adequados. Agora tenho uma rotina que realmente faz sentido para mim.',foto:'depo-marina.jpg'},
+{nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
+{nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
+const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva',...(ANTESDEPOIS.length?['transf']:[]),'pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2589,7 +2595,7 @@ function viewOnboarding(){
     ${cta('Quero saber o que usar')}</div>`;
   if(st==='comunidade')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Veja quem já cuida da pele com a Pellie</h1>
-    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card" style="border-radius:24px;padding:16px">${d.antes?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">${[['antes','Antes'],['depois','Depois']].map(([k,t])=>`<figure style="margin:0"><img src="${esc(d[k])}" alt="${t}, ${esc(d.nome)}" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px"><figcaption class="obk" style="text-align:center;margin-top:4px;font-size:11px">${t}</figcaption></figure>`).join('')}</div>`:`<img src="${esc(d.foto)}" alt="${esc(d.nome)}" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 12%;border-radius:18px;margin-bottom:14px">`}<b style="font-size:17px">${esc(d.nome)}</b><div class="small muted">${esc(d.leg||'')}</div><p style="margin:8px 0 0;font-size:15px;line-height:1.45">“${esc(d.txt)}”</p></div>`).join('')}</div>
+    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card dep"><img src="${esc(d.foto)}" alt="${esc(d.nome)}" width="84" height="84" loading="lazy"><div><b>${esc(d.nome)}</b><span class="small muted">${esc(d.leg||'')}</span><p class="d1">“${esc(d.t1)}”</p><p class="d2">${esc(d.t2)}</p></div></div>`).join('')}</div>
     <p class="small muted" style="text-align:center">Depoimento publicado com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`;
   if(st==='transf'){const a=ANTESDEPOIS[0];return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh" style="margin-top:18px">O antes e depois<br>de quem usa a Pellie.</h1>
