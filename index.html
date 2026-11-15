@@ -65,6 +65,7 @@
 @media(prefers-reduced-motion:reduce){.sbot{animation:none}}
 .pimg{flex:none;display:grid;place-items:center}
 .sbot.want{opacity:.5;filter:grayscale(.35)}
+.hpr{display:block;color:var(--terra-ink)!important;font-weight:600}
 .sh.gone{opacity:.62}
 .pwo-g{display:grid;gap:12px;text-align:left;margin-bottom:6px}
 .pwo{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1.5px solid var(--oll);background:transparent;border-radius:20px;padding:16px;font:inherit;color:var(--ink);cursor:pointer}
@@ -2191,6 +2192,22 @@ function hairPlan(r){
   if(q.queda==='mais')P_.push({k:'tonico',passo:'Tônico para o couro cabeludo',busca:'Loção ou tônico capilar com cafeína ou pantenol, como cuidado de apoio. Não trata queda: se persistir, procure um profissional.',por:'Você relatou queda maior que o normal'});
   return{prior,crono,produtos:P_,aviso:q.queda==='mais'?'Você relatou queda maior que o normal. O app não avalia queda: se durar ou aparecerem falhas, procure um dermatologista ou tricologista.':null};
 }
+/* Cuidado capilar: preço estimado do frasco (R$), quantos meses dura e exemplos de linhas vendidas no Brasil.
+   Valores aproximados; variam por loja e promoção. Onde não há exemplo seguro, qualquer marca com a fórmula serve. */
+const HAIRT={
+ shampoo:{econ:[18,2,['Dove Hidratação Intensa','Elseve Hidra-Hialurônico']],mid:[50,3,['Wella Invigo Nutri-Enrich','Truss Equilibrium']],prem:[130,3,['Kérastase Nutritive Bain Satin','Olaplex Nº 4']]},
+ clarif:{econ:[25,6,[]],mid:[60,6,[]],prem:[140,6,[]]},
+ cond:{econ:[18,2,['Dove Hidratação Intensa','Elseve Hidra-Hialurônico']],mid:[55,3,['Wella Invigo Nutri-Enrich',"L'Oréal Professionnel Serie Expert Nutrifier"]],prem:[140,3,['Kérastase Nutritive','Olaplex Nº 5']]},
+ mascara:{econ:[25,2,['Pantene Hidro-Cauterização']],mid:[70,3,["L'Oréal Professionnel Absolut Repair",'Wella Invigo Nutri-Enrich']],prem:[180,3,['Kérastase Nutritive Masquintense','Redken Extreme']]},
+ ligacao:{econ:[40,3,['Pantene Bond Repair']],mid:[90,3,[]],prem:[270,4,['Olaplex Nº 3','Redken Acidic Bonding Concentrate']]},
+ leave:{econ:[20,2,[]],mid:[60,3,[]],prem:[150,4,['Kérastase Nutritive Nectar Thermique','Moroccanoil Hydrating Styling Cream']]},
+ oleo:{econ:[25,4,['Óleo de argan ou de coco, 100% vegetal']],mid:[60,4,['Wella Oil Reflections']],prem:[250,6,['Moroccanoil Treatment','Kérastase Elixir Ultime']]},
+ termico:{econ:[25,3,['Tresemmé Proteção Térmica']],mid:[70,4,['Wella EIMI Thermal Image']],prem:[170,5,['Kérastase Nectar Thermique']]},
+ solar:{econ:[30,3,[]],mid:[80,4,[]],prem:[200,5,['Kérastase Soleil']]},
+ esfol:{econ:[30,4,[]],mid:[70,4,[]],prem:[180,5,[]]},
+ defin:{econ:[20,2,[]],mid:[70,3,['Wella Nutricurls','Redken Curvaceous']],prem:[160,3,["Kérastase Curl Manifesto","L'Oréal Professionnel Curl Expression"]]},
+ tonico:{econ:[35,2,[]],mid:[80,2,[]],prem:[200,3,[]]}
+};
 const promptHairMarcas=(r,pl)=>`Cabelo ${r.tipo}${hqTxt()?'; '+hqTxt():''}. Notas da foto (0 a 100): raiz oleosa ${r.raiz}, pontas ressecadas ${r.pontas}, porosidade ${r.poro}, danos ${r.danos}, frizz ${r.frizz}. Para cada produto abaixo, sugira um por faixa de preço (econ, mid, prem), escolhendo o produto que atende ao motivo indicado.
 Produtos: ${pl.produtos.map(x=>x.k+' = '+x.passo+' ('+x.busca+') Motivo: '+x.por).join(' | ')}.
 Responda SOMENTE com um JSON: {"marcas":{"chave":{"econ":"Marca e produto","mid":"Marca e produto","prem":"Marca e produto"}}}
@@ -2208,8 +2225,7 @@ async function analisarCabelo(){
     else{const arr=a=>Array.isArray(a)?a:[];
       S.hres={d:hoje(),tipo:String(r.tipo||'Liso'),resumo:r.resumo?String(r.resumo):'',raiz:num(r.raiz),pontas:num(r.pontas),poro:num(r.poro),danos:num(r.danos),frizz:num(r.frizz),
         atencao:r.atencao?String(r.atencao):null,marcas:{}};
-      try{const pl=hairPlan(S.hres),m=await sf.json(promptHairMarcas(S.hres,pl),{tipo:'texto'}),mm=(m&&m.marcas)||{};
-        pl.produtos.forEach(x=>{const y=mm[x.k];if(y)S.hres.marcas[x.k]={econ:String(y.econ||''),mid:String(y.mid||''),prem:String(y.prem||'')}})}catch(e){}
+
       xp(40,'Análise do cabelo','hair');S.okMsg='cabelo'}
   }catch(e){const c=e&&e.code;S.hErr=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
   S.hBusy=false;render();
@@ -2231,7 +2247,7 @@ function viewCabelo(){
       ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:S.hFile&&!S.hBusy&&S.okMsg!=='cabelo'?`<p class="note" style="color:var(--sage);font-weight:600">${ic('check',12)} Foto pronta. ${hqDone()?'Toque em Analisar meu cabelo.':'Falta responder o questionário.'}</p>`:'<p class="note">Sua foto não é guardada.</p>'}</div></div></div>
     `;
   if(!r)return `<div class="stack">${inp}</div>`;
-  const tier=S.tier,tn={econ:'Econômico',mid:'Intermediário',prem:'Premium'},pl=hairPlan(r),mk=r.marcas||{};
+  const tier=S.tier,tn={econ:'Econômico',mid:'Intermediário',prem:'Premium'},pl=hairPlan(r),mk=r.marcas||{},custoH=pl.produtos.reduce((a,x)=>{const t=(HAIRT[x.k]||{})[tier];return a+(t?t[0]/t[1]:0)},0);
   return `<div class="stack">${S.okMsg==='cabelo'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Análise do cabelo concluída!</b><div class="small muted" style="margin-top:2px">Veja abaixo o seu resultado, os produtos e o cronograma capilar.</div></div></div>`:''}
   <div class="card"><div class="row" style="justify-content:space-between"><h3>Tipo de cabelo</h3><b style="font-family:var(--f-display);font-size:20px">${esc(r.tipo)}</b></div>
     <p class="small muted" style="margin:4px 0 8px">${esc(r.resumo)}</p>
@@ -2241,10 +2257,11 @@ function viewCabelo(){
     ${r.atencao?`<p class="note" style="color:var(--warn)">${esc(r.atencao)}</p>`:''}${pl.aviso?`<p class="note" style="color:var(--warn)">${esc(pl.aviso)}</p>`:''}</div>
   ${pl.produtos.length?`<div class="card"><h3>Produtos para o seu cabelo</h3>
     <div class="seg" role="group" aria-label="Faixa de preço" style="margin:10px 0">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${l}</button>`).join('')}</div>
+    <div class="total" style="margin-bottom:8px"><div class="small">${ic('tag',16)} Custo estimado do cuidado capilar (${tn[tier].toLowerCase()})</div><div class="price">${brl(Math.round(custoH))} por mês</div></div>
     <button class="btn" data-act="hrot-all" style="width:100%;margin-bottom:6px">${ic('routine',18)}${pl.produtos.every(x=>hInRot(x.k))?'Cuidados do cabelo já estão na rotina':'Incluir o cuidado do cabelo na rotina'}</button>
-    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier],nm=mt||x.passo,naP=S.shelf.some(i=>i.n===nm);return `<div class="hp"><div class="vp"><span class="pimg">${pimg(x.k,46)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>
+    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier],nm=mt||x.passo,naP=S.shelf.some(i=>i.n===nm);return `<div class="hp"><div class="vp"><span class="pimg">${pimg(x.k,46)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${(()=>{const t=(HAIRT[x.k]||{})[tier];return t?`<small class="hpr">Cerca de ${brl(t[0])} o frasco · dura uns ${t[1]} meses · ${brl(Math.round(t[0]/t[1]))}/mês</small>${exList(t[2])}`:''})()}</span></div>
       <div class="hpb"><button class="rg" data-hrot="${x.k}" aria-pressed="${hInRot(x.k)}">${ic(hInRot(x.k)?'check':'routine',14)}${hInRot(x.k)?'Na rotina':'Pôr na rotina'}</button><button class="rg" data-hshelf="${x.k}" aria-pressed="${naP}" ${naP?'disabled':''}>${ic(naP?'check':'bottle',14)}${naP?'Na prateleira':'Guardar na prateleira'}</button></div></div>`}).join('')}
-    <p class="note">Exemplos de marcas, sem preço fixo. Confira a lista de ingredientes no rótulo.</p></div>`:''}
+    <p class="note">Valores e exemplos são estimativas para o Brasil e mudam por loja e promoção. Confira os ingredientes no rótulo.</p></div>`:''}
   ${pl.crono.length?`<div class="card"><h3>Cronograma capilar</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.crono.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
   <h3 style="margin:6px 4px -4px">Refazer a análise</h3>${inp}
   <p class="note">Não é diagnóstico. Queda forte, falhas ou coceira que não passa: procure um dermatologista ou tricologista.</p></div>`;
