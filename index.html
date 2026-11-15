@@ -507,6 +507,10 @@ header{padding:16px 0 12px}
 .obm{justify-content:center}
 .obh{font-size:30px;line-height:1.12;letter-spacing:-.03em}
 .obs{color:var(--muted);font-size:16px;line-height:1.4;margin:-6px 0 0;text-align:center}
+.cam{display:flex;flex-direction:column;gap:6px;padding:4px 2px}
+.cs{display:flex;gap:14px;align-items:center;text-align:left}.cs b{display:block;font-size:16px;font-family:var(--f-display)}.cs small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.cam .cs{padding:10px 0;position:relative}.cam .cs:not(:last-child)::after{content:"";position:absolute;left:22px;top:58px;height:16px;border-left:2px dotted var(--tint)}
+.cic{flex:none;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;color:var(--ink)}.cs.on .cic{background:var(--tint)}
 .obk{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .bkx{align-self:flex-start;border:0;background:transparent;color:var(--ink);padding:8px 8px 8px 0;cursor:pointer;display:inline-flex}
 .obf{margin-top:auto;padding-top:8px;display:flex;justify-content:center;position:sticky;bottom:14px}
@@ -748,11 +752,11 @@ const STEPS={
 };
 const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
-const DEF=()=>({nome:'',hrot:[],meta:null,zonas:[],idade:25,ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
+const DEF=()=>({nome:'',convite:'',sol:null,acido:null,gestT:null,hrot:[],meta:null,zonas:[],idade:25,ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['nome','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade'];
+const KEY='mm_v1',SAVED=['nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -768,7 +772,7 @@ const QS=[
  {k:'pele',t:'Como você sente a sua pele?',o:[['oleosa','Oleosa','Brilho o dia todo'],['mista','Mista','Zona T oleosa'],['seca','Seca','Repuxa e descama'],['normal','Normal','Equilibrada'],['nao-sei','Não sei dizer']]},
  {k:'pref',multi:true,t:'O que mais incomoda você?',s:'Marque quantas quiser',o:[['acne','Espinhas'],['manchas','Manchas'],['linhas','Linhas finas'],['poros','Poros dilatados'],['resseca','Ressecamento'],['verm','Vermelhidão']]},
  {k:'sens',t:'Sua pele reage a produtos?',s:'Arde, coça ou fica vermelha',o:[['alta','Sim, com frequência'],['media','Às vezes'],['baixa','Raramente']]},
- {k:'gest',t:'Você está grávida, tentando engravidar ou amamentando?',s:'Opcional',o:[['sim','Sim'],['nao','Não'],['nd','Prefiro não responder']]}
+ {k:'gest',t:'Alguns ativos precisam ser evitados. Você está:',s:'Sua segurança',o:[['nao','Nenhuma das opções'],['tent','Tentando engravidar'],['amam','Amamentando'],['grav','Grávida']]}
 ];
 const QI={'20':'sparkle','30':'sparkle','40':'sparkle','50':'sparkle',oleosa:'drop',mista:'drops',seca:'sun',normal:'checkc','nao-sei':'face',acne:'spot',manchas:'sun',linhas:'waves',poros:'pores',resseca:'leaf',verm:'flame',alta:'alert',media:'drops',baixa:'checkc',sim:'heart',nao:'checkc',nd:'lock',econ:'coin',mid:'sparkle',prem:'star'};
 const LBL={oleosa:'Oleosa',mista:'Mista',seca:'Seca',normal:'Normal','nao-sei':'Ainda não sei',acne:'Espinhas',manchas:'Manchas',linhas:'Linhas finas',poros:'Poros dilatados',resseca:'Ressecamento',verm:'Vermelhidão',
@@ -777,13 +781,13 @@ const PRIOR={acne:'Controlar a oleosidade e as espinhas com limpeza suave e niac
   linhas:'Hidratar bem e proteger do sol; retinoide entra aos poucos, se você puder usar.',poros:'Niacinamida e limpeza regular melhoram o aspecto dos poros.',
   resseca:'Reforçar a barreira com hidratante rico em ceramidas.',verm:'Acalmar a pele: evite esfoliação forte e produtos com fragrância.'};
 /* ---------- Rotina montada pelas notas da análise ---------- */
-const rotSig=()=>JSON.stringify([S.result&&[S.result.d,S.result.oleo,S.result.hid,S.result.poros,S.result.manchas,S.result.linhas,S.result.verm,S.result.tipo],S.pref,S.sens,S.gest,S.age,S.ing&&S.ing.evitar]);
+const rotSig=()=>JSON.stringify([S.result&&[S.result.d,S.result.oleo,S.result.hid,S.result.poros,S.result.manchas,S.result.linhas,S.result.verm,S.result.tipo],S.pref,S.sens,S.gest,S.acido,S.sol,S.age,S.ing&&S.ing.evitar]);
 function rotinaPorAnalise(){
   const rs=S.result;if(!rs)return null;
   const has=k=>S.pref.includes(k),clamp=v=>Math.max(0,Math.min(100,v));
   const o=clamp(rs.oleo+(has('acne')?15:0)),p=clamp(rs.poros+(has('poros')?15:0)),mc=clamp(rs.manchas+(has('manchas')?15:0)),
     l=clamp(rs.linhas+(has('linhas')?15:0)+(S.age==='40'?8:S.age==='50'?12:0)),hd=clamp(rs.hid-(has('resseca')?15:0)),v=clamp(rs.verm+(has('verm')?15:0));
-  const forte=S.sens==='alta',sens=forte||S.sens==='media'||rs.tipo==='Sensível',gest=S.gest==='sim',T=55;
+  const forte=S.sens==='alta',sens=forte||S.sens==='media'||S.acido==='irr'||rs.tipo==='Sensível',gest=S.gest==='sim',T=55;
   const calm=v>=60||(forte&&v>=45);
   const evita=(S.ing.evitar||[]).join(' ').toLowerCase();
   const barra={vitc:/vitamina c|asc[oó]rbico/,niacina:/niacinamida/,retinol:/retin/,bha:/salic|bha/,hialu:/hialur/};
@@ -830,7 +834,7 @@ function getR0(){
   r.nota=nota;return r;
 }
 function infoAny(k){return S.rot?[...S.rot.manha,...S.rot.noite].find(x=>x.k===k)||null:null}
-function perfilBasico(){return (S.meta?`objetivo: ${(METAS.find(m=>m[0]===S.meta)||[])[1]||''}; `:'')+((S.zonas||[]).length?`regiões do rosto que mais incomodam: ${zonasTxt()}; `:'')+(quizTxt()?`respostas do quiz detalhado: ${quizTxt()}; `:'')+`faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}; pele que ela sente como ${LBL[S.pele]||'não sabe'}; incômodos: ${S.pref.map(k=>LBL[k]).join(', ')||'nenhum informado'}; sensibilidade a produtos: ${LBL[S.sens]||'não informada'}`}
+function perfilBasico(){return (S.meta?`objetivo: ${(METAS.find(m=>m[0]===S.meta)||[])[1]||''}; `:'')+((S.zonas||[]).length?`regiões do rosto que mais incomodam: ${zonasTxt()}; `:'')+(quizTxt()?`respostas do quiz detalhado: ${quizTxt()}; `:'')+`faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}; pele que ela sente como ${LBL[S.pele]||'não sabe'}; incômodos: ${S.pref.map(k=>LBL[k]).join(', ')||'nenhum informado'}; sensibilidade a produtos: ${LBL[S.sens]||'não informada'}${S.acido?'; histórico com ácidos ou retinol: '+({tol:'usou e tolerou bem',irr:'usou e teve irritação',nao:'nunca usou',ns:'não sabe'}[S.acido]||''):''}${S.sol!=null?'; exposição ao sol por dia: '+({0:'quase nada','1':'menos de 1 hora','2':'de 1 a 3 horas','3':'mais de 3 horas'}[S.sol]||''):''}`}
 const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2});
 const mes=k=>{const [p,m]=P[k].t[S.tier];return p/m};
 const custoTier=t=>Math.round(routineKeys().reduce((a,x)=>{const [p,m]=P[x].t[t];return a+p/m},0));
@@ -2003,7 +2007,10 @@ function viewCabelo(){
 }
 
 /* ---------- Cadastro (onboarding) ---------- */
-const OBS=['intro','nome','meta','evo','queixas','zonas','foco','idade','pele','sens','gest','foto'];
+/* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
+const DEPO=[];   /* [{nome:'Nome', txt:'Depoimento real'}] */
+const ANTESDEPOIS=[]; /* [{nome:'Nome', cidade:'Cidade, UF', antes:'url', depois:'url'}] */
+const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','sol','acido','gest','horario','scanner',...(DEPO.length?['comunidade']:[]),...(ANTESDEPOIS.length?['transf']:[]),'caminho',S.plus?'foto':'pronta'];
 const METAS=[['vidro','Pele de vidro','lisa e iluminada'],['limpa','Pele limpa','sem espinhas nem marcas'],['radiante','Pele radiante','viço e tom uniforme'],['firme','Pele firme','menos linhas finas']];
 const ZONAS=[['testa','testa'],['olhos','área dos olhos'],['nariz','nariz'],['bochechas','bochechas'],['queixo','queixo']];
 const zonasTxt=()=>{const a=ZONAS.filter(([k])=>(S.zonas||[]).includes(k)).map(z=>z[1]);return a.length>1?a.slice(0,-1).join(', ')+' e '+a[a.length-1]:a[0]||''};
@@ -2101,7 +2108,7 @@ function obPhone(){return `<div class="mph" aria-hidden="true"><div class="mph-s
   <div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i><u>${ic('sun',12)}Começar</u></div>
   ${[['Limpador suave','Gel de limpeza'],['Sérum','Niacinamida'],['Hidratante','Com ceramidas'],['Protetor solar','FPS 50+']].map(([a,b],i)=>`<div class="mph-r"><em>${i+1}</em><span>${ic('bottle',14)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
 function viewOnboarding(){
-  const i=Math.min(S.ob.step,OBS.length-1),st=OBS[i],nome=esc(S.nome||'');
+  const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
   const cta=(t,ok=true,act='ob-next')=>`<div class="obf"><button class="btn obc" id="ob-go" data-act="${act}" ${ok?'':'disabled'}>${t}</button></div>`;
   if(st==='intro')return `<div class="ob obx" style="text-align:center">
@@ -2151,7 +2158,56 @@ function viewOnboarding(){
     <div class="whl"><div class="whb"></div><div class="wheel" id="age-wheel" tabindex="0" aria-label="Idade">${Array.from({length:63},(_,k)=>`<div class="wi">${18+k}</div>`).join('')}</div></div>
     <div class="obk">anos</div>
     ${cta('Continuar')}</div>`;
-  if(st==='pele'||st==='sens'||st==='gest'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
+  if(st==='gest')return `<div class="ob obx">${back}
+    <div class="obk" style="text-align:center">Sua segurança</div><h1 class="obh" style="text-align:center">Alguns ativos precisam ser evitados. Você está:</h1>
+    <div class="stack" style="gap:10px">${QS.find(x=>x.k==='gest').o.map(o=>`<button class="op2" data-gest="${o[0]}" aria-pressed="${S.gestT===o[0]}"><span><b>${o[1]}</b></span><i></i></button>`).join('')}</div>
+    ${cta('Continuar',!!S.gestT)}</div>`;
+  if(st==='convite')return `<div class="ob obx obm" style="text-align:center">${back}
+    <h1 class="obh">${nome?nome+', você':'Você'} tem um código de convite?</h1><p class="obs">Se uma amiga te convidou, digite o código que ela enviou.</p>
+    <input id="convite" class="obin" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="13" placeholder="PELLIE-XXXXXX" aria-label="Código de convite" value="${esc(S.convite||'')}">
+    <button class="btn ghost" data-act="convite-colar" style="align-self:center">${ic('copy',16)}Colar</button>
+    <div class="obf" style="flex-direction:column;align-items:center;gap:6px"><button class="btn obc" id="ob-go" data-act="ob-next" ${/^PELLIE-[A-Z0-9]{6}$/.test(S.convite||'')?'':'disabled'}>Continuar</button>
+    <button class="back" data-act="ob-next" style="padding:10px;font-weight:600;color:var(--ink)">Pular</button></div></div>`;
+  if(st==='sol'||st==='acido'){const Q={sol:{k:'sol',e:'Sua rotina',t:'Quanto tempo você fica exposta ao sol por dia?',o:[['0','Quase nada'],['1','Menos de 1 hora'],['2','De 1 a 3 horas'],['3','Mais de 3 horas']]},
+      acido:{k:'acido',e:'Sua rotina',t:'Você já usou ácidos ou retinol?',o:[['tol','Sim','e minha pele tolerou bem'],['irr','Sim','mas tive irritação'],['nao','Não'],['ns','Não sei']]}}[st];
+    return `<div class="ob obx">${back}
+    <div class="obk" style="text-align:center">${Q.e}</div><h1 class="obh" style="text-align:center">${Q.t}</h1>
+    <div class="stack" style="gap:10px">${Q.o.map(o=>`<button class="op2" data-obq="${Q.k}|${o[0]}" aria-pressed="${S[Q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
+    ${cta('Continuar',S[Q.k]!=null)}</div>`}
+  if(st==='horario'){const per=S.obHp||'m',h=S.rem[per];return `<div class="ob obx" style="text-align:center">${back}
+    <h1 class="obh">${nome?nome+', que':'Que'} horas você quer fazer sua rotina ${per==='m'?'da manhã':'da noite'}?</h1><p class="obs">Você muda isso depois, em Mais.</p>
+    <div class="seg two" role="group" aria-label="Período" style="max-width:300px;margin:0 auto;width:100%"><button data-hper="m" aria-pressed="${per==='m'}">${ic('sun',16)}Manhã</button><button data-hper="n" aria-pressed="${per==='n'}">${ic('moon',16)}Noite</button></div>
+    <div class="whl"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
+    <p class="small muted">${ic('bell',14)} Rotina ${per==='m'?'da manhã':'da noite'} às ${h}.</p>
+    ${cta('Continuar')}</div>`}
+  if(st==='scanner')return `<div class="ob obx" style="text-align:center">${back}
+    <div class="obk">Scanner de produtos</div><h1 class="obh">Nem todo produto combina com a sua pele.</h1>
+    <svg viewBox="0 0 220 190" width="220" height="190" style="margin:0 auto;display:block" role="img" aria-label="Ilustração de um frasco dentro da moldura do scanner"><g fill="none" stroke="#8A6A48" stroke-width="2.5" stroke-linecap="round"><path d="M18 46V22H44M176 22H202V46M18 144V168H44M176 168H202V144"/><rect x="82" y="58" width="56" height="86" rx="12"/><rect x="100" y="42" width="20" height="12"/><path d="M92 82h36M100 94h20M92 108h36" stroke-width="2"/></g></svg>
+    <div class="card" style="text-align:left"><div class="obk" style="margin-bottom:6px">Exemplo de análise</div><b style="font-size:17px">Nome do produto</b>
+      <p class="small muted" style="margin:6px 0 0">Você fotografa o rótulo e o Pellie diz se o produto combina com a sua pele, o que ele tem de bom e o que pode incomodar.</p></div>
+    ${cta('Quero saber o que usar')}</div>`;
+  if(st==='comunidade')return `<div class="ob obx">${back}
+    <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Mulheres que já cuidam da pele com a Pellie</h1>
+    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card"><b>${esc(d.nome)}</b><p class="small muted" style="margin:6px 0 0">${esc(d.txt)}</p></div>`).join('')}</div>
+    <p class="small muted" style="text-align:center">Depoimentos publicados com autorização. Resultados individuais variam.</p>${cta('Montar minha rotina')}</div>`;
+  if(st==='transf'){const a=ANTESDEPOIS[0];return `<div class="ob obx">${back}
+    <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh">O antes e depois de quem usa a Pellie.</h1>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><figure style="margin:0"><img src="${esc(a.antes)}" alt="Antes" style="width:100%;border-radius:20px"><figcaption class="obk" style="text-align:center;margin-top:6px">Antes</figcaption></figure><figure style="margin:0"><img src="${esc(a.depois)}" alt="Depois" style="width:100%;border-radius:20px"><figcaption class="obk" style="text-align:center;margin-top:6px">Depois</figcaption></figure></div>
+    <p class="small muted" style="text-align:center">${esc(a.nome)} · ${esc(a.cidade)}. Com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`}
+  if(st==='caminho'){const p=S.pref[0]||'acne',T=CAMT[p]||CAMT.acne;return `<div class="ob obx">${back}
+    <div class="obk">Seu caminho</div><h1 class="obh">${T[0]}:<br><b>sua meta em 3 semanas.</b></h1><p class="obs" style="text-align:left">Montamos cada passo.</p>
+    <div class="cam">${[['face','Hoje: '+T[1],'foi o que você marcou'],['routine','Semana 1','rotina montada para o que sua pele precisa'],['bottle','Semana 2','produtos certos, com compatibilidade antes de comprar'],['sparkle','Semana 3','sua meta: '+T[2]]].map(([i_,t,d],k)=>`<div class="cs${k===3?' on':''}"><span class="cic">${ic(i_,22)}</span><div><b>${t}</b><small>${d}</small></div></div>`).join('')}</div>
+    <p class="small muted" style="text-align:center">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
+  if(st==='pronta'){const ks=(R[S.age]||R['30']).m,N={limpador:['Limpeza','gel de limpeza suave'],niacina:['Tratamento','sérum de niacinamida'],vitc:['Tratamento','sérum de vitamina C'],hidr:['Hidratação','hidratante para o seu tipo de pele'],fps:['Proteção','protetor solar']};
+    return `<div class="ob obx" style="text-align:center"><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:40px;width:auto"></div>
+    <h1 class="obh">A rotina perfeita para sua pele está quase pronta</h1>
+    <div class="card" style="text-align:left"><div class="row" style="justify-content:space-between"><span class="obk">${ic('sun',14)} Manhã</span><span class="small muted">${ic('lock',13)} ${ks.length} passos</span></div>
+      ${ks.map((k,j)=>{const n=N[k]||[k,''];return `<div class="cs" style="padding:12px 0;border-top:1px solid var(--line)"><span class="cic" style="width:34px;height:34px;font-size:14px;font-weight:700">${j+1}</span><div><b>${n[0]}</b><small>${n[1]}</small></div></div>`}).join('')}</div>
+    <p class="small muted">Prévia feita com as suas respostas. A rotina final sai da análise da sua foto.</p>
+    <div><div class="pwb" style="justify-content:center"><b>R$ 34,90</b><span>/mês</span></div><div class="small muted">ou R$ 149,90 por ano. Cancele quando quiser.</div></div>
+    <div class="obf" style="flex-direction:column;align-items:center;gap:6px"><button class="btn obc" data-act="ob-plano">Ativar meu plano</button>
+    <p class="small muted" style="margin:0"><a href="privacidade.html" target="_blank" rel="noopener" style="color:inherit">Privacidade</a></p></div></div>`}
+  if(st==='pele'||st==='sens'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">${q.t}</h1>${q.s?`<p class="obs">${q.s}</p>`:''}
     <div class="stack" style="gap:10px">${q.o.map(o=>`<button class="op2" data-opt="${q.k}|${o[0]}" aria-pressed="${S[q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
     ${cta('Continuar',!!S.ans[q.k])}</div>`}
@@ -2171,6 +2227,13 @@ function viewOnboarding(){
     <div class="ftp">${[['sun','Boa iluminação'],['sparkle','Sem maquiagem'],['hair','Cabelo preso'],['face','Sem óculos']].map(([i_,t])=>`<div><span>${ic(i_,20)}</span>${t}</div>`).join('')}</div>
     ${cta(S.plus?'Abrir câmera':'Continuar',true,'ob-fim')}</div>`;
 }
+const CAMT={acne:['Menos espinhas','espinhas','menos espinhas novas'],manchas:['Menos manchas','manchas','manchas mais discretas'],linhas:['Menos linhas finas','linhas finas','linhas finas mais suaves'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],resseca:['Menos ressecamento','ressecamento','pele mais confortável'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão']};
+function horaSlots(per){const a=per==='m'?[5,12]:[19,24],o=[];for(let h=a[0];h<a[1];h++){o.push(pad(h)+':00');o.push(pad(h)+':30')}const c=S.rem[per];if(c&&!o.includes(c)){o.push(c);o.sort()}return o}
+function timeWheelInit(w){const H=52,per=w.dataset.per,it=[...w.children];
+  const set=()=>{const k=Math.max(0,Math.min(it.length-1,Math.round(w.scrollTop/H)));S.rem[per]=it[k].dataset.t;
+    it.forEach((c,j)=>{const dd=Math.abs(j-k);c.className='wi'+(dd===0?' on':dd===1?' n1':dd===2?' n2':'')});const p=document.querySelector('.ob .small.muted');if(p)p.textContent='Rotina '+(per==='m'?'da manhã':'da noite')+' às '+S.rem[per]+'.'};
+  w.scrollTop=Math.max(0,it.findIndex(c=>c.dataset.t===S.rem[per]))*H;set();
+  let t;w.addEventListener('scroll',()=>{set();clearTimeout(t);t=setTimeout(save,300)},{passive:true})}
 function wheelInit(w){
   const H=52,set=()=>{const k=Math.max(0,Math.min(62,Math.round(w.scrollTop/H)));S.idade=18+k;S.age=idadeFaixa(S.idade);S.ans.age=true;
     [...w.children].forEach((c,j)=>{const dd=Math.abs(j-k);c.className='wi'+(dd===0?' on':dd===1?' n1':dd===2?' n2':'')})};
@@ -2186,6 +2249,7 @@ function render(){
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
+  {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
   f3scan();
   save();
 }
@@ -2203,6 +2267,11 @@ document.addEventListener('click',e=>{
   else if(d.plan){S.planSel=d.plan;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.meta){S.meta=d.meta;render()}
   else if(d.zona){const z=S.zonas||(S.zonas=[]),ix=z.indexOf(d.zona);if(ix>=0)z.splice(ix,1);else z.push(d.zona);const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.gest){S.gestT=d.gest;S.gest=d.gest==='nao'?'nao':'sim';S.ans.gest=true;render()}
+  else if(d.obq){const [k,v]=d.obq.split('|');S[k]=v;render()}
+  else if(d.hper){S.obHp=d.hper;render()}
+  else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
+  else if(d.act==='ob-plano'){S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='ob-next'){S.ob.step++;render();window.scrollTo(0,0)}
   else if(d.act==='ob-back'){S.ob.step=Math.max(0,S.ob.step-1);render();window.scrollTo(0,0)}
   else if(d.act==='ob-fim'){S.ob.done=true;S.tab='pele';S.peleSub='analise';gameCheck();render();window.scrollTo(0,0)}
@@ -2296,6 +2365,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{
   if(e.target.id==='post-t'){S.draft=e.target.value;return}
   if(e.target.id==='cmp-r'){e.target.parentElement.style.setProperty('--p',e.target.value+'%');return}
+  if(e.target.id==='convite'){S.convite=e.target.value.toUpperCase();e.target.value=S.convite;const g=document.getElementById('ob-go');if(g)g.disabled=!/^PELLIE-[A-Z0-9]{6}$/.test(S.convite);save();return}
   if(e.target.id==='nome'){S.nome=e.target.value;const g=document.getElementById('ob-go');if(g)g.disabled=!S.nome.trim();return}
   const m=e.target.id&&e.target.id.match(/^r-(hid|oleo|irr)$/);
   if(m)document.getElementById('v-'+m[1]).textContent=e.target.value;
