@@ -944,7 +944,7 @@ function proxInfo(){
   if(n<m){per='m';min=m-n}else if(n<nt&&!feito('n')){per='n';min=nt-n}else{per='m';min=1440-n+m}
   return{open:false,per,min};
 }
-const gameOn=()=>!!S.plus;
+const gameOn=()=>!!S.plus&&!!S.ob.done;
 function celebrate(o){if(!gameOn())return;o.id=Date.now()+'-'+Math.random();if(S.cele)S.celeQ.push(o);else S.cele=o}
 function xp(n,why,once){
   if(!gameOn())return false;
@@ -2067,7 +2067,7 @@ function viewCabelo(){
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
 const DEPO=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',txt:'Minha pele mudou quando comecei a entender o que ela realmente precisava. Com o Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva',...(S.plus?[]:[...(ANTESDEPOIS.length?['transf']:[]),'pronta'])];
+const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva',...(ANTESDEPOIS.length?['transf']:[]),'pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2344,7 +2344,7 @@ function viewOnboarding(){
     ${cta('Quero saber o que usar')}</div>`;
   if(st==='comunidade')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Veja quem já cuida da pele com a Pellie</h1>
-    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card" style="display:flex;gap:14px;align-items:flex-start;border-radius:24px;padding:18px"><img src="${esc(d.foto)}" alt="Foto de ${esc(d.nome)}" loading="lazy" style="flex:none;width:64px;height:64px;border-radius:50%;object-fit:cover"><div><b style="font-size:17px">${esc(d.nome)}</b><div class="small muted">${esc(d.leg||'')}</div><p style="margin:8px 0 0;font-size:15px;line-height:1.45">“${esc(d.txt)}”</p></div></div>`).join('')}</div>
+    <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card" style="display:flex;gap:14px;align-items:flex-start;border-radius:24px;padding:16px"><div style="width:100%"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">${[['antes','Antes'],['depois','Depois']].map(([k,t])=>`<figure style="margin:0"><img src="${esc(ANTESDEPOIS[0][k])}" alt="${t}, ${esc(d.nome)}" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px"><figcaption class="obk" style="text-align:center;margin-top:4px;font-size:11px">${t}</figcaption></figure>`).join('')}</div><b style="font-size:17px">${esc(d.nome)}</b><div class="small muted">${esc(d.leg||'')}</div><p style="margin:8px 0 0;font-size:15px;line-height:1.45">“${esc(d.txt)}”</p></div></div>`).join('')}</div>
     <p class="small muted" style="text-align:center">Depoimento publicado com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`;
   if(st==='transf'){const a=ANTESDEPOIS[0];return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh" style="margin-top:18px">O antes e depois<br>de quem usa a Pellie.</h1>
@@ -2400,7 +2400,7 @@ function viewOnboarding(){
     <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
     <div style="text-align:center;margin-top:12px"><h1 class="obh" style="font-size:36px">O que você leva</h1><p class="obs" style="margin-top:8px">Tudo para cuidar da sua pele, num só lugar.</p></div>
     <div class="lv">${[['face','Análise de pele com IA','Acompanhe a evolução da sua pele.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['bottle','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:62px;height:62px">${ic(i_,26)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
-    ${cta('Vamos começar',true,S.plus?'ob-fim2':'ob-next')}</div>`;
+    ${cta('Vamos começar',true,'ob-next')}</div>`;
   if(st==='pronta'){const L=(S.result&&rotinaPorAnalise())||null,ks=(L?L.manha.map(x=>x.k):(R[S.age]||R['30']).m),TT={limpador:'Limpeza',hidr:'Hidratação',fps:'Proteção'};
     return `<div class="ob obx" style="text-align:center"><button data-act="ob-pular" aria-label="Fechar" style="position:absolute;right:16px;top:14px;width:40px;height:40px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center">${ic('x',18)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
     <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
