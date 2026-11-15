@@ -2330,22 +2330,37 @@ function faceMap(tap){
 /* ---------- Rosto 3D: malha facial de código aberto (modelo canônico do MediaPipe, Apache-2.0) + Three.js ---------- */
 const F3REG={testa:{a:[10,151,9,67,297,69,299],s:2.5},olhos:{a:[230,450,119,348,231,451],s:1.35},nariz:{a:[1,4,5,195,197,6,48,278,98,327],s:1.35},bochechas:{a:[50,280,205,425,187,411],s:1.8},queixo:{a:[152,175,199,18],s:1.8}};
 const F3D={p:null,ok:false,cv:null,zs:null,host:null};
+/* Feminiza a malha canônica (que é neutra/masculina): mandíbula e nariz mais finos, testa suave, lábios e olhos mais marcados */
+function f3fem(P){const n=P.length/3,ss=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
+  const X=i=>i*3,Y=i=>i*3+1,Z=i=>i*3+2;
+  for(let i=0;i<n;i++){const x=P[X(i)],y=P[Y(i)],z=P[Z(i)];
+    P[X(i)]=x*(1-.17*ss(-1.2,-9.4,y));                        // mandíbula e queixo mais finos
+    if(z>2)P[Z(i)]=z-.38*ss(3.2,4.6,y)*(1-ss(6.4,7.6,y));      // arcada e testa suaves
+    const w=Math.exp(-(x*x/(2*2.6*2.6)+(y+.6)*(y+.6)/(2*3.4*3.4)));  // nariz mais fino e curto
+    if(z>4.8){P[X(i)]*=1-.15*w;P[Z(i)]-=(z-4.8)*.13*w}}
+  const LIPS=[61,146,91,181,84,17,314,405,321,375,291,409,270,269,267,0,37,39,40,185,78,95,88,178,87,14,317,402,318,324,308,415,310,311,312,13,82,81,80,191];
+  LIPS.forEach(a=>{P[Y(a)]=-4.4+(P[Y(a)]+4.4)*1.2;P[Z(a)]+=.12});    // lábios mais cheios
+  [[33,7,163,144,145,153,154,155,133,173,157,158,159,160,161,246],[263,249,390,373,374,380,381,382,362,398,384,385,386,387,388,466]].forEach(E=>{
+    let cx=0,cy=0;E.forEach(a=>{cx+=P[X(a)];cy+=P[Y(a)]});cx/=E.length;cy/=E.length;
+    E.forEach(a=>{P[Y(a)]=cy+(P[Y(a)]-cy)*1.16;P[X(a)]=cx+(P[X(a)]-cx)*1.05})});  // olhos maiores
+  [70,63,105,66,107,336,296,334,293,300,46,53,52,65,55,285,295,282,283,276].forEach(a=>{P[Y(a)]+=.24});  // sobrancelhas mais altas
+  for(let i=0;i<n;i++)P[X(i)]*=.965}
 function f3load(){
   if(F3D.p)return F3D.p;
   F3D.p=Promise.all([new Promise((ok,no)=>{const s=document.createElement('script');s.src='three.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)}),fetch('face-mesh.json').then(r=>{if(!r.ok)throw 0;return r.json()})]).then(([_,m])=>{
-    const T=window.THREE,geo=new T.BufferGeometry(),P=new Float32Array(m.v),n=P.length/3;
+    const T=window.THREE,geo=new T.BufferGeometry(),P=new Float32Array(m.v),n=P.length/3;f3fem(P);
     geo.setAttribute('position',new T.BufferAttribute(P,3));geo.setIndex(m.f);geo.computeVertexNormals();
     const W={};Object.keys(F3REG).forEach(k=>{const r=F3REG[k],w=W[k]=new Float32Array(n);for(let i=0;i<n;i++){let b=0;for(const a of r.a){const dx=P[i*3]-P[a*3],dy=P[i*3+1]-P[a*3+1],dz=P[i*3+2]-P[a*3+2],e=Math.exp(-(dx*dx+dy*dy+dz*dz)/(2*r.s*r.s));if(e>b)b=e}w[i]=b}});
     const C=new Float32Array(n*3);geo.setAttribute('color',new T.BufferAttribute(C,3));
     const rn=new T.WebGLRenderer({antialias:true,alpha:true});rn.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
     const sc=new T.Scene(),cam=new T.PerspectiveCamera(26,1/1.2,1,200);cam.position.set(0,-.4,50);
-    sc.add(new T.HemisphereLight(0xffffff,0x6f6964,.82));const d1=new T.DirectionalLight(0xffffff,.55);d1.position.set(5,8,14);sc.add(d1);const d2=new T.DirectionalLight(0xffffff,.2);d2.position.set(-9,-2,6);sc.add(d2);
+    sc.add(new T.HemisphereLight(0xfff4ea,0x8a6a5a,.86));const d1=new T.DirectionalLight(0xfff1e6,.55);d1.position.set(5,8,14);sc.add(d1);const d2=new T.DirectionalLight(0xffffff,.2);d2.position.set(-9,-2,6);sc.add(d2);
     const g=new T.Group(),mesh=new T.Mesh(geo,new T.MeshStandardMaterial({vertexColors:true,roughness:.78,metalness:.02,side:T.DoubleSide}));
-    const wire=new T.LineSegments(new T.WireframeGeometry(geo),new T.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.62}));wire.scale.setScalar(1.004);
+    const wire=new T.LineSegments(new T.WireframeGeometry(geo),new T.LineBasicMaterial({color:0xfff1e6,transparent:true,opacity:.5}));wire.scale.setScalar(1.004);
     g.add(mesh);g.add(wire);g.position.y=.6;sc.add(g);
     const cv=rn.domElement;cv.className='f3c';cv.setAttribute('role','img');cv.setAttribute('aria-label','Rosto em 3D com as regiões da pele');
     const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;let raf=0,t0=performance.now();
-    const paint=()=>{const z=F3D.zs||{};for(let i=0;i<n;i++){let w=0;for(const k in z){const x=W[k]?W[k][i]*z[k]:0;if(x>w)w=x}w=Math.min(1,w);w=w*w*(3-2*w);C[i*3]=.69+(.72-.69)*w;C[i*3+1]=.68+(.40-.68)*w;C[i*3+2]=.68+(.32-.68)*w}geo.attributes.color.needsUpdate=true};
+    const paint=()=>{const z=F3D.zs||{};for(let i=0;i<n;i++){let w=0;for(const k in z){const x=W[k]?W[k][i]*z[k]:0;if(x>w)w=x}w=Math.min(1,w);w=w*w*(3-2*w);C[i*3]=.87+(.72-.87)*w;C[i*3+1]=.77+(.40-.77)*w;C[i*3+2]=.71+(.32-.71)*w}geo.attributes.color.needsUpdate=true};
     const frame=()=>{if(!cv.isConnected){raf=0;return}const t=(performance.now()-t0)/1000;g.rotation.y=still?0:Math.sin(t*.55)*.24;g.rotation.x=still?0:-.03+Math.sin(t*.38)*.035;rn.render(sc,cam);raf=requestAnimationFrame(frame)};
     const size=()=>{const h=F3D.host;if(!h)return;const w=Math.max(120,Math.min(h.clientWidth||300,360)),ht=Math.round(w*1.2);rn.setSize(w,ht,false);cv.style.width=w+'px';cv.style.height=ht+'px'};
     cv.addEventListener('click',e=>{const h=F3D.host;if(!h||h.dataset.f3d!=='tap')return;const b=cv.getBoundingClientRect(),ray=new T.Raycaster();ray.setFromCamera(new T.Vector2((e.clientX-b.left)/b.width*2-1,-((e.clientY-b.top)/b.height*2-1)),cam);
