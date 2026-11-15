@@ -635,6 +635,7 @@ header{padding:16px 0 12px}
 [data-f3d=tap] .f3c{cursor:pointer}
 [data-f3d=tap]{min-height:340px}
 .fhalo .f3d{max-width:250px;margin:0 auto}
+.fhalo:has(.fimg){background:none}.fhalo .fimg{width:min(100%,280px,calc((100dvh - 520px)/1.25))}
 .mleg{display:grid;gap:6px;text-align:left;margin:6px 0 2px}.mleg span{display:flex;gap:8px;align-items:center;font-size:14px}.mleg i{flex:none;width:12px;height:12px;border-radius:50%;background:#B76652}
 /* barra de navegação flutuante */
 .app{padding-bottom:118px}
@@ -876,6 +877,11 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes tutin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .tutd{display:flex;gap:7px;justify-content:center;margin:10px 0 4px}.tutd i{width:8px;height:8px;border-radius:50%;background:rgba(90,46,20,.16);transition:background .3s,transform .3s}.tutd i.on{background:#D9788F;transform:scale(1.15)}
 .cmesh{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
+/* rosto com imagem própria + malha */
+.fimg{position:relative;width:min(100%,310px,calc((100dvh - 440px)/1.25));min-width:200px;aspect-ratio:900/1125;margin:6px auto 0}
+.fimg img{display:block;width:100%;height:100%;-webkit-mask-image:linear-gradient(#000 80%,transparent),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(#000 80%,transparent),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-composite:intersect;user-select:none;-webkit-user-drag:none}
+.fimg .fim-o{position:absolute;inset:0;-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}.fimg svg{display:block;width:100%;height:100%}
+.fimg[data-fimg=tap]{cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2473,7 +2479,7 @@ const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['tran
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
-const ZONAS=[['testa','testa'],['olhos','olheiras'],['nariz','nariz'],['bochechas','bochechas'],['queixo','queixo']];
+const ZONAS=[['testa','testa'],['olhos','olheiras'],['nariz','nariz'],['bochechas','bochechas'],['queixo','queixo'],['boca','boca']];
 const zonasTxt=()=>{const a=ZONAS.filter(([k])=>(S.zonas||[]).includes(k)).map(z=>z[1]);return a.length>1?a.slice(0,-1).join(', ')+' e '+a[a.length-1]:a[0]||''};
 const idadeFaixa=n=>n<30?'20':n<40?'30':n<50?'40':'50';
 function skinDot(k){
@@ -2524,7 +2530,7 @@ function faceMap(tap){
       <path d="M124 240 C140 243 160 243 176 240" fill="none" stroke="#857B73" stroke-width="1.2"/>
     </g></svg>`}
 /* ---------- Rosto 3D: malha facial de código aberto (modelo canônico do MediaPipe, Apache-2.0) + Three.js ---------- */
-const F3REG={testa:{a:[10,151,9,67,297,69,299],s:2.5},olhos:{a:[230,450,119,348,231,451],s:1.35},nariz:{a:[1,4,5,195,197,6,48,278,98,327],s:1.35},bochechas:{a:[50,280,205,425,187,411],s:1.8},queixo:{a:[152,175,199,18],s:1.8}};
+const F3REG={testa:{a:[10,151,9,67,297,69,299],s:2.5},olhos:{a:[230,450,119,348,231,451],s:1.35},nariz:{a:[1,4,5,195,197,6,48,278,98,327],s:1.35},bochechas:{a:[50,280,205,425,187,411],s:1.8},queixo:{a:[152,175,199,18],s:1.8},boca:{a:[13,14,61,291,0,17,78,308],s:1.5}};
 const F3D={p:null,ok:false,cv:null,zs:null,host:null};
 /* Feminiza a malha canônica (que é neutra/masculina): mandíbula e nariz mais finos, testa suave, lábios e olhos mais marcados */
 function f3fem(P){const n=P.length/3,ss=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
@@ -2591,7 +2597,29 @@ function f3scan(){const h=document.querySelector('[data-f3d]');if(!h)return;
   f3load().then(()=>{if(!h.isConnected)return;let z={};try{z=JSON.parse(h.dataset.z||'{}')}catch(e){}
     const fb=h.querySelector('.f3fb');if(fb)fb.remove();F3D.host=h;F3D.zs=z;h.appendChild(F3D.cv);F3D.size();F3D.paint();F3D.start()}).catch(()=>{const fb=h.querySelector('.f3fb');if(fb)fb.hidden=false})}
 /* marcador do rosto 3D; enquanto carrega (ou sem WebGL), mostra o desenho */
-function face3d(modo,z,fallback){return `<div class="f3d" data-f3d="${modo}" data-z='${JSON.stringify(z)}'><div class="f3fb" hidden>${fallback||''}</div></div>`}
+/* rosto-base.webp (imagem própria) + malha e regiões em rosa alinhadas pelo rastreamento facial (rosto-pts.json) */
+const FIMG={p:null,d:null},FW=900,FH=1125;
+function fimgLoad(){if(FIMG.p)return FIMG.p;
+  FIMG.p=Promise.all([fetch('face-mesh.json').then(r=>{if(!r.ok)throw 0;return r.json()}),fetch('rosto-pts.json').then(r=>{if(!r.ok)throw 0;return r.json()})]).then(([m,pt])=>{
+    const P=m.v,n=P.length/3,W={};
+    Object.keys(F3REG).forEach(k=>{const r=F3REG[k],w=W[k]=new Float32Array(n);for(let i=0;i<n;i++){let b=0;for(const a of r.a){const dx=P[i*3]-P[a*3],dy=P[i*3+1]-P[a*3+1],dz=P[i*3+2]-P[a*3+2],e=Math.exp(-(dx*dx+dy*dy+dz*dz)/(2*r.s*r.s));if(e>b)b=e}w[i]=b}});
+    FIMG.d={f:m.f,pt,W,n};return FIMG.d});
+  return FIMG.p}
+function fimgSvg(z){const d=FIMG.d,f=d.f,pt=d.pt,W=d.W,X=i=>(pt[i][0]*FW).toFixed(1),Y=i=>(pt[i][1]*FH).toFixed(1);let pk='',wr='';
+  for(let t=0;t<f.length;t+=3){const a=f[t],b=f[t+1],c=f[t+2];let w=0;
+    for(const k in z){if(!W[k])continue;const x=(W[k][a]+W[k][b]+W[k][c])/3*z[k];if(x>w)w=x}
+    w=Math.min(1,w*1.15);w=w*w*(3-2*w);const A=`${X(a)} ${Y(a)}`,B=`${X(b)} ${Y(b)}`,C=`${X(c)} ${Y(c)}`;
+    if(w>.05)pk+=`<path d="M${A}L${B}L${C}Z" fill-opacity="${(w*.46).toFixed(2)}"/>`;wr+=`M${A}L${B}L${C}Z`}
+  return `<svg viewBox="0 0 ${FW} ${FH}" aria-hidden="true"><defs><filter id="fimb" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="6"/></filter></defs><g fill="#F2689E" filter="url(#fimb)">${pk}</g><path d="${wr}" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.3" stroke-linejoin="round"/></svg>`}
+function fimgHtml(modo,z){return `<div class="fimg" data-fimg="${modo}" data-z='${JSON.stringify(z)}'><img src="rosto-base.webp" width="${FW}" height="${FH}" alt="Rosto feminino de frente com a malha da análise"><div class="fim-o">${FIMG.d?fimgSvg(z):''}</div></div>`}
+function fimgScan(){const hs=[...document.querySelectorAll('.fimg')].filter(h=>!h.querySelector('svg'));if(!hs.length)return;
+  fimgLoad().then(()=>{hs.forEach(h=>{if(!h.isConnected||h.querySelector('svg'))return;let z={};try{z=JSON.parse(h.dataset.z||'{}')}catch(e){}h.querySelector('.fim-o').innerHTML=fimgSvg(z)})}).catch(()=>{})}
+document.addEventListener('click',e=>{const h=e.target.closest('.fimg[data-fimg=tap]');if(!h||!FIMG.d)return;
+  const r=h.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*FW,y=(e.clientY-r.top)/r.height*FH,pt=FIMG.d.pt;let bi=-1,bd=1e9;
+  for(let i=0;i<pt.length;i++){const dx=pt[i][0]*FW-x,dy=pt[i][1]*FH-y,q=dx*dx+dy*dy;if(q<bd){bd=q;bi=i}}
+  if(bi<0||Math.sqrt(bd)>70)return;let bk=null,bw=.3;for(const k in FIMG.d.W){const v=FIMG.d.W[k][bi];if(v>bw){bw=v;bk=k}}if(!bk)return;
+  const zz=S.zonas||(S.zonas=[]),ix=zz.indexOf(bk);if(ix>=0)zz.splice(ix,1);else zz.push(bk);const sy=window.scrollY;render();window.scrollTo(0,sy)});
+function face3d(modo,z,fallback){if(modo!=='tutor')return fimgHtml(modo,z);return `<div class="f3d" data-f3d="${modo}" data-z='${JSON.stringify(z)}'><div class="f3fb" hidden>${fallback||''}</div></div>`}
 const zonasSel=()=>{const o={};(S.zonas||[]).forEach(k=>o[k]=1);return o};
 /* regiões destacadas a partir do resultado da análise */
 function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=Math.max(o[k]||0,v)}),L=[];
@@ -2990,7 +3018,7 @@ function render(){
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  f3scan();camSync();
+  f3scan();fimgScan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;v.classList.remove('vin');void v.offsetWidth;v.classList.add('vin');clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin'),1300)}}
   save();
 }
