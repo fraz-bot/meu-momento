@@ -56,6 +56,7 @@
 .prc{display:grid;gap:0}.prr{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.prr:last-child{border:0}
 .prr b{display:block;font-weight:600}.prr small{display:block;color:var(--muted);font-size:14px}
 .rd{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--oll)}
+.pimg{flex:none;display:grid;place-items:center}
 .btn.fill{background:var(--ol)!important;color:#fff!important;border:0!important}
 </style>
 <script>window.MM_VER="1794731395";</script>
@@ -2047,7 +2048,7 @@ function viewCabelo(){
   ${pl.produtos.length?`<div class="card"><h3>Produtos para o seu cabelo</h3>
     <div class="seg" role="group" aria-label="Faixa de preço" style="margin:10px 0">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${l}</button>`).join('')}</div>
     <button class="btn" data-act="hrot-all" style="width:100%;margin-bottom:6px">${ic('routine',18)}${pl.produtos.every(x=>hInRot(x.k))?'Cuidados do cabelo já estão na rotina':'Incluir o cuidado do cabelo na rotina'}</button>
-    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier],nm=mt||x.passo,naP=S.shelf.some(i=>i.n===nm);return `<div class="hp"><div class="vp"><span class="tile">${ic('bottle',18)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>
+    ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier],nm=mt||x.passo,naP=S.shelf.some(i=>i.n===nm);return `<div class="hp"><div class="vp"><span class="pimg">${pimg(x.k,46)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${mt?`<small style="color:var(--accent);font-weight:600">${esc(mt)}</small>`:''}</span></div>
       <div class="hpb"><button class="rg" data-hrot="${x.k}" aria-pressed="${hInRot(x.k)}">${ic(hInRot(x.k)?'check':'routine',14)}${hInRot(x.k)?'Na rotina':'Pôr na rotina'}</button><button class="rg" data-hshelf="${x.k}" aria-pressed="${naP}" ${naP?'disabled':''}>${ic(naP?'check':'bottle',14)}${naP?'Na prateleira':'Guardar na prateleira'}</button></div></div>`}).join('')}
     <p class="note">Exemplos de marcas, sem preço fixo. Confira a lista de ingredientes no rótulo.</p></div>`:''}
   ${pl.crono.length?`<div class="card"><h3>Cronograma capilar</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.crono.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
@@ -2155,6 +2156,15 @@ function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=
   if(r.linhas>=50){add(['testa','olhos'],r.linhas/100);L.push('Linhas finas: testa e área dos olhos')}
   [['manchas','Manchas'],['verm','Vermelhidão']].forEach(([k,t])=>{const a=(Array.isArray(zz[k])?zz[k]:[]).filter(x=>F3REG[x]);if(r[k]>=50&&a.length){add(a,r[k]/100);L.push(t+': '+a.map(x=>(ZONAS.find(q=>q[0]===x)||[0,x])[1]).join(', '))}});
   return{z:o,leg:L}}
+// Ilustrações genéricas (sem marca) por tipo de produto
+function pimg(k,w=44){
+  const T={limpador:['tube','#EBD9C8','#8A6A48'],fps:['tube','#F6E3B8','#C8892B'],vitc:['drop','#C9822B','#F4C27A'],niacina:['drop','#E8DFD2','#8A6A48'],retinol:['drop','#5A2E14','#D9B79A'],bha:['drop','#CFE3D8','#3E7B67'],hialu:['drop','#D9E6EE','#5A86A3'],calmante:['jar','#DCE9DF','#3E7B67'],hidr:['jar','#F3E6DB','#8A6A48'],cabelo:['pump','#EBD9C8','#8A6A48']};
+  const [f,c1,c2]=T[k]||['jar','#F3E6DB','#8A6A48'];
+  const sh={tube:`<path d="M20 8h24l-3 12H23z" fill="${c2}"/><path d="M19 20h26l-2 36a3 3 0 0 1-3 3H24a3 3 0 0 1-3-3z" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="26" y="30" width="12" height="2.200" rx="1" fill="${c2}" opacity=".6"/><rect x="28" y="36" width="8" height="2.200" rx="1" fill="${c2}" opacity=".4"/>`,
+    drop:`<rect x="29" y="6" width="6" height="8" rx="2" fill="${c2}"/><path d="M26 14h12v8H26z" fill="#2C2118" opacity=".85"/><rect x="19" y="22" width="26" height="36" rx="6" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="24" y="32" width="16" height="12" rx="2" fill="#fff" opacity=".55"/>`,
+    jar:`<rect x="14" y="16" width="36" height="9" rx="3" fill="${c2}"/><rect x="12" y="25" width="40" height="30" rx="8" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="22" y="34" width="20" height="9" rx="2" fill="#fff" opacity=".55"/>`,
+    pump:`<path d="M28 6h12v5h-4v5h-4v-5h-4z" fill="${c2}"/><rect x="20" y="16" width="24" height="42" rx="6" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="25" y="30" width="14" height="12" rx="2" fill="#fff" opacity=".55"/>`}[f];
+  return `<svg viewBox="0 0 64 64" width="${w}" height="${w}" role="img" aria-label="Ilustração do produto" style="display:block">${sh}</svg>`}
 function qIcon(k){const sv=d=>`<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
   return {olheiras:sv('<path d="M3 15c3.500-5.500 8-8 12-8s8.500 2.500 12 8c-3.500 5.500-8 8-12 8S6.500 20.500 3 15z"/><circle cx="15" cy="15" r="3.500"/>'),textura:sv('<path d="M5 9h4M12 9h4M19 9h4M5 15h4M12 15h4M19 15h4M5 21h4M12 21h4M19 21h4"/>'),
     oleo:ic('drop',30),acne:ic('spot',30),manchas:sv('<circle cx="9" cy="9" r="3"/><circle cx="20" cy="12" r="3"/><circle cx="12" cy="21" r="3"/>'),linhas:ic('waves',30),poros:ic('pores',30),resseca:sv('<circle cx="15" cy="15" r="10"/><path d="M15 5l-3 6 5 3-4 5 2 6"/>'),outro:ic('plus',30)}[k]||''}
@@ -2242,7 +2252,7 @@ function startScan(){
 }
 function obPhone(){return `<div class="mph" aria-hidden="true"><div class="mph-s"><div class="mph-n"></div>
   <div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i><u>${ic('sun',12)}Começar</u></div>
-  ${[['Limpador suave','Gel de limpeza'],['Sérum','Niacinamida'],['Hidratante','Com ceramidas'],['Protetor solar','FPS 50+']].map(([a,b],i)=>`<div class="mph-r"><em>${i+1}</em><span>${ic('bottle',14)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
+  ${[['Limpador suave','Gel de limpeza','limpador'],['Sérum','Niacinamida','niacina'],['Hidratante','Com ceramidas','hidr'],['Protetor solar','FPS 50+','fps']].map(([a,b,k],i)=>`<div class="mph-r"><em>${i+1}</em><span>${pimg(k,22)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
 function viewOnboarding(){
   const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
@@ -2388,7 +2398,7 @@ function viewOnboarding(){
     return `<div class="ob obx" style="text-align:center"><button data-act="ob-pular" aria-label="Fechar" style="position:absolute;right:16px;top:14px;width:40px;height:40px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center">${ic('x',18)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
     <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
     <div class="card prc" style="text-align:left;padding:18px 22px"><div class="row" style="justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)"><span class="obk" style="display:flex;gap:8px;align-items:center">${ic('sun',15)}Manhã</span><span class="small muted" style="display:flex;gap:6px;align-items:center">${ic('lock',13)}${ks.length} passos</span></div>
-      ${ks.map((k,j)=>`<div class="prr"><span class="cic" style="width:46px;height:46px;font-size:18px">${j+1}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small>${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
+      ${ks.map((k,j)=>`<div class="prr"><span class="pimg" style="width:46px">${pimg(k,46)}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small>${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
     <div><p class="small muted" style="margin:0 0 10px;font-size:16px">Tudo que sua pele precisa está aqui.</p><div style="font-size:44px;line-height:1">R$ 34,90<span style="font-size:18px;color:var(--muted)">/mês</span></div><p class="small muted" style="margin:6px 0 0">Cancele quando quiser</p><p class="small muted" style="margin:2px 0 0">ou R$ 149,90 por ano</p></div>
     <div class="obf" style="flex-direction:column;align-items:center;gap:8px;width:100%"><button class="btn obc fill" data-act="ob-plano" style="width:100%">Ativar meu plano</button>
     <p class="small" style="margin:0;display:flex;gap:22px;justify-content:center"><a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--ink)">Termos</a><a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--ink)">Privacidade</a><a href="#" data-act="plus-refresh" style="color:var(--ink)">Restaurar compra</a></p></div></div>`}
