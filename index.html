@@ -848,6 +848,18 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .qiw{width:100%}.qa{display:block;width:100%;height:auto;aspect-ratio:96/64;border-radius:15px}
 .qg3 button:has(.qiw) b{font-size:13px;min-height:2.4em;display:grid;align-items:center}
 .qg3 button[aria-pressed=true] .qa{box-shadow:0 0 0 2px var(--terra)}
+/* plano em 3 passos */
+.pl3{display:grid;gap:12px;position:relative}
+.pl0{display:flex;gap:10px;align-items:center;justify-content:center;text-align:left;font-size:14px;color:var(--muted);background:var(--terra-soft);border-radius:16px;padding:10px 14px}
+.pl0 span{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--surface);color:var(--terra-ink)}
+.pl0 small{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--terra-ink)}.pl0 b{color:var(--ol)}
+.pls3{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--oll);border-radius:22px;padding:16px 16px;box-shadow:var(--sh)}
+.pls3 em{font-style:normal;width:34px;height:34px;border-radius:50%;background:var(--ol);color:#FBF6EE;font-weight:700;font-size:16px;display:grid;place-items:center}
+.pls3 small{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--terra-ink)}
+.pls3 b{display:block;font-size:18px;color:var(--ol);margin:1px 0 2px}.pls3 p{margin:0;font-size:14px;line-height:1.4;color:var(--muted)}
+.pli{color:var(--terra);display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--terra-soft)}
+.pls3:not(:last-child)::after{content:"";position:absolute;left:32px;bottom:-12px;width:2px;height:12px;background:repeating-linear-gradient(180deg,var(--terra) 0 3px,transparent 3px 6px)}
+.pls3.fim{border:1.5px solid var(--terra);background:linear-gradient(180deg,#fff,var(--terra-soft))}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2740,14 +2752,13 @@ function viewOnboarding(){
     <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh" style="margin-top:18px">O antes e depois<br>de quem usa a Pellie.</h1>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><figure style="margin:0"><img src="${esc(a.antes)}" alt="Foto de antes, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Antes</figcaption></figure><figure style="margin:0"><img src="${esc(a.depois)}" alt="Foto de depois, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Depois</figcaption></figure></div>
     <p class="small muted" style="text-align:center">${esc(a.nome)}, ${esc(a.leg)}. Com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`}
-  if(st==='caminho'){const d=desafio(),T=CAMT[d?d.k:'oleo'];return `<div class="ob obx">${back}
-    <div class="obk">Seu caminho</div><h1 class="obh"><span style="font-weight:500">${T[0]}:</span><br>sua meta em 3 semanas.</h1><p class="obs" style="text-align:left">Montamos cada passo.</p>
-    <div class="zz">
-      <svg viewBox="0 0 358 440" width="100%" aria-hidden="true" style="position:absolute;inset:0"><g fill="none" stroke="#5A2E14" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="1.5 7"><path d="M64 52C92 96 150 104 178 122"/><path d="M192 170C208 204 236 216 245 236"/><path d="M252 290C262 322 284 336 290 346"/></g></svg>
-      <div class="zn" style="left:17%;top:4.500%"><span class="cic">${ic('face',24)}</span><div style="left:34px"><b>Hoje: ${T[1]}</b><small>foi o que sua análise mostrou</small></div></div>
-      <div class="zn" style="left:52%;top:31.500%"><span class="cic">${ic('routine',24)}</span><div style="left:34px;width:150px"><b>Semana 1</b><small>rotina montada para o que sua pele precisa</small></div></div>
-      <div class="zn" style="left:69%;top:58.500%"><span class="cic">${ic('bottle',24)}</span><div class="l" style="right:34px;width:170px"><b>Semana 2</b><small>produtos certos, com compatibilidade antes de comprar</small></div></div>
-      <div class="zn big" style="left:81.500%;top:84%"><span class="cic on">${ic('sparkle',30)}</span><div class="l" style="right:34px;width:190px"><b>Semana 3</b><small>sua meta: ${T[2]}</small></div></div>
+  if(st==='caminho'){const d=desafio(),T=CAMT[d?d.k:'oleo'];
+    const PL=[['routine','Semana 1','Sua rotina, pronta','Manhã e noite, só com o que a sua pele precisa.'],['bottle','Semana 2','Os produtos certos','Veja a compatibilidade antes de comprar e use o que já tem.'],['sparkle','Semana 3','Sua meta',`${T[2][0].toUpperCase()+T[2].slice(1)}. Compare com a análise de hoje.`]];
+    return `<div class="ob obx">${back}
+    <div class="obk" style="text-align:center">Seu plano</div><h1 class="obh" style="text-align:center">Seu plano em<br>3 passos</h1>
+    <p class="obs" style="text-align:center">${T[0]} em 3 semanas.</p>
+    <div class="pl3" role="list"><div class="pl0" role="listitem"><span>${ic('face',16)}</span><div><small>Ponto de partida</small><b>${T[1][0].toUpperCase()+T[1].slice(1)}</b> foi o que sua análise mostrou</div></div>
+      ${PL.map(([i_,w,t,dsc],k)=>`<div class="pls3${k===2?' fim':''}" role="listitem"><em>${k+1}</em><div><small>${w}</small><b>${t}</b><p>${dsc}</p></div><span class="pli">${ic(i_,22)}</span></div>`).join('')}
     </div>
     <p class="small muted" style="text-align:center;margin:0">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
   if(st==='foto')return `<div class="ob obx">${back}
