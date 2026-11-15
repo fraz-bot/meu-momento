@@ -1135,14 +1135,15 @@ function authView(){
   if(AUTH.user&&AUTH.ready){AUTH.want=false;return precisaConsent()&&S.ob.done?consentView():null}
   const logo=LOGO.replace('class="logo"','class="logo" style="width:84px;height:84px;filter:drop-shadow(0 10px 18px rgba(122,99,82,.35))"');
   if(!AUTH.ready)return `<div class="ob" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"><p class="small muted" style="margin-top:8px">Carregando…</p></div></div>`;
-  return `<div class="ob" style="text-align:center;gap:14px"><div class="brand" style="flex-direction:column;gap:6px;margin-top:18px"><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"></div>
-    <div class="welcome">${welcomeArt()}</div>
-    <h1>Falta só criar sua conta.</h1>
-    <p class="muted">Entre para salvar sua análise e sua rotina em segurança.</p>
-    <button class="btn" data-act="login-google" style="background:#fff;color:#2C2118;border:1.5px solid var(--tint);box-shadow:0 6px 16px rgba(122,99,82,.15)">${GLOGO}Entrar com Google</button>
-    ${AUTH.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(AUTH.err)}</p>`:''}
-    <p class="note">${ic('lock',12)} Sua foto é enviada só para gerar a análise e não fica guardada.</p>
-    <p class="note">Ao entrar, você poderá ler a <a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--accent)">Política de Privacidade e os Termos</a>.</p></div>`;
+  const nm=S.nome?esc(S.nome)+', sua':'Sua';
+  return `<div class="ob obx" style="text-align:center">
+    <div style="margin-top:34px"><img src="pellie-flor.png" alt="" style="height:64px;width:auto;opacity:.9"></div>
+    <div><div class="obk">Quase lá</div><h1 class="obh" style="margin-top:10px">${nm} análise<br>está salva aqui.</h1>
+    <p class="obs" style="margin-top:12px">Crie sua conta para guardar sua rotina e acompanhar a evolução da sua pele.</p></div>
+    <div class="obf" style="flex-direction:column;align-items:stretch;gap:12px;width:100%;margin-top:auto;position:static">
+      <button class="btn obc" data-act="login-google" style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px">${GLOGO}Continuar com Google</button>
+      ${AUTH.err?`<p class="note" role="alert" style="color:var(--alert);margin:0">${esc(AUTH.err)}</p>`:''}
+      <p class="small muted" style="margin:6px 0 0;line-height:1.5">Sua foto é enviada só para gerar a análise e não fica guardada. Ao continuar, você concorda com os <a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Termos</a> e a <a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Política de Privacidade</a>.</p></div></div>`;
 }
 async function loginGoogle(){AUTH.err=null;try{const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error)throw error}catch(e){AUTH.err='Não consegui abrir o login do Google. Tente de novo.';render()}}
 async function sairConta(){try{await sb.auth.signOut()}catch(e){}AUTH.user=null;CL.ok=false;AUTH.ready=true;render()}
