@@ -2552,7 +2552,7 @@ function obPhoneDemo(){
    <div class="mps s2"><div class="mp-scan"><img src="exemplo-base.jpg" alt="" width="180" height="180"><i class="mp-line"></i><span class="mp-tag">${ic('sparkle',10)}Ácido hialurônico</span></div><b class="mp-lt">Lendo o rótulo...</b><span class="mp-sub">Ingredientes e ativos do produto</span></div>
    <div class="mps s3"><div class="mp-top"><b>Minha prateleira</b><u>Editar</u></div>${sh(['hidr','niacina','vitc','limpador'])}${sh(['fps','limpador','hialu'])}<div class="mp-rec"><b>Recomendados pra você</b><div><span>${pimg('limpador',26)}<small>Limpador suave</small></span><span>${pimg('niacina',26)}<small>Sérum</small></span></div></div></div>
    <div class="mps s4"><div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i></div>${R}</div>
-   <div class="mps s5"><span class="mp-sub" style="margin-top:34px">Hora do seu skincare noturno</span><b class="mp-big">9min</b><u class="mp-go"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg>Iniciar skincare</u><div class="mp-fade">${R.split('</div></div>').slice(0,3).map(x=>x+'</div></div>').join('')}</div></div>
+   <div class="mps s5"><span class="mp-sub" style="margin-top:34px">Hora do seu skincare noturno</span><b class="mp-big">7min</b><u class="mp-go"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg>Iniciar skincare</u><div class="mp-fade">${R.split('</div></div>').slice(0,3).map(x=>x+'</div></div>').join('')}</div></div>
   </div></div>`}
 function viewOnboarding(){
   const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
