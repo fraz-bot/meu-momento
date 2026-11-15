@@ -2291,7 +2291,7 @@ function viewCabelo(){
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
 const DEPO=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',txt:'Minha pele mudou quando comecei a entender o que ela realmente precisava. Com o Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva',...(ANTESDEPOIS.length?['transf']:[]),'pronta'];
+const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','analise','caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
