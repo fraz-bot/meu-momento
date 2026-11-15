@@ -56,6 +56,13 @@
 .prc{display:grid;gap:0}.prr{display:flex;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.prr:last-child{border:0}
 .prr b{display:block;font-weight:600}.prr small{display:block;color:var(--muted);font-size:14px}
 .rd{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--oll)}
+.shelfv{background:linear-gradient(180deg,#FBF3EA,#F3E6D8);border:1px solid var(--oll);border-radius:24px;padding:14px 14px 6px;display:grid;gap:0}
+.srow{display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:6px;min-height:84px;padding:0 4px}
+.sbot{display:grid;place-items:end center;min-height:72px;background:none;border:0;padding:0;animation:sbin .35s ease both}
+.sgh{width:46px;height:46px;margin:0 auto 6px;align-self:end;border:1.5px dashed var(--ol)!important;border-radius:50%;color:var(--ol);place-items:center;min-height:0;cursor:pointer;background:transparent}
+.splank{height:10px;border-radius:4px;background:linear-gradient(#CDA783,#A97F5B);box-shadow:0 7px 8px -5px rgba(60,35,15,.4);margin:0 -6px 12px}
+@keyframes sbin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.sbot{animation:none}}
 .pimg{flex:none;display:grid;place-items:center}
 .pwo-g{display:grid;gap:12px;text-align:left;margin-bottom:6px}
 .pwo{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1.5px solid var(--oll);background:transparent;border-radius:20px;padding:16px;font:inherit;color:var(--ink);cursor:pointer}
@@ -1429,6 +1436,17 @@ function viewRotina(){
 
 const exList=a=>a&&a.length?`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('bottle',16)}${esc(n)}</li>`).join('')}</ul>`:'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
 const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('bottle',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button>`;
+function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.n||'').toLowerCase();
+  const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
+  for(const [r,k] of T)if(r.test(t))return k;return 'hidr'}
+// Prateleira ilustrada: cresce uma tábua a cada 4 produtos
+function shelfViz(it){const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
+  for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
+    if(x)c+=`<div class="sbot" title="${esc(x.n)}">${pimg(shelfKey(x),58)}</div>`;
+    else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
+    else c+='<div class="sbot"></div>'}
+    h+=`<div class="srow">${c}</div><div class="splank"></div>`}
+  return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
 function viewShelf(){
   const it=S.shelf,soon=shelfSoon().length;
   const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado;return `<div class="sh"><span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}<div class="exp ${f.cls}">${f.txt}</div>
@@ -1436,9 +1454,9 @@ function viewShelf(){
     <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
     <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
     <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Na rotina:</span>${[['m','Manhã'],['n','Noite']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}">${t}</button>`).join('')}</div></div>`};
-  return `<div class="stack">${it.length?`<div class="card"><div class="row" style="justify-content:space-between"><h3>Minha prateleira</h3><span class="small muted">${it.length} ${it.length===1?'produto':'produtos'}${soon?` · ${soon} vencendo`:''}</span></div>
+  return `<div class="stack">${it.length?`${shelfViz(it)}<div class="card"><div class="row" style="justify-content:space-between"><h3>Minha prateleira</h3><span class="small muted">${it.length} ${it.length===1?'produto':'produtos'}${soon?` · ${soon} vencendo`:''}</span></div>
     <p class="note" style="margin-top:2px">Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>${it.map(row).join('')}</div>`
-    :`<div class="card" style="text-align:center;padding:28px 18px"><span class="tile" style="margin:0 auto 10px;width:52px;height:52px">${ic('bottle',26)}</span><h3>Sua prateleira está vazia</h3><p class="small muted" style="margin-top:4px">Escaneie um produto e guarde aqui.</p></div>`}
+    :`<div class="card" style="text-align:center;padding:28px 18px"><div style="margin:-6px -6px 14px">${shelfViz([])}</div><h3>Sua prateleira está vazia</h3><p class="small muted" style="margin-top:4px">Escaneie um produto e guarde aqui.</p></div>`}
     ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`;
 }
 function viewProdutos(){
@@ -2521,7 +2539,7 @@ document.addEventListener('click',e=>{
   else if(d.regc){S.reg.ciclo=!S.reg.ciclo;document.querySelector('[data-regc]').setAttribute('aria-pressed',String(S.reg.ciclo))}
   else if(d.sub){S.peleSub=d.sub;render();window.scrollTo(0,0)}
   else if(d.act==='shelf-add'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto';
-    if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
+    if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
     gameCheck();render()}
   else if(d.act==='guardar-foto'){guardarFoto()}
   else if(d.act==='novo-prod'){S.prodResult=null;S.prodPhoto=null;S.prodFile=null;S.prodErr=null;render();window.scrollTo(0,0)}
