@@ -774,6 +774,38 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .dep b{display:block;font-size:17px;color:var(--ol)}.dep .small{display:block;text-transform:none;letter-spacing:0}
 .dep .d1{margin:8px 0 0;font-size:15px;line-height:1.4;font-weight:600;color:var(--ol)}
 .dep .d2{margin:6px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}
+/* celular animado da tela inicial */
+.mpd{width:min(58vw,224px);aspect-ratio:224/392;margin:2px auto;border-radius:40px;background:var(--ol);padding:7px;box-shadow:0 26px 50px rgba(75,41,25,.24)}
+.mpd-s{position:relative;height:100%;border-radius:33px;overflow:hidden;background:linear-gradient(180deg,#F6E6D2 0%,#FBF6EE 52%);text-align:left}
+.mpd-n{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:60px;height:14px;border-radius:9px;background:var(--ol);z-index:3}
+.mps{position:absolute;inset:0;padding:34px 11px 12px;display:grid;align-content:start;gap:7px;opacity:0;animation:mpsc 17.5s infinite both}
+.mps.s2{animation-delay:3.5s}.mps.s3{animation-delay:7s}.mps.s4{animation-delay:10.5s}.mps.s5{animation-delay:14s}
+@keyframes mpsc{0%{opacity:0;transform:translateY(10px) scale(.985)}3.5%,17%{opacity:1;transform:none}20%,100%{opacity:0;transform:translateY(-6px)}}
+.mp-big{display:block;text-align:center;font-family:var(--f-display);font-size:40px;letter-spacing:-.04em;line-height:1;color:var(--terra,#A76F5C)}
+.mp-sub{display:block;text-align:center;font-size:10px;color:var(--ol);font-weight:600}
+.s1 .mp-big{margin-top:4px}
+.mp-ring{width:108px;height:108px;border-radius:50%;margin:4px auto 0;border:3px solid #E7C9BC;overflow:hidden;background:#fff;box-shadow:0 6px 16px rgba(167,111,92,.2)}
+.mp-ring img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.mp-card{background:#fff;border-radius:14px;padding:9px 10px;box-shadow:0 4px 14px rgba(75,41,25,.08);display:grid;gap:5px}
+.mp-card>b{font-size:12px;color:var(--ol)}.mp-card p{margin:0;font-size:9px;line-height:1.35;color:var(--muted)}.mp-card p b{color:var(--terra,#A76F5C)}
+.mp-ch{display:flex;gap:5px}.mp-ch u{text-decoration:none;font-size:8px;padding:3px 7px;border-radius:99px;background:#EFE8E0;color:var(--muted);font-weight:600}.mp-ch u.ok{background:#DDEBE2;color:#3F7A5C}
+.mp-scan{position:relative;width:150px;height:150px;margin:10px auto 0;border-radius:22px;overflow:hidden;box-shadow:0 8px 20px rgba(75,41,25,.18)}
+.mp-scan img{width:100%;height:100%;object-fit:cover;display:block}
+.mp-line{position:absolute;left:8%;right:8%;top:10%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff 30%,#fff 70%,transparent);box-shadow:0 0 10px 3px rgba(255,255,255,.8),0 0 20px 6px rgba(167,111,92,.5);animation:mpline 3.5s ease-in-out infinite;animation-delay:3.5s}
+@keyframes mpline{0%,100%{top:10%}50%{top:86%}}
+.mp-tag{position:absolute;left:8px;top:22px;display:inline-flex;align-items:center;gap:4px;background:#fff;color:var(--ol);font-size:9px;font-weight:700;padding:4px 8px;border-radius:99px;box-shadow:0 3px 10px rgba(75,41,25,.2);opacity:0;animation:mptag 17.5s infinite both;animation-delay:3.5s}
+@keyframes mptag{0%,6%{opacity:0;transform:translateY(6px)}10%,17%{opacity:1;transform:none}20%,100%{opacity:0}}
+.mp-lt{display:block;text-align:center;font-size:13px;color:var(--ol);margin-top:6px}
+.mp-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--ol)}.mp-top b{font-size:11px}.mp-top u{text-decoration:none;color:var(--terra,#A76F5C);font-weight:700}
+.mpsh{display:flex;justify-content:space-around;align-items:flex-end;padding:6px 6px 0;border-bottom:5px solid #EBD3C8;border-radius:0 0 4px 4px;margin:0 2px;min-height:58px;background:linear-gradient(180deg,rgba(255,255,255,.65),rgba(255,255,255,0))}
+.mpsh span{display:grid;transform:translateY(1px)}
+.mp-rec{margin-top:8px;display:grid;gap:5px}.mp-rec>b{font-size:10px;color:var(--ol)}.mp-rec>div{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mp-rec span{background:#fff;border-radius:12px;padding:7px 6px;display:grid;justify-items:center;gap:3px;box-shadow:0 2px 8px rgba(75,41,25,.07)}.mp-rec small{font-size:8.5px;color:var(--ol);font-weight:600}
+.s4 .mph-h{padding:2px 0 6px}
+.mp-go{text-decoration:none;justify-self:center;display:inline-flex;align-items:center;gap:6px;background:var(--ol);color:#FBF6EE;font-size:11px;font-weight:700;padding:9px 16px;border-radius:99px;margin-top:6px;box-shadow:0 6px 14px rgba(75,41,25,.22)}
+.s5 .mp-big{font-size:46px;margin-top:6px;color:var(--ol)}
+.mp-fade{display:grid;gap:6px;margin-top:12px;opacity:.55;filter:blur(1.2px);-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
+@media (prefers-reduced-motion:reduce){.mps{animation:none;opacity:0}.mps.s4{opacity:1}.mp-line,.mp-tag{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2510,13 +2542,25 @@ function startScan(){
 function obPhone(){return `<div class="mph" aria-hidden="true"><div class="mph-s"><div class="mph-n"></div>
   <div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i><u>${ic('sun',12)}Começar</u></div>
   ${[['Limpador suave','Gel de limpeza','limpador'],['Sérum','Niacinamida','niacina'],['Hidratante','Com ceramidas','hidr'],['Protetor solar','FPS 50+','fps']].map(([a,b,k],i)=>`<div class="mph-r"><em>${i+1}</em><span>${pimg(k,22)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
+function obPhoneDemo(){
+  const rows=[['Limpador suave','Gel de limpeza','limpador'],['Sérum','Niacinamida','niacina'],['Hidratante','Com ceramidas','hidr'],['Protetor solar','FPS 50+','fps']];
+  const R=rows.map(([a,b,k],i)=>`<div class="mph-r"><em>${i+1}</em><span>${pimg(k,22)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('');
+  const sh=ks=>`<div class="mpsh">${ks.map(k=>`<span>${pimg(k,34)}</span>`).join('')}</div>`;
+  return `<div class="mpd" aria-hidden="true"><div class="mpd-s"><i class="mpd-n"></i>
+   <div class="mps s1"><b class="mp-big">86%</b><span class="mp-sub">Compatibilidade de pele</span><div class="mp-ring"><img src="exemplo-base.jpg" alt="" width="120" height="120"></div>
+     <div class="mp-card"><b>Accord Parfait</b><div class="mp-ch"><u class="ok">Pode usar</u><u>Confiança média</u></div><p><b>O que significa?</b> Combina com a sua pele e hidrata sem pesar.</p></div></div>
+   <div class="mps s2"><div class="mp-scan"><img src="exemplo-base.jpg" alt="" width="180" height="180"><i class="mp-line"></i><span class="mp-tag">${ic('sparkle',10)}Ácido hialurônico</span></div><b class="mp-lt">Lendo o rótulo...</b><span class="mp-sub">Ingredientes e ativos do produto</span></div>
+   <div class="mps s3"><div class="mp-top"><b>Minha prateleira</b><u>Editar</u></div>${sh(['hidr','niacina','vitc','limpador'])}${sh(['fps','limpador','hialu'])}<div class="mp-rec"><b>Recomendados pra você</b><div><span>${pimg('limpador',26)}<small>Limpador suave</small></span><span>${pimg('niacina',26)}<small>Sérum</small></span></div></div></div>
+   <div class="mps s4"><div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i></div>${R}</div>
+   <div class="mps s5"><span class="mp-sub" style="margin-top:34px">Hora do seu skincare noturno</span><b class="mp-big">9min</b><u class="mp-go"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg>Iniciar skincare</u><div class="mp-fade">${R.split('</div></div>').slice(0,3).map(x=>x+'</div></div>').join('')}</div></div>
+  </div></div>`}
 function viewOnboarding(){
   const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
   const cta=(t,ok=true,act='ob-next')=>`<div class="obf"><button class="btn obc" id="ob-go" data-act="${act}" ${ok?'':'disabled'}>${t}</button></div>`;
   if(st==='intro')return `<div class="ob obx" style="text-align:center">
     <div class="brand" style="justify-content:center;gap:10px"><img src="pellie-logo.png" alt="Pellie" style="height:46px;width:auto"></div>
-    ${obPhone()}
+    ${obPhoneDemo()}
     <h1 class="obh">A rotina certa<br>para a sua pele.</h1><p class="obs">Feita especialmente para você.</p>
     ${cta('Analisar minha pele')}
     <p class="small muted">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p></div>`;
