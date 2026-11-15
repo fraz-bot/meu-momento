@@ -775,22 +775,22 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .dep .d1{margin:8px 0 0;font-size:15px;line-height:1.4;font-weight:600;color:var(--ol)}
 .dep .d2{margin:6px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}
 /* exemplo do scanner */
-.exf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
-.exf img{width:100%;height:100%;object-fit:cover;display:block}
-.exf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(75,41,25,0) 55%,rgba(75,41,25,.18))}
-.exl{position:absolute;left:8%;right:8%;top:10%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff 30%,#fff 70%,transparent);box-shadow:0 0 14px 3px rgba(255,255,255,.75),0 0 28px 8px rgba(167,111,92,.5);animation:exscan 3.2s ease-in-out infinite;z-index:2}
-@keyframes exscan{0%,100%{top:10%;opacity:0}12%,88%{opacity:1}50%{top:88%}}
-.exc{position:absolute;width:30px;height:30px;border:3px solid #fff;z-index:2;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
-.exc.c1{top:12px;left:12px;border-right:0;border-bottom:0;border-top-left-radius:12px}.exc.c2{top:12px;right:12px;border-left:0;border-bottom:0;border-top-right-radius:12px}
-.exc.c3{bottom:12px;left:12px;border-right:0;border-top:0;border-bottom-left-radius:12px}.exc.c4{bottom:12px;right:12px;border-left:0;border-top:0;border-bottom-right-radius:12px}
-.exr{animation:fadein .7s .5s ease both}
-.exh{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 2px}.exh>div{display:grid;gap:2px}
-.exh .exn,.exh .small{text-transform:none!important;letter-spacing:0!important}.exn{font-size:22px;font-weight:600;color:var(--ol)}
-.exa{animation:exring 1.4s .8s ease-out both}@keyframes exring{from{stroke-dasharray:0 176}}
-.exv{display:block;font-size:17px;color:var(--ok);margin:2px 0 8px}
-.exk{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:9px}.exk li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--ol)}
-.exk i{flex:none;width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--ok)}.exk .att i{background:var(--att)}
-@media (prefers-reduced-motion:reduce){.exl,.exr,.exa{animation:none}.exl{display:none}}
+.pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
+.pxf img{width:100%;height:100%;object-fit:cover;display:block}
+.pxf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(75,41,25,0) 55%,rgba(75,41,25,.18))}
+.pxl{position:absolute;left:8%;right:8%;top:10%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff 30%,#fff 70%,transparent);box-shadow:0 0 14px 3px rgba(255,255,255,.75),0 0 28px 8px rgba(167,111,92,.5);animation:pxscan 3.2s ease-in-out infinite;z-index:2}
+@keyframes pxscan{0%,100%{top:10%;opacity:0}12%,88%{opacity:1}50%{top:88%}}
+.pxc{position:absolute;width:30px;height:30px;border:3px solid #fff;z-index:2;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
+.pxc.c1{top:12px;left:12px;border-right:0;border-bottom:0;border-top-left-radius:12px}.pxc.c2{top:12px;right:12px;border-left:0;border-bottom:0;border-top-right-radius:12px}
+.pxc.c3{bottom:12px;left:12px;border-right:0;border-top:0;border-bottom-left-radius:12px}.pxc.c4{bottom:12px;right:12px;border-left:0;border-top:0;border-bottom-right-radius:12px}
+.pxr{animation:fadein .7s .5s ease both}
+.pxh{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 2px}.pxh>div{display:grid;gap:2px}
+.pxh .pxn,.pxh .small{text-transform:none!important;letter-spacing:0!important}.pxn{font-size:22px;font-weight:600;color:var(--ol)}
+.pxa{animation:pxring 1.4s .8s ease-out both}@keyframes pxring{from{stroke-dasharray:0 176}}
+.pxv{display:block;font-size:17px;color:var(--ok);margin:2px 0 8px}
+.pxk{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:9px}.pxk li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--ol)}
+.pxk i{flex:none;width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--ok)}.pxk .att i{background:var(--att)}
+@media (prefers-reduced-motion:reduce){.pxl,.pxr,.pxa{animation:none}.pxl{display:none}}
 </style>
 
 <div class="app">
@@ -2585,12 +2585,12 @@ function viewOnboarding(){
     ${cta('Continuar')}</div>`}
   if(st==='scanner')return `<div class="ob obx" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh">Nem todo produto combina com a sua pele.</h1>
-    <div class="exf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="exl"></i><span class="exc c1"></span><span class="exc c2"></span><span class="exc c3"></span><span class="exc c4"></span></div>
-    <div class="card exr" style="text-align:left"><div class="obk" style="display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
-      <div class="exh"><div><b class="exn">Accord Parfait</b><span class="small muted">L'Oréal Paris · base líquida</span></div>
-      <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="86% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="exa" cx="32" cy="32" r="28" fill="none" stroke="#4F8A6B" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="151.3 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">86%</text></svg></div>
-      <b class="exv">Alta compatibilidade</b>
-      <ul class="exk"><li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata sem pesar na pele mista.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b> e acabamento uniforme.</span></li><li class="att"><i></i><span><b>FPS 20</b> ajuda, mas não substitui o protetor da rotina.</span></li></ul>
+    <div class="pxf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="card pxr" style="text-align:left"><div class="obk" style="display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
+      <div class="pxh"><div><b class="pxn">Accord Parfait</b><span class="small muted">L'Oréal Paris · base líquida</span></div>
+      <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="86% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="pxa" cx="32" cy="32" r="28" fill="none" stroke="#4F8A6B" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="151.3 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">86%</text></svg></div>
+      <b class="pxv">Alta compatibilidade</b>
+      <ul class="pxk"><li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata sem pesar na pele mista.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b> e acabamento uniforme.</span></li><li class="att"><i></i><span><b>FPS 20</b> ajuda, mas não substitui o protetor da rotina.</span></li></ul>
       <span class="small muted">Exemplo para uma pele mista. Na sua análise, a Pellie confere a lista de ingredientes do seu produto.</span></div>
     ${cta('Quero saber o que usar')}</div>`;
   if(st==='comunidade')return `<div class="ob obx">${back}
