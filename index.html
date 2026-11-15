@@ -2009,7 +2009,7 @@ function viewCabelo(){
 /* ---------- Cadastro (onboarding) ---------- */
 /* Depoimentos e antes/depois: só entram no fluxo quando houver conteúdo real, com autorização de cada cliente */
 const DEPO=[];   /* [{nome:'Nome', txt:'Depoimento real'}] */
-const ANTESDEPOIS=[]; /* [{nome:'Nome', cidade:'Cidade, UF', antes:'url', depois:'url'}] */
+const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
 const obSteps=()=>['intro','nome','convite','meta','evo','queixas','zonas','foco','idade','pele','sens','sol','acido','gest','horario','scanner',...(DEPO.length?['comunidade']:[]),...(ANTESDEPOIS.length?['transf']:[]),'caminho',S.plus?'foto':'pronta'];
 const METAS=[['vidro','Pele de vidro','lisa e iluminada'],['limpa','Pele limpa','sem espinhas nem marcas'],['radiante','Pele radiante','viço e tom uniforme'],['firme','Pele firme','menos linhas finas']];
 const ZONAS=[['testa','testa'],['olhos','área dos olhos'],['nariz','nariz'],['bochechas','bochechas'],['queixo','queixo']];
@@ -2192,8 +2192,8 @@ function viewOnboarding(){
     <p class="small muted" style="text-align:center">Depoimentos publicados com autorização. Resultados individuais variam.</p>${cta('Montar minha rotina')}</div>`;
   if(st==='transf'){const a=ANTESDEPOIS[0];return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Transformação real</div><h1 class="obh">O antes e depois de quem usa a Pellie.</h1>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><figure style="margin:0"><img src="${esc(a.antes)}" alt="Antes" style="width:100%;border-radius:20px"><figcaption class="obk" style="text-align:center;margin-top:6px">Antes</figcaption></figure><figure style="margin:0"><img src="${esc(a.depois)}" alt="Depois" style="width:100%;border-radius:20px"><figcaption class="obk" style="text-align:center;margin-top:6px">Depois</figcaption></figure></div>
-    <p class="small muted" style="text-align:center">${esc(a.nome)} · ${esc(a.cidade)}. Com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><figure style="margin:0"><img src="${esc(a.antes)}" alt="Foto de antes, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Antes</figcaption></figure><figure style="margin:0"><img src="${esc(a.depois)}" alt="Foto de depois, ${esc(a.nome)}" loading="lazy" style="width:100%;border-radius:20px;aspect-ratio:3/4;object-fit:cover"><figcaption class="obk" style="text-align:center;margin-top:6px">Depois</figcaption></figure></div>
+    <p class="small muted" style="text-align:center">${esc(a.nome)}, ${esc(a.leg)}. Com autorização. Resultados individuais variam.</p>${cta('Continuar')}</div>`}
   if(st==='caminho'){const p=S.pref[0]||'acne',T=CAMT[p]||CAMT.acne;return `<div class="ob obx">${back}
     <div class="obk">Seu caminho</div><h1 class="obh">${T[0]}:<br><b>sua meta em 3 semanas.</b></h1><p class="obs" style="text-align:left">Montamos cada passo.</p>
     <div class="cam">${[['face','Hoje: '+T[1],'foi o que você marcou'],['routine','Semana 1','rotina montada para o que sua pele precisa'],['bottle','Semana 2','produtos certos, com compatibilidade antes de comprar'],['sparkle','Semana 3','sua meta: '+T[2]]].map(([i_,t,d],k)=>`<div class="cs${k===3?' on':''}"><span class="cic">${ic(i_,22)}</span><div><b>${t}</b><small>${d}</small></div></div>`).join('')}</div>
