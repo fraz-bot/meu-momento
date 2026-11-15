@@ -930,11 +930,6 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .ofp{margin:0;color:var(--muted);line-height:1.45;font-size:16px}
 .ofv{display:flex;flex-direction:column;align-items:center;line-height:1.1}.ofv s{color:var(--muted);font-size:17px}.ofv b{font-size:46px;letter-spacing:-.03em;color:#4A2A1E}.ofv small{color:#A76F5C;font-weight:600;font-size:14px;margin-top:4px}
 @keyframes ofi{from{opacity:0}to{opacity:1}}@keyframes ofu{from{transform:translateY(40px)}to{transform:none}}
-.rxw{flex:1;min-width:0}.rxb{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:8px;width:100%;cursor:pointer;font-weight:600;padding:4px 0}
-.rxb:focus-visible{outline:2px solid var(--accent);border-radius:8px}
-.rxc{width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:-3px 4px 0 8px;transition:transform .25s;flex:none}
-.rxb[aria-expanded=true] .rxc{transform:rotate(-135deg);margin-top:3px}.rxb .xpchip+.rxc{margin-left:6px}
-.rxd{animation:rxi .25s ease;padding-top:2px}@keyframes rxi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1787,7 +1782,7 @@ function viewRotina(){
     <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
     ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
       <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
-      <div class="rxw"><button class="tt rxb" data-rx="${per}${k}" aria-expanded="${!!(S.rx&&S.rx[per+k])}">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}<i class="rxc" aria-hidden="true"></i></button>${S.rx&&S.rx[per+k]?`<div class="rxd"><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}</div>`:''}</div></div>`}).join('')}
+      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}</div></div>`}).join('')}
   </div>
   ${tratRot(per)}
   ${shelfRot(per)}
@@ -3207,7 +3202,6 @@ document.addEventListener('click',e=>{
   else if(d.act==='fechar-cele'){S.cele=S.celeQ.shift()||null;render()}
   else if(d.per){S.period=d.per;render()}
   else if(d.tier){S.tier=d.tier;render()}
-  else if(d.rx){S.rx=S.rx||{};S.rx[d.rx]=!S.rx[d.rx];const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.done){const [per,k]=d.done.split('|');const bl=bloq(per);if(bl&&!isDone(per,k)){toast('Libera às '+(per==='m'?S.rem.m:S.rem.n)+', em '+fmtDur(bl));return}toggleStep(per,k)}
   else if(d.act&&d.act.startsWith('unl|')){S.unl[hoje()+d.act.slice(4)]=true;render()}
   else if(d.act==='analisar'){analisar()}
