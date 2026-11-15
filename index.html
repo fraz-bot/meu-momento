@@ -53,10 +53,17 @@
 .ovl.rose{background:#F3DDD2;margin:-10px -18px 0;padding:0 18px;min-height:100dvh}
 .pillo{display:inline-block;margin-top:12px;border:1px solid var(--ol);border-radius:999px;padding:7px 16px;font-size:14px;color:var(--ol)}
 .lv{display:grid;gap:18px;margin:14px 0}.lv>div{display:flex;gap:16px;align-items:center}.lv b{display:block;font-weight:600;font-size:17px}.lv small{display:block;color:var(--muted);font-size:14px}
-.prc{display:grid;gap:0}.prr{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.prr:last-child{border:0}
+.prc{display:grid;gap:0}.prr{display:flex;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.prr:last-child{border:0}
 .prr b{display:block;font-weight:600}.prr small{display:block;color:var(--muted);font-size:14px}
 .rd{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--oll)}
 .pimg{flex:none;display:grid;place-items:center}
+.pwo-g{display:grid;gap:12px;text-align:left;margin-bottom:6px}
+.pwo{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1.5px solid var(--oll);background:transparent;border-radius:20px;padding:16px;font:inherit;color:var(--ink);cursor:pointer}
+.pwo.on{border:2px solid var(--ol);background:var(--soft);padding:15px}
+.pwo i{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--oll)}.pwo.on i{border:6px solid var(--ol);background:#fff}
+.pwo>span{text-align:left}.pwo>.pwp2{text-align:right}.pwo b{display:block;font-size:17px;font-weight:600}.pwo small{display:block;color:var(--muted);font-size:13px;font-weight:400}
+.pwp2{text-align:right;font-size:19px;font-weight:600}
+.pwo em{position:absolute;top:-11px;right:14px;font-style:normal;background:var(--ol);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:999px}
 .btn.fill{background:var(--ol)!important;color:#fff!important;border:0!important}
 </style>
 <script>window.MM_VER="1794731395";</script>
@@ -1295,7 +1302,7 @@ let _mk=nowMin();setInterval(()=>{const x=nowMin();if(x===_mk)return;_mk=x;const
 const LIVRES=['tema','quiz','plano','medalhas','conta','privacidade'];
 function ofertaPlus(titulo){return `<div class="card oferta"><h3 style="color:var(--ongrad)">${titulo||'Libere a análise completa e a sua rotina'}</h3>
   <div class="small" style="opacity:.95">Notas completas, prioridades, rotina de manhã e noite, produtos, cabelo, scanner e mais.</div>
-  <div class="pl"><div class="best"><span class="pr2">R$ 149,90 <small>/ano</small></span><div class="small">Equivale a R$ 12,49 por mês · melhor valor</div></div><div><span class="pr2">R$ 34,90 <small>/mês</small></span></div></div>
+  <div class="pl"><div class="best"><span class="pr2">R$ 149,90 <small>/ano</small></span><div class="small">Equivale a R$ 12,49 por mês · melhor valor</div></div><div><span class="pr2">R$ 59,90 <small>/mês</small></span></div></div>
   <button class="btn" data-act="plus-toggle" style="width:100%">${ic('crown',18)}Assinar agora</button>
   <p class="small" style="opacity:.9;margin:8px 0 0">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</p></div>`}
 function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Pellie+.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Pellie+</button></div>`}
@@ -1307,10 +1314,10 @@ function viewPaywall(){
     <h1 class="obh" style="text-align:center"><span style="font-weight:500">${S.nome?esc(S.nome)+', a':'A'} sua rotina de skincare</span><br>está a um passo.</h1>
     <p class="obs">Análise da pele e do cabelo por foto, rotina, produtos e scanner, tudo liberado.</p>
     <div class="pwm">${obPhone()}</div>
-    <div class="pwp"><div class="pwb"><b>${an?'R$ 12,49':'R$ 34,90'}</b><span>/mês</span></div><div class="small muted">${an?'R$ 149,90 cobrado por ano. Cancele quando quiser.':'Cobrado todo mês. Cancele quando quiser.'}</div></div>
+    <div class="pwp"><div class="pwb"><b>${an?'R$ 12,49':'R$ 59,90'}</b><span>/mês</span></div><div class="small muted">${an?'R$ 149,90 cobrado por ano. Cancele quando quiser.':'Cobrado todo mês. Cancele quando quiser.'}</div></div>
     <div class="pls" role="radiogroup" aria-label="Plano">
-      <button role="radio" aria-checked="${an}" data-plan="ano"><em>Economize 64%</em><i></i><span>Plano anual</span><b>R$ 149,90<small>por ano</small></b></button>
-      <button role="radio" aria-checked="${!an}" data-plan="mes"><i></i><span>Plano mensal</span><b>R$ 34,90<small>por mês</small></b></button></div>
+      <button role="radio" aria-checked="${an}" data-plan="ano"><em>Economize 79%</em><i></i><span>Plano anual</span><b>R$ 149,90<small>por ano</small></b></button>
+      <button role="radio" aria-checked="${!an}" data-plan="mes"><i></i><span>Plano mensal</span><b>R$ 59,90<small>por mês</small></b></button></div>
     <button class="btn obc" data-act="plus-toggle" style="width:100%;text-transform:uppercase;letter-spacing:.06em">Quero meu plano agora</button>
     <p class="small muted" style="text-align:center;margin:0">Renova automaticamente. Cancele quando quiser, nos ajustes da loja.</p>
     <p class="small" style="text-align:center;margin:0"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--muted)">Termos e Política</a> · ${typeof atualizaPlano==='function'?`<button class="back" data-act="plus-refresh" style="display:inline;padding:0;color:var(--muted);text-decoration:underline">Restaurar compra</button>`:''}</p></div>`}
@@ -1858,8 +1865,8 @@ function vPlano(){
     <div class="small" style="opacity:.9;margin:-2px 0 2px">Tudo liberado com a assinatura:</div>
     ${[['face','Análise da pele por foto, sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['bottle','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
     <div style="display:grid;gap:8px;margin-top:6px">
-      <div style="background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 34,90<span style="font-size:14px;font-weight:500"> /mês</span></div></div>
-      <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 268,90 no ano.</div></div>
+      <div style="background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 59,90<span style="font-size:14px;font-weight:500"> /mês</span></div></div>
+      <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 568,90 no ano.</div></div>
     </div>
     <div class="small" style="opacity:.95;margin:2px 0 4px">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</div>
     <button class="btn" data-act="plus-toggle">${S.plus?'Seu plano: Pellie+':'Pagamento em breve'}</button></div>
@@ -2408,7 +2415,11 @@ function viewOnboarding(){
     <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
     <div class="card prc" style="text-align:left;padding:18px 22px"><div class="row" style="justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)"><span class="obk" style="display:flex;gap:8px;align-items:center">${ic('sun',15)}Manhã</span><span class="small muted" style="display:flex;gap:6px;align-items:center">${ic('lock',13)}${ks.length} passos</span></div>
       ${ks.map((k,j)=>`<div class="prr"><span class="pimg" style="width:46px">${pimg(k,46)}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small>${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
-    <div><p class="small muted" style="margin:0 0 10px;font-size:16px">Tudo que sua pele precisa está aqui.</p><div style="font-size:44px;line-height:1">R$ 34,90<span style="font-size:18px;color:var(--muted)">/mês</span></div><p class="small muted" style="margin:6px 0 0">Cancele quando quiser</p><p class="small muted" style="margin:2px 0 0">ou R$ 149,90 por ano</p></div>
+    <div><p class="small muted" style="margin:0 0 12px;font-size:16px">Tudo que sua pele precisa está aqui.</p>
+      <div class="pwo-g" role="radiogroup" aria-label="Plano">
+        <button class="pwo ${S.planSel!=='mes'?'on':''}" role="radio" aria-checked="${S.planSel!=='mes'}" data-plan="ano"><i></i><span><b>Anual</b><small>R$ 12,49 por mês</small></span><span class="pwp2">R$ 149,90<small>por ano</small></span><em>Melhor valor · economize 79%</em></button>
+        <button class="pwo ${S.planSel==='mes'?'on':''}" role="radio" aria-checked="${S.planSel==='mes'}" data-plan="mes"><i></i><span><b>Mensal</b><small>Cancele quando quiser</small></span><span class="pwp2">R$ 59,90<small>por mês</small></span></button>
+      </div></div>
     <div class="obf" style="flex-direction:column;align-items:center;gap:8px;width:100%"><button class="btn obc fill" data-act="ob-plano" style="width:100%">Ativar meu plano</button>
     <p class="small" style="margin:0;display:flex;gap:22px;justify-content:center"><a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--ink)">Termos</a><a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--ink)">Privacidade</a><a href="#" data-act="plus-refresh" style="color:var(--ink)">Restaurar compra</a></p></div></div>`}
   if(st==='pele'||st==='sens'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
