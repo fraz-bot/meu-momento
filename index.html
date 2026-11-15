@@ -923,6 +923,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes suspD{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-5px)}}
 @keyframes suspP{0%,35%{opacity:0;transform:translateY(6px)}60%,100%{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.susp .sf::before,.susp .sf::after,.susp .sf svg,.susp .sd i{animation:none}.susp .sp{animation:none;opacity:1}}
+.prr .prb{filter:blur(6px);-webkit-filter:blur(6px);user-select:none;-webkit-user-select:none;pointer-events:none;display:block}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -3033,7 +3034,7 @@ function viewOnboarding(){PFI=0;
     return `<div class="ob obx" style="text-align:center"><button data-act="ob-pular" aria-label="Fechar" style="position:absolute;right:16px;top:14px;width:40px;height:40px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center">${ic('x',18)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:44px;width:auto"></div>
     <h1 class="obh">A rotina perfeita para<br>sua pele está pronta</h1>
     <div class="card prc" style="text-align:left;padding:18px 22px"><div class="row" style="justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)"><span class="obk" style="display:flex;gap:8px;align-items:center">${ic('sun',15)}Manhã</span><span class="small muted" style="display:flex;gap:6px;align-items:center">${ic('lock',13)}${ks.length} passos</span></div>
-      ${ks.map((k,j)=>`<div class="prr"><span class="pimg" style="width:46px">${pimg(k,46)}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small>${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
+      ${ks.map((k,j)=>`<div class="prr"><span class="pimg" style="width:46px">${pimg(k,46)}</span><div style="flex:1"><b>${TT[k]||'Tratamento'}</b><small class="prb" aria-label="Disponível após ativar o plano">${(P[k]&&P[k].n||k).toLowerCase()}</small></div><i class="rd"></i></div>`).join('')}</div>
     <div><p class="small muted" style="margin:0 0 12px;font-size:16px">Tudo que sua pele precisa está aqui.</p>
       <div class="pwo-g" role="radiogroup" aria-label="Plano">
         <button class="pwo ${S.planSel!=='mes'?'on':''}" role="radio" aria-checked="${S.planSel!=='mes'}" data-plan="ano"><i></i><span><b>Anual</b><small>R$ 12,49 por mês</small></span><span class="pwp2">R$ 149,90<small>por ano</small></span><em>Melhor valor · economize 79%</em></button>
