@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light}html,body{margin:0}body{font-family:system-ui,sans-serif}[hidden]{display:none!important}img{max-width:100%}</style>
-<script>window.MM_VER="1794704178";</script>
+<script>window.MM_VER="1794704883";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -37,7 +37,8 @@ p{margin:0}
 .ic{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 header{padding:14px 0 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.01em}
-.logo{width:32px;height:32px;flex:none}
+.logo{width:32px;height:32px;flex:none;object-fit:contain}
+.wmi{height:26px;width:auto;display:block}
 .tag{font-size:12px;color:var(--muted)}
 .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-weight:500;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -569,7 +570,7 @@ nav button[aria-current="page"],:root:not([data-tema=suave]) nav button[aria-cur
 
 <div class="app">
   <header>
-    <div class="brand"><svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cbH" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2DABE"/><stop offset="1" stop-color="#E1BE98"/></linearGradient></defs><rect width="48" height="48" rx="15" fill="url(#cbH)"/><circle cx="24" cy="24" r="17.2" fill="none" stroke="#8A6A48" stroke-width=".7"/><path d="M31.89 20.07Q31.89 20.85 31.71 21.57Q31.53 22.29 31.01 23.1Q30.48 23.91 29.61 24.49Q28.74 25.08 27.24 25.47Q25.74 25.86 23.76 25.86Q22.86 25.86 21.69 25.77V31.23Q21.69 32.88 22.21 33.38Q22.74 33.87 24.51 33.93V34.5H16.11V33.93Q17.82 33.78 18.23 33.28Q18.63 32.79 18.63 30.9V17.91Q18.63 16.29 18.21 15.84Q17.79 15.39 16.11 15.21V14.64H24.03Q25.38 14.64 26.64 14.9Q27.9 15.15 29.14 15.72Q30.39 16.29 31.14 17.4Q31.89 18.51 31.89 20.07ZM21.69 16.77V24.57Q22.74 24.66 23.4 24.66Q28.62 24.66 28.62 20.25Q28.62 17.94 27.18 16.84Q25.74 15.75 22.71 15.75Q22.11 15.75 21.9 15.96Q21.69 16.17 21.69 16.77Z" fill="#3A2A1C"/></svg><span class="wm">Pellie</span></div>
+    <div class="brand"><img class="logo" src="pellie-flor.png" alt=""><img class="wmi" src="pellie-nome.png" alt="Pellie"></div>
     <div class="tag" id="tag"></div>
   </header>
   <div id="ages" hidden></div>
@@ -633,7 +634,7 @@ const IC={
 };
 const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
 const ICONS={hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('bottle',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22)};
-const LOGO=`<svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cbL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2DABE"/><stop offset="1" stop-color="#E1BE98"/></linearGradient></defs><rect width="48" height="48" rx="15" fill="url(#cbL)"/><circle cx="24" cy="24" r="17.2" fill="none" stroke="#8A6A48" stroke-width=".7"/><path d="M31.89 20.07Q31.89 20.85 31.71 21.57Q31.53 22.29 31.01 23.1Q30.48 23.91 29.61 24.49Q28.74 25.08 27.24 25.47Q25.74 25.86 23.76 25.86Q22.86 25.86 21.69 25.77V31.23Q21.69 32.88 22.21 33.38Q22.74 33.87 24.51 33.93V34.5H16.11V33.93Q17.82 33.78 18.23 33.28Q18.63 32.79 18.63 30.9V17.91Q18.63 16.29 18.21 15.84Q17.79 15.39 16.11 15.21V14.64H24.03Q25.38 14.64 26.64 14.9Q27.9 15.15 29.14 15.72Q30.39 16.29 31.14 17.4Q31.89 18.51 31.89 20.07ZM21.69 16.77V24.57Q22.74 24.66 23.4 24.66Q28.62 24.66 28.62 20.25Q28.62 17.94 27.18 16.84Q25.74 15.75 22.71 15.75Q22.11 15.75 21.9 15.96Q21.69 16.17 21.69 16.77Z" fill="#3A2A1C"/></svg>`;
+const LOGO=`<img class="logo" src="pellie-flor.png" alt="">`;
 const TABS=[['hoje','Hoje'],['pele','Pele'],['cabelo','Cabelo'],['rotina','Rotina'],['produtos','Produtos'],['mais','Mais']];
 const AGES=[['20','Até 29 anos'],['30','30 a 39 anos'],['40','40 a 49 anos'],['50','50 anos ou mais']];
 const TIERS=[['econ','Econômico'],['mid','Intermediário'],['prem','Premium']];
@@ -1047,8 +1048,8 @@ const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
 function authView(){
   if(AUTH.user&&AUTH.ready){return precisaConsent()?consentView():null}
   const logo=LOGO.replace('class="logo"','class="logo" style="width:84px;height:84px;filter:drop-shadow(0 10px 18px rgba(122,99,82,.35))"');
-  if(!AUTH.ready)return `<div class="ob" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div>${logo}<div class="wm big" style="margin-top:8px">Pellie</div><p class="small muted" style="margin-top:8px">Carregando…</p></div></div>`;
-  return `<div class="ob" style="text-align:center;gap:14px"><div class="brand" style="flex-direction:column;gap:6px;margin-top:18px">${logo}<span class="wm big">Pellie</span></div>
+  if(!AUTH.ready)return `<div class="ob" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"><p class="small muted" style="margin-top:8px">Carregando…</p></div></div>`;
+  return `<div class="ob" style="text-align:center;gap:14px"><div class="brand" style="flex-direction:column;gap:6px;margin-top:18px"><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"></div>
     <div class="welcome">${welcomeArt()}</div>
     <h1>Que bom ter você aqui.</h1>
     <p class="muted">Entre para analisar a sua pele e montar a sua rotina.</p>
@@ -2031,7 +2032,7 @@ function viewOnboarding(){
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
   const cta=(t,ok=true,act='ob-next')=>`<div class="obf"><button class="btn obc" id="ob-go" data-act="${act}" ${ok?'':'disabled'}>${t}</button></div>`;
   if(st==='intro')return `<div class="ob obx" style="text-align:center">
-    <div class="brand" style="justify-content:center;gap:10px">${LOGO.replace('class="logo"','class="logo" style="width:40px;height:40px"')}<span class="wm" style="font-size:28px">Pellie</span></div>
+    <div class="brand" style="justify-content:center;gap:10px"><img src="pellie-logo.png" alt="Pellie" style="height:46px;width:auto"></div>
     ${obPhone()}
     <h1 class="obh">A rotina certa<br>para a sua pele.</h1><p class="obs">Feita especialmente para você.</p>
     ${cta('Analisar minha pele')}
