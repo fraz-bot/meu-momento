@@ -843,6 +843,11 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .mp-e u{text-decoration:none;font-size:4.048cqw;font-weight:800;padding:1.19cqw 3.333cqw;border-radius:47.143cqw}.mp-e u.ok{background:#DDEBE2;color:#3F7A5C}.mp-e u.att{background:#F6E1D6;color:#B8623F}
 .mp-ing{display:grid;gap:2.476cqw;padding:.95cqw 1.9cqw}.mp-ing div{display:flex;gap:2.857cqw;align-items:flex-start;font-size:4.19cqw;line-height:1.35;color:var(--muted)}.mp-ing b{color:var(--ol)}.mp-ing i{flex:none;width:2.857cqw;height:2.857cqw;border-radius:50%;margin-top:1.667cqw;background:#4F8A6B}.mp-ing i.att{background:#B8623F}
 @media (prefers-reduced-motion:reduce){.mps,.mps.on .a,.mps.on .mp-b i,.mps.on .mpsh span,.mps.on .mp-ln,.mps.on .mp-arc,.mps.on .mp-arc2,.mps.on .mp-tag,.mps.on .mp-line,.mps.on .mp-pt{animation:none!important;transition:opacity .2s!important}.mps .a,.mps .mpsh span,.mps .mp-tag{opacity:1;transform:none}.mps.on .mp-line{opacity:0}}
+/* queixas com ilustração */
+.qg3 button:has(.qiw){padding:6px 6px 10px;min-height:0;gap:7px;align-content:start}
+.qiw{width:100%}.qa{display:block;width:100%;height:auto;aspect-ratio:96/64;border-radius:15px}
+.qg3 button:has(.qiw) b{font-size:13px;min-height:2.4em;display:grid;align-items:center}
+.qg3 button[aria-pressed=true] .qa{box-shadow:0 0 0 2px var(--terra)}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2488,6 +2493,28 @@ function pimg(k,w=44){
     jar:`<rect x="14" y="16" width="36" height="9" rx="3" fill="${c2}"/><rect x="12" y="25" width="40" height="30" rx="8" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="22" y="34" width="20" height="9" rx="2" fill="#fff" opacity=".55"/>`,
     pump:`<path d="M28 6h12v5h-4v5h-4v-5h-4z" fill="${c2}"/><rect x="20" y="16" width="24" height="42" rx="6" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="25" y="30" width="14" height="12" rx="2" fill="#fff" opacity=".55"/>`}[f];
   return `<svg viewBox="0 0 64 64" width="${w}" height="${w}" role="img" aria-label="Ilustração do produto" style="display:block">${sh}</svg>`}
+function qArt(k){
+  const bg=`<defs><linearGradient id="qb${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0D3BC"/><stop offset="1" stop-color="#E2B696"/></linearGradient></defs><rect width="96" height="64" fill="url(#qb${k})"/>`;
+  const A={
+   acne:`<g><circle cx="30" cy="26" r="11" fill="#E9A090" opacity=".45"/><circle cx="30" cy="26" r="6.5" fill="#D9695E"/><circle cx="28.4" cy="24.2" r="1.9" fill="#FFF1E2"/>
+     <circle cx="62" cy="20" r="9" fill="#E9A090" opacity=".4"/><circle cx="62" cy="20" r="5.2" fill="#D9695E"/>
+     <circle cx="55" cy="44" r="8.5" fill="#E9A090" opacity=".4"/><circle cx="55" cy="44" r="5" fill="#D9695E"/><circle cx="53.6" cy="42.4" r="1.5" fill="#FFF1E2"/>
+     <circle cx="20" cy="48" r="3.2" fill="#D98474"/><circle cx="80" cy="42" r="3" fill="#D98474"/><circle cx="42" cy="9" r="2.6" fill="#D98474"/><circle cx="78" cy="12" r="2.2" fill="#D98474"/></g>`,
+   oleo:`<g><ellipse cx="34" cy="22" rx="22" ry="11" fill="#fff" opacity=".5" transform="rotate(-18 34 22)"/><ellipse cx="70" cy="40" rx="14" ry="7" fill="#fff" opacity=".42" transform="rotate(-18 70 40)"/>
+     <ellipse cx="30" cy="20" rx="9" ry="4" fill="#fff" opacity=".75" transform="rotate(-18 30 20)"/>
+     ${[[20,44],[44,34],[58,14],[78,24],[40,52]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3.4" fill="#F7E3C8" stroke="#D9A97E" stroke-width=".8"/><circle cx="${x-1}" cy="${y-1.1}" r="1" fill="#fff"/>`).join('')}</g>`,
+   manchas:`<g><path d="M14 30c2-9 14-12 20-6 5 5 2 14-6 15-8 2-15-1-14-9z" fill="#9C5C36" opacity=".72"/><path d="M56 16c7-5 16 0 15 8-1 7-11 10-16 5-4-4-4-9 1-13z" fill="#8A4E2D" opacity=".68"/>
+     <path d="M52 42c5-3 12 0 11 6-1 5-9 6-12 2-2-3-1-6 1-8z" fill="#A9683E" opacity=".7"/><circle cx="40" cy="48" r="3" fill="#A9683E" opacity=".7"/><circle cx="84" cy="46" r="2.4" fill="#9C5C36" opacity=".7"/><circle cx="80" cy="12" r="2" fill="#9C5C36" opacity=".6"/></g>`,
+   linhas:`<g fill="none" stroke="#A8734F" stroke-linecap="round" stroke-width="1.7" opacity=".85"><path d="M10 34c18-5 34-5 52-1"/><path d="M10 26c20-6 38-7 60-2" opacity=".75"/><path d="M12 42c18-4 34-3 50 1" opacity=".75"/><path d="M62 33c8-3 14-6 22-12"/><path d="M62 35c9 0 16 2 24 8" /><path d="M20 14c10-3 20-3 30 0" opacity=".55"/><path d="M24 52c9 3 18 3 28 0" opacity=".55"/></g>`,
+   poros:`<g>${[[16,16],[34,12],[54,18],[76,14],[24,32],[46,34],[66,32],[86,30],[14,50],[36,50],[58,50],[78,50]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i%3===0?5.2:4.4}" fill="#D2A27E" opacity=".7"/><circle cx="${x}" cy="${y}" r="${i%3===0?3.3:2.8}" fill="#9A6444"/>`).join('')}</g>`,
+   olheiras:`<g><path d="M14 30c12-12 56-12 68 0-12 10-56 10-68 0z" fill="#FFF7EE" stroke="#6B4A36" stroke-width="1.5"/><circle cx="48" cy="30" r="8.2" fill="#6B4A36"/><circle cx="48" cy="30" r="3.6" fill="#241A14"/><circle cx="45.6" cy="27.4" r="1.4" fill="#fff"/>
+     <path d="M14 30c12-12 56-12 68 0" fill="none" stroke="#6B4A36" stroke-width="2.2" stroke-linecap="round"/><path d="M12 38c14 10 58 10 72 0-3 12-18 18-36 18S15 50 12 38z" fill="#8A6A8E" opacity=".5"/></g>`,
+   resseca:`<g fill="none" stroke="#B8876A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20l14 6 10-8 14 10 12-9 16 8 14-4"/><path d="M22 26l-4 14 14 6 8-12 16 6 12-10"/><path d="M32 46l-4 14M48 40l6 18M60 36l16 10 12-2"/><path d="M14 52l12-6" opacity=".7"/></g>
+     <g fill="#fff" opacity=".78"><path d="M28 14l8 2-3 6z"/><path d="M62 42l9 1-4 7z"/><path d="M14 40l6-3 1 7z"/><path d="M74 20l7 3-5 5z"/></g>`,
+   textura:`<g>${[[14,16,5],[30,12,4],[48,17,5.4],[68,12,4.4],[84,19,4.8],[22,32,5.6],[40,30,4.6],[58,34,5.2],[76,34,5],[12,50,4.6],[30,48,5.4],[48,52,4.6],[66,50,5.4],[84,52,4.4]].map(([x,y,r])=>`<circle cx="${x+1}" cy="${y+1.4}" r="${r}" fill="#B98666" opacity=".5"/><circle cx="${x}" cy="${y}" r="${r}" fill="#EBC7AA"/><circle cx="${x-r*.35}" cy="${y-r*.4}" r="${r*.38}" fill="#fff" opacity=".55"/>`).join('')}</g>`,
+   outro:`<rect x="3" y="3" width="90" height="58" rx="10" fill="none" stroke="#A8734F" stroke-width="1.5" stroke-dasharray="4 4" opacity=".7"/><path d="M48 20v24M36 32h24" stroke="#4B2919" stroke-width="3" stroke-linecap="round"/>`
+  };
+  return `<svg class="qa" viewBox="0 0 96 64" role="img" aria-hidden="true">${bg}${A[k]||''}</svg>`}
 function qIcon(k){const sv=d=>`<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
   return {olheiras:sv('<path d="M3 15c3.500-5.500 8-8 12-8s8.500 2.500 12 8c-3.500 5.500-8 8-12 8S6.500 20.500 3 15z"/><circle cx="15" cy="15" r="3.500"/>'),textura:sv('<path d="M5 9h4M12 9h4M19 9h4M5 15h4M12 15h4M19 15h4M5 21h4M12 21h4M19 21h4"/>'),
     oleo:ic('drop',30),acne:ic('spot',30),manchas:sv('<circle cx="9" cy="9" r="3"/><circle cx="20" cy="12" r="3"/><circle cx="12" cy="21" r="3"/>'),linhas:ic('waves',30),poros:ic('pores',30),resseca:sv('<circle cx="15" cy="15" r="10"/><path d="M15 5l-3 6 5 3-4 5 2 6"/>'),outro:ic('plus',30)}[k]||''}
@@ -2657,7 +2684,7 @@ function viewOnboarding(){
     ${cta('Quero começar')}</div>`}
   if(st==='queixas')return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">${nome?nome+', o':'O'} que mais te incomoda na sua pele hoje?</h1><p class="obs">Escolha até 3. Vamos priorizar isso na sua rotina.</p>
-    <div class="qg3">${[['acne','Acne'],['oleo','Oleosidade'],['manchas','Manchas'],['linhas','Rugas'],['poros','Poros dilatados'],['olheiras','Olheiras'],['resseca','Ressecamento'],['textura','Textura irregular'],['outro','Outro']].map(([k,t])=>`<button data-opt="pref|${k}" aria-pressed="${S.pref.includes(k)}"><span class="qi">${qIcon(k)}</span><b>${t}</b></button>`).join('')}</div>
+    <div class="qg3">${[['acne','Acne'],['oleo','Oleosidade'],['manchas','Manchas'],['linhas','Rugas'],['poros','Poros dilatados'],['olheiras','Olheiras'],['resseca','Ressecamento'],['textura','Textura irregular'],['outro','Outro']].map(([k,t])=>`<button data-opt="pref|${k}" aria-pressed="${S.pref.includes(k)}"><span class="qi qiw">${qArt(k)}</span><b>${t}</b></button>`).join('')}</div>
     ${cta('Continuar',S.pref.length>0)}</div>`;
   if(st==='zonas')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Sua pele</div><h1 class="obh" style="text-align:center">Toque nas regiões do rosto que mais incomodam</h1>
