@@ -42,7 +42,7 @@
 .camr{display:grid;place-items:center;width:100%}
 .camring{position:relative;width:min(340px,86vw)}.camring svg{width:100%}
 .camring .tk{stroke:rgba(255,255,255,.25)}.camring .tk.on{stroke:#F2D9C4}
-.camo{position:absolute;left:23.3%;right:23.3%;top:25.3%;bottom:25.3%;border-radius:50%;overflow:hidden;background:#1a0f08}
+.camo{position:absolute;left:9%;right:9%;top:8%;bottom:8%;border-radius:50%;overflow:hidden;background:#1a0f08}
 .camo video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
 .cams{display:grid;gap:14px;justify-items:center;width:100%}
 .campill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:12px 20px;font-size:15px;text-align:center}
@@ -2228,12 +2228,12 @@ async function camLoop(){
     busy=false;
   },90);
 }
-let SCANIV=null;
+let SCANIV=null,SCANP=0;
 function startScan(){
-  if(SCANIV)clearInterval(SCANIV);let p=0;
+  if(SCANIV)clearInterval(SCANIV);SCANP=0;
   SCANIV=setInterval(()=>{
     const fim=!S.analyzing&&(!!S.result||!!S.err);
-    p=fim?(S.result?100:p):Math.min(92,p+(92-p)*.04+.3);
+    SCANP=fim?(S.result?100:SCANP):Math.min(92,SCANP+(92-SCANP)*.04+.3);const p=SCANP;
     const a=document.getElementById('scarc'),n=document.getElementById('scn');
     if(a)a.setAttribute('stroke-dashoffset',(722.6*(1-p/100)).toFixed(1));if(n)n.textContent=Math.round(p);
     if(fim||obStepAtual()!=='scan'){clearInterval(SCANIV);SCANIV=null}
@@ -2368,11 +2368,11 @@ function viewOnboarding(){
       <button class="campb" id="cam-skip" data-act="cam-snap" hidden></button><label for="ob-gal" class="campb">${ic('image',16)}Escolher da galeria</label></div></div>`;
   if(st==='scan'){const fim=!!S.result&&!S.analyzing;return `<div class="ob obx" style="text-align:center">
     <div class="obk">Scan de pele</div>
-    <div class="scr"><svg viewBox="0 0 260 260" width="100%" aria-hidden="true"><circle cx="130" cy="130" r="127" fill="none" stroke="#EBD7CB" stroke-width="1.5"/><circle cx="130" cy="130" r="115" fill="none" stroke="#EBD7CB" stroke-width="1.500"/><circle id="scarc" cx="130" cy="130" r="115" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round" stroke-dasharray="722.600" stroke-dashoffset="722.600" transform="rotate(-90 130 130)"/></svg><div class="scn"><b id="scn">0</b><small>%</small></div></div>
+    <div class="scr"><svg viewBox="0 0 260 260" width="100%" aria-hidden="true"><circle cx="130" cy="130" r="127" fill="none" stroke="#EBD7CB" stroke-width="1.5"/><circle cx="130" cy="130" r="115" fill="none" stroke="#EBD7CB" stroke-width="1.500"/><circle id="scarc" cx="130" cy="130" r="115" fill="none" stroke="#5A2E14" stroke-width="2.500" stroke-linecap="round" stroke-dasharray="722.600" stroke-dashoffset="${(722.6*(1-SCANP/100)).toFixed(1)}" transform="rotate(-90 130 130)"/></svg><div class="scn"><b id="scn">${Math.round(SCANP)}</b><small>%</small></div></div>
     <h1 class="obh" style="font-size:28px">Montando seu relatório</h1>
     ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:`<p class="obs">Leva só alguns segundos. Não feche o app.</p>`}
     <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i class="w"></i></div>
-    <div class="obf" style="flex-direction:column;align-items:center;gap:6px">${S.err?`<button class="btn obc" data-act="scan-retry">Tentar de novo</button><button class="back" data-act="scan-outra" style="padding:10px;font-weight:600;color:var(--ink)">Tirar outra foto</button>${S.result?`<button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Continuar com a análise anterior</button>`:''}`:`<button class="back" id="scan-go" data-act="ob-next" style="padding:12px;font-weight:600;color:var(--ink);${fim?'':'opacity:.35;pointer-events:none'}">Ver resultado</button>`}</div></div>`}
+    <div class="obf" style="flex-direction:column;align-items:center;gap:6px">${S.err?`<button class="btn obc" data-act="scan-retry">Tentar de novo</button><button class="back" data-act="scan-outra" style="padding:10px;font-weight:600;color:var(--ink)">Tirar outra foto</button>${S.result?`<button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Continuar com a análise anterior</button>`:''}`:`<button class="btn obc" id="scan-go" data-act="ob-next" style="${fim?'':'opacity:.35;pointer-events:none'}" ${fim?'':'disabled'}>Ver resultado</button>`}</div></div>`}
   if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
     <div class="obk">Sua análise</div><h1 class="obh">${nome?nome+', seu':'Seu'} maior desafio hoje é a ${dn.t}.</h1>
     <div class="card big" style="padding:30px 18px"><svg viewBox="0 0 120 100" width="64" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg>
