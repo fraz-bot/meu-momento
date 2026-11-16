@@ -1914,7 +1914,7 @@ function viewRotina(){
     <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
     ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
       <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
-      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];return ex?prodCard(ex,k,S.tier):''})()}</div></div>`}).join('')}
+      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];return ex&&FOTOS?prodCard(ex,k,S.tier):''})()}</div></div>`}).join('')}
   </div>
   ${tratRot(per)}
   ${shelfRot(per)}
@@ -1922,7 +1922,7 @@ function viewRotina(){
   ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
 }
 
-const exList=(a,k)=>a&&a.length?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
+const exList=(a,k)=>a&&a.length?(FOTOS?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('bottle',16)}${esc(n)}</li>`).join('')}</ul>`):'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
 const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('bottle',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button>`;
 function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.n||'').toLowerCase();
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
@@ -1930,14 +1930,14 @@ function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.
 // Prateleira ilustrada: cresce uma tábua a cada 4 produtos
 function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${shelfThumb(x)}</div>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${FOTOS?shelfThumb(x):pimgOld(shelfKey(x),58)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
   return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
 function viewShelf(){
   const it=S.shelf,soon=shelfSoon().length,nT=temP().length,nQ=it.filter(i=>stOf(i)==='quero').length;
-  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}">${shelfThumb(i)}<span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
+  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}">${FOTOS?shelfThumb(i):''}<span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
 </div>
     <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
     <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shst="${i.id}|${k}" aria-pressed="${stOf(i)===k}">${t}</button>`).join('')}</div>
@@ -2057,7 +2057,7 @@ function viewSos(){
     <div class="row" style="gap:10px;flex-wrap:nowrap"><span class="tile" style="flex:none">${ic('spot',22)}</span><div><h3 style="text-transform:capitalize">${esc(r.aspecto||'Sua pele')}</h3><p class="small muted" style="margin-top:2px">${esc(r.resumo)}</p></div></div>
     ${r.medico?`<div class="alertc" style="margin-top:12px;border-color:var(--alert)">${ic('alert',22)}<span><b>Vale falar com um dermatologista</b><span class="small muted" style="display:block">${esc(r.medico)}</span></span></div>`:''}
     ${r.agora.length?`<h3 class="ttl pri" style="margin-top:16px">Faça agora</h3><ul class="list small">${r.agora.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
-    ${r.usar.length?`<h3 class="ttl ok" style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${shelfThumb(u.it)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
+    ${r.usar.length?`<h3 class="ttl ok" style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${FOTOS?shelfThumb(u.it):pimgOld(shelfKey(u.it),46)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
       :`<h3 class="ttl neu" style="margin-top:16px">Dos seus produtos</h3><p class="small muted">${tem.length?'Nenhum dos seus produtos é indicado para este caso.':'Você ainda não marcou nenhum produto como Tenho.'}</p>`}
     ${r.faltou?`<p class="small" style="margin-top:10px">${ic('tag',14)} <b>O que ajudaria:</b> ${esc(r.faltou)}. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Minha prateleira</button></p>`:''}
     ${r.evitar.length?`<h3 class="ttl att" style="margin-top:16px">Evite agora</h3><ul class="list small">${r.evitar.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
@@ -2847,6 +2847,7 @@ function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=
    Fonte 1: IMG_SEED (imagens verificadas, com licença, em produtos/ ou URL oficial).
    Fonte 2: cache local. Fonte 3: Open Beauty Facts (CC BY-SA), só com correspondência exata de marca e nome.
    Nunca usa a foto de um produto parecido. Sem imagem: placeholder discreto com a marca. */
+const FOTOS=false; /* true liga as miniaturas reais (cartões e busca de imagens) */
 const IMG_SEED={/* 'marca nome normalizado':{u:'produtos/arquivo.webp',f:'fabricante'} */};
 const MARCAS=["La Roche-Posay","Dr. Jart+","Paula's Choice","The Ordinary","SkinCeuticals","Beauty of Joseon","Bioderma","Neutrogena","Cetaphil","CeraVe","Vichy","Avène","Avene","ISDIN","Heliocare","Episol","Bepantol","Eucerin","Nivea","Garnier","L'Oréal","Principia","Creamy","Medicube","Cosrx","Sallve","Needs","Simple","Granado"].sort((a,b)=>b.length-a.length);
 const pNorm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9+% ]+/g,' ').replace(/\s+/g,' ').trim();
@@ -2885,7 +2886,7 @@ function prodCard(nome,k,tier,extra){const p=pSplit(nome),c=P[k]||{},t=(c.t&&c.t
     <div class="pcb">${c.a?`<p>${esc(c.a)}</p>`:''}${t?`<p class="small muted">Cerca de ${brl(t[0])} o frasco · dura uns ${t[1]} meses.</p>`:''}${c.ler?`<p class="small"><b>O que procurar:</b> ${esc(c.ler)}</p>`:''}${extra||''}</div></details>`}
 function shelfThumb(i){const p=pSplit(i.n);if(i.marca)p.marca=i.marca;if(i.img){IMGC[pKey(p)]=IMGC[pKey(p)]||{u:i.img,t:Date.now()}}return pthHtml(p,'sm')}
 const REP={limpador:"La Roche-Posay Effaclar Gel",vitc:"La Roche-Posay Pure Vitamin C10 Serum",niacina:"The Ordinary Niacinamide 10% + Zinc 1%",retinol:"The Ordinary Retinol 0,2% em Esqualano",bha:"The Ordinary Salicylic Acid 2% Solution",hialu:"The Ordinary Hyaluronic Acid 2% + B5",calmante:"La Roche-Posay Cicaplast Baume B5",hidr:"La Roche-Posay Toleriane Double Repair",fps:"La Roche-Posay Anthelios XL Toque Seco"};
-function pimg(k,w=44){if(!REP[k])return `<span class="pth err mini" style="width:${w}px;height:${w}px;border-radius:${Math.round(w*.27)}px"><i></i></span>`;return pthHtml(pSplit(REP[k]),'',w)}
+function pimg(k,w=44){if(!FOTOS)return pimgOld(k,w);if(!REP[k])return `<span class="pth err mini" style="width:${w}px;height:${w}px;border-radius:${Math.round(w*.27)}px"><i></i></span>`;return pthHtml(pSplit(REP[k]),'',w)}
 function pimgOld(k,w=44){
   const T={limpador:['tube','#EBD9C8','#8A6A48'],fps:['tube','#F6E3B8','#C8892B'],vitc:['drop','#C9822B','#F4C27A'],niacina:['drop','#E8DFD2','#8A6A48'],retinol:['drop','#5A2E14','#D9B79A'],bha:['drop','#CFE3D8','#3E7B67'],hialu:['drop','#D9E6EE','#5A86A3'],calmante:['jar','#DCE9DF','#3E7B67'],hidr:['jar','#F3E6DB','#8A6A48'],cabelo:['pump','#EBD9C8','#8A6A48']};
   const [f,c1,c2]=T[k]||['jar','#F3E6DB','#8A6A48'];
@@ -3062,7 +3063,7 @@ function viewOnboarding(){PFI=0;
   const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
   const cta=(t,ok=true,act='ob-next')=>`<div class="obf"><button class="btn obc" id="ob-go" data-act="${act}" ${ok?'':'disabled'}>${t}</button></div>`;
-  if(st==='intro'){const HT=(k,w)=>`<span class="hth" style="width:${w}px;height:${Math.round(w*1.45)}px"><span class="hfb">${pimgOld(k,w)}</span>${REP[k]?pthHtml(pSplit(REP[k]),'hh'):''}</span>`,
+  if(st==='intro'){const HT=(k,w)=>`<span class="hth" style="width:${w}px;height:${Math.round(w*1.45)}px"><span class="hfb">${pimgOld(k,w)}</span>${FOTOS&&REP[k]?pthHtml(pSplit(REP[k]),'hh'):''}</span>`,
       rowS=ks=>`<div class="hsr">${ks.map(k=>HT(k,38)).join('')}</div><div class="hpl"></div>`,
       card=(k,t,sub)=>`<div class="hcd"><em>${ic('bottle',9)}Na estante</em><div class="hci">${HT(k,28)}</div><b>${t}</b></div>`;
     return `<div class="ob obx inx" style="text-align:center">
