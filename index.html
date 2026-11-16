@@ -1037,6 +1037,19 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @media(prefers-reduced-motion:reduce){.pws-bg,.pws-sh{animation:none}}
 .pxo{gap:10px}.pxo .pxt{font-size:25px;margin:0}.pxo .pxf{width:100%;aspect-ratio:auto;height:clamp(110px,19vh,170px);margin:0;border-radius:22px}.pxo .pxf img{object-position:50% 38%}
 .pxs{padding:14px 16px}.pxs .pxn{font-size:20px}.pxs .pxv{font-size:16px;margin:0 0 6px}.pxs .pxk{gap:6px;margin:0 0 8px}.pxs .pxk li{font-size:14px;line-height:1.3}.pxs .pxh{margin:2px 0 0}.pxs .pxh svg{width:54px;height:54px}.pxs .small{font-size:12px}
+/* miniaturas reais */
+.pth{position:relative;flex:none;width:64px;height:64px;border-radius:16px;background:#fff;border:1px solid var(--line,#EAD3C4);box-shadow:0 2px 8px rgba(120,70,50,.08);display:grid;place-items:center;overflow:hidden}
+.pth img{width:100%;height:100%;object-fit:contain;padding:5px;box-sizing:border-box;opacity:0;transition:opacity .35s ease;background:#fff}.pth.ok img{opacity:1}
+.pth i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#B99A8A;text-align:center;line-height:1.15;padding:4px;opacity:0}.pth.err i{opacity:1}.pth.ok i{display:none}
+.pth.ld{background:linear-gradient(100deg,#fff 30%,#FBEDE4 50%,#fff 70%) 0 0/200% 100%;animation:pthsh 1.3s linear infinite}@keyframes pthsh{to{background-position:-200% 0}}
+.pth.sm{width:48px;height:48px;border-radius:13px}.pth.sm i{font-size:7px}
+.pcd{background:#fff;border:1px solid var(--line,#EAD3C4);border-radius:20px;box-shadow:0 4px 14px rgba(120,70,50,.07);margin-top:8px;text-align:left}
+.pcd summary{list-style:none;display:flex;gap:12px;align-items:center;padding:10px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}.pcd summary::-webkit-details-marker{display:none}
+.pcx{flex:1;min-width:0;display:grid;gap:1px}.pcx small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent,#A76F5C)}.pcx b{font-size:15px;line-height:1.25;font-weight:600;color:var(--ink,#2C1A12)}.pcx em{font-style:normal;font-size:13px;color:var(--muted,#7C5A4B)}
+.pcv{flex:none;color:var(--muted,#7C5A4B);transition:transform .25s ease;display:grid}.pcd[open] .pcv{transform:rotate(90deg)}
+.pcb{padding:0 14px 12px;border-top:1px solid var(--line,#EAD3C4);display:grid;gap:6px;font-size:14px}.pcb p{margin:8px 0 0}
+.pimgc{display:block;font-size:11px;color:var(--muted);margin-top:10px}
+@media(prefers-reduced-motion:reduce){.pth.ld{animation:none}.pth img{transition:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1891,7 +1904,7 @@ function viewRotina(){
     <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
     ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
       <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
-      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}</div></div>`}).join('')}
+      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];return ex?prodCard(ex,k,S.tier):''})()}</div></div>`}).join('')}
   </div>
   ${tratRot(per)}
   ${shelfRot(per)}
@@ -1899,7 +1912,7 @@ function viewRotina(){
   ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
 }
 
-const exList=a=>a&&a.length?`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('bottle',16)}${esc(n)}</li>`).join('')}</ul>`:'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
+const exList=(a,k)=>a&&a.length?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
 const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('bottle',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button>`;
 function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.n||'').toLowerCase();
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
@@ -1907,14 +1920,14 @@ function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.
 // Prateleira ilustrada: cresce uma tábua a cada 4 produtos
 function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${pimg(shelfKey(x),58)}</div>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${shelfThumb(x)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
   return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
 function viewShelf(){
   const it=S.shelf,soon=shelfSoon().length,nT=temP().length,nQ=it.filter(i=>stOf(i)==='quero').length;
-  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}"><span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
+  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}">${shelfThumb(i)}<span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
 </div>
     <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
     <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shst="${i.id}|${k}" aria-pressed="${stOf(i)===k}">${t}</button>`).join('')}</div>
@@ -1946,7 +1959,7 @@ function viewProdutos(){
       <div class="pr"><div class="price">${brl(cur[0])}</div><div class="small muted">dura ~${String(cur[1]).replace('.',',')} meses</div></div></div>
     ${f&&f.motivo?`<div class="ir"><span class="ib">${ic('heart',16)}</span><div><b>Por que para você</b>${esc(f.motivo)}</div></div>`:''}
     <div class="ir"><span class="ib">${ic('leaf',16)}</span><div><b>Como é</b>${cur[2]}</div></div>
-    ${exList(cur[3])}
+    ${exList(cur[3],k)}
     <div class="tiers" role="group" aria-label="Faixa deste produto">${TIERS.map(([x,l])=>`<button class="tier ${x===sel?'on':''}" data-ptier="${k}|${x}" aria-pressed="${x===sel}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[x],16)}${l}<b>${brl(Math.round(t[x][0]/t[x][1]))}/mês</b></button>`).join('')}</div>
     <div class="ler"><div class="ir" style="margin:0"><span class="ib" style="background:var(--surface)">${ic('scan',16)}</span><div><b>No rótulo, procure</b>${P[k].ler}</div></div></div></div>`}).join('')}
   <p class="note">Marcas são sugestões e os preços são estimativas. Confira na loja.</p>
@@ -2034,7 +2047,7 @@ function viewSos(){
     <div class="row" style="gap:10px;flex-wrap:nowrap"><span class="tile" style="flex:none">${ic('spot',22)}</span><div><h3 style="text-transform:capitalize">${esc(r.aspecto||'Sua pele')}</h3><p class="small muted" style="margin-top:2px">${esc(r.resumo)}</p></div></div>
     ${r.medico?`<div class="alertc" style="margin-top:12px;border-color:var(--alert)">${ic('alert',22)}<span><b>Vale falar com um dermatologista</b><span class="small muted" style="display:block">${esc(r.medico)}</span></span></div>`:''}
     ${r.agora.length?`<h3 class="ttl pri" style="margin-top:16px">Faça agora</h3><ul class="list small">${r.agora.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
-    ${r.usar.length?`<h3 class="ttl ok" style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${pimg(shelfKey(u.it),46)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
+    ${r.usar.length?`<h3 class="ttl ok" style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${shelfThumb(u.it)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
       :`<h3 class="ttl neu" style="margin-top:16px">Dos seus produtos</h3><p class="small muted">${tem.length?'Nenhum dos seus produtos é indicado para este caso.':'Você ainda não marcou nenhum produto como Tenho.'}</p>`}
     ${r.faltou?`<p class="small" style="margin-top:10px">${ic('tag',14)} <b>O que ajudaria:</b> ${esc(r.faltou)}. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Minha prateleira</button></p>`:''}
     ${r.evitar.length?`<h3 class="ttl att" style="margin-top:16px">Evite agora</h3><ul class="list small">${r.evitar.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
@@ -2819,6 +2832,45 @@ function zonasAnalise(r){const o={},add=(ks,v)=>ks.forEach(k=>{if(F3REG[k])o[k]=
   [['manchas','Manchas'],['verm','Vermelhidão']].forEach(([k,t])=>{const a=(Array.isArray(zz[k])?zz[k]:[]).filter(x=>F3REG[x]);if(r[k]>=50&&a.length){add(a,r[k]/100);L.push(t+': '+a.map(x=>(ZONAS.find(q=>q[0]===x)||[0,x])[1]).join(', '))}});
   return{z:o,leg:L}}
 // Ilustrações genéricas (sem marca) por tipo de produto
+
+/* ===== Miniaturas reais dos produtos =====
+   Fonte 1: IMG_SEED (imagens verificadas, com licença, em produtos/ ou URL oficial).
+   Fonte 2: cache local. Fonte 3: Open Beauty Facts (CC BY-SA), só com correspondência exata de marca e nome.
+   Nunca usa a foto de um produto parecido. Sem imagem: placeholder discreto com a marca. */
+const IMG_SEED={/* 'marca nome normalizado':{u:'produtos/arquivo.webp',f:'fabricante'} */};
+const MARCAS=["La Roche-Posay","Dr. Jart+","Paula's Choice","The Ordinary","SkinCeuticals","Beauty of Joseon","Bioderma","Neutrogena","Cetaphil","CeraVe","Vichy","Avène","Avene","ISDIN","Heliocare","Episol","Bepantol","Eucerin","Nivea","Garnier","L'Oréal","Principia","Creamy","Medicube","Cosrx","Sallve","Needs","Simple","Granado"].sort((a,b)=>b.length-a.length);
+const pNorm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9+% ]+/g,' ').replace(/\s+/g,' ').trim();
+function pSplit(txt){const t=String(txt||'').trim();for(const m of MARCAS)if(pNorm(t).startsWith(pNorm(m)))return{marca:m,nome:t.slice(m.length).trim()||t};return{marca:'',nome:t}}
+const pKey=p=>pNorm((p.marca||'')+' '+(p.nome||''));
+const IMGC=(()=>{try{return JSON.parse(localStorage.getItem('mm_img')||'{}')}catch(e){return{}}})();
+const imgSave=()=>{try{const k=Object.keys(IMGC);if(k.length>300)k.sort((a,b)=>(IMGC[a].t||0)-(IMGC[b].t||0)).slice(0,k.length-300).forEach(x=>delete IMGC[x]);localStorage.setItem('mm_img',JSON.stringify(IMGC))}catch(e){}};
+function pthHtml(p,cls){const k=pKey(p),c=IMG_SEED[k]||IMGC[k];const u=c&&c.u;
+  return `<span class="pth ${cls||''}${u?'':' ld'}" data-pk="${esc(k)}" data-pm="${esc(p.marca||'')}" data-pn="${esc(p.nome||'')}" data-pe="${esc(p.ean||'')}">${u?`<img src="${esc(u)}" alt="${esc((p.marca?p.marca+' ':'')+p.nome)}" loading="lazy" decoding="async" width="64" height="64">`:''}<i>${esc(p.marca||'')}</i></span>`}
+function pTokOk(prod,nome,marca){const bn=pNorm(marca),pn=pNorm(prod.product_name||'')+' '+pNorm(prod.brands||'');
+  if(bn&&!pNorm(prod.brands||'').split(/[,; ]+/).concat(pNorm(prod.brands||'')).some(x=>x&&(x===bn||bn.includes(x)&&x.length>3||x.includes(bn)&&bn.length>3)))return false;
+  const tk=pNorm(nome).split(' ').filter(w=>w.length>2&&!['com','para','das','dos','sem','toque','seco'].includes(w));if(tk.length<1)return false;
+  return tk.every(w=>pn.includes(w))}
+async function pBusca(p){const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),7000);
+  try{const F='code,product_name,brands,image_front_small_url,image_front_url';let L=[];
+    if(p.ean){const r=await fetch('https://world.openbeautyfacts.org/api/v2/product/'+encodeURIComponent(p.ean)+'.json?fields='+F,{signal:ctl.signal});const j=await r.json();if(j&&j.product&&j.product.code===String(p.ean))L=[j.product]}
+    else{const q=encodeURIComponent((p.marca+' '+p.nome).trim());const r=await fetch('https://world.openbeautyfacts.org/cgi/search.pl?search_terms='+q+'&search_simple=1&action=process&json=1&page_size=12&fields='+F,{signal:ctl.signal});const j=await r.json();L=(j&&j.products)||[]}
+    const m=L.find(x=>(x.image_front_small_url||x.image_front_url)&&(p.ean||pTokOk(x,p.nome,p.marca)));
+    return m?{u:m.image_front_small_url||m.image_front_url,f:'Open Beauty Facts',ean:m.code}:null}catch(e){return undefined}finally{clearTimeout(to)}}
+const pFila=[],pFalha={};let pAtivos=0;
+function pthHidratar(){document.querySelectorAll('.pth.ld[data-pk]').forEach(el=>{if(el._q)return;const k=el.dataset.pk,c=IMG_SEED[k]||IMGC[k];
+    if(c&&c.u){el._q=1;pthPoe(el,c.u);return}
+    if(c&&c.u===null&&Date.now()-(c.t||0)<6048e5){el._q=1;el.classList.remove('ld');el.classList.add('err');return}
+    if(!navigator.onLine||Date.now()-(pFalha[k]||0)<6e4){el.classList.remove('ld');el.classList.add('err');return}el._q=1;pFila.push(el)});pthFila()}
+function pthFila(){while(pAtivos<2&&pFila.length){const el=pFila.shift();if(!el.isConnected)continue;pAtivos++;
+    const p={marca:el.dataset.pm,nome:el.dataset.pn,ean:el.dataset.pe};
+    pBusca(p).then(r=>{const k=el.dataset.pk;if(r===undefined){pFalha[k]=Date.now();document.querySelectorAll('.pth[data-pk="'+CSS.escape(k)+'"]').forEach(e=>{e.classList.remove('ld');e.classList.add('err')})}else if(r){IMGC[k]={u:r.u,f:r.f,t:Date.now()};imgSave();document.querySelectorAll('.pth[data-pk="'+CSS.escape(k)+'"]').forEach(e=>pthPoe(e,r.u))}else{IMGC[k]={u:null,t:Date.now()};imgSave();document.querySelectorAll('.pth[data-pk="'+CSS.escape(k)+'"]').forEach(e=>{e.classList.remove('ld');e.classList.add('err')})}}).finally(()=>{pAtivos--;pthFila()})}}
+function pthPoe(el,u){if(el.querySelector('img'))return;const im=new Image();im.alt=(el.dataset.pm?el.dataset.pm+' ':'')+el.dataset.pn;im.decoding='async';im.loading='lazy';im.width=im.height=64;
+  im.onload=()=>{el.classList.remove('ld','err');el.classList.add('ok')};im.onerror=()=>{im.remove();el.classList.remove('ld');el.classList.add('err');const k=el.dataset.pk;if(IMGC[k]){IMGC[k]={u:null,t:Date.now()};imgSave()}};im.src=u;el.prepend(im)}
+/* Cartão do produto: miniatura, categoria, nome, marca, seta para detalhes */
+function prodCard(nome,k,tier,extra){const p=pSplit(nome),c=P[k]||{},t=(c.t&&c.t[tier||S.tier||'mid'])||null;
+  return `<details class="pcd"><summary>${pthHtml(p)}<span class="pcx"><small>${esc(c.n||'')}</small><b>${esc(p.nome)}</b>${p.marca?`<em>${esc(p.marca)}</em>`:''}</span><span class="pcv">${ic('chev',18)}</span></summary>
+    <div class="pcb">${c.a?`<p>${esc(c.a)}</p>`:''}${t?`<p class="small muted">Cerca de ${brl(t[0])} o frasco · dura uns ${t[1]} meses.</p>`:''}${c.ler?`<p class="small"><b>O que procurar:</b> ${esc(c.ler)}</p>`:''}${extra||''}</div></details>`}
+function shelfThumb(i){const p=pSplit(i.n);if(i.marca)p.marca=i.marca;if(i.img){IMGC[pKey(p)]=IMGC[pKey(p)]||{u:i.img,t:Date.now()}}return pthHtml(p,'sm')}
 function pimg(k,w=44){
   const T={limpador:['tube','#EBD9C8','#8A6A48'],fps:['tube','#F6E3B8','#C8892B'],vitc:['drop','#C9822B','#F4C27A'],niacina:['drop','#E8DFD2','#8A6A48'],retinol:['drop','#5A2E14','#D9B79A'],bha:['drop','#CFE3D8','#3E7B67'],hialu:['drop','#D9E6EE','#5A86A3'],calmante:['jar','#DCE9DF','#3E7B67'],hidr:['jar','#F3E6DB','#8A6A48'],cabelo:['pump','#EBD9C8','#8A6A48']};
   const [f,c1,c2]=T[k]||['jar','#F3E6DB','#8A6A48'];
@@ -3277,7 +3329,7 @@ function render(){
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  raspeInit();fitIp();
+  raspeInit();fitIp();pthHidratar();
   f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();

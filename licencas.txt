@@ -3,3 +3,5 @@ Componentes de terceiros usados no Pellie
 three.js (three.min.js) - Licença MIT - Copyright 2010-2023 three.js authors - https://threejs.org
 Modelo canônico de malha facial (face-mesh.json) - derivado de canonical_face_model.obj do projeto MediaPipe - Licença Apache 2.0 - Copyright The MediaPipe Authors - https://github.com/google-ai-edge/mediapipe
 MediaPipe Face Mesh (pasta mediapipe/) - Licença Apache 2.0 - Copyright The MediaPipe Authors - https://github.com/google-ai-edge/mediapipe
+
+Fotos de embalagens de produtos - Open Beauty Facts (https://world.openbeautyfacts.org) - Licença CC BY-SA 4.0 (imagens) e ODbL (dados) - exibidas com crédito, somente quando marca e nome do produto correspondem exatamente. Imagens oficiais licenciadas pelos fabricantes, quando existirem, ficam na pasta produtos/.
