@@ -1050,16 +1050,6 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pcb{padding:0 14px 12px;border-top:1px solid var(--line,#EAD3C4);display:grid;gap:6px;font-size:14px}.pcb p{margin:8px 0 0}
 .pimgc{display:block;font-size:11px;color:var(--muted);margin-top:10px}
 @media(prefers-reduced-motion:reduce){.pth.ld{animation:none}.pth img{transition:none}}
-.app:has(.inx){padding-bottom:0!important}html:has(.inx),body:has(.inx){overflow:hidden;height:100%}
-.inx{height:100dvh;max-height:100dvh;overflow:hidden;gap:8px;padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box}
-.inx .inp{flex:1 1 0;min-height:150px;overflow:visible}.inx .inh{font-size:clamp(27px,8.2vw,34px);line-height:1.1;font-weight:800;margin:0}.inx .inb{margin:0;font-size:16px}.inx .inc{width:100%;padding:16px 0;font-size:17px;margin-top:2px}
-.hs .ip-h{white-space:nowrap}.hs{padding:38px 12px 64px;gap:5px;opacity:1!important;animation:none!important;transform:none!important}.hsh{border-radius:18px;background:linear-gradient(180deg,#FBEDE4,#F6E3D8);padding:8px 6px 4px;box-shadow:inset 0 2px 8px rgba(255,255,255,.8),0 4px 14px rgba(120,70,50,.1)}
-.hsr{display:flex;justify-content:space-around;align-items:flex-end;height:58px}.hpl{height:5px;border-radius:3px;background:linear-gradient(#E4C7B6,#D3AE9B);margin:0 -2px 6px;box-shadow:0 2px 3px rgba(120,70,50,.18)}
-.hth{position:relative;display:grid;place-items:end center;flex:none}.hth .hfb{position:absolute;inset:auto 0 0 0;display:grid;place-items:end center;filter:drop-shadow(0 3px 3px rgba(80,40,30,.22))}
-.hth .pth.hh{position:absolute;inset:0;width:100%!important;height:100%!important;background:none!important;border:0!important;box-shadow:none!important;animation:none!important;border-radius:0!important}.hth .pth.hh img{padding:0;object-fit:contain;object-position:bottom}.hth .pth.hh i{display:none}.hth:has(.pth.ok) .hfb{display:none}
-.hcs{display:flex;gap:8px}.hcd{flex:1;background:#fff;border-radius:14px;padding:6px;box-shadow:0 3px 10px rgba(120,70,50,.1);text-align:left;position:relative;min-width:0}
-.hcd em{display:inline-flex;gap:3px;align-items:center;font-style:normal;font-size:8px;font-weight:700;color:#A76F5C;background:#F6E3D8;border-radius:99px;padding:2px 6px}.hci{display:grid;place-items:center;height:40px}.hcd b{display:block;font-size:10px;line-height:1.2;color:#2C1A12}.hcd small{display:block;font-size:9px;color:#9A7B6C}
-.hsc{align-self:center;display:flex;gap:6px;align-items:center;background:#fff;border-radius:99px;padding:8px 14px;font-size:11px;font-weight:700;color:#2C1A12;box-shadow:0 4px 14px rgba(120,70,50,.16);margin-top:auto;position:relative;z-index:2;margin-bottom:0}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -3063,19 +3053,12 @@ function viewOnboarding(){PFI=0;
   const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
   const cta=(t,ok=true,act='ob-next')=>`<div class="obf"><button class="btn obc" id="ob-go" data-act="${act}" ${ok?'':'disabled'}>${t}</button></div>`;
-  if(st==='intro'){const HT=(k,w)=>`<span class="hth" style="width:${w}px;height:${Math.round(w*1.45)}px"><span class="hfb">${pimgOld(k,w)}</span>${FOTOS&&REP[k]?pthHtml(pSplit(REP[k]),'hh'):''}</span>`,
-      rowS=ks=>`<div class="hsr">${ks.map(k=>HT(k,38)).join('')}</div><div class="hpl"></div>`,
-      card=(k,t,sub)=>`<div class="hcd"><em>${ic('bottle',9)}Na estante</em><div class="hci">${HT(k,28)}</div><b>${t}</b></div>`;
-    return `<div class="ob obx inx" style="text-align:center">
-    <div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:36px;width:auto"></div>
-    <div class="p3 inp" aria-hidden="true"><div class="ipw c"><div class="ip"><div class="ips"><div class="ipi"></div><div class="ipb"><b>9:41</b><span><svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="#2C1A12"/><rect x="4.3" y="4" width="3" height="6" rx="1" fill="#2C1A12"/><rect x="8.6" y="2" width="3" height="8" rx="1" fill="#2C1A12"/><rect x="13" y="0" width="3" height="10" rx="1" fill="#2C1A12"/></svg><svg width="22" height="10" viewBox="0 0 22 10"><rect x=".5" y=".5" width="18" height="9" rx="3" fill="none" stroke="#2C1A12" opacity=".5"/><rect x="2" y="2" width="15" height="6" rx="2" fill="#2C1A12"/></svg></span></div>
-      <div class="ip-sl b hs"><div class="ip-h">Minha estante<u>Editar</u></div><div class="hsh">${rowS(['limpador','vitc','niacina','hialu'])}${rowS(['fps','hidr','calmante','bha'])}</div>
-        <div class="ip-h" style="font-size:12px;margin-top:4px">Recomendados<u>Ver todos</u></div><div class="hcs">${card('limpador','Limpador facial suave','Gel ou espuma')}${card('fps','Protetor solar FPS 50+','Toque seco')}</div>
-        <div class="hsc">${ic('scan',13)}Escanear produto</div></div>
-      <div class="ip-tab"><span>${ic('home',20)}</span><span>${ic('face',20)}</span><span>${ic('bottle',20)}</span><span>${ic('users',20)}</span></div><div class="ip-hb"></div></div></div></div></div>
-    <h1 class="obh inh">A rotina perfeita<br>para sua pele.</h1><p class="obs inb">Feita especialmente para você.</p>
-    <button class="btn obc inc" id="ob-go" data-act="ob-next">Analisar minha pele</button>
-    <p class="small muted" style="margin:0">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p></div>`}
+  if(st==='intro')return `<div class="ob obx" style="text-align:center">
+    <div class="brand" style="justify-content:center;gap:10px"><img src="pellie-logo.png" alt="Pellie" style="height:46px;width:auto"></div>
+    ${obPhoneDemo()}
+    <h1 class="obh">A rotina certa<br>para a sua pele.</h1><p class="obs">Feita especialmente para você.</p>
+    ${cta('Analisar minha pele')}
+    <p class="small muted">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p></div>`;
   if(st==='nome')return `<div class="ob obx obm" style="text-align:center">
     <h1 class="obh">Como você quer ser chamada?</h1><p class="obs">Esse nome aparece na tela inicial do app.</p>
     <input id="nome" class="obin" type="text" autocomplete="given-name" placeholder="Seu nome" aria-label="Seu nome" value="${nome}">
