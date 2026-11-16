@@ -985,7 +985,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pxa{animation:pxring 1.4s .8s ease-out both}@keyframes pxring{from{stroke-dasharray:0 176}}
 .pxv{display:block;font-size:17px;color:var(--ok);margin:2px 0 8px}
 .pxk{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:9px}.pxk li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--ol)}
-.pxk i{flex:none;width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--ok)}.pxk .att i{background:var(--att)}
+.pxk i{flex:none;width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--ok)}.pxk .att i{background:var(--att)}.pxk .bad i{background:#C94A3F}
 @media (prefers-reduced-motion:reduce){.pxl,.pxr,.pxa{animation:none}.pxl{display:none}}
 </style>
 
@@ -2996,16 +2996,20 @@ function viewOnboarding(){PFI=0;
     <div class="whl ln"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
     <p class="small muted" id="rem-txt" style="display:flex;gap:8px;justify-content:center;align-items:center;margin-top:auto">${ic('bell',15)}<span>Lembrete todos os dias às ${h}</span></p>
     ${cta('Continuar')}</div>`}
-  if(st==='scanner')return `<div class="ob obx" style="text-align:center">${back}
+  if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=seco,oleo=r?Math.round(r.oleo):null;
+    const pc=ok?86:32,cor=ok?'#4F8A6B':'#C94A3F',lab=ok?'Alta compatibilidade':'Não recomendado',da=(pc/100*176).toFixed(1);
+    const li=ok?`<li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata e ajuda a pele seca.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b> e acabamento uniforme.</span></li><li class="att"><i></i><span><b>FPS 20</b> ajuda, mas não substitui o protetor da rotina.</span></li>`
+      :`<li class="bad"><i></i><span><b>Base hidratante</b> com ácido hialurônico: pode pesar em pele com ${oleo!=null?'oleosidade em '+oleo+'/100':'tendência à oleosidade'}.</span></li><li class="bad"><i></i><span><b>Textura líquida</b> e acabamento uniforme podem acentuar o brilho na testa e no nariz.</span></li><li class="att"><i></i><span><b>FPS 20</b> ajuda, mas não substitui o protetor da rotina.</span></li>`;
+    return `<div class="ob obx" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh">Nem todo produto combina com a sua pele.</h1>
     <div class="pxf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <div class="card pxr" style="text-align:left"><div class="obk" style="display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
       <div class="pxh"><div><b class="pxn">Accord Parfait</b><span class="small muted">L'Oréal Paris · base líquida</span></div>
-      <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="86% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="pxa" cx="32" cy="32" r="28" fill="none" stroke="#4F8A6B" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="151.3 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">86%</text></svg></div>
-      <b class="pxv">Alta compatibilidade</b>
-      <ul class="pxk"><li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata sem pesar na pele mista.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b> e acabamento uniforme.</span></li><li class="att"><i></i><span><b>FPS 20</b> ajuda, mas não substitui o protetor da rotina.</span></li></ul>
-      <span class="small muted">Exemplo para uma pele mista. Na sua análise, a Pellie confere a lista de ingredientes do seu produto.</span></div>
-    ${cta('Quero saber o que usar')}</div>`;
+      <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="${pc}% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="pxa" cx="32" cy="32" r="28" fill="none" stroke="${cor}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${da} 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">${pc}%</text></svg></div>
+      <b class="pxv" style="color:${cor}">${lab}</b>
+      <ul class="pxk">${li}</ul>
+      <span class="small muted">Exemplo ilustrativo com o seu perfil de pele. Para o seu produto, a Pellie confere a lista de ingredientes.</span></div>
+    ${cta('Quero saber o que usar')}</div>`}
   if(st==='comunidade')return `<div class="ob obx">${back}
     <div class="obk" style="text-align:center">Comunidade</div><h1 class="obh" style="text-align:center">Veja quem já cuida da pele com a Pellie</h1>
     <div class="stack" style="gap:12px">${DEPO.map(d=>`<div class="card dep"><img src="${esc(d.foto)}" alt="${esc(d.nome)}" width="84" height="84" loading="lazy"><div><b>${esc(d.nome)}</b><span class="small muted">${esc(d.leg||'')}</span><p class="d1">“${esc(d.t1)}”</p><p class="d2">${esc(d.t2)}</p></div></div>`).join('')}</div>
