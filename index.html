@@ -760,14 +760,22 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 /* transições discretas entre telas e indicadores */
-#view.vin{position:relative;animation:vin .36s cubic-bezier(.2,.7,.2,1) both}
-@keyframes vin{from{opacity:0;top:10px}to{opacity:1;top:0}}
+#view.vin{position:relative;animation:vin .45s cubic-bezier(.22,.8,.2,1) both}
+@keyframes vin{from{opacity:0;top:12px}to{opacity:1;top:0}}
+#view.vin.vf{animation-name:vinf}#view.vin.vb{animation-name:vinb}
+@keyframes vinf{from{opacity:0;left:34px}60%{opacity:1}to{opacity:1;left:0}}
+@keyframes vinb{from{opacity:0;left:-34px}60%{opacity:1}to{opacity:1;left:0}}
+#view.vin .ob>*:not(.obf):not(.cta):not(.ovl){animation:vkid .5s cubic-bezier(.22,.8,.2,1) backwards}
+#view.vin .ob>*:nth-child(2){animation-delay:.04s}#view.vin .ob>*:nth-child(3){animation-delay:.09s}#view.vin .ob>*:nth-child(4){animation-delay:.14s}#view.vin .ob>*:nth-child(5){animation-delay:.19s}#view.vin .ob>*:nth-child(n+6){animation-delay:.24s}
+@keyframes vkid{from{opacity:0}}
+#view{overflow-x:clip}
+.btn,.op2,.mrow{transition:transform .15s ease,background-color .2s ease,opacity .2s ease}.btn:active,.op2:active{transform:scale(.98)}
 #view.vin .bar b{animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
 #view.vin .meter:nth-child(3n+1) .bar b{animation-delay:.05s}#view.vin .meter:nth-child(3n+2) .bar b{animation-delay:.13s}#view.vin .meter:nth-child(3n) .bar b{animation-delay:.21s}
 @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 /* botões de texto no rodapé do onboarding (Pular, Tirar outra foto...): centralizados e com área de toque */
 .obf .back{align-self:stretch;width:100%;justify-content:center;align-items:center;min-height:56px;margin-top:6px;padding:10px 20px;font-size:17px;font-weight:600;color:var(--ol)!important;background:transparent;border:1.5px solid var(--ol);border-radius:14px}
-@media (prefers-reduced-motion:reduce){#view.vin,#view.vin .bar b,.scr::before,.scspin,.scst{animation:none}#scarc{transition:none}}
+@media (prefers-reduced-motion:reduce){#view.vin,#view.vin .ob>*,#view.vin .bar b,.scr::before,.scspin,.scst{animation:none}#scarc{transition:none}}
 
 /* depoimentos */
 .dep{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:start;border-radius:24px;padding:14px;text-align:left}
@@ -3269,7 +3277,7 @@ function render(){
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
   raspeInit();fitIp();
   f3scan();fimgScan();tut3Scan();camSync();
-  {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;v.classList.remove('vin');void v.offsetWidth;v.classList.add('vin');clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin'),1300)}}
+  {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,2200)}
