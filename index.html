@@ -970,6 +970,12 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .evp{transform-box:fill-box;transform-origin:center;animation:evpu 2s ease-in-out 3.4s infinite}
 @keyframes evw{to{transform:scaleX(1)}}@keyframes evdp{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}@keyframes evpu{0%,100%{transform:scale(1);opacity:.2}50%{transform:scale(1.5);opacity:.07}}
 @media(prefers-reduced-motion:reduce){.evk{transform:none;animation:none}.evd{opacity:1;animation:none}.evp{animation:none}}
+.spl{list-style:none;margin:0;padding:0;display:grid;gap:10px;justify-content:center;text-align:left}
+.spl li{display:flex;gap:10px;align-items:center;font-size:16px;color:var(--ol);opacity:0;animation:spi .5s ease var(--d) forwards}
+.spl i{width:22px;height:22px;border-radius:50%;background:#A76F5C;color:#fff;display:grid;place-items:center;flex:none}
+.spb{visibility:hidden;opacity:0;animation:spb .5s ease 3.9s forwards}
+@keyframes spi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes spb{from{visibility:hidden;opacity:0}to{visibility:visible;opacity:1}}
+@media(prefers-reduced-motion:reduce){.spl li,.spb{animation:none;opacity:1;visibility:visible}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2565,7 +2571,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'leva','rotok','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanprod','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'leva','rotok','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -2996,6 +3002,11 @@ function viewOnboarding(){PFI=0;
     <div class="whl ln"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
     <p class="small muted" id="rem-txt" style="display:flex;gap:8px;justify-content:center;align-items:center;margin-top:auto">${ic('bell',15)}<span>Lembrete todos os dias às ${h}</span></p>
     ${cta('Continuar')}</div>`}
+  if(st==='scanprod')return `<div class="ob obx" style="text-align:center">${back}
+    <div class="obk">Scanner de produtos</div><h1 class="obh">Escaneando o produto…</h1>
+    <div class="pxf spf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <ul class="spl" aria-live="polite"><li style="--d:.5s"><i>${ic('check',13)}</i>Lendo o rótulo</li><li style="--d:1.7s"><i>${ic('check',13)}</i>Conferindo os ingredientes</li><li style="--d:2.9s"><i>${ic('check',13)}</i>Comparando com a sua pele</li></ul>
+    <div class="obf"><button class="btn obc spb" data-act="ob-next" style="width:100%">Ver resultado do scan</button></div></div>`;
   if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=seco,oleo=r?Math.round(r.oleo):null;
     const pc=ok?86:32,cor=ok?'#4F8A6B':'#C94A3F',lab=ok?'Alta compatibilidade':'Não recomendado',da=(pc/100*176).toFixed(1);
     const li=ok?`<li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata e ajuda a pele seca.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b> e acabamento uniforme.</span></li><li class="att"><i></i><span><b>FPS 20</b> ajuda, mas não substitui o protetor da rotina.</span></li>`
