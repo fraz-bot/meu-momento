@@ -3076,7 +3076,7 @@ function viewOnboarding(){PFI=0;
     const NN=[['oleosidade',r?r.oleo:0],['poros dilatados',r?r.poros:0],['linhas finas',r?r.linhas:0],['manchas',r?r.manchas:0],['vermelhidão',r?r.verm:0],['ressecamento',r?100-r.hid:0]].filter(x=>x[1]>=45).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);
     const nl=NN.length?NN:[d?d.t:'cuidado diário'],nt=nl.length>1?nl.slice(0,-1).join(', ')+' e '+nl[nl.length-1]:nl[0];
     const rg=zonasTxt()||((d&&d.pill.split(' · ')[1])||''),mt=METAS.find(x=>x[0]===S.meta);
-    const TL=[['face','Hoje',T[1]+', como a sua análise mostrou'],['routine','Semana 1','rotina personalizada'],['bottle','Semana 2','produtos compatíveis com a sua pele'],['chart','Semana 3','acompanhamento da sua evolução']];
+    const TL=[['face','Hoje',T[1]+', como a sua análise mostrou'],['routine','Passo 1','rotina personalizada'],['bottle','Passo 2','produtos compatíveis com a sua pele'],['chart','Passo 3','acompanhamento da sua evolução']];
     return `<div class="ob obx" style="text-align:center">
     <span class="rkc" aria-hidden="true">${ic('check',34)}</span>
     <h1 class="obh">${nome?esc(nome)+', sua':'Sua'} rotina para cuidar da sua pele está pronta.</h1>
@@ -3085,7 +3085,7 @@ function viewOnboarding(){PFI=0;
     <p class="small muted" style="margin:-6px 0 0">Você pode ajustar depois.</p>
     <h2 class="rkh">${ic('chart',20)}Para onde você vai</h2>
     <div class="rtl">${TL.map((t,i)=>`<div style="--i:${i}"><span class="cic">${ic(t[0],20)}</span><div><b>${t[1]}</b><small>${esc(t[2])}</small></div></div>`).join('')}<div class="rtf" style="--i:4"><span class="cic on">${ic('star',22)}</span><div><b>Sua meta</b><small>${esc(T[2])}</small></div></div></div>
-    <p class="small muted" style="margin:0">Etapas de acompanhamento. Os resultados variam de pessoa para pessoa.</p>
+    <p class="small muted" style="margin:0">Passos de acompanhamento. Os resultados variam de pessoa para pessoa.</p>
     ${cta('Vamos começar!',true,'ob-next')}</div>`}
   if(st==='susp'||st==='susp2'){const a=st==='susp';return `<div class="ovl rose"><div class="ob obx"><div class="susp" role="status" aria-live="polite">
     <div class="sf"><svg viewBox="0 0 120 100" width="72" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(k=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${k} 60 50)"/>`).join('')}</g></svg></div>
