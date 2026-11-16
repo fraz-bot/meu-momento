@@ -1050,6 +1050,10 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pcb{padding:0 14px 12px;border-top:1px solid var(--line,#EAD3C4);display:grid;gap:6px;font-size:14px}.pcb p{margin:8px 0 0}
 .pimgc{display:block;font-size:11px;color:var(--muted);margin-top:10px}
 @media(prefers-reduced-motion:reduce){.pth.ld{animation:none}.pth img{transition:none}}
+.app:has(.iny){padding-bottom:0!important}html:has(.iny),body:has(.iny){overflow:hidden;height:100%}
+.iny{height:100dvh;max-height:100dvh;overflow:hidden;gap:8px;padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;justify-content:space-between}
+.iny .mpw{--mw:max(110px,min(58vw,250px,calc((100dvh - 365px - env(safe-area-inset-top) - env(safe-area-inset-bottom))/1.9)));gap:6px;margin:0 auto}
+.iny .mpd-lb{min-height:34px}.iny .inh2{font-size:clamp(25px,7.4vw,32px);line-height:1.1;margin:0}.iny .obf{padding:0;margin:0}.iny .brand img{height:38px!important}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -3053,10 +3057,10 @@ function viewOnboarding(){PFI=0;
   const OB=obSteps(),i=Math.min(S.ob.step,OB.length-1),st=OB[i],nome=esc(S.nome||'');
   const back=`<button class="bkx" data-act="ob-back" aria-label="Voltar">${ic('back',22)}</button>`;
   const cta=(t,ok=true,act='ob-next')=>`<div class="obf"><button class="btn obc" id="ob-go" data-act="${act}" ${ok?'':'disabled'}>${t}</button></div>`;
-  if(st==='intro')return `<div class="ob obx" style="text-align:center">
+  if(st==='intro')return `<div class="ob obx iny" style="text-align:center">
     <div class="brand" style="justify-content:center;gap:10px"><img src="pellie-logo.png" alt="Pellie" style="height:46px;width:auto"></div>
     ${obPhoneDemo()}
-    <h1 class="obh">A rotina certa<br>para a sua pele.</h1><p class="obs">Feita especialmente para você.</p>
+    <h1 class="obh inh2">A rotina certa<br>para a sua pele.</h1><p class="obs" style="margin:0">Feita especialmente para você.</p>
     ${cta('Analisar minha pele')}
     <p class="small muted">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p></div>`;
   if(st==='nome')return `<div class="ob obx obm" style="text-align:center">
