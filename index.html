@@ -981,24 +981,34 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pwx2{position:absolute;left:14px;top:16px;width:44px;height:44px;border:0;background:transparent;color:#4A2A1E;cursor:pointer;display:grid;place-items:center;z-index:3}
 .pwh{margin:6px 18px 0;font-size:34px;line-height:1.12;letter-spacing:-.025em;color:#2C1A12}.pwh span{display:block;font-weight:400}.pwh b{display:block;font-weight:800}
 .pws{margin:0 28px;font-size:17px;line-height:1.35;color:#4A2A1E}
-.p3{position:relative;height:340px;margin:4px 0 -6px}
-.p3p{position:absolute;top:0;border-radius:34px;background:#2C2118;padding:6px;box-shadow:0 24px 46px rgba(120,70,50,.28)}
-.p3p.c{left:50%;width:min(56%,218px);transform:translateX(-50%);z-index:2;height:330px}
-.p3p.l{left:-9%;width:min(50%,196px);transform:perspective(700px) rotateY(24deg) rotateZ(-3deg);opacity:.72;top:34px;height:290px}
-.p3p.r{right:-9%;width:min(50%,196px);transform:perspective(700px) rotateY(-24deg) rotateZ(3deg);opacity:.72;top:34px;height:290px}
-.p3s{height:100%;border-radius:29px;overflow:hidden;padding:24px 9px 10px;position:relative;display:flex;flex-direction:column;gap:6px;text-align:left;background:linear-gradient(180deg,#F7E7DC,#FDF8F3 55%)}
-.c .p3s{background:linear-gradient(180deg,#C98F7C 0%,#A76F5C 38%,#8C5846 100%);color:#fff;align-items:center;padding-top:26px}
-.p3n{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:54px;height:13px;border-radius:9px;background:#2C2118}
-.p3t{display:flex;justify-content:space-between;font-size:10px;color:#4A2A1E}.p3t u{color:#A76F5C;text-decoration:none}
-.p3r{display:flex;gap:4px;justify-content:space-around;padding:6px 0;border-bottom:3px solid #EAD3C4}
-.p3g{margin-top:auto;font-size:10px;font-weight:700;color:#4A2A1E}
-.c small{font-size:11px;font-weight:600;opacity:.9}
-.p3b{width:104px;height:104px;border-radius:50%;background:#FFF;border:6px solid rgba(255,255,255,.45);display:grid;place-items:center;align-content:center;color:#A76F5C;margin:6px 0}.p3b b{font-size:12px;margin-top:-6px}
-.p3i{display:flex;gap:6px;align-items:center;width:100%;background:rgba(255,255,255,.2);border-radius:10px;padding:5px 6px;font-size:10px}
-.p3i em{font-style:normal;font-weight:700;width:10px}.p3i>span{background:#fff;border-radius:7px;padding:2px;display:grid}.p3i>div{flex:1;min-width:0}.p3i b{display:block;font-size:10px}
-.p3i i{display:block;height:7px;width:70%;border-radius:4px;background:rgba(255,255,255,.55);filter:blur(2px);margin-top:3px}
-.p3w{display:flex;justify-content:space-between;margin-top:4px}.p3w span{width:17px;height:17px;border-radius:50%;border:1.5px dashed #D9BBA9;display:grid;place-items:center;font-size:8px;color:#7C5A4B}.p3w span.on{background:#A76F5C;border-color:#A76F5C;color:#fff}
-.p3k{display:flex;flex-direction:column;align-items:center;color:#A76F5C;margin-top:16px}.p3k b{font-size:26px;color:#4A2A1E}.p3k small{font-size:9px;color:#7C5A4B;font-weight:500}
+.p3{position:relative;height:350px;margin:4px 0 -6px;overflow:hidden}
+.ip{position:absolute;left:50%;top:0;width:220px;height:476px;margin-left:-110px;border-radius:46px;background:#17110D;padding:7px;box-shadow:0 0 0 1.5px #5A4A40 inset,0 26px 50px rgba(110,60,40,.35)}
+.ip::before,.ip::after{content:"";position:absolute;width:3px;background:#3A2E27;border-radius:2px}.ip::before{left:-3px;top:92px;height:42px;box-shadow:0 56px 0 #3A2E27}.ip::after{right:-3px;top:120px;height:62px}
+.ips{height:100%;border-radius:40px;overflow:hidden;position:relative;background:#FBF4EE}
+.ipi{position:absolute;top:9px;left:50%;margin-left:-32px;width:64px;height:19px;border-radius:12px;background:#0B0806;z-index:5}
+.ipb{position:absolute;top:10px;left:0;right:0;display:flex;justify-content:space-between;padding:0 22px 0 24px;font-size:11px;font-weight:700;color:#2C1A12;z-index:4;pointer-events:none}.ipb span{display:flex;gap:4px;align-items:center}
+.ip-sl{position:absolute;inset:0;padding:40px 12px 12px;opacity:0;display:flex;flex-direction:column;gap:7px;text-align:left;animation:ipcy 15s infinite both}
+.ip-sl:nth-child(1){animation-delay:0s}.ip-sl:nth-child(2){animation-delay:3s}.ip-sl:nth-child(3){animation-delay:6s}.ip-sl:nth-child(4){animation-delay:9s}.ip-sl:nth-child(5){animation-delay:12s}
+@keyframes ipcy{0%{opacity:0;transform:translateX(18px)}3%,20%{opacity:1;transform:none}23%,100%{opacity:0;transform:translateX(-18px)}}
+.ip-sl.a{background:linear-gradient(180deg,#C98F7C 0%,#A76F5C 40%,#8C5846 100%);color:#fff;align-items:center}.ip-sl.a>small{font-size:12px;font-weight:600;margin-top:4px}
+.ip-sl.b,.ip-sl.c,.ip-sl.d,.ip-sl.e{background:linear-gradient(180deg,#F7E7DC,#FDF8F3 50%);color:#2C1A12}
+.ip-h{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;font-weight:700;margin-top:4px}.ip-h u{font-size:11px;font-weight:600;color:#A76F5C;text-decoration:none}
+.ip-btn{flex:none;width:96px;height:96px;aspect-ratio:1;border-radius:50%;background:#fff;border:6px solid rgba(255,255,255,.4);display:grid;place-items:center;align-content:center;color:#A76F5C;margin:6px 0 4px;animation:ippu 2.4s ease-in-out infinite}.ip-btn b{font-size:12px;margin-top:-5px}
+@keyframes ippu{50%{transform:scale(1.06)}}
+.ip-st{display:flex;gap:7px;align-items:center;width:100%;background:rgba(255,255,255,.2);border-radius:12px;padding:6px 7px;font-size:11px}.ip-st em{font-style:normal;font-weight:700;width:10px}.ip-st>span{flex:none;background:#fff;border-radius:8px;padding:2px;display:grid}.ip-st>div{flex:1;min-width:0}.ip-st b{display:block;font-size:11px}.ip-st i{display:block;height:6px;width:70%;border-radius:4px;background:rgba(255,255,255,.55);filter:blur(2px);margin-top:3px}
+.ip-r{display:flex;justify-content:space-around;padding:8px 0;border-bottom:3px solid #EAD3C4}
+.ip-g{font-size:11px;font-weight:700;margin-top:6px}
+.ip-w{display:flex;justify-content:space-between}.ip-w span{width:24px;height:24px;border-radius:50%;border:1.5px dashed #D9BBA9;display:grid;place-items:center;font-size:10px;color:#7C5A4B}.ip-w span.on{background:#A76F5C;border-color:#A76F5C;color:#fff}
+.ip-k{display:flex;flex-direction:column;align-items:center;color:#A76F5C;padding:10px 0 4px}.ip-k b{font-size:34px;color:#4A2A1E;line-height:1.1}.ip-k small{font-size:11px;color:#7C5A4B}
+.ip-c{background:#fff;border:1px solid #EAD3C4;border-radius:14px;padding:9px 10px;font-size:11px;color:#7C5A4B}.ip-c b{display:block;font-size:13px;color:#2C1A12}
+.ip-bar{display:grid;gap:3px;font-size:11px}.ip-bar>div{height:8px;border-radius:5px;background:#EAD3C4;overflow:hidden}.ip-bar>div i{display:block;height:100%;border-radius:5px;background:#A76F5C;width:var(--v)}
+.ip-ex{align-self:flex-start;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#A76F5C;background:#F3DDD2;border-radius:99px;padding:3px 8px}
+.ip-ok{display:flex;gap:6px;align-items:center;background:#EAF2E6;color:#3E6B3A;border-radius:12px;padding:8px 10px;font-size:12px;font-weight:700}
+.ip-sc{display:grid;place-items:center;padding:14px 0;background:#fff;border:1px solid #EAD3C4;border-radius:16px;position:relative;overflow:hidden}.ip-sc::after{content:"";position:absolute;left:10px;right:10px;height:2px;background:#A76F5C;box-shadow:0 0 8px #A76F5C;animation:ipsc 1.8s ease-in-out infinite}
+@keyframes ipsc{0%,100%{top:14%}50%{top:84%}}
+.ipd{display:flex;gap:6px;justify-content:center;margin-top:12px}.ipd i{width:7px;height:7px;border-radius:50%;background:#C9A99A;opacity:.5;animation:ipdt 15s infinite}.ipd i:nth-child(2){animation-delay:3s}.ipd i:nth-child(3){animation-delay:6s}.ipd i:nth-child(4){animation-delay:9s}.ipd i:nth-child(5){animation-delay:12s}
+@keyframes ipdt{0%,20%{opacity:1;background:#4A2A1E;width:20px;border-radius:5px}21%,100%{opacity:.5;background:#C9A99A;width:7px}}
+@media(prefers-reduced-motion:reduce){.ip-sl,.ipd i,.ip-btn,.ip-sc::after{animation:none}.ip-sl:first-child{opacity:1}}
 .pwb2{background:#FBF4EE;border-radius:34px 34px 0 0;padding:20px 20px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 -10px 30px rgba(120,70,50,.08);position:relative;z-index:3;flex:1}
 .pwq{display:flex;background:#EFDFD3;border-radius:999px;padding:4px;gap:4px}.pwq button{border:0;background:transparent;border-radius:999px;padding:9px 20px;font-family:inherit;font-weight:700;font-size:15px;color:#7C5A4B;cursor:pointer;display:flex;gap:6px;align-items:center}
 .pwq button[aria-checked=true]{background:#4A2A1E;color:#fff}.pwq em{font-style:normal;font-size:11px;background:#A76F5C;color:#fff;border-radius:999px;padding:2px 7px}
@@ -3169,12 +3179,14 @@ function viewOnboarding(){PFI=0;
     return `<div class="pwz"><button class="pwx2" data-act="ob-fechar" aria-label="Fechar">${ic('x',22)}</button><div class="brand" style="justify-content:center"><img src="pellie-logo.png" alt="Pellie" style="height:40px;width:auto"></div>
     <h1 class="pwh"><span>A rotina perfeita</span><b>para sua pele está pronta.</b></h1>
     <p class="pws">Tudo que você precisa para cuidar da sua pele está aqui.</p>
-    <div class="p3" aria-hidden="true">
-      <div class="p3p l"><div class="p3s"><div class="p3n"></div><div class="p3t"><b>Minha estante</b><u>Editar</u></div>${sh.map(r=>`<div class="p3r">${r.map(k=>`<span>${pimg(k,26)}</span>`).join('')}</div>`).join('')}<div class="p3g">Recomendados pra você</div></div></div>
-      <div class="p3p c"><div class="p3s"><div class="p3n"></div><small>Rotina da manhã</small><div class="p3b"><span>${ic('check',44)}</span><b>Começar</b></div>
-        ${[['Limpeza','limpador'],['Tratamento','niacina'],['Hidratação','hidr'],['Proteção','fps']].map(([a,k],i)=>`<div class="p3i"><em>${i+1}</em><span>${pimg(k,22)}</span><div><b>${a}</b><i></i></div>${ic('check',13)}</div>`).join('')}</div></div>
-      <div class="p3p r"><div class="p3s"><div class="p3n"></div><div class="p3t"><b>Olá, ${esc(S.nome||'')}</b><u>Hoje</u></div><div class="p3w">${['D','S','T','Q','Q','S','S'].map((d,i)=>`<span class="${i<3?'on':''}">${d}</span>`).join('')}</div><div class="p3k">${ic('flame',20)}<b>1 dia</b><small>de rotina em dia</small></div><div class="p3g">Pra você · Hoje</div></div></div>
-    </div>
+    <div class="p3" aria-hidden="true"><div class="ip"><div class="ips"><div class="ipi"></div><div class="ipb"><b>9:41</b><span><svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="#2C1A12"/><rect x="4.3" y="4" width="3" height="6" rx="1" fill="#2C1A12"/><rect x="8.6" y="2" width="3" height="8" rx="1" fill="#2C1A12"/><rect x="13" y="0" width="3" height="10" rx="1" fill="#2C1A12"/></svg><svg width="22" height="10" viewBox="0 0 22 10"><rect x=".5" y=".5" width="18" height="9" rx="3" fill="none" stroke="#2C1A12" opacity=".5"/><rect x="2" y="2" width="15" height="6" rx="2" fill="#2C1A12"/><rect x="20" y="3.5" width="1.6" height="3" rx=".8" fill="#2C1A12" opacity=".5"/></svg></span></div>
+      <div class="ip-sl a"><small>Rotina da manhã</small><div class="ip-btn">${ic('check',40)}<b>Começar</b></div>${[['Limpeza','limpador'],['Tratamento','niacina'],['Hidratação','hidr'],['Proteção','fps']].map(([a,k],i)=>`<div class="ip-st"><em>${i+1}</em><span>${pimg(k,22)}</span><div><b>${a}</b><i></i></div>${ic('check',13)}</div>`).join('')}</div>
+      <div class="ip-sl b"><div class="ip-h">Minha estante<u>Editar</u></div>${sh.map(r=>`<div class="ip-r">${r.map(k=>`<span>${pimg(k,30)}</span>`).join('')}</div>`).join('')}<div class="ip-g">Recomendados pra você</div></div>
+      <div class="ip-sl c"><div class="ip-h">Olá${S.nome?', '+esc(S.nome):''}<u>Hoje</u></div><div class="ip-w">${['D','S','T','Q','Q','S','S'].map((d,i)=>`<span class="${i<3?'on':''}">${d}</span>`).join('')}</div><div class="ip-k">${ic('flame',26)}<b>1 dia</b><small>de rotina em dia</small></div><div class="ip-c"><b>Rotina da manhã</b>4 passos para hoje</div><div class="ip-c"><b>Rotina da noite</b>3 passos para hoje</div></div>
+      <div class="ip-sl d"><div class="ip-h">Sua análise<u>Pele</u></div><span class="ip-ex">Exemplo</span>${[['Oleosidade','72%'],['Poros','58%'],['Hidratação','40%'],['Linhas finas','25%']].map(([t,v])=>`<div class="ip-bar"><span>${t}</span><div><i style="--v:${v}"></i></div></div>`).join('')}<div class="ip-c" style="margin-top:4px"><b>Maior desafio</b>Veja o que sua pele mais precisa</div></div>
+      <div class="ip-sl e"><div class="ip-h">Scanner<u>Produtos</u></div><span class="ip-ex">Exemplo</span><div class="ip-sc">${pimg('hidr',64)}</div><div class="ip-ok">${ic('check',16)}Combina com a sua pele</div><div class="ip-c">Veja a compatibilidade antes de comprar.</div></div>
+    </div></div></div>
+    <div class="ipd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <div class="pwb2"><div class="pwq" role="radiogroup" aria-label="Plano"><button role="radio" aria-checked="${an}" data-plan="ano">Anual<em>${S.oferta?'oferta':'-'+PA.e}</em></button><button role="radio" aria-checked="${!an}" data-plan="mes">Mensal</button></div>
       <div class="pwn"><b>${pm}</b><span>/mês</span></div><p class="pwc">${sub}</p><p class="pwd">Menos de <b>${dia}</b> por dia para cuidar da sua pele.</p>
       <button class="btn obc pwk" data-act="ob-plano">Quero meu plano agora</button>
