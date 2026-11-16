@@ -930,6 +930,41 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .ofp{margin:0;color:var(--muted);line-height:1.45;font-size:16px}
 .ofv{display:flex;flex-direction:column;align-items:center;line-height:1.1}.ofv s{color:var(--muted);font-size:17px}.ofv b{font-size:46px;letter-spacing:-.03em;color:#4A2A1E}.ofv small{color:#A76F5C;font-weight:600;font-size:14px;margin-top:4px}
 @keyframes ofi{from{opacity:0}to{opacity:1}}@keyframes ofu{from{transform:translateY(40px)}to{transform:none}}
+/* novas telas do onboarding */
+.agb{min-height:76px;border-radius:22px}
+.rspw{margin:-10px -18px 0;padding:76px 18px 40px;min-height:100dvh;background:radial-gradient(120% 70% at 50% 60%,#F9B3D0 0,#EC6FA6 48%,#D84E8F 100%);color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;overflow:hidden}
+.rspw::before{content:"";position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 62%,rgba(255,255,255,.13) 0 9deg,transparent 9deg 22deg);animation:rspr 40s linear infinite;pointer-events:none}
+.rspw>*{position:relative}.rspw{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.rspw h1{margin:0;font-size:32px;line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.rsph{margin:0;font-size:19px;font-weight:600;opacity:.95}
+.rspc{position:relative;width:min(76vw,310px);aspect-ratio:3/4;margin-top:14px;border-radius:30px;background:#FFF;box-shadow:0 0 70px rgba(255,255,255,.55),0 18px 40px rgba(120,20,70,.3);overflow:hidden;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.rspc.rv{transform:scale(1.04);animation:rspp .9s ease}
+.rspc canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .6s}
+.rspc canvas.gone{opacity:0;pointer-events:none}
+.rspv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:24px;color:#3B2217}
+.rspv small{font-size:17px;color:#7C5A4B}.rspv b{font-size:84px;line-height:1;color:#D84E8F;letter-spacing:-.03em}.rspv b.rsw{font-size:40px;margin:10px 0}
+.rspv>span{font-size:21px;font-weight:600}.rspv p{margin:12px 0 0;font-size:15px;color:#5C3F31}.rspv p b{font-size:15px;color:#3B2217;letter-spacing:0}
+.rspb{margin-top:auto;background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.7);color:#fff;border-radius:999px;padding:14px 26px;font-family:inherit;font-weight:600;font-size:16px;cursor:pointer}
+@keyframes rspr{to{transform:rotate(360deg)}}@keyframes rspp{0%{box-shadow:0 0 0 rgba(255,255,255,0)}50%{box-shadow:0 0 110px rgba(255,255,255,.9)}}
+.ntb{position:relative;margin:36px auto 0;width:min(82vw,330px);height:250px}
+.ntb::before{content:"";position:absolute;left:12%;right:12%;top:36px;bottom:0;border-radius:30px 30px 0 0;background:linear-gradient(#FFF,rgba(255,255,255,0))}
+.ntbell{position:absolute;left:50%;top:0;transform:translateX(-50%);width:104px;height:104px;border-radius:50%;background:linear-gradient(#E8679F,#F4A9C8);display:grid;place-items:center;color:#fff;animation:ntr 2.4s ease-in-out infinite;transform-origin:50% 0}
+.ntcard{position:absolute;left:-6%;right:-6%;top:118px;background:#FFF;border-radius:24px;padding:14px 16px;display:flex;gap:12px;text-align:left;box-shadow:0 14px 34px rgba(120,40,80,.15);animation:ntu .7s cubic-bezier(.2,.9,.3,1) .2s both}
+.ntcard img{border-radius:9px;flex:none;height:34px;width:34px;object-fit:contain;background:#FBE4EE;padding:4px}
+.ntcard>div{display:flex;flex-direction:column;gap:2px;font-size:14px;min-width:0}.ntt{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.ntt b{font-weight:600}
+@keyframes ntr{0%,100%{transform:translateX(-50%) rotate(0)}10%{transform:translateX(-50%) rotate(12deg)}20%{transform:translateX(-50%) rotate(-10deg)}30%{transform:translateX(-50%) rotate(6deg)}40%{transform:translateX(-50%) rotate(0)}}
+@keyframes ntu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.rkc{width:82px;height:82px;border-radius:50%;border:3px solid #E8679F;color:#E8679F;display:grid;place-items:center;margin:14px auto 0}
+.rkk{text-align:center;padding:22px 18px}.rkt{font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:6px 0 4px}
+.rkn{display:flex;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}.rkn>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;color:#E8679F}.rkn small{color:var(--muted);font-size:14px}.rkn span{color:var(--ink)}.rkn b{font-size:34px;color:#E8679F;line-height:1.1}.rkn i{width:1px;height:46px;background:var(--line)}
+.rkh{display:flex;gap:8px;align-items:center;justify-content:center;margin:6px 0 0;font-size:24px;letter-spacing:-.02em}
+.rtl{position:relative;display:flex;flex-direction:column;gap:20px;text-align:left;padding:4px 6px 0 22px}
+.rtl::before{content:"";position:absolute;left:44px;top:26px;bottom:34px;width:4px;border-radius:2px;background:linear-gradient(#E8679F,#F6B7D2);transform-origin:top;animation:rtg 1.6s ease-out both}
+.rtl>div{display:flex;gap:14px;align-items:center;animation:rtu .5s ease both;animation-delay:calc(var(--i)*.25s)}
+.rtl .cic{width:46px;height:46px;flex:none;border:2.5px solid #E8679F;background:#fff;color:#E8679F;position:relative;z-index:1}.rtl .cic.on{background:#E8679F;color:#fff;box-shadow:0 0 0 8px rgba(232,103,159,.18)}
+.rtl b{display:block;font-size:17px}.rtl small{color:var(--muted);font-size:14px}.rtf b{color:#E8679F}
+@keyframes rtg{from{transform:scaleY(0)}to{transform:scaleY(1)}}@keyframes rtu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rspw::before,.ntbell,.ntcard,.rtl::before,.rtl>div,.rspc.rv{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1102,7 +1137,7 @@ const STEPS={
 };
 const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
-const DEF=()=>({nome:'',convite:'',sol:null,acido:null,gestT:null,hrot:[],meta:null,zonas:[],idade:25,ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
+const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot:[],meta:null,zonas:[],idade:25,ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
@@ -2525,7 +2560,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','susp','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2',...(DEPO.length?['comunidade']:[]),'leva','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'leva','rotok','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -3015,6 +3050,38 @@ function viewOnboarding(){PFI=0;
     ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:`<p class="obs">Leva só alguns segundos. Não feche o app.</p>`}
     <p class="scst" id="scst" data-i="${scanSt()}">${SCANTXT[scanSt()]}</p><div class="dots" aria-hidden="true">${[0,1,2,3].map(k=>`<i id="scd${k}" class="${k>scanSt()?'w':''}"></i>`).join('')}</div>
     <div class="obf" style="flex-direction:column;align-items:center;gap:6px">${S.err?`<button class="btn obc" data-act="scan-retry">Tentar de novo</button><button class="back" data-act="scan-outra" style="padding:10px;font-weight:600;color:var(--ink)">Tirar outra foto</button>${S.result?`<button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Continuar com a análise anterior</button>`:''}`:`<button class="btn obc" id="scan-go" data-act="ob-next" style="${fim?'':'opacity:.35;pointer-events:none'}" ${fim?'':'disabled'}>Ver resultado</button>`}</div></div>`}
+  if(st==='agua'){const O=[['<1','Menos de 1 litro'],['1-2','1 a 2 litros'],['2-3','2 a 3 litros'],['>3','Mais de 3 litros']];return `<div class="ob obx">${back}
+    <div class="obk" style="text-align:center">Seus hábitos</div><h1 class="obh" style="text-align:center">Quanta água você bebe por dia?</h1>
+    <div class="stack" style="gap:12px">${O.map(o=>`<button class="op2 agb" data-obq="agua|${o[0]}" aria-pressed="${S.agua===o[0]}"><span><b>${o[1]}</b></span><i></i></button>`).join('')}</div>
+    ${cta('Continuar',S.agua!=null)}</div>`}
+  if(st==='raspe'){const r=S.result;if(!r)return '';const d=desafio(),M=[r.oleo,r.poros,r.linhas,r.manchas,r.verm,100-r.hid],n=M.filter(v=>v>=50).length,ok=!!window.RSP_OK;
+    const rv=n?`<small>Encontramos</small><b>${n}</b><span>${n===1?'ponto de atenção':'pontos de atenção'}</span>`:`<small>Sua análise mostrou</small><b class="rsw">Equilíbrio</b><span>na sua pele</span>`;
+    const sb=d&&d.forte?`<p>E um ponto forte: <b>${esc(d.forte)}</b>.</p>`:`<p>Vamos ver cada um deles agora.</p>`;
+    return `<div class="rspw"><h1>${nome?esc(nome)+', você':'Você'} precisa ver isso.</h1><p class="rsph">${ok?'Pronto!':'Raspe para revelar'}</p>
+    <div class="rspc ${ok?'rv':''}" id="rsp-card"><div class="rspv">${rv}${sb}</div>${ok?'':`<canvas id="rsp-c" aria-label="Área para raspar"></canvas>`}</div>
+    <button class="rspb" data-act="raspe-ok">${ok?'Continuar':'Revelar sem raspar'}</button></div>`}
+  if(st==='notif'){const n=nowMin(),m=hm(S.rem.m),nt=hm(S.rem.n);let at,dia,per;if(n<m){at=S.rem.m;dia='hoje';per='m'}else if(n<nt){at=S.rem.n;dia='hoje';per='n'}else{at=S.rem.m;dia='amanhã';per='m'}
+    const [hh,mm]=at.split(':'),fh=mm==='00'?hh.replace(/^0/,'')+'h':hh.replace(/^0/,'')+'h'+mm;
+    return `<div class="ob obx ntw" style="text-align:center">${back}
+    <div class="ntb"><span class="ntbell">${ic('bell',54)}</span><div class="ntcard"><img src="pellie-flor.png" alt="" width="34" height="34"><div><div class="ntt"><b>Pellie</b><span>agora</span></div><b>${per==='m'?'Bom dia!':'Boa noite!'}</b><span>${per==='m'?'Hora da sua rotina da manhã.':'Não esqueça sua rotina da noite antes de dormir.'}</span></div></div></div>
+    <h1 class="obh">Sua próxima rotina é ${dia} às ${fh}</h1>
+    <p class="obs">Quer que a Pellie te lembre na hora de fazer o seu skincare? Toque em “Continuar” e depois em “Permitir” para receber os lembretes.</p>
+    <div class="obf" style="flex-direction:column;align-items:center;gap:6px;width:100%"><button class="btn obc" id="ob-go" data-act="notif-ok" style="width:100%">Continuar</button><button class="back" data-act="ob-next" style="padding:10px;color:var(--muted)">Agora não</button></div></div>`}
+  if(st==='rotok'){const r=S.result,d=desafio(),L=(r&&rotinaPorAnalise())||null,Rr=R[S.age]||R['30'],nm=L?L.manha.length:Rr.m.length,nn=L?L.noite.length:Rr.n.length,T=CAMT[d?d.k:'oleo'];
+    const NN=[['oleosidade',r?r.oleo:0],['poros dilatados',r?r.poros:0],['linhas finas',r?r.linhas:0],['manchas',r?r.manchas:0],['vermelhidão',r?r.verm:0],['ressecamento',r?100-r.hid:0]].filter(x=>x[1]>=45).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);
+    const nl=NN.length?NN:[d?d.t:'cuidado diário'],nt=nl.length>1?nl.slice(0,-1).join(', ')+' e '+nl[nl.length-1]:nl[0];
+    const rg=zonasTxt()||((d&&d.pill.split(' · ')[1])||''),mt=METAS.find(x=>x[0]===S.meta);
+    const TL=[['face','Hoje',T[1]+', como a sua análise mostrou'],['routine','Semana 1','rotina personalizada'],['bottle','Semana 2','produtos compatíveis com a sua pele'],['chart','Semana 3','acompanhamento da sua evolução']];
+    return `<div class="ob obx" style="text-align:center">
+    <span class="rkc" aria-hidden="true">${ic('check',34)}</span>
+    <h1 class="obh">${nome?esc(nome)+', sua':'Sua'} rotina para cuidar da sua pele está pronta.</h1>
+    <div class="card rkk"><div class="obk">Seu foco</div><div class="rkt">${esc(nt.charAt(0).toUpperCase()+nt.slice(1))}</div>${rg?`<div class="small muted">${esc(rg.charAt(0).toUpperCase()+rg.slice(1))}</div>`:''}${mt?`<div class="small" style="margin-top:6px">Objetivo: <b>${esc(mt[1])}</b>, ${esc(mt[2])}</div>`:''}
+      <div class="rkn"><div>${ic('sun',18)}<small>Manhã</small><span><b>${nm}</b> passos</span></div><i></i><div>${ic('moon',18)}<small>Noite</small><span><b>${nn}</b> passos</span></div></div></div>
+    <p class="small muted" style="margin:-6px 0 0">Você pode ajustar depois.</p>
+    <h2 class="rkh">${ic('chart',20)}Para onde você vai</h2>
+    <div class="rtl">${TL.map((t,i)=>`<div style="--i:${i}"><span class="cic">${ic(t[0],20)}</span><div><b>${t[1]}</b><small>${esc(t[2])}</small></div></div>`).join('')}<div class="rtf" style="--i:4"><span class="cic on">${ic('star',22)}</span><div><b>Sua meta</b><small>${esc(T[2])}</small></div></div></div>
+    <p class="small muted" style="margin:0">Etapas de acompanhamento. Os resultados variam de pessoa para pessoa.</p>
+    ${cta('Vamos começar!',true,'ob-next')}</div>`}
   if(st==='susp'||st==='susp2'){const a=st==='susp';return `<div class="ovl rose"><div class="ob obx"><div class="susp" role="status" aria-live="polite">
     <div class="sf"><svg viewBox="0 0 120 100" width="72" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(k=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${k} 60 50)"/>`).join('')}</g></svg></div>
     <h1>${a?(nome?nome+', sua':'Sua')+' análise ficou pronta.':'Mas olha só o que encontramos…'}</h1>
@@ -3082,6 +3149,19 @@ function timeWheelInit(w){const H=52,per=w.dataset.per,it=[...w.children];
     it.forEach((c,j)=>{const dd=Math.abs(j-k);c.className='wi'+(dd===0?' on':dd===1?' n1':dd===2?' n2':'')});const p=document.querySelector('.ob .small.muted');if(p)p.textContent='Rotina '+(per==='m'?'da manhã':'da noite')+' às '+S.rem[per]+'.'};
   w.scrollTop=Math.max(0,it.findIndex(c=>c.dataset.t===S.rem[per]))*H;set();
   let t;w.addEventListener('scroll',()=>{set();clearTimeout(t);t=setTimeout(save,300)},{passive:true})}
+function raspeInit(){const c=document.getElementById('rsp-c');if(!c)return;const b=c.getBoundingClientRect();if(!b.width)return;const W=c.width=Math.round(b.width),H=c.height=Math.round(b.height),x=c.getContext('2d',{willReadFrequently:true});
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#F6E6EE');g.addColorStop(.5,'#E9CFDD');g.addColorStop(1,'#DDBFD3');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(194,96,140,.5)';x.lineWidth=2.5;for(let a=0;a<360;a+=72){x.save();x.translate(W/2,H/2-8);x.rotate(a*Math.PI/180);x.beginPath();x.ellipse(0,-34,16,30,0,0,7);x.stroke();x.restore()}
+  x.fillStyle='rgba(120,60,90,.55)';x.font='600 15px system-ui,sans-serif';x.textAlign='center';x.fillText('Raspe aqui',W/2,H/2+84);
+  let down=false,last=null,fim=false,t0=0;
+  const pt=e=>{const r=c.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+  const sc=(a,z)=>{x.globalCompositeOperation='destination-out';x.lineWidth=48;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(z[0],z[1]);x.stroke()};
+  const chk=()=>{if(fim)return;const d=x.getImageData(0,0,W,H).data;let n=0,tot=0;for(let i=3;i<d.length;i+=64){tot++;if(d[i]<128)n++}if(n/tot>.5)acabou()};
+  const acabou=()=>{fim=true;window.RSP_OK=true;try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}c.classList.add('gone');const cd=document.getElementById('rsp-card');if(cd)cd.classList.add('rv');const h=document.querySelector('.rsph');if(h)h.textContent='Pronto!';const bt=document.querySelector('.rspb');if(bt)bt.textContent='Continuar';
+    setTimeout(()=>{if(window.RSP_OK&&obStepAtual()==='raspe'){window.RSP_OK=false;S.ob.step++;render();window.scrollTo(0,0)}},2600)};
+  c.addEventListener('pointerdown',e=>{down=true;last=pt(e);try{c.setPointerCapture(e.pointerId)}catch(_){}sc(last,last);e.preventDefault()});
+  c.addEventListener('pointermove',e=>{if(!down)return;const p=pt(e);sc(last,p);last=p;const n=Date.now();if(n-t0>120){t0=n;chk()}e.preventDefault()});
+  const up=()=>{down=false;chk()};c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up)}
 function wheelInit(w){
   const H=52,set=()=>{const k=Math.max(0,Math.min(62,Math.round(w.scrollTop/H)));S.idade=18+k;S.age=idadeFaixa(S.idade);S.ans.age=true;
     [...w.children].forEach((c,j)=>{const dd=Math.abs(j-k);c.className='wi'+(dd===0?' on':dd===1?' n1':dd===2?' n2':'')})};
@@ -3095,11 +3175,12 @@ function render(){
   ajustaRot();
   renderChrome();
   clearTimeout(render._su);if(!S.ob.done){const a=obStepAtual();if(a==='susp'||a==='susp2')render._su=setTimeout(()=>{if(!S.ob.done&&obStepAtual()===a){S.ob.step++;render();window.scrollTo(0,0)}},3200)}
-  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='susp')&&!S.result))obIr('foto')}
+  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='raspe')&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
+  raspeInit();
   f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;v.classList.remove('vin');void v.offsetWidth;v.classList.add('vin');clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin'),1300)}}
   save();
@@ -3124,6 +3205,8 @@ document.addEventListener('click',e=>{
   else if(d.hper){S.obHp=d.hper;render()}
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
   else if(d.act==='ob-pular'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
+  else if(d.act==='raspe-ok'){window.RSP_OK=false;S.ob.step++;render();window.scrollTo(0,0)}
+  else if(d.act==='notif-ok'){const N=S.notif||(S.notif={on:false});(async()=>{try{if(!N.on){const LN=nativoNotif();let okp=true;if(LN){const rr=await LN.requestPermissions();okp=!!(rr&&rr.display==='granted')}else if('Notification' in window&&Notification.permission==='default'){try{okp=(await Notification.requestPermission())!=='denied'}catch(e){}}else if('Notification' in window&&Notification.permission==='denied')okp=false;if(okp){N.on=true;agendarNotif()}}}catch(e){}S.ob.step++;render();window.scrollTo(0,0)})()}
   else if(d.act==='ob-fechar'){if(S.ofVisto){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje'}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
   else if(d.act==='of-no'){S.ofOpen=false;S.ob.done=false;obIr('intro');render();window.scrollTo(0,0)}
   else if(d.act==='of-ok'){S.ofOpen=false;S.oferta=true;S.planSel='ano';S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
