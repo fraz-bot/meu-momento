@@ -1042,7 +1042,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pth img{width:100%;height:100%;object-fit:contain;padding:5px;box-sizing:border-box;opacity:0;transition:opacity .35s ease;background:#fff}.pth.ok img{opacity:1}
 .pth i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#B99A8A;text-align:center;line-height:1.15;padding:4px;opacity:0}.pth.err i{opacity:1}.pth.ok i{display:none}
 .pth.ld{background:linear-gradient(100deg,#fff 30%,#FBEDE4 50%,#fff 70%) 0 0/200% 100%;animation:pthsh 1.3s linear infinite}@keyframes pthsh{to{background-position:-200% 0}}
-.pth.sm{width:48px;height:48px;border-radius:13px}.pth.sm i{font-size:7px}
+.pth.mini i{font-size:0}.pth.sm{width:48px;height:48px;border-radius:13px}.pth.sm i{font-size:7px}
 .pcd{background:#fff;border:1px solid var(--line,#EAD3C4);border-radius:20px;box-shadow:0 4px 14px rgba(120,70,50,.07);margin-top:8px;text-align:left}
 .pcd summary{list-style:none;display:flex;gap:12px;align-items:center;padding:10px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}.pcd summary::-webkit-details-marker{display:none}
 .pcx{flex:1;min-width:0;display:grid;gap:1px}.pcx small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent,#A76F5C)}.pcx b{font-size:15px;line-height:1.25;font-weight:600;color:var(--ink,#2C1A12)}.pcx em{font-style:normal;font-size:13px;color:var(--muted,#7C5A4B)}
@@ -2844,12 +2844,15 @@ function pSplit(txt){const t=String(txt||'').trim();for(const m of MARCAS)if(pNo
 const pKey=p=>pNorm((p.marca||'')+' '+(p.nome||''));
 const IMGC=(()=>{try{return JSON.parse(localStorage.getItem('mm_img')||'{}')}catch(e){return{}}})();
 const imgSave=()=>{try{const k=Object.keys(IMGC);if(k.length>300)k.sort((a,b)=>(IMGC[a].t||0)-(IMGC[b].t||0)).slice(0,k.length-300).forEach(x=>delete IMGC[x]);localStorage.setItem('mm_img',JSON.stringify(IMGC))}catch(e){}};
-function pthHtml(p,cls){const k=pKey(p),c=IMG_SEED[k]||IMGC[k];const u=c&&c.u;
-  return `<span class="pth ${cls||''}${u?'':' ld'}" data-pk="${esc(k)}" data-pm="${esc(p.marca||'')}" data-pn="${esc(p.nome||'')}" data-pe="${esc(p.ean||'')}">${u?`<img src="${esc(u)}" alt="${esc((p.marca?p.marca+' ':'')+p.nome)}" loading="lazy" decoding="async" width="64" height="64">`:''}<i>${esc(p.marca||'')}</i></span>`}
-function pTokOk(prod,nome,marca){const bn=pNorm(marca),pn=pNorm(prod.product_name||'')+' '+pNorm(prod.brands||'');
-  if(bn&&!pNorm(prod.brands||'').split(/[,; ]+/).concat(pNorm(prod.brands||'')).some(x=>x&&(x===bn||bn.includes(x)&&x.length>3||x.includes(bn)&&bn.length>3)))return false;
-  const tk=pNorm(nome).split(' ').filter(w=>w.length>2&&!['com','para','das','dos','sem','toque','seco'].includes(w));if(tk.length<1)return false;
-  return tk.every(w=>pn.includes(w))}
+function pthHtml(p,cls,w){const k=pKey(p),c=IMG_SEED[k]||IMGC[k];const u=c&&c.u;
+  return `<span class="pth ${cls||''}${u?'':' ld'}${w&&w<40?' mini':''}"${w?` style="width:${w}px;height:${w}px;border-radius:${Math.round(w*.27)}px"`:''} data-pk="${esc(k)}" data-pm="${esc(p.marca||'')}" data-pn="${esc(p.nome||'')}" data-pe="${esc(p.ean||'')}">${u?`<img src="${esc(u)}" alt="${esc((p.marca?p.marca+' ':'')+p.nome)}" loading="lazy" decoding="async" width="64" height="64">`:''}<i>${esc(p.marca||'')}</i></span>`}
+const P_GEN=new Set(['gel','creme','locao','hidratante','limpeza','limpador','facial','protetor','solar','serum','toque','seco','fps','spf','com','sem','para','das','dos','cleanser','cream','lotion','moisturizer','moisturiser','sunscreen','face','the','and','with','for','ml','em','de','da','do','oil','free','fluid','fluido','esqualano','solucao','solution']);
+const pToks=t=>pNorm(t).replace(/\+/g,' ').split(' ').filter(w=>w.length>1&&!P_GEN.has(w)&&!/^\d+(ml|g)?$/.test(w));
+function pTokOk(prod,nome,marca){const bn=pNorm(marca);if(!bn)return false;const pb=pNorm(prod.brands||'');
+  if(!(pb.split(/[,;]+/).some(x=>x.trim()===bn)||pb===bn))return false;
+  const bt=new Set(pToks(marca)),ours=pToks(nome).filter(w=>!bt.has(w));if(!ours.length)return false;
+  const theirs=pToks(prod.product_name||'').filter(w=>!bt.has(w));
+  return ours.every(w=>theirs.includes(w))&&theirs.every(w=>ours.includes(w))}
 async function pBusca(p){const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),7000);
   try{const F='code,product_name,brands,image_front_small_url,image_front_url';let L=[];
     if(p.ean){const r=await fetch('https://world.openbeautyfacts.org/api/v2/product/'+encodeURIComponent(p.ean)+'.json?fields='+F,{signal:ctl.signal});const j=await r.json();if(j&&j.product&&j.product.code===String(p.ean))L=[j.product]}
@@ -2871,7 +2874,9 @@ function prodCard(nome,k,tier,extra){const p=pSplit(nome),c=P[k]||{},t=(c.t&&c.t
   return `<details class="pcd"><summary>${pthHtml(p)}<span class="pcx"><small>${esc(c.n||'')}</small><b>${esc(p.nome)}</b>${p.marca?`<em>${esc(p.marca)}</em>`:''}</span><span class="pcv">${ic('chev',18)}</span></summary>
     <div class="pcb">${c.a?`<p>${esc(c.a)}</p>`:''}${t?`<p class="small muted">Cerca de ${brl(t[0])} o frasco · dura uns ${t[1]} meses.</p>`:''}${c.ler?`<p class="small"><b>O que procurar:</b> ${esc(c.ler)}</p>`:''}${extra||''}</div></details>`}
 function shelfThumb(i){const p=pSplit(i.n);if(i.marca)p.marca=i.marca;if(i.img){IMGC[pKey(p)]=IMGC[pKey(p)]||{u:i.img,t:Date.now()}}return pthHtml(p,'sm')}
-function pimg(k,w=44){
+const REP={limpador:"La Roche-Posay Effaclar Gel",vitc:"La Roche-Posay Pure Vitamin C10 Serum",niacina:"The Ordinary Niacinamide 10% + Zinc 1%",retinol:"The Ordinary Retinol 0,2% em Esqualano",bha:"The Ordinary Salicylic Acid 2% Solution",hialu:"The Ordinary Hyaluronic Acid 2% + B5",calmante:"La Roche-Posay Cicaplast Baume B5",hidr:"La Roche-Posay Toleriane Double Repair",fps:"La Roche-Posay Anthelios XL Toque Seco"};
+function pimg(k,w=44){if(!REP[k])return `<span class="pth err mini" style="width:${w}px;height:${w}px;border-radius:${Math.round(w*.27)}px"><i></i></span>`;return pthHtml(pSplit(REP[k]),'',w)}
+function pimgOld(k,w=44){
   const T={limpador:['tube','#EBD9C8','#8A6A48'],fps:['tube','#F6E3B8','#C8892B'],vitc:['drop','#C9822B','#F4C27A'],niacina:['drop','#E8DFD2','#8A6A48'],retinol:['drop','#5A2E14','#D9B79A'],bha:['drop','#CFE3D8','#3E7B67'],hialu:['drop','#D9E6EE','#5A86A3'],calmante:['jar','#DCE9DF','#3E7B67'],hidr:['jar','#F3E6DB','#8A6A48'],cabelo:['pump','#EBD9C8','#8A6A48']};
   const [f,c1,c2]=T[k]||['jar','#F3E6DB','#8A6A48'];
   const sh={tube:`<path d="M20 8h24l-3 12H23z" fill="${c2}"/><path d="M19 20h26l-2 36a3 3 0 0 1-3 3H24a3 3 0 0 1-3-3z" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="26" y="30" width="12" height="2.200" rx="1" fill="${c2}" opacity=".6"/><rect x="28" y="36" width="8" height="2.200" rx="1" fill="${c2}" opacity=".4"/>`,
