@@ -965,6 +965,11 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .rtl b{display:block;font-size:17px}.rtl small{color:var(--muted);font-size:14px}.rtf b{color:#E8679F}
 @keyframes rtg{from{transform:scaleY(0)}to{transform:scaleY(1)}}@keyframes rtu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.rspw::before,.ntbell,.ntcard,.rtl::before,.rtl>div,.rspc.rv{animation:none}}
+.evk{transform-box:fill-box;transform-origin:0 0;transform:scaleX(0);animation:evw 2.4s cubic-bezier(.45,.05,.25,1) .5s forwards}.evk.k2{animation-duration:2.4s;animation-delay:.5s}
+.evd{opacity:0;transform-box:fill-box;transform-origin:center;animation:evdp .5s cubic-bezier(.3,1.6,.5,1) forwards}.evd.d2{animation-delay:2.7s}.evd.d1{animation-delay:2.9s}
+.evp{transform-box:fill-box;transform-origin:center;animation:evpu 2s ease-in-out 3.4s infinite}
+@keyframes evw{to{transform:scaleX(1)}}@keyframes evdp{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}@keyframes evpu{0%,100%{transform:scale(1);opacity:.2}50%{transform:scale(1.5);opacity:.07}}
+@media(prefers-reduced-motion:reduce){.evk{transform:none;animation:none}.evd{opacity:1;animation:none}.evp{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2941,13 +2946,13 @@ function viewOnboarding(){PFI=0;
     <h1 class="obh"><span style="font-weight:500">${nome},</span><br>a sua pele pode mudar.</h1><p class="obs" style="text-align:left">A sua ${mt} começa com uma rotina feita para você.</p>
     <div class="evo"><div class="evt"><span>Hoje</span><span>Sua meta</span></div>
       <svg viewBox="0 0 320 210" role="img" aria-label="Ilustração: com o Pellie a evolução sobe; sem rotina, oscila" style="display:block;width:100%;height:auto">
-        <defs><linearGradient id="evg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B08C66" stop-opacity=".3"/><stop offset="1" stop-color="#B08C66" stop-opacity="0"/></linearGradient></defs>
+        <defs><clipPath id="evc1"><rect class="evk k1" x="0" y="0" width="320" height="210"/></clipPath><clipPath id="evc2"><rect class="evk k2" x="0" y="0" width="320" height="210"/></clipPath><linearGradient id="evg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B08C66" stop-opacity=".3"/><stop offset="1" stop-color="#B08C66" stop-opacity="0"/></linearGradient></defs>
         <path d="M26 70H310M26 130H310" stroke="#E0CFB9" stroke-width="1" stroke-dasharray="2 5"/><path d="M10 196H310" stroke="#E0CFB9" stroke-width="1.5"/>
-        <path d="M30 170 C52 132 70 128 92 110 C118 90 132 88 156 68 C184 46 214 40 290 22 L290 196 L30 196Z" fill="url(#evg)"/>
-        <path d="M30 170 C52 132 70 128 92 110 C118 90 132 88 156 68 C184 46 214 40 290 22" fill="none" stroke="#8A6A48" stroke-width="5" stroke-linecap="round"/>
-        <path d="M30 170 C50 136 74 118 104 122 C128 126 140 112 162 122 C184 134 198 126 222 134 C250 144 266 142 290 154" fill="none" stroke="#85776A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 6"/>
-        <circle cx="30" cy="170" r="7" fill="#fff" stroke="#2C2118" stroke-width="3.5"/><circle cx="290" cy="154" r="6" fill="#fff" stroke="#85776A" stroke-width="3"/>
-        <circle cx="290" cy="22" r="15" fill="#8A6A48" opacity=".2"/><circle cx="290" cy="22" r="9.5" fill="#8A6A48" stroke="#fff" stroke-width="2.5"/>
+        <path clip-path="url(#evc1)" d="M30 170 C52 132 70 128 92 110 C118 90 132 88 156 68 C184 46 214 40 290 22 L290 196 L30 196Z" fill="url(#evg)"/>
+        <path clip-path="url(#evc1)" d="M30 170 C52 132 70 128 92 110 C118 90 132 88 156 68 C184 46 214 40 290 22" fill="none" stroke="#8A6A48" stroke-width="5" stroke-linecap="round"/>
+        <path clip-path="url(#evc2)" d="M30 170 C50 136 74 118 104 122 C128 126 140 112 162 122 C184 134 198 126 222 134 C250 144 266 142 290 154" fill="none" stroke="#85776A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 6"/>
+        <circle cx="30" cy="170" r="7" fill="#fff" stroke="#2C2118" stroke-width="3.5"/><g class="evd d2"><circle cx="290" cy="154" r="6" fill="#fff" stroke="#85776A" stroke-width="3"/></g>
+        <g class="evd d1"><circle class="evp" cx="290" cy="22" r="15" fill="#8A6A48" opacity=".2"/><circle cx="290" cy="22" r="9.5" fill="#8A6A48" stroke="#fff" stroke-width="2.5"/></g>
       </svg>
       <div class="evl"><span><i></i>Com Pellie</span><span><i class="d"></i>Sem rotina</span></div><p class="small muted" style="text-align:center;margin:8px 0 0">Comparação ilustrativa. O resultado varia de pessoa para pessoa.</p></div>
     ${cta('Quero começar')}</div>`}
