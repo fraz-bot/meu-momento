@@ -1020,6 +1020,13 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes pwp{0%,100%{box-shadow:0 10px 24px rgba(74,42,30,.3)}50%{box-shadow:0 10px 34px rgba(167,111,92,.7);transform:scale(1.015)}}
 @media(prefers-reduced-motion:reduce){.pwk{animation:none}}
 .rkd{border:0;border-top:1px solid var(--line,#E8D5CB);margin:10px 0;width:100%}.rkr{padding:14px;text-align:left}.rkp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rkp figure{margin:0;position:relative}.rkp img{width:100%;border-radius:18px;aspect-ratio:3/4;object-fit:cover;display:block}.rkp figcaption{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#4A2A1E;color:#fff;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:99px}.rkp figcaption.d{background:#A76F5C}.rkl{text-align:left;gap:12px}.rkl>div{background:var(--card,#fff);border:1px solid var(--line,#E8D5CB);border-radius:22px;padding:14px 16px}
+.pws-bg{position:fixed;inset:0;background:rgba(44,26,18,.6);z-index:40;animation:pwfd .25s both}.pws-sh{position:fixed;left:0;right:0;bottom:0;z-index:41;background:#FBF4EE;border-radius:30px 30px 0 0;padding:20px 20px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;text-align:left;animation:pwup .32s cubic-bezier(.2,.8,.2,1) both;max-width:560px;margin:0 auto}
+@keyframes pwfd{from{opacity:0}}@keyframes pwup{from{transform:translateY(100%)}}
+.pws-h{display:flex;align-items:center;justify-content:center;gap:8px;color:#A76F5C;font-size:21px;position:relative;padding:0 36px}.pws-h b{font-weight:700}.pws-h button{position:absolute;right:-6px;top:50%;margin-top:-20px;width:40px;height:40px;border:0;background:none;color:#4A2A1E;display:grid;place-items:center;cursor:pointer}
+.pwo{position:relative;display:flex;align-items:center;gap:14px;width:100%;border:2px solid #E4CFC3;background:#fff;border-radius:22px;padding:20px 18px;font-family:inherit;font-size:19px;color:#2C1A12;text-align:left;cursor:pointer}.pwo span{flex:1}.pwo b{display:flex;flex-direction:column;align-items:flex-end;color:#A76F5C;font-size:21px;line-height:1.15}.pwo b small{font-size:17px;font-weight:600}
+.pwo i{flex:none;width:28px;height:28px;border-radius:50%;border:2.5px solid #A76F5C;position:relative}.pwo.on{border-color:#A76F5C}.pwo.on i::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#A76F5C}
+.pwo em{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-style:normal;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#A76F5C;color:#fff;border-radius:99px;padding:5px 14px;white-space:nowrap}
+@media(prefers-reduced-motion:reduce){.pws-bg,.pws-sh{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -3187,9 +3194,13 @@ function viewOnboarding(){PFI=0;
         return ph('l',B)+ph('r',C)+ph('c',A+Dd+E+B+C)})()}
     </div>
     <div class="pwb2"><div class="pwn"><b>${pm}</b><span>/mês</span></div><p class="pwc">${an?`${PA.p} por ano · menos de <b>${dia}</b> por dia`:sub}</p>
-      <button class="btn obc pwk" data-act="ob-plano">Quero meu plano agora</button>
-      <p class="pwr">Renova automaticamente. Cancele quando quiser.</p><button class="pwm" data-plan="${an?'mes':'ano'}">${an?'Prefere pagar por mês? R$ 59,90/mês':'Ver o plano anual: '+PA.m+'/mês'}</button>
+      <button class="btn obc pwk" data-act="pw-sheet">Quero meu plano agora</button>
+      <p class="pwr">Renova automaticamente. Cancele quando quiser.</p>
       <p class="small" style="margin:0;display:flex;gap:18px;justify-content:center;flex-wrap:wrap"><a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:var(--muted)">Termos</a><span style="color:var(--muted)">·</span><a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:var(--muted)">Políticas</a><span style="color:var(--muted)">·</span><a href="#" data-act="plus-refresh" style="color:var(--muted)">Restaurar compra</a></p></div>
+    ${S.pwSheet&&!S.ofOpen?`<div class="pws-bg" data-act="pw-close"></div><div class="pws-sh" role="dialog" aria-modal="true" aria-labelledby="pwst"><div class="pws-h"><span>${ic('check',22)}</span><b id="pwst">Acesse sua rotina já</b><button data-act="pw-close" aria-label="Fechar">${ic('x',22)}</button></div>
+      <button class="pwo${an?' on':''}" role="radio" aria-checked="${an}" data-plan="ano"><em>Economize ${S.oferta?'oferta':PA.e}</em><i></i><span>Plano anual</span><b>${PA.p}<small>por ano</small></b></button>
+      <button class="pwo${!an?' on':''}" role="radio" aria-checked="${!an}" data-plan="mes"><i></i><span>Plano mensal</span><b>R$ 59,90<small>por mês</small></b></button>
+      <button class="btn obc pwk" data-act="ob-plano">Quero cuidar da minha pele</button><p class="pwr">Renova automaticamente, cancele quando quiser.</p></div>`:''}
     ${S.ofOpen?`<div class="ofx" role="dialog" aria-modal="true" aria-labelledby="oft"><div class="ofc"><span class="vbadge">${ic('crown',14)}Oferta única</span><h2 id="oft">${S.nome?esc(S.nome)+', e':'E'}spera um pouco!</h2><p class="ofp">Sua rotina já está montada e é feita só para a sua pele. Liberamos um desconto que não aparece de novo: o plano anual por</p><div class="ofv"><s>R$ 149,90</s><b>R$ 119,90</b><small>por ano · só R$ 9,99 por mês</small></div><p class="ofp" style="font-size:14px">Menos de R$ 0,35 por dia para cuidar da pele que você acabou de analisar.</p><button class="btn obc fill" data-act="of-ok" style="width:100%">Garantir por R$ 119,90</button><button class="back" data-act="of-no" style="padding:12px;color:var(--muted)">Não quero cuidar da minha pele agora</button></div></div>`:''}</div>`}
   if(st==='pele'||st==='sens'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">${q.t}</h1>${q.s?`<p class="obs">${q.s}</p>`:''}
@@ -3283,10 +3294,12 @@ document.addEventListener('click',e=>{
   else if(d.act==='ob-pular'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
   else if(d.act==='raspe-ok'){window.RSP_OK=false;S.ob.step++;render();window.scrollTo(0,0)}
   else if(d.act==='notif-ok'){const N=S.notif||(S.notif={on:false});(async()=>{try{if(!N.on){const LN=nativoNotif();let okp=true;if(LN){const rr=await LN.requestPermissions();okp=!!(rr&&rr.display==='granted')}else if('Notification' in window&&Notification.permission==='default'){try{okp=(await Notification.requestPermission())!=='denied'}catch(e){}}else if('Notification' in window&&Notification.permission==='denied')okp=false;if(okp){N.on=true;agendarNotif()}}}catch(e){}S.ob.step++;render();window.scrollTo(0,0)})()}
-  else if(d.act==='ob-fechar'){if(S.ofVisto){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje'}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
+  else if(d.act==='ob-fechar'){S.pwSheet=false;if(S.ofVisto){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje'}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
   else if(d.act==='of-no'){S.ofOpen=false;S.ob.done=false;obIr('intro');render();window.scrollTo(0,0)}
   else if(d.act==='of-ok'){S.ofOpen=false;S.oferta=true;S.planSel='ano';S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
-  else if(d.act==='ob-plano'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
+  else if(d.act==='pw-sheet'){S.pwSheet=true;render()}
+  else if(d.act==='pw-close'){S.pwSheet=false;render()}
+  else if(d.act==='ob-plano'){S.pwSheet=false;S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
   else if(d.act==='cam-snap'){const u=OBCAM.snapNow&&OBCAM.snapNow();if(u)camFinish(u)}
   else if(d.act==='cam-fechar'){camStop();obIr('foto');render()}
