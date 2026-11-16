@@ -3163,7 +3163,7 @@ function raspeInit(){const c=document.getElementById('rsp-c');if(!c)return;const
   const sc=(a,z)=>{x.globalCompositeOperation='destination-out';x.lineWidth=48;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(z[0],z[1]);x.stroke()};
   const chk=()=>{if(fim)return;const d=x.getImageData(0,0,W,H).data;let n=0,tot=0;for(let i=3;i<d.length;i+=64){tot++;if(d[i]<128)n++}if(n/tot>.5)acabou()};
   const acabou=()=>{fim=true;window.RSP_OK=true;try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}c.classList.add('gone');const cd=document.getElementById('rsp-card');if(cd)cd.classList.add('rv');const h=document.querySelector('.rsph');if(h)h.textContent='Pronto!';const bt=document.querySelector('.rspb');if(bt)bt.textContent='Continuar';
-    setTimeout(()=>{if(window.RSP_OK&&obStepAtual()==='raspe'){window.RSP_OK=false;S.ob.step++;render();window.scrollTo(0,0)}},2600)};
+};
   c.addEventListener('pointerdown',e=>{down=true;last=pt(e);try{c.setPointerCapture(e.pointerId)}catch(_){}sc(last,last);e.preventDefault()});
   c.addEventListener('pointermove',e=>{if(!down)return;const p=pt(e);sc(last,p);last=p;const n=Date.now();if(n-t0>120){t0=n;chk()}e.preventDefault()});
   const up=()=>{down=false;chk()};c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up)}
