@@ -1693,7 +1693,7 @@ const sampleP=Promise.resolve({
     else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
-      const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',msg:(cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
+      const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',cod,msg:(cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
     if(!data||data.ok!==true)throw {code:'srv',msg:'Algo deu errado. Tente de novo.'};
     return data.resultado;
   }
@@ -3376,8 +3376,9 @@ function viewOnboarding(){PFI=0;
   if(st==='pronta'){const PA=PAN(),an=S.planSel!=='mes',pm=an?PA.m:'R$ 59,90',sub=an?`${PA.p} cobrado por ano · cancele quando quiser`:'Cobrado todo mês · cancele quando quiser',dia=an?(S.oferta?'R$ 0,33':'R$ 0,41'):'R$ 1,97';
     const sh=[['limpador','hidr','fps','niacina'],['vitc','bha','calmante','retinol'],['hialu','hidr','niacina','fps']];
     return `<div class="pwz"><button class="pwx2" data-act="ob-fechar" aria-label="Fechar">${ic('x',22)}</button><div class="brand" style="justify-content:center;align-items:center"><img src="pellie-logo.png" alt="Pellie" style="height:34px;width:auto"><span class="pwp">PRO</span></div>
-    <h1 class="pwh"><span>A rotina perfeita</span><b>para sua pele está pronta.</b></h1>
-    <p class="pws">Tudo que você precisa para cuidar da sua pele está aqui.</p>
+    ${S.semGratis&&!S.result?`<h1 class="pwh"><span>Sua análise gratuita</span><b>já foi usada.</b></h1>
+    <p class="pws">${S.nome?esc(S.nome)+', continue':'Continue'} com o Pellie Pro: análise da sua pele, rotina feita para você e scanner de produtos.</p>`:`<h1 class="pwh"><span>A rotina perfeita</span><b>para sua pele está pronta.</b></h1>
+    <p class="pws">Tudo que você precisa para cuidar da sua pele está aqui.</p>`}
     <div class="p3" aria-hidden="true">
       ${(()=>{const SB=`<div class="ipb"><b>9:41</b><span><svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="#2C1A12"/><rect x="4.3" y="4" width="3" height="6" rx="1" fill="#2C1A12"/><rect x="8.6" y="2" width="3" height="8" rx="1" fill="#2C1A12"/><rect x="13" y="0" width="3" height="10" rx="1" fill="#2C1A12"/></svg><svg width="22" height="10" viewBox="0 0 22 10"><rect x=".5" y=".5" width="18" height="9" rx="3" fill="none" stroke="#2C1A12" opacity=".5"/><rect x="2" y="2" width="15" height="6" rx="2" fill="#2C1A12"/><rect x="20" y="3.5" width="1.6" height="3" rx=".8" fill="#2C1A12" opacity=".5"/></svg></span></div>`,TAB=`<div class="ip-tab"><span>${ic('home',20)}</span><span>${ic('face',20)}</span><span>${ic('bottle',20)}</span><span>${ic('users',20)}</span></div><div class="ip-hb"></div>`,
         A=`<div class="ip-sl a"><small>Rotina da manhã</small><div class="ip-btn">${ic('check',40)}<b>Começar</b></div>${[['Limpeza','limpador'],['Tratamento','niacina'],['Hidratação','hidr'],['Proteção','fps']].map(([a,k],i)=>`<div class="ip-st"><em>${i+1}</em><span>${pimg(k,22)}</span><div><b>${a}</b><i></i></div>${ic('check',13)}</div>`).join('')}</div>`,B=`<div class="ip-sl b"><div class="ip-h">Minha estante<u>Editar</u></div>${sh.map(r=>`<div class="ip-r">${r.map(k=>`<span>${pimg(k,30)}</span>`).join('')}</div>`).join('')}<div class="ip-g">Recomendados pra você</div></div>`,C=`<div class="ip-sl c"><div class="ip-h">Olá${S.nome?', '+esc(S.nome):''}<u>Hoje</u></div><div class="ip-w">${['D','S','T','Q','Q','S','S'].map((d,i)=>`<span class="${i<3?'on':''}">${d}</span>`).join('')}</div><div class="ip-k">${ic('flame',26)}<b>1 dia</b><small>de rotina em dia</small></div><div class="ip-c"><b>Rotina da manhã</b>4 passos para hoje</div><div class="ip-c"><b>Rotina da noite</b>3 passos para hoje</div></div>`,Dd=`<div class="ip-sl d"><div class="ip-h">Sua análise<u>Pele</u></div><span class="ip-ex">Exemplo</span>${[['Oleosidade','72%'],['Poros','58%'],['Hidratação','40%'],['Linhas finas','25%']].map(([t,v])=>`<div class="ip-bar"><span>${t}</span><div><i style="--v:${v}"></i></div></div>`).join('')}<div class="ip-c" style="margin-top:4px"><b>Maior desafio</b>Veja o que sua pele mais precisa</div></div>`,E=`<div class="ip-sl e"><div class="ip-h">Scanner<u>Produtos</u></div><span class="ip-ex">Exemplo</span><div class="ip-sc">${pimg('hidr',64)}</div><div class="ip-ok">${ic('check',16)}Combina com a sua pele</div><div class="ip-c">Veja a compatibilidade antes de comprar.</div></div>`,
@@ -3676,9 +3677,10 @@ async function analisar(){
     if(!r||r.erro){S.err=(r&&r.erro)||'Não consegui ler a foto. Tente outra.'}
     else{S.result={d:hoje(),tipo:String(r.tipo||'Normal'),resumo:r.resumo?String(r.resumo):'',oleo:num(r.oleo),hid:num(r.hid),poros:num(r.poros),manchas:num(r.manchas),linhas:num(r.linhas),verm:num(r.verm),
       desafio:['oleo','poros','linhas','manchas','verm','resseca'].includes(r.desafio)?r.desafio:null,desafioReg:(Array.isArray(r.desafio_regioes)?r.desafio_regioes:[]).map(String).filter(x=>ZONAS.some(z=>z[0]===x)).slice(0,3),forte:r.ponto_forte?String(r.ponto_forte).slice(0,40):null,prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null,zonas:(r.zonas&&typeof r.zonas==='object')?{manchas:(Array.isArray(r.zonas.manchas)?r.zonas.manchas:[]).map(String).slice(0,5),verm:(Array.isArray(r.zonas.verm)?r.zonas.verm:[]).map(String).slice(0,5)}:null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
-  }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
-  if(ok)S.okMsg='pele';
-  S.analyzing=false;gameCheck();render();
+  }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.');
+    if(c==='srv'&&!S.ob.done&&((e.cod==='limite_gratis'&&/gratuita/.test(e.msg||''))||e.cod==='plus')){S.err=null;S.semGratis=true}}
+  if(ok){S.okMsg='pele';S.semGratis=false}
+  S.analyzing=false;gameCheck();if(S.semGratis&&!S.ob.done&&obStepAtual()==='scan')obIr('pronta');render();
   if(ok){if(S.ob.done)toast('Avaliação da pele concluída');window.scrollTo(0,0);if(S.plus)montarRotina()}
 }
 const promptRot=L=>`Você é uma esteticista. Escreva os textos da rotina de cuidados do rosto de ${S.nome}. Perfil: ${perfilTxt()}. Resultado da análise da foto: tipo ${S.result.tipo}; ${S.result.resumo}. Prioridades: ${S.result.prioridades.join(' | ')}.
