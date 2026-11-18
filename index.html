@@ -116,6 +116,37 @@
 .rt-sum{list-style:none;margin:0 0 10px;padding:12px 14px;width:100%;box-sizing:border-box;background:#FFFCF9;border-radius:22px;box-shadow:0 8px 22px rgba(170,128,86,.1);display:grid;gap:9px;text-align:left}.rt-sum li{display:flex;gap:10px;align-items:center}.rt-sum i{flex:none;width:22px;height:22px;border-radius:50%;background:#4A2A1E;color:#fff;display:grid;place-items:center}.rt-sum li.skip i{background:#EFE2D8}.rt-sum b{display:block;font-size:15px;color:#4A2A1E}.rt-sum small{display:block;font-size:12.5px;color:#8A6F62}
 @media(max-height:700px){.rt-th{width:68px!important;height:68px!important}.rt-card{gap:7px}.rt-top h1{font-size:21px}}
 @media(prefers-reduced-motion:reduce){.rt-card.inf,.rt-card.inb,.rt-card.fin,.rt-seal,.rt-cta.ok{animation:none}}
+/* Aba Hoje (redesign) */
+.hj{gap:14px}
+.hj-gr{display:flex;align-items:center;gap:12px}.hj-av{flex:none;width:52px;height:52px;border-radius:50%;border:2px solid #4A2A1E;display:grid;place-items:center;font-size:22px;font-weight:700;color:#4A2A1E;background:#FFFCF9}
+.hj-gt{flex:1;min-width:0;display:flex;flex-direction:column}.hj-gt b{font-size:19px;color:#4A2A1E;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hj-gt span{font-size:14px;color:#8A6F62;margin-top:1px}
+.hj-pts{flex:none;display:inline-flex;align-items:center;gap:6px;font:inherit;border:1.5px solid #EBD8CB;background:#FFFCF9;color:#4A2A1E;border-radius:99px;padding:9px 14px;cursor:pointer;box-shadow:0 4px 12px rgba(170,128,86,.1)}.hj-pts b{font-size:17px}.hj-pts span{font-size:13px;color:#8A6F62}.hj-pts svg{color:#A76F5C}
+.hj-wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.hj-d{display:grid;justify-items:center;gap:6px;font-size:12px;font-weight:700;color:#8A6F62}
+.hj-d i{width:42px;height:42px;max-width:100%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:15px;font-weight:700;color:#4A2A1E;background:#F3E8DF;transition:all .3s}
+.hj-d.on i{background:#4A2A1E;color:#fff;box-shadow:0 6px 14px rgba(74,42,30,.25)}.hj-d.today i{background:#FFFCF9;box-shadow:0 0 0 2px #A76F5C}.hj-d.today.on i{background:#4A2A1E;box-shadow:0 0 0 2px #FFFCF9,0 0 0 4px #A76F5C}.hj-d.today span{color:#4A2A1E}
+.hj-d.fut i{background:transparent;border:1.5px dashed #DDBFAE;color:#A8907F}.hj-d.fut{opacity:.85}
+.hj-rit{border-radius:26px;padding:18px 16px 14px;background:linear-gradient(150deg,#FFF6EA 0%,#F9E4D2 100%);box-shadow:0 10px 26px rgba(170,128,86,.14);display:flex;flex-direction:column;gap:12px}.hj-rit h2{margin:0;font-size:clamp(23px,6.6vw,28px);color:#4A2A1E;letter-spacing:-.02em}.hj-np{margin:0;font-size:16px;color:#4A2A1E;font-weight:600}
+.hj-pr{display:flex;align-items:center;gap:12px}.hj-pi{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#A76F5C;background:rgba(255,255,255,.65)}.hj-pi.sm{width:40px;height:40px}.hj-pm{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px}.hj-pm b{font-size:18px;color:#4A2A1E}.hj-pm small{font-size:13px;color:#7C5A4B}
+.hj-ch{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:700;border-radius:99px;padding:4px 10px;background:rgba(255,255,255,.7);color:#7C5A4B}.hj-ch.ok{background:#E4EFE6;color:#2F5B3E}
+.hj-bt{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;font:inherit;font-weight:700;font-size:15px;color:#fff;background:linear-gradient(135deg,#6B3A27,#4A2A1E);border:0;border-radius:99px;padding:0 18px;cursor:pointer;box-shadow:0 8px 18px rgba(74,42,30,.25)}.hj-bt.ghost{background:rgba(255,255,255,.75);color:#4A2A1E;box-shadow:none;border:1.5px solid #E6CFC0}.hj-bt.sm{min-height:36px;font-size:14px;padding:0 14px}.hj-bt.wide{width:100%}
+.hj-cons{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;border:0;border-radius:24px;background:#FFFCF9;padding:14px 14px 14px 16px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 22px rgba(170,128,86,.1)}
+.hj-ring{flex:none;position:relative;width:68px;height:68px;border-radius:50%;background:conic-gradient(#A76F5C calc(var(--p)*1%),#F0E3D8 0);display:grid;place-items:center}.hj-ring:before{content:'';position:absolute;inset:7px;border-radius:50%;background:#FFFCF9}.hj-ring b{position:relative;font-size:17px}
+.hj-cx{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}.hj-cx b{font-size:16.5px}.hj-cx small{font-size:13px;color:#7C5A4B;line-height:1.3}.hj-md{display:flex;align-items:center;gap:6px;margin-top:2px}.hj-md em{font-style:normal;font-size:12.5px;color:#8A6F62}
+.hj-bar{display:block;height:6px;border-radius:99px;background:#F0E3D8;overflow:hidden}.hj-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#C99580,#A76F5C);transition:width .6s}
+.hj-h{margin:6px 0 -4px;font-size:20px;color:#4A2A1E;letter-spacing:-.01em}
+.hj-sos{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;border:1.5px solid #E6B8A4;border-radius:24px;padding:16px;background:linear-gradient(140deg,#FBE3D6,#F6D2C2);color:#4A2A1E;cursor:pointer;box-shadow:0 10px 24px rgba(190,110,80,.2)}.hj-sos>span:nth-child(2){flex:1}.hj-sos b{display:block;font-size:18px}.hj-sos small{display:block;font-size:13.5px;color:#7C4A38;line-height:1.35;margin-top:2px}.hj-sosi{flex:none;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#B5563A;box-shadow:0 6px 14px rgba(190,110,80,.25)}
+.hj-q{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.hj-q button{display:flex;flex-direction:column;align-items:center;gap:8px;font:inherit;border:0;border-radius:22px;background:#FFFCF9;padding:16px 6px 14px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 20px rgba(170,128,86,.1)}.hj-q span{color:#A76F5C;display:flex}.hj-q b{font-size:14px}
+.hj-ck{display:flex;align-items:center;gap:12px;text-align:left;width:100%;font:inherit;border:0;border-radius:24px;background:linear-gradient(140deg,#FFF9F2,#F8EAE0);padding:14px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 22px rgba(170,128,86,.1)}.hj-cki{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#A76F5C;background:#fff}.hj-ckt{flex:1;min-width:0}.hj-ckt b{display:block;font-size:16.5px}.hj-ckt small{display:block;font-size:13px;color:#7C5A4B;line-height:1.3;margin-top:2px}
+.hj-dns{display:flex;flex-direction:column;gap:8px}.hj-dn{display:flex;align-items:center;gap:12px;text-align:left;width:100%;font:inherit;border:0;border-radius:20px;background:#EEF4EE;padding:11px 14px;color:#2F5B3E;cursor:pointer}.hj-dn>span:nth-child(2){flex:1}.hj-dn b{display:block;font-size:15.5px}.hj-dn small{display:block;font-size:12.5px;opacity:.8}.hj-dn .hj-pi{background:#fff;color:#4F8A68}
+.hj-tl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.hj-tl button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:86px;font:inherit;font-size:13.5px;font-weight:600;border:0;border-radius:20px;background:#FFFCF9;color:#4A2A1E;cursor:pointer;box-shadow:0 6px 16px rgba(170,128,86,.09)}.hj-tl span{color:#A76F5C;display:flex}
+.hj-nm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.hj-nm button{display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;border:0;border-radius:18px;background:#F8EFE6;padding:12px 4px;color:#4A2A1E;cursor:pointer}.hj-nm svg{color:#A76F5C}.hj-nm b{font-size:22px;letter-spacing:-.02em;margin-top:2px}.hj-nm span{font-size:11.5px;color:#8A6F62}
+.hj-tip{border-radius:26px;padding:18px 18px 16px;background:linear-gradient(150deg,#F8E6DC,#F3D9CC 60%,#EFD0C0);color:#4A2A1E;box-shadow:0 10px 24px rgba(170,128,86,.14);position:relative;overflow:hidden}.hj-tip:after{content:'';position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.5),transparent 70%)}
+.hj-tk{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#A76F5C}.hj-tip h2{margin:4px 0 6px;font-size:clamp(26px,7.4vw,32px);letter-spacing:-.02em;line-height:1.05}.hj-tip p{margin:0;font-size:15px;line-height:1.45;color:#5E4033;position:relative}
+.hj-tb,.hj-tr{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;position:relative}.hj-tb span{font-size:12.5px;font-weight:600;color:#6B3A27;background:rgba(255,255,255,.6);border-radius:99px;padding:5px 11px}.hj-tr span{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:700;color:#2F5B3E;background:#E4EFE6;border-radius:99px;padding:5px 11px}
+.hj-cq{display:flex;flex-direction:column;gap:10px;text-align:left;width:100%;font:inherit;border:0;border-radius:24px;background:#FFFCF9;padding:16px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 22px rgba(170,128,86,.1)}.hj-cqh{display:flex;justify-content:space-between;align-items:baseline}.hj-cqh b{font-size:18px}.hj-cqh span{font-size:14px;color:#8A6F62;font-weight:600}
+.hj-cqm{display:flex;gap:8px;flex-wrap:wrap}.hj-cqm span{width:38px;height:38px;border-radius:50%;display:grid;place-items:center}.hj-cqm .on{background:linear-gradient(135deg,#F6E3D8,#EBC9B7);color:#8A4A34}.hj-cqm .nx{background:#F3E8DF;color:#B9A497;border:1.5px dashed #DDBFAE}.hj-cq small{font-size:12.5px;color:#7C5A4B;line-height:1.35}
+@media(max-width:360px){.hj-d i{width:36px;height:36px;font-size:14px}.hj-nm b{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.hj-d i,.hj-bar i{transition:none}}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -2598,50 +2629,64 @@ async function analisarSos(){
   S.sosBusy=false;render();window.scrollTo(0,0);
 }
 
+/* ---------- Aba Hoje (redesign): só apresentação. Dados, atalhos e ações são os de sempre ---------- */
+const HJ_BEN={'Protetor solar':['Previne manchas','Protege do envelhecimento'],'Niacinamida':['Equilibra a oleosidade','Poros menos visíveis'],'Vitamina C':['Uniformiza o tom','Antioxidante'],'Retinoide':['Renova a pele','Uso à noite'],'Ácido hialurônico':['Atrai água para a pele','Aplicar na pele úmida'],'Limpeza suave':['30 segundos','Água morna'],'Barreira da pele':['Simplificar a rotina','Menos irritação'],'Teste de alergia':['Atrás da orelha','Por 24 horas'],'Sono e pele':['Menos oleosidade','Menos vermelhidão'],'Ácidos esfoliantes':['Melhora a textura','2 vezes por semana']};
+const HJ_KEY={'Protetor solar':'fps','Niacinamida':'niacina','Vitamina C':'vitc','Retinoide':'retinol','Ácido hialurônico':'hialu','Limpeza suave':'limpador','Ácidos esfoliantes':'bha'};
 function viewHoje(){
   const h=new Date().getHours(),hi=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
   const st=streak(),nx=nextStep(),NM={m:'manhã',n:'noite'};
   const ws=weekStart(),td=ymd(new Date()),days=[];
   for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(ws.getDate()+i);const k=ymd(d);days.push({on:counted(k),w:['D','S','T','Q','Q','S','S'][i],n:d.getDate(),t:k===td,f:k>td})}
-  const R_=getR(),tip=tipHoje(),soon=shelfSoon();
-  const card=(per,ks,ic_,nm)=>{const n=ks.filter(k=>isDone(per,k)).length;
-    if(n===ks.length&&ks.length||bloq(per))return '';const bl=0;return `<div class="rc"><div class="rh"><b>${ic(ic_,16)}${nm}</b>${bl?`<span class="cnt">${ic('lock',12)} ${per==='m'?S.rem.m:S.rem.n}</span>`:`<span class="cnt">${n}/${ks.length}</span>`}</div>
-    ${ks.map(k=>{const ex=(P[k].t[S.tier][3]||[])[0],on=isDone(per,k);return `<button class="rr ${on?'on':''}" data-done="${per}|${k}" aria-pressed="${on}"><span class="tile">${ic(P[k].ic,20)}</span><span class="rn"><b>${P[k].n}</b><span>${esc(ex||P[k].a)}</span></span><span class="rk">${ic('check',16)}</span></button>`}).join('')}</div>`};
-  const nb=Object.keys(S.badges).length,wc=weekCount(),NMd=nextMedal();
-  let hero;
-  const temRot=S.plus&&!!S.result;
-  if(temRot){
-    const pi=proxInfo();
-    hero=pi.open?`<div class="hs">Hora da sua rotina da ${NM[pi.per]}</div><div class="hbig">Agora</div><button class="hpill" data-go="rotina|${pi.per}">Começar${ic('chev',16)}</button>`
-    :`<div class="hs">Sua rotina da ${NM[pi.per]} em</div><div class="hbig">${fmtDur(pi.min)}</div><button class="hpill" data-go="rotina|${pi.per}">Ver rotina${ic('chev',16)}</button>`;
-  }else{
-    hero=`<div class="hs">Seu próximo passo</div><div class="hbig sm">${nx.done?'Cuide de você':nx.t}</div>${nx.done?'':`<button class="hpill" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',16)}</button>`}`;
-  }
-  const falta=NMd?NMd.d-st:0;
-  return `<div class="stack">
-  <div class="greet"><span class="av">${esc((S.nome||'M').trim().charAt(0).toUpperCase())}</span><div class="gt2"><b>${hi}, ${esc(S.nome)}</b><span class="small muted">${st?`${st} ${st===1?'dia seguido':'dias seguidos'}`:'Comece o seu momento hoje'}</span></div>
-    ${gameOn()?`<button class="ptsb" data-go="mais|medalhas" aria-label="Pontos e medalhas">${ic('star',15)}<b>${S.xp}</b><span>pts</span></button>`:''}</div>
-  <div class="wk7b">${days.map(d=>`<div class="wd ${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}"><i>${d.on?ic('check',15):d.n}</i><span>${d.w}</span></div>`).join('')}</div>
-  <div class="hero2">${hero}</div>
-  <button class="comp" data-go="mais|medalhas">
-    <span class="cm">${NMd?medalSvg(NMd,false,34):medalSvg(MEDALS[5],true,34)}</span>
-    <span class="cx"><b>${NMd?(falta>0?`Faltam ${falta} ${falta===1?'dia':'dias'} para a medalha ${NMd.nm}`:`Medalha ${NMd.nm} a caminho`):'Todas as medalhas conquistadas'}</b>
-      <span class="cbar"><i style="width:${NMd?Math.min(100,st/NMd.d*100):100}%"></i></span>
-      <span class="small muted">Meta da semana: ${Math.min(wc,5)} de 5 dias · ${nb} conquistas</span></span>${ic('chev',16)}</button>
-  <div class="row" style="justify-content:space-between"><h3 class="pv">Pra você · Hoje</h3></div>
-  <button class="alertc" data-go="sos" style="border-color:var(--accent)">${ic('spot',22)}<span><b>Resgate da Pele</b><span class="small muted" style="display:block">Espinha ou irritação? Fotografe e veja o que fazer agora</span></span></button>
-  <div class="pv3">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>
-  ${temRot&&!nx.done?`<div class="cta go"><div class="gt">${nx.t}</div><button class="btn" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',18)}</button></div>`:''}
-  ${S.plus?'':paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.')}
-  ${S.fase&&S.fase!=='padrao'&&FASES[S.fase]?`<button class="alertc" style="border-color:var(--accent)" data-go="mais|fase">${ic(FASES[S.fase].i,22)}<span><b>Modo: ${FASES[S.fase].t}</b><span class="small muted" style="display:block">Rotina ajustada</span></span></button>`:''}
-  ${soon.length?`<button class="alertc" data-go="produtos|shelf">${ic('alert',22)}<span><b>${soon.length===1?'1 produto vence':soon.length+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}
-  ${temRot?`${[['m','sun','Manhã'],['n','moon','Noite']].filter(([per])=>feito(per)).map(([per,i_,nm])=>`<button class="doneb" data-go="rotina|${per}">${ic('checkc',18)}<span>${nm} concluída</span>${ic('chev',16)}</button>`).join('')}`:''}
-  ${temRot?`${card('m',R_.m,'sun','Manhã')}`:''}
-  ${temRot?`${card('n',R_.n,'moon','Noite')}`:''}
-  <div class="short">${[['clock','Horários','lembretes'],['cal','Fase','fase'],['leaf','Ingredientes','ingredientes'],['coin','Gastos','gastos'],['file','Relatório','relatorio'],['crown','Plano','plano']].map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span class="tile">${ic(i_,20)}</span>${t}</button>`).join('')}</div>
-  ${S.plus?`<div class="cnts">${[['image','Antes/depois',S.fotos.length,'ba'],['chart','Diário',S.diary.length,'evo'],['face','Análises',S.analises.length,'analise'],['routine','Registros',S.diary.length+S.analises.length+S.prods.length,'reg']].map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,20)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}
-  <div class="tip"><div class="kick">Dica do dia</div><b>${tip[0]}</b><span class="small muted">${tip[1]}</span></div>
-  <button class="mrow" data-go="mais|medalhas"><span class="tile">${ic('star',20)}</span><span class="mt"><b>Conquistas</b><span>${nb} de ${BADGES.length} conquistadas · toque para ver</span></span>${ic('chev',18)}</button></div>`;
+  const R_=getR(),tip=tipHoje(),soon=shelfSoon(),temRot=S.plus&&!!S.result;
+  const nb=Object.keys(S.badges).length,wc=weekCount(),NMd=nextMedal(),falta=NMd?NMd.d-st:0;
+  const meta=Math.min(wc,5),pct=Math.round(meta/5*100),restam=7-new Date().getDay();
+  /* Seu ritual de hoje: os botões levam ao Pellie Ritual / à rotina que já existem */
+  const linha=(per,ic_,nm)=>{const ks=per==='m'?R_.m:R_.n,ok=feito(per),bl=bloq(per),n=ks.length;
+    const chip=ok?`<span class="hj-ch ok">${ic('checkc',14)}Concluída</span>`:bl?`<span class="hj-ch">${ic('clock',14)}Libera às ${libHora(per)}</span>`:`<span class="hj-ch">Pendente</span>`;
+    return `<div class="hj-pr"><span class="hj-pi">${ic(ic_,28)}</span><div class="hj-pm"><b>${nm}</b>${chip}<small>${n} ${n===1?'etapa':'etapas'} · ~${Math.max(2,n)} min</small></div>
+      ${ok?`<button class="hj-bt ghost" data-go="rotina|${per}">Ver</button>`:`<button class="hj-bt" data-hrit="${per}">${ic('chev',14)}Iniciar</button>`}</div>`};
+  let rit;
+  if(temRot)rit=`<section class="hj-rit"><h2>Seu ritual de hoje</h2>${linha('m','sun','Manhã')}${linha('n','moon','Noite')}</section>`;
+  else rit=`<section class="hj-rit"><h2>${nx.done?'Cuide de você':'Seu próximo passo'}</h2>${nx.done?'':`<p class="hj-np">${esc(nx.t)}</p><button class="hj-bt wide" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',14)}</button>`}</section>`;
+  const cons=`<button class="hj-cons" data-go="mais|medalhas"><span class="hj-ring" style="--p:${pct}"><b>${pct}%</b></span>
+    <span class="hj-cx"><b>Consistência da semana</b><small>${meta} de 5 dias${meta<5?` · faltam ${5-meta}`:' · meta batida'} · ${restam} ${restam===1?'dia':'dias'} na semana</small>
+      <span class="hj-md">${NMd?medalSvg(NMd,false,22):medalSvg(MEDALS[5],true,22)}<em>${NMd?(falta>0?`Próxima: ${NMd.nm} · faltam ${falta} ${falta===1?'dia':'dias'}`:`Medalha ${NMd.nm} a caminho`):'Todas as medalhas conquistadas'}</em></span>
+      <span class="hj-bar"><i style="width:${NMd?Math.min(100,st/NMd.d*100):100}%"></i></span></span>${ic('chev',16)}</button>`;
+  const hojeReg=S.diary.some(e=>e.d===hoje());
+  const check=temRot?`<button class="hj-ck" data-go="pele|evo"><span class="hj-cki">${ic('chart',26)}</span><span class="hj-ckt"><b>Como está a sua pele hoje?</b><small>${hojeReg?'Já registrado hoje. Veja a sua evolução.':'Um registro rápido alimenta o seu gráfico de evolução.'}</small></span><span class="hj-bt sm ${hojeReg?'ghost':''}">${hojeReg?'Ver':'Registrar'}</span></button>`:'';
+  const doneC=temRot?[['m','sun','Manhã'],['n','moon','Noite']].filter(([p])=>feito(p)).map(([p,i_,nm])=>{const l=S.log[hoje()]||{},f=l.tr&&l.tr[p]&&l.tr[p].f,hr=f?pad(new Date(f).getHours())+':'+pad(new Date(f).getMinutes()):'',n=(p==='m'?R_.m:R_.n).length;
+    return `<button class="hj-dn" data-go="rotina|${p}"><span class="hj-pi sm">${ic(i_,22)}</span><span><b>${nm} concluída</b><small>${n} de ${n} etapas${hr?' · '+hr:''}</small></span>${ic('chev',16)}</button>`}).join(''):'';
+  const avisos=`${!S.plus?paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.'):''}
+    ${S.fase&&S.fase!=='padrao'&&FASES[S.fase]?`<button class="alertc" style="border-color:var(--accent)" data-go="mais|fase">${ic(FASES[S.fase].i,22)}<span><b>Modo: ${FASES[S.fase].t}</b><span class="small muted" style="display:block">Rotina ajustada</span></span></button>`:''}
+    ${soon.length?`<button class="alertc" data-go="produtos|shelf">${ic('alert',22)}<span><b>${soon.length===1?'1 produto vence':soon.length+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}`;
+  const tools=[['clock','Horários','lembretes'],['cal','Fase','fase'],['leaf','Ingredientes','ingredientes'],['coin','Gastos','gastos'],['file','Relatório','relatorio'],['crown','Plano','plano']];
+  const nums=S.plus?[['image','Antes/depois',S.fotos.length,'ba'],['chart','Diário',S.diary.length,'evo'],['face','Análises',S.analises.length,'analise'],['routine','Registros',S.diary.length+S.analises.length+S.prods.length,'reg']]:null;
+  /* dica do dia: relação com os cuidados só quando há dado real */
+  const kk=HJ_KEY[tip[0]],noRot=kk&&(R_.m.includes(kk)?'manhã':R_.n.includes(kk)?'noite':''),noShelf=kk&&temP().find(i=>shelfKey(i)===kk&&i.v!=='evitar');
+  const rel=[noRot?`<span>${ic('check',13)}Faz parte da sua rotina da ${noRot}</span>`:'',noShelf?`<span>${ic('bottle',13)}Você tem: ${esc(noShelf.n)}</span>`:''].join('');
+  const ben=(HJ_BEN[tip[0]]||[]).map(b=>`<span>${esc(b)}</span>`).join('');
+  const got=BADGES.filter(b=>S.badges[b.id]),nxtB=BADGES.find(b=>!S.badges[b.id]),last=got.slice().sort((a,b)=>String(S.badges[b.id])<String(S.badges[a.id])?-1:1)[0];
+  return `<div class="stack hj">
+  <div class="hj-gr"><span class="hj-av">${esc((S.nome||'M').trim().charAt(0).toUpperCase())}</span><div class="hj-gt"><b>${hi}, ${esc(S.nome)}</b><span>${st?`${st} ${st===1?'dia seguido':'dias seguidos'}`:'Comece o seu momento hoje'}</span></div>
+    ${gameOn()?`<button class="hj-pts" data-go="mais|medalhas" aria-label="Pontos e medalhas">${ic('star',16)}<b>${S.xp}</b><span>pts</span></button>`:''}</div>
+  <div class="hj-wk" role="group" aria-label="Sua semana">${days.map(d=>`<div class="hj-d ${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}"><i>${d.on?ic('check',15):d.n}</i><span>${d.w}</span></div>`).join('')}</div>
+  ${rit}
+  ${cons}
+  ${avisos}
+  <h3 class="hj-h">Para você hoje</h3>
+  <button class="hj-sos" data-go="sos"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Resgate da Pele</b><small>Espinha ou irritação? Fotografe e veja o que fazer agora.</small></span>${ic('chev',18)}</button>
+  <div class="hj-q">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>
+  ${check}
+  ${doneC?`<h3 class="hj-h">Rotinas de hoje</h3><div class="hj-dns">${doneC}</div>`:''}
+  <h3 class="hj-h">Ferramentas</h3>
+  <div class="hj-tl">${tools.map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span>${ic(i_,22)}</span>${t}</button>`).join('')}</div>
+  ${nums?`<h3 class="hj-h">Seus números</h3><div class="hj-nm">${nums.map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}
+  <article class="hj-tip"><div class="hj-tk">Dica do dia</div><h2>${tip[0]}</h2><p>${tip[1]}</p>${ben?`<div class="hj-tb">${ben}</div>`:''}${rel?`<div class="hj-tr">${rel}</div>`:''}</article>
+  <button class="hj-cq" data-go="mais|medalhas"><div class="hj-cqh"><b>Conquistas</b><span>${nb} de ${BADGES.length}</span></div>
+    <div class="hj-cqm">${got.slice(0,6).map(b=>`<span class="on" title="${esc(b.n)}">${ic(b.i,18)}</span>`).join('')}${nxtB?`<span class="nx" title="${esc(nxtB.n)}">${ic('lock',16)}</span>`:''}</div>
+    <span class="hj-bar"><i style="width:${Math.round(nb/BADGES.length*100)}%"></i></span>
+    <small>${nxtB?`Próxima: ${esc(nxtB.n)} · ${esc(nxtB.d)}`:'Todas as conquistas obtidas'}${last?` · Última: ${esc(last.n)} (${fmtD(S.badges[last.id])})`:''}</small></button>
+  </div>`;
 }
 function viewPele(){return `<div class="stack">${viewPele0()}</div>`}
 function viewCabeloTab(){return viewCabelo()}
@@ -3946,6 +3991,7 @@ document.addEventListener('click',e=>{
   else if(d.hshelf&&S.hres){const x=hairPlan(S.hres).produtos.find(z=>z.k===d.hshelf);if(x){const n=((S.hres.marcas||{})[x.k]||{})[S.tier]||x.passo;if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,cat:'cabelo',nota:null,v:'serve',aberto:hoje(),meses:12});toast('Guardado na prateleira')}}const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.shrot){const [id,per]=d.shrot.split('|');const it=S.shelf.find(i=>i.id===id);if(it){const r=String(it.rot||'');it.rot=r.includes(per)?r.replace(per,''):r+per;toast(it.rot.includes(per)?'Adicionado à rotina da '+(per==='m'?'manhã':'noite'):'Tirado da rotina');const y=window.scrollY;render();window.scrollTo(0,y)}}
   else if(d.rit){ritAct(d.rit)}
+  else if(d.hrit){S.tab='rotina';S.rotFull=false;S.period=d.hrit;S.perMan=true;ritAct('start|'+d.hrit)}
   else if(d.rper){S.period=d.rper;S.perMan=true;render()}
   else if(d.shdone){const [per,id]=d.shdone.split('|');const l=dayLog(),a=l['x'+per]||(l['x'+per]=[]),ix=a.indexOf(id);if(ix>=0)a.splice(ix,1);else a.push(id);const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
