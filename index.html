@@ -147,6 +147,55 @@
 .hj-cqm{display:flex;gap:8px;flex-wrap:wrap}.hj-cqm span{width:38px;height:38px;border-radius:50%;display:grid;place-items:center}.hj-cqm .on{background:linear-gradient(135deg,#F6E3D8,#EBC9B7);color:#8A4A34}.hj-cqm .nx{background:#F3E8DF;color:#B9A497;border:1.5px dashed #DDBFAE}.hj-cq small{font-size:12.5px;color:#7C5A4B;line-height:1.35}
 @media(max-width:360px){.hj-d i{width:36px;height:36px;font-size:14px}.hj-nm b{font-size:19px}}
 @media(prefers-reduced-motion:reduce){.hj-d i,.hj-bar i{transition:none}}
+/* Aba Pele (redesign) */
+.plw{gap:14px}.plw h1{margin:0}
+.pl-h h1{font-size:clamp(30px,8.4vw,36px);color:#4A2A1E;letter-spacing:-.02em}.pl-h p{margin:4px 0 0;color:#8A6F62;font-size:15px;line-height:1.35}
+.pl-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pl-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:68px;font:inherit;font-size:12.5px;font-weight:700;border:0;border-radius:18px;background:#FFFCF9;color:#4A2A1E;cursor:pointer;box-shadow:0 6px 16px rgba(170,128,86,.09);padding:8px 2px;line-height:1.1;text-align:center}.pl-tabs button svg{color:#A76F5C}
+.pl-tabs button[aria-pressed="true"]{background:linear-gradient(135deg,#6B3A27,#4A2A1E);color:#fff;box-shadow:0 8px 18px rgba(74,42,30,.25)}.pl-tabs button[aria-pressed="true"] svg{color:#fff}
+.pl-in{animation:plIn .5s ease both}@keyframes plIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pl-card,.pl-hero{border-radius:24px;background:#FFFCF9;padding:16px;box-shadow:0 8px 22px rgba(170,128,86,.1);color:#4A2A1E}
+.pl-ct{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}.pl-ct b{font-size:18px}.pl-ct small{color:#8A6F62;font-size:12.5px}
+.pl-hero{background:linear-gradient(150deg,#FFF6EA,#F9E4D2)}.pl-hk{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#A76F5C}.pl-hero h2{margin:4px 0 12px;font-size:clamp(24px,6.8vw,29px);letter-spacing:-.02em}
+.pl-hb{display:flex;gap:14px;align-items:center}.pl-pic{flex:none;width:118px;height:148px;border-radius:60px 60px 56px 56px;overflow:hidden;background:#F3E8DF;box-shadow:0 8px 18px rgba(74,42,30,.18)}.pl-pic img{width:100%;height:100%;object-fit:cover;display:block}.pl-ph0{width:100%;height:100%;display:grid;place-items:center}.pl-ph0 svg{width:70%;height:auto}
+.pl-hr{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}.pl-type{align-self:flex-start;display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;border-radius:99px;padding:5px 11px;background:#fff;color:#7C4A38}
+.pl-mi{display:flex;justify-content:space-between;font-size:14px;color:#6B4A3C;border-bottom:1px solid rgba(167,111,92,.18);padding-bottom:5px}.pl-mi b{color:#4A2A1E}
+.pl-go{width:100%;margin-top:14px;min-height:50px;border-radius:99px!important;background:linear-gradient(135deg,#6B3A27,#4A2A1E)!important;color:#fff!important;border:0!important;box-shadow:0 8px 18px rgba(74,42,30,.25);justify-content:center}.pl-go[disabled]{opacity:.55;box-shadow:none}
+.pl-ok{display:flex;gap:10px;align-items:flex-start;border-radius:20px;padding:12px 14px;background:#E4EFE6;color:#2F5B3E;font-size:14px;line-height:1.35}.pl-ok svg{flex:none;margin-top:1px}
+.pl-ir{display:grid;grid-template-columns:28px 108px 1fr 44px;gap:8px;align-items:center;margin:11px 0;font-size:14.5px}.pl-ii{display:grid;place-items:center;color:#A76F5C}.pl-in{}
+.pl-ib{display:block;height:8px;border-radius:99px;background:#F0E3D8;overflow:hidden}.pl-ib b{display:block;height:100%;border-radius:99px;background:#6E9A7A;transition:width .6s}.pl-ib b.md{background:#C99A6B}.pl-ib b.hi{background:#B5563A}
+.pl-iv{text-align:right;font-weight:700}
+.pl-lk{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;font:inherit;font-size:14px;font-weight:700;color:#A76F5C;background:none;border:0;padding:8px;cursor:pointer}
+.pl-row{display:flex;align-items:center;gap:14px;text-align:left;width:100%;font:inherit;border:0;border-radius:22px;background:#FFFCF9;padding:14px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 20px rgba(170,128,86,.1)}.pl-row>span:nth-child(2){flex:1}.pl-row b{display:block;font-size:16.5px}.pl-row small{display:block;font-size:13px;color:#7C5A4B;margin-top:2px}.pl-ri{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#F8EAE0;color:#A76F5C}
+.pl-top{display:flex;align-items:center;gap:10px}.pl-top h2{margin:0;font-size:22px;color:#4A2A1E;flex:1}.pl-top.solo{justify-content:center}.pl-top.solo h2{text-align:center;flex:none}.pl-bk{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:#FFFCF9;color:#4A2A1E;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 12px rgba(170,128,86,.12)}.pl-bk svg{transform:scaleX(-1)}
+.pl-chip{font-size:12px;font-weight:800;border-radius:99px;padding:4px 10px;background:#F3E8DF;color:#7C4A38}
+.pl-ix p{margin:8px 0 0}.pl-ih{display:flex;align-items:center;gap:10px;margin-bottom:10px}.pl-ih b{flex:1;font-size:17px}.pl-big{font-size:26px;font-weight:800;letter-spacing:-.02em}.pl-cp{font-size:13px;color:#7C5A4B}
+.pl-dl{display:inline-block;font-size:12.5px;font-weight:700;border-radius:99px;padding:3px 9px;background:#F3E8DF;color:#7C5A4B}.pl-dl.good{background:#E4EFE6;color:#2F5B3E}.pl-dl.bad{background:#F8E0D8;color:#9B3F28}
+.pl-ph{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:4px}.pl-ph b{font-size:17.5px}.pl-lv{font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px}.pl-lv.a{background:#F8E0D8;color:#9B3F28}.pl-lv.m{background:#F8EBD3;color:#8A5A1C}.pl-lv.b{background:#E4EFE6;color:#2F5B3E}
+.pl-tg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}.pl-tg small{width:100%;font-size:12px;color:#8A6F62;font-weight:700}.pl-tg span{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:600;border-radius:99px;padding:5px 11px;background:#F8EFE6;color:#6B3A27}.pl-tg.ok span{background:#E4EFE6;color:#2F5B3E}
+.pl-mo{display:flex;align-items:center;gap:5px;margin-top:10px;font:inherit;font-size:14px;font-weight:700;color:#A76F5C;background:none;border:0;padding:4px 0;cursor:pointer}.pl-mo[aria-expanded="true"] svg{transform:rotate(90deg)}.pl-st{margin:8px 0 0;padding-left:20px;font-size:14px;line-height:1.45;color:#5E4033;display:flex;flex-direction:column;gap:6px}
+.pl-h2{}
+.pl-frame{position:relative;aspect-ratio:3/4;max-height:56vh;margin:0 auto;width:100%;border-radius:28px;overflow:hidden;background:linear-gradient(150deg,#FFF6EA,#F3E0D2);display:grid;place-items:center;color:#A76F5C;box-shadow:0 10px 26px rgba(170,128,86,.14)}.pl-frame img{width:100%;height:100%;object-fit:cover}.pl-guide{width:62%;height:auto}.pl-gt{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13.5px;color:#7C5A4B}
+.pl-frame .c{position:absolute;width:34px;height:34px;border:3px solid #fff;opacity:.9}.pl-frame .tl{top:14px;left:14px;border-right:0;border-bottom:0;border-radius:14px 0 0 0}.pl-frame .tr{top:14px;right:14px;border-left:0;border-bottom:0;border-radius:0 14px 0 0}.pl-frame .bl{bottom:14px;left:14px;border-right:0;border-top:0;border-radius:0 0 0 14px}.pl-frame .br{bottom:14px;right:14px;border-left:0;border-top:0;border-radius:0 0 14px 0}.pl-frame:not(.has) .c{border-color:#C99580}
+.pl-chk{list-style:none;margin:0;padding:12px 14px;border-radius:20px;background:#F8EFE6;display:flex;flex-direction:column;gap:7px;font-size:14px;color:#5E4033}.pl-chk li{display:flex;gap:9px;align-items:center}.pl-chk li i{flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid #C99580}.pl-chk li.ok{color:#2F5B3E}.pl-chk li.warn{color:#9B3F28}
+.pl-shot{display:flex;align-items:center;justify-content:space-between;padding:0 10px}.pl-gal{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:#FFFCF9;color:#4A2A1E;cursor:pointer;box-shadow:0 6px 16px rgba(170,128,86,.12)}.pl-sp{width:54px}
+.pl-sh{width:74px;height:74px;border-radius:50%;border:3px solid #4A2A1E;display:grid;place-items:center;cursor:pointer;background:#FFFCF9}.pl-sh span{width:56px;height:56px;border-radius:50%;background:#4A2A1E;display:block}
+.pl-proc{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:34px 12px 10px;color:#4A2A1E;min-height:60vh;justify-content:center;animation:plIn .5s ease both}
+.pl-orb{position:relative;width:190px;height:190px;display:grid;place-items:center}.pl-orb i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(201,149,128,.35),rgba(201,149,128,.06) 70%);animation:plPulse 2.8s ease-in-out infinite}.pl-orb i:nth-child(2){inset:26px;animation-delay:.5s}.pl-orb i:nth-child(3){inset:52px;animation-delay:1s}
+.pl-orb span{position:relative;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:#FFFCF9;color:#A76F5C;box-shadow:0 8px 22px rgba(170,128,86,.25)}@keyframes plPulse{0%,100%{transform:scale(.88);opacity:.6}50%{transform:scale(1.05);opacity:1}}
+.pl-proc h2{margin:0;font-size:26px;letter-spacing:-.02em}.pl-msg{margin:0;position:relative;height:22px;width:100%;font-size:15px;color:#7C5A4B}.pl-msg span{position:absolute;inset:0;opacity:0;animation:plMsg 9s infinite}.pl-msg span:nth-child(2){animation-delay:3s}.pl-msg span:nth-child(3){animation-delay:6s}@keyframes plMsg{0%{opacity:0;transform:translateY(6px)}6%,30%{opacity:1;transform:none}36%,100%{opacity:0}}
+.pl-ind{width:min(260px,70%);height:6px;border-radius:99px;background:#EBD8CB;overflow:hidden;position:relative}.pl-ind i{position:absolute;top:0;bottom:0;width:40%;border-radius:99px;background:linear-gradient(90deg,#C99580,#4A2A1E);animation:plInd 1.5s ease-in-out infinite}@keyframes plInd{0%{left:-40%}100%{left:100%}}
+.pl-priv{margin:6px 0 0;display:inline-flex;gap:6px;align-items:center;font-size:13px;color:#7C5A4B;background:#F8EFE6;border-radius:99px;padding:9px 16px}
+.pl-fl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 10px}.pl-fl button{font:inherit;font-size:14px;font-weight:700;border:0;border-radius:99px;padding:10px 0;background:#F3E8DF;color:#7C5A4B;cursor:pointer}.pl-fl button[aria-pressed="true"]{background:#4A2A1E;color:#fff}
+.pl-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:4px;scrollbar-width:none}.pl-chips::-webkit-scrollbar{display:none}.pl-chips button{flex:none;font:inherit;font-size:13px;font-weight:700;border:1.5px solid #EBD8CB;border-radius:99px;padding:7px 13px;background:transparent;color:#7C5A4B;cursor:pointer}.pl-chips button[aria-pressed="true"]{background:#F3DDD2;border-color:#A76F5C;color:#4A2A1E}
+.pl-ch text{font-size:10px;fill:#8A6F62}
+.pl-ev{display:grid;grid-template-columns:28px 1fr auto auto;gap:8px;align-items:center;width:100%;font:inherit;font-size:14.5px;border:0;background:none;color:#4A2A1E;padding:9px 0;border-bottom:1px solid #F0E3D8;text-align:left;cursor:default}button.pl-ev{cursor:pointer}.pl-ev>span:nth-child(3){color:#7C5A4B;font-size:13px}.pl-ev:last-child{border-bottom:0}
+.pl-hi{padding:9px 0;border-bottom:1px solid #F0E3D8}.pl-hi:last-child{border:0}.pl-hi b{display:block;font-size:14px}.pl-hi small{display:block;font-size:13px;color:#7C5A4B;margin-top:2px;line-height:1.35}
+.pl-nm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pl-nm button{display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;border:0;border-radius:18px;background:#F8EFE6;padding:12px 4px;color:#4A2A1E;cursor:pointer}.pl-nm svg{color:#A76F5C}.pl-nm b{font-size:22px;margin-top:2px}.pl-nm span{font-size:11.5px;color:#8A6F62}
+.pl-tl{position:relative;display:flex;gap:12px;padding-top:12px}.pl-tl>i{flex:none;width:10px;height:10px;border-radius:50%;background:#A76F5C;margin-top:6px;position:relative}.pl-tl:not(:last-child)>i:after{content:'';position:absolute;left:4px;top:12px;bottom:-200px;width:2px;background:#EBD8CB}
+.pl-tc{flex:1;min-width:0;padding-bottom:6px}.pl-tc>b{font-size:15.5px}.pl-ev2{display:flex;gap:10px;align-items:flex-start;margin-top:8px;padding:10px 12px;border-radius:16px;background:#F8EFE6;color:#4A2A1E}.pl-ev2>svg{flex:none;margin-top:2px;color:#A76F5C}.pl-ev2 span{flex:1;min-width:0}.pl-ev2 b{font-size:14px;display:block}.pl-ev2 small{display:block;font-size:12.5px;color:#7C5A4B;line-height:1.35;margin-top:2px}.pl-nt{font-style:italic}.pl-th{display:flex;gap:6px;flex-wrap:wrap}.pl-th img{width:64px;height:80px;object-fit:cover;border-radius:12px}
+@media(max-width:360px){.pl-ir{grid-template-columns:24px 92px 1fr 40px;font-size:13.5px}.pl-pic{width:98px;height:126px}}
+@media(prefers-reduced-motion:reduce){.pl-orb i,.pl-ind i,.pl-msg span,.pl-in,.pl-proc{animation:none}.pl-msg span:first-child{opacity:1}}
+.pl-chk li{justify-content:flex-start;border:0;padding:0;background:none;box-shadow:none;margin:0;min-height:0}.pl-st{list-style:decimal}.pl-st li{border:0;padding:0;background:none;box-shadow:none;margin:0;display:list-item;justify-content:flex-start}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -1981,52 +2030,6 @@ function gate(){if(S.plus)return S.tab==='rotina'&&!S.result?precisaAnalise():nu
   return null}
 
 const guia=(t,b,attr)=>`<div class="cta go"><div class="gt">${t}</div><button class="btn" ${attr}>${b}${ic('chev',18)}</button></div>`;
-function viewAnalise(){
-  const rs=S.result,nome=esc(S.nome);
-  const MI={'Oleosidade':'drop','Hidratação':'drops','Poros':'pores','Manchas':'spot','Linhas finas':'waves','Vermelhidão':'flame'};
-  const bar=(l,v,inv)=>`<div class="meter ind" data-k="${esc((rs&&rs.d||'')+l+v)}" style="--v:${v}"><span class="ml">${ic(MI[l],16)}${l}</span><div class="bar"><b class="${bandC(inv?100-v:v)}"></b></div><span class="num">${odo(v)}</span></div>`;
-  const scan=S.analyzing?'<div class="scan"></div>':'';
-  const shown=S.photo||(S.fotos.length?S.fotos[S.fotos.length-1].img:null);
-  const box=shown?`<div class="face"><img class="photo" src="${shown}" alt="Sua foto">${scan}</div>`:`<div class="face">${rs?faceSvg(rs):faceEmpty()}${scan}</div>`;
-  const card1=`<div class="card">
-    <div class="row" style="justify-content:space-between"><h2>${rs?`Sua pele, ${nome}`:`${nome}, vamos analisar a sua pele`}</h2>${rs?`<span class="badge">${fmtD(rs.d)}</span>`:''}</div>
-    <div class="face-wrap" style="margin-top:12px">
-      ${box}
-      <div>
-        <p class="small muted">${rs?'Quer atualizar? Tire outra foto.':'Rosto limpo e luz natural.'}</p>
-        <div class="row" style="gap:8px;margin:10px 0 8px">
-          <input class="sr" id="foto-cam" type="file" accept="image/*" capture="user"><label for="foto-cam" class="btn" style="cursor:pointer">${ic('camera')}Tirar foto</label>
-          <input class="sr" id="foto-gal" type="file" accept="image/*"><label for="foto-gal" class="btn ghost" style="cursor:pointer">${ic('image')}Galeria</label>
-        </div>
-        <button class="btn" data-act="analisar" ${S.analyzing||!S.file?'disabled':''} style="width:100%">${ic('sparkle')}${S.analyzing?'Analisando a sua pele…':S.file?'Analisar minha pele':'Tire uma foto para analisar'}</button>
-        ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:S.file&&!S.analyzing&&S.okMsg!=='pele'?`<p class="note" style="color:var(--sage);font-weight:600">${ic('check',12)} Foto pronta. Toque em Analisar minha pele.</p>`:'<p class="note">Sua foto não é guardada.</p>'}
-      </div>
-    </div></div>`;
-  if(!rs)return `<div class="stack">${card1}
-    <div class="card"><div class="row" style="gap:8px">${['Oleosidade','Hidratação','Poros','Manchas','Linhas finas','Vermelhidão'].map(x=>`<span class="badge">${x}</span>`).join('')}</div></div></div>`;
-  return `<div class="stack">${S.okMsg==='pele'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Avaliação da pele concluída, ${nome}!</b><div class="small muted" style="margin-top:2px">Veja o resultado abaixo. Em seguida, a sua rotina é montada com base nele.</div></div></div>`:''}${card1}
-  ${(()=>{const m=zonasAnalise(rs);return `<div class="card" style="text-align:center"><div class="row" style="justify-content:space-between"><h3>Mapa da sua pele</h3><span class="badge">3D</span></div>
-    ${face3d('view',m.z,'')}
-    ${m.leg.length?`<div class="mleg">${m.leg.map(x=>`<span><i></i>${esc(x)}</span>`).join('')}</div>`:'<p class="small muted">Nenhuma região com nota alta nesta análise.</p>'}
-    <p class="note" style="text-align:left">As áreas em rosa mostram onde as notas da análise pedem mais atenção. Modelo ilustrativo, não é o seu rosto.</p></div>`})()}
-  <div class="card">
-    <div class="row" style="justify-content:space-between"><h3>Tipo de pele</h3><b style="font-family:var(--f-display);font-size:20px">${esc(rs.tipo)}</b></div>
-    <p class="small muted" style="margin:4px 0 8px">${esc(rs.resumo)}</p>
-    ${bar('Oleosidade',rs.oleo)}${bar('Hidratação',rs.hid,true)}${bar('Poros',rs.poros)}${bar('Manchas',rs.manchas)}${bar('Linhas finas',rs.linhas)}${bar('Vermelhidão',rs.verm)}
-    <div class="lgd"><span class="lgo">Favorável</span><span class="lgm">Cuidado</span><span class="lga">Atenção</span></div><p class="note">Notas de 0 a 100, estimadas pela foto.</p>
-  </div>
-  <div class="card">
-    <h3 class="ttl pri">Prioridades para você</h3>
-    <ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${rs.prioridades.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
-    ${rs.atencao?`<p class="note" style="color:var(--warn)">${esc(rs.atencao)}</p>`:''}
-    <div class="row" style="gap:8px;margin-top:12px;flex-wrap:nowrap">
-      <button class="btn ghost" data-act="salvar-analise" style="flex:1">${ic('plus',18)}Diário</button>
-      ${S.photo?`<button class="btn ghost" data-act="guardar-foto" style="flex:1">${ic('image',18)}Guardar foto</button>`:''}</div>
-    ${S.rotErr?`<p class="note" style="color:var(--alert)">${esc(S.rotErr)}</p>`:''}
-    <p class="note">Não é diagnóstico. Pinta que muda ou ferida que não cicatriza: procure um dermatologista.</p>
-  </div>
-  ${S.rot?guia('Sua rotina está pronta','Ver rotina','data-go="rotina"'):S.rotBusy?guia('Montando a sua rotina…','Aguarde','disabled'):guia('Agora, a sua rotina','Montar','data-act="montar-rotina"')}</div>`;
-}
 
 const inRot=(i,per)=>String(i.rot||'').includes(per);
 const shDone=(per,id)=>{const l=S.log[hoje()];return !!(l&&l['x'+per]&&l['x'+per].includes(id))};
@@ -2396,7 +2399,7 @@ function viewDiario(){
   const insights=BAD.map(([k,v,t])=>{const f=e=>e[k]===v,A=d.filter(f),B=d.filter(e=>!f(e)&&has(e));if(A.length<2||B.length<2)return '';const x=Math.round(avg(A)-avg(B));return Math.abs(x)>=5?`<div class="ins">${ic('chart',14)} Com ${t}, a sua irritação ficou ${Math.abs(x)} pontos ${x>0?'maior':'menor'}.</div>`:''}).join('');
   const hojeE=d.find(e=>e.d===hoje());
   return `<div class="stack">
-  <div class="card"><h2>Evolução da pele</h2>${top}${insights}</div>
+  <div class="card"><h2>Seu diário</h2>${top}${insights}</div>
   ${hojeE&&!S.editReg?`<div class="card"><div class="row" style="justify-content:space-between"><h3>Seu registro de hoje</h3><span class="badge" style="background:var(--sage);color:var(--bg)">${ic('check',12)} Salvo</span></div>
     ${[['Hidratação',hojeE.hid,'drops',false],['Oleosidade',hojeE.oleo,'drop',true],['Irritação',hojeE.irr,'flame',true]].map(([l,v,i_,inv])=>`<div class="meter"><span class="ml">${ic(i_,16)}${l}</span><div class="bar"><b class="${bandC(inv?v:100-v)}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`).join('')}
     <div class="chips" style="margin-top:10px">${entTxt(hojeE).split(' · ').filter(Boolean).map(x=>`<span style="color:var(--accent)">${x}</span>`).join('')}</div>
@@ -2688,19 +2691,116 @@ function viewHoje(){
     <small>${nxtB?`Próxima: ${esc(nxtB.n)} · ${esc(nxtB.d)}`:'Todas as conquistas obtidas'}${last?` · Última: ${esc(last.n)} (${fmtD(S.badges[last.id])})`:''}</small></button>
   </div>`;
 }
-function viewPele(){return `<div class="stack">${viewPele0()}</div>`}
 function viewCabeloTab(){return viewCabelo()}
-function viewPele0(){
-  const sub=S.peleSub,SUBS=[['analise','face','Análise'],['evo','chart','Evolução'],['ba','image','Antes/depois'],['reg','routine','Registros']];
-  return `<div class="stack"><div class="seg four" role="group" aria-label="Seção da pele">${SUBS.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}${l}</button>`).join('')}</div>
-    ${!S.plus&&sub!=='analise'?paywall({evo:'Diário e evolução',ba:'Antes e depois',reg:'Registros'}[sub]||'Recurso do Pellie Pro',{evo:'chart',ba:'image',reg:'routine'}[sub]||'crown','Acompanhe a sua pele ao longo do tempo.'):sub==='evo'?viewDiario():sub==='ba'?viewAD():sub==='reg'?viewRegistros():viewAnalise()}</div>`;
-}
 function fotoBtns(){return `<div class="row" style="gap:8px;margin-top:10px;flex-wrap:nowrap">
       <input class="sr" id="evo-cam" type="file" accept="image/*" capture="user"><label for="evo-cam" class="btn" style="cursor:pointer;flex:1">${ic('camera')}Tirar foto</label>
       <input class="sr" id="evo-gal" type="file" accept="image/*"><label for="evo-gal" class="btn ghost" style="cursor:pointer;flex:1">${ic('image')}Galeria</label></div>`}
+/* ---------- Aba Pele (redesign): só apresentação. Análise, dados e armazenamento são os de sempre ---------- */
+const PL_IND=[['oleo','Oleosidade','drop',false,'Brilho e produção de sebo. Quanto maior a nota, mais oleosa a pele.'],
+ ['hid','Hidratação','drops',true,'Água na pele. Aqui, quanto maior a nota, mais hidratada.'],
+ ['poros','Poros','pores',false,'Visibilidade dos poros. Quanto maior a nota, mais aparentes.'],
+ ['manchas','Manchas','spot',false,'Diferenças de tom. Quanto maior a nota, mais manchas.'],
+ ['linhas','Linhas finas','waves',false,'Linhas de expressão. Quanto maior a nota, mais marcadas.'],
+ ['verm','Vermelhidão','flame',false,'Áreas avermelhadas. Quanto maior a nota, mais vermelhidão.']];
+const PL_ING=[[/niacinamida/i,'Niacinamida',['niacina']],[/vitamina c/i,'Vitamina C',['vitc']],[/salic|bha/i,'Ácido salicílico',['bha']],[/azelaic/i,'Ácido azelaico',[]],[/retinoide/i,'Retinoide',['retinol']],[/hialur/i,'Ácido hialurônico',['hialu']],[/ceramida/i,'Ceramidas',['hidr']],[/pantenol/i,'Pantenol',['calmante']],[/centella/i,'Centella',['calmante']],[/pept[ií]deo/i,'Peptídeos',[]],[/bakuchiol/i,'Bakuchiol',[]],[/cafe[ií]na/i,'Cafeína',[]],[/FPS|protetor/i,'Protetor solar',['fps']],[/mand[eé]lico|l[aá]tico/i,'Ácido mandélico/lático',['bha']]];
+const plSorted=()=>[...S.analises].sort((a,b)=>a.d<b.d?-1:1);
+const plAt=(v,inv)=>inv?100-v:v;
+const plCls=a=>a>=60?'hi':a>=35?'md':'ok';
+function plDelta(cur,prev,inv){const d=Math.round(cur-prev);if(!d)return `<span class="pl-dl">sem mudança</span>`;const bom=inv?d>0:d<0;return `<span class="pl-dl ${bom?'good':'bad'}">${d>0?'+':'−'}${Math.abs(d)} pts</span>`}
+function peleQ(url){const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=48;const g=c.getContext('2d');g.drawImage(im,0,0,48,48);const d=g.getImageData(0,0,48,48).data;let s=0;for(let i=0;i<d.length;i+=4)s+=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];s/=2304;S.photoQ={luz:s<70?'baixa':s>205?'alta':'ok',res:Math.min(im.width,im.height)<400?'baixa':'ok'}}catch(e){S.photoQ=null}
+  if(S.photo===url&&S.tab==='pele'&&!S.analyzing)render()};im.src=url}
+function plPri(rs){const X=tratamentos();if(!X||!X.lista.length)return rs.prioridades.map(t=>({id:'p'+t.length,ttl:t,alvo:'',lvl:'',ing:[],prod:[],passos:[],cuidado:'',per:'',prazo:''}));
+  return X.lista.map(t=>{const tx=t.ttl+' '+t.passos.join(' '),ing=PL_ING.filter(([re])=>re.test(tx)),keys=ing.flatMap(x=>x[2]);
+    return{id:t.id,ttl:t.ttl,alvo:t.alvo,lvl:t.pr>=70?'Alta':t.pr>=55?'Média':'Baixa',ing:ing.map(x=>x[1]),prod:temP().filter(i=>i.v!=='evitar'&&keys.includes(shelfKey(i))),passos:t.passos,cuidado:t.cuidado,per:t.per,prazo:t.prazo}})}
+function plBar(l,v,inv,ico,big){const a=plAt(v,inv);return `<div class="pl-ir"><span class="pl-ii">${ic(ico,18)}</span><span class="pl-in">${l}</span><span class="pl-ib"><b class="${plCls(a)}" style="width:${Math.max(3,v)}%"></b></span><span class="pl-iv">${Math.round(v)}%</span></div>`}
+function plBack(t){return `<div class="pl-top"><button class="pl-bk" data-pv="" aria-label="Voltar">${ic('chev',20)}</button><h2>${t}</h2></div>`}
+function viewPele(){return `<div class="stack plw">${viewPele0()}</div>`}
+function viewPele0(){
+  const sub=S.peleSub,SUBS=[['analise','face','Análise'],['evo','chart','Evolução'],['ba','image','Antes/depois'],['reg','routine','Registros']];
+  const body=!S.plus&&sub!=='analise'?paywall({evo:'Diário e evolução',ba:'Antes e depois',reg:'Registros'}[sub]||'Recurso do Pellie Pro',{evo:'chart',ba:'image',reg:'routine'}[sub]||'crown','Acompanhe a sua pele ao longo do tempo.'):sub==='evo'?viewEvo():sub==='ba'?viewAD():sub==='reg'?viewRegistros():viewAnalise();
+  const sob=sub==='analise'&&(S.pv||S.pleCap||S.analyzing);
+  return `${sob?'':`<div class="pl-h"><h1>Pele</h1><p>Analise, acompanhe e evolua o cuidado da sua pele.</p></div>
+  <div class="pl-tabs" role="group" aria-label="Seção da pele">${SUBS.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}<span>${l}</span></button>`).join('')}</div>`}${body}`;
+}
+function plCapture(){
+  const rs=S.result,q=S.photoQ,fotoOk=!!S.file;
+  const it=(ok,t)=>`<li class="${ok===true?'ok':ok===false?'warn':''}">${ok===true?ic('check',15):ok===false?ic('alert',15):'<i></i>'}${t}</li>`;
+  const luz=q?(q.luz==='ok'?it(true,'Boa iluminação nesta foto'):it(false,q.luz==='baixa'?'Foto escura. Tente mais perto de uma janela':'Foto muito clara. Evite luz direta no rosto')):it(null,'Boa iluminação (luz natural)');
+  const res=q&&q.res==='baixa'?it(false,'Foto pequena. Prefira a câmera do aparelho'):'';
+  const frame=S.photo?`<img src="${S.photo}" alt="Sua foto">`:`<svg viewBox="0 0 200 250" class="pl-guide" aria-hidden="true"><ellipse cx="100" cy="122" rx="62" ry="84" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 7" stroke-linecap="round"/><path d="M52 232c8-24 30-34 48-34s40 10 48 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".5"/></svg><span class="pl-gt">Posicione o rosto dentro da moldura</span>`;
+  return `<div class="stack pl-in">${plBackCap(rs)}
+  <div class="pl-frame ${S.photo?'has':''}">${frame}<i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>
+  <ul class="pl-chk"><li><i></i>Rosto limpo e sem maquiagem</li>${luz}<li><i></i>Olhe para a câmera</li><li><i></i>Mantenha o rosto centralizado</li>${res}</ul>
+  <div class="pl-shot"><input class="sr" id="foto-gal" type="file" accept="image/*"><label for="foto-gal" class="pl-gal" aria-label="Escolher da galeria">${ic('image',24)}</label>
+    <input class="sr" id="foto-cam" type="file" accept="image/*" capture="user"><label for="foto-cam" class="pl-sh" aria-label="Tirar foto"><span></span></label><span class="pl-sp"></span></div>
+  <button class="btn pl-go" data-act="analisar" ${S.analyzing||!S.file?'disabled':''}>${ic('sparkle')}${S.file?'Analisar minha pele':'Tire uma foto para analisar'}</button>
+  ${S.err?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.err)}</p>`:S.file?`<p class="note" style="color:var(--sage);font-weight:600">${ic('check',12)} Foto pronta. Toque em Analisar minha pele.</p>`:'<p class="note">Sua foto não é guardada.</p>'}</div>`;
+}
+const plBackCap=rs=>rs?`<div class="pl-top"><button class="pl-bk" data-pv="capx" aria-label="Voltar">${ic('chev',20)}</button><h2>Nova análise</h2></div>`:`<div class="pl-top solo"><h2>Tirar foto</h2></div>`;
+function plProc(){return `<div class="pl-proc"><div class="pl-orb"><i></i><i></i><i></i><span>${ic('sparkle',34)}</span></div>
+  <h2>Analisando sua pele…</h2><p class="pl-msg"><span>Analisando características da sua pele</span><span>Observando oleosidade, poros e manchas</span><span>Preparando seus pontos de atenção</span></p>
+  <div class="pl-ind"><i></i></div><p class="pl-priv">${ic('lock',14)} Sua foto não é guardada.</p></div>`}
+function viewAnalise(){
+  const rs=S.result,nome=esc(S.nome);
+  if(S.analyzing)return plProc();
+  if(!rs||S.pleCap)return plCapture();
+  const A=plSorted(),prev=A.filter(a=>a.d<rs.d).pop(),pv=S.pv;
+  if(pv==='map'){const m=zonasAnalise(rs);return `<div class="stack pl-in">${plBack('Mapa da sua pele')}<div class="pl-card" style="text-align:center"><div class="row" style="justify-content:space-between"><b>Modelo ilustrativo</b><span class="pl-chip">3D</span></div>${face3d('view',m.z,'')}
+    ${m.leg.length?`<div class="mleg">${m.leg.map(x=>`<span><i></i>${esc(x)}</span>`).join('')}</div>`:'<p class="small muted">Nenhuma região com nota alta nesta análise.</p>'}</div>
+    <div class="pl-card"><b>O que significa?</b><p class="small muted" style="margin-top:6px">As áreas em rosa mostram onde as notas da análise pedem mais atenção. É um modelo ilustrativo, não é o seu rosto.</p></div></div>`}
+  if(pv==='ind'){return `<div class="stack pl-in">${plBack('Indicadores da sua pele')}
+    ${PL_IND.map(([k,l,ic_,inv,ex])=>{const v=rs[k],pr=prev?prev[k]:null;return `<div class="pl-card pl-ix"><div class="pl-ih"><span class="pl-ii">${ic(ic_,20)}</span><b>${l}</b><span class="pl-big">${Math.round(v)}%</span></div>
+      <span class="pl-ib"><b class="${plCls(plAt(v,inv))}" style="width:${Math.max(3,v)}%"></b></span><p class="small muted">${ex}</p>
+      ${pr!=null?`<p class="pl-cp">Desde ${fmtD(prev.d)}: ${plDelta(v,pr,inv)}</p>`:''}</div>`}).join('')}
+    <p class="note">Notas de 0 a 100, estimadas pela foto. Não são diagnóstico.</p></div>`}
+  if(pv==='pri'){const L=plPri(rs);S.plOpen=S.plOpen||{};return `<div class="stack pl-in">${plBack('Prioridades para você')}
+    ${L.map(t=>{const op=!!S.plOpen[t.id];return `<div class="pl-card pl-pr"><div class="pl-ph"><b>${esc(t.ttl)}</b>${t.lvl?`<span class="pl-lv ${t.lvl==='Alta'?'a':t.lvl==='Média'?'m':'b'}">${t.lvl} prioridade</span>`:''}</div>
+      ${t.alvo?`<p class="small muted">${esc(t.alvo)}${t.prazo?' · resultado em '+esc(t.prazo):''}</p>`:''}
+      ${t.ing.length?`<div class="pl-tg"><small>Ingredientes relevantes</small>${t.ing.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
+      ${t.prod.length?`<div class="pl-tg ok"><small>Na sua prateleira</small>${t.prod.map(i=>`<span>${ic('bottle',13)}${esc(i.n)}</span>`).join('')}</div>`:t.ing.length?`<p class="small muted" style="margin-top:8px">Nenhum produto da sua prateleira combina com este cuidado ainda.</p>`:''}
+      ${t.passos.length?`<button class="pl-mo" data-plx="${t.id}" aria-expanded="${op}">${op?'Menos informações':'Mais informações'}${ic('chev',14)}</button>${op?`<ol class="pl-st">${t.passos.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="trw">${ic('alert',14)}<span>${esc(t.cuidado)}</span></p>`:''}`:''}</div>`}).join('')}
+    <button class="btn pl-go" data-go="rotina">${ic('routine',18)}Ver rotina personalizada</button>
+    <p class="note">Orientações gerais, que não substituem a avaliação de um dermatologista.</p></div>`}
+  const shown=S.photo||(S.fotos.length?S.fotos[S.fotos.length-1].img:null),pic=shown?`<img src="${shown}" alt="Sua foto">`:`<div class="pl-ph0">${rs?faceSvg(rs):faceEmpty()}</div>`;
+  const top3=PL_IND.map(x=>({x,a:plAt(rs[x[0]],x[3])})).sort((p,q)=>q.a-p.a).slice(0,3);
+  const pri=plPri(rs);
+  return `<div class="stack pl-in">${S.okMsg==='pele'?`<div class="pl-ok" role="status">${ic('check',18)}<span><b>Avaliação concluída, ${nome}!</b> Veja o resultado abaixo. Sua rotina é montada com base nele.</span></div>`:''}
+  <div class="pl-hero"><div class="pl-hk">Última análise · ${fmtD(rs.d)}</div><h2>Sua pele, ${nome}</h2>
+    <div class="pl-hb"><div class="pl-pic">${pic}</div><div class="pl-hr"><span class="pl-type">${ic('drop',14)}Pele ${esc(String(rs.tipo).toLowerCase())}</span>${top3.map(({x})=>`<div class="pl-mi"><span>${x[1]}</span><b>${Math.round(rs[x[0]])}%</b></div>`).join('')}</div></div>
+    <p class="small muted" style="margin-top:10px">${esc(rs.resumo)}</p>
+    <button class="btn pl-go" data-pv="cap">${ic('camera',18)}Nova análise</button>
+    <div class="row" style="gap:8px;margin-top:8px;flex-wrap:nowrap"><button class="btn ghost" data-act="salvar-analise" style="flex:1">${ic('plus',18)}Diário</button>${S.photo?`<button class="btn ghost" data-act="guardar-foto" style="flex:1">${ic('image',18)}Guardar foto</button>`:''}</div>
+    ${S.rotErr?`<p class="note" style="color:var(--alert)">${esc(S.rotErr)}</p>`:''}</div>
+  <div class="pl-card"><div class="pl-ct"><b>Indicadores da sua pele</b></div>${PL_IND.map(([k,l,i_,inv])=>plBar(l,rs[k],inv,i_)).join('')}<div class="lgd"><span class="lgo">Favorável</span><span class="lgm">Cuidado</span><span class="lga">Atenção</span></div><p class="note">Notas de 0 a 100, estimadas pela foto.</p>
+    <button class="pl-lk" data-pv="ind">Ver detalhes de cada indicador${ic('chev',14)}</button></div>
+  <button class="pl-row" data-pv="map"><span class="pl-ri">${ic('face',22)}</span><span><b>Mapa da sua pele</b><small>Regiões que pedem mais atenção</small></span>${ic('chev',16)}</button>
+  <button class="pl-row" data-pv="pri"><span class="pl-ri">${ic('sparkle',22)}</span><span><b>Prioridades para você</b><small>${pri.length} ${pri.length===1?'cuidado':'cuidados'} pelas suas notas</small></span>${ic('chev',16)}</button>
+  ${S.rot?`<button class="pl-row" data-go="rotina"><span class="pl-ri">${ic('routine',22)}</span><span><b>Sua rotina está pronta</b><small>Cuidados baseados na sua análise</small></span>${ic('chev',16)}</button>`:S.rotBusy?`<div class="pl-row"><span class="pl-ri">${ic('routine',22)}</span><span><b>Montando a sua rotina…</b><small>Aguarde</small></span></div>`:`<button class="pl-row" data-act="montar-rotina"><span class="pl-ri">${ic('routine',22)}</span><span><b>Agora, a sua rotina</b><small>Montar com base na análise</small></span>${ic('chev',16)}</button>`}
+  ${rs.atencao?`<p class="note" style="color:var(--warn)">${esc(rs.atencao)}</p>`:''}
+  <p class="note">Não é diagnóstico. Pinta que muda ou ferida que não cicatriza: procure um dermatologista.</p></div>`;
+}
+function plChart(W,k,inv){
+  const w=320,h=170,L=34,B=26,T=12,R=14,vs=W.map(a=>a[k]),mn=Math.max(0,Math.floor((Math.min(...vs)-10)/10)*10),mx=Math.min(100,Math.ceil((Math.max(...vs)+10)/10)*10),sp=mx-mn||10;
+  const x=i=>L+(W.length===1?(w-L-R)/2:i*(w-L-R)/(W.length-1)),y=v=>T+(h-T-B)*(1-(v-mn)/sp),pts=W.map((a,i)=>x(i)+','+y(a[k])).join(' '),st=Math.ceil(W.length/5);
+  return `<svg class="chart pl-ch" viewBox="0 0 ${w} ${h}" role="img" aria-label="Evolução de ${k}">${[mn,(mn+mx)/2,mx].map(v=>`<line x1="${L}" x2="${w-R}" y1="${y(v)}" y2="${y(v)}" stroke="#EBD8CB" stroke-width="1"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${Math.round(v)}</text>`).join('')}
+    ${W.length>1?`<polygon points="${x(0)},${h-B} ${pts} ${x(W.length-1)},${h-B}" fill="#A76F5C" opacity=".1"/><polyline fill="none" stroke="#A76F5C" stroke-width="2.5" stroke-linejoin="round" points="${pts}"/>`:''}
+    ${W.map((a,i)=>`<circle cx="${x(i)}" cy="${y(a[k])}" r="${i===W.length-1?5:3}" fill="#A76F5C"/>${i%st===0||i===W.length-1?`<text x="${x(i)}" y="${h-8}" text-anchor="middle">${fmtD(a.d)}</text>`:''}`).join('')}</svg>`}
+function viewEvo(){
+  const A=plSorted(),f=S.evoF||30,k=S.evoK||'oleo',cut=new Date();cut.setDate(cut.getDate()-f);const W=A.filter(a=>a.d>=ymd(cut)),meta=PL_IND.find(x=>x[0]===k)||PL_IND[0],inv=meta[3];
+  const fst=W[0],lst=W[W.length-1];
+  const hist=[];for(let i=A.length-1;i>=1&&hist.length<5;i--){const a=A[i],b=A[i-1],ch=PL_IND.map(x=>({x,d:Math.round(a[x[0]]-b[x[0]])})).filter(o=>o.d).sort((p,q)=>Math.abs(q.d)-Math.abs(p.d))[0];hist.push(`<div class="pl-hi"><b>${fmtD(b.d)} → ${fmtD(a.d)}</b><small>${a.tipo!==b.tipo?`Tipo de pele: ${esc(b.tipo)} para ${esc(a.tipo)}. `:''}${ch?`Maior mudança: ${ch.x[1].toLowerCase()} ${ch.d>0?'+':'−'}${Math.abs(ch.d)} pts.`:'Sem mudança nas notas.'}</small></div>`)}
+  return `<div class="stack pl-in"><div class="pl-card"><div class="pl-ct"><b>Evolução da pele</b></div>
+    <div class="pl-fl" role="group" aria-label="Período">${[7,30,90].map(n=>`<button data-evf="${n}" aria-pressed="${f===n}">${n} dias</button>`).join('')}</div>
+    <div class="pl-chips" role="group" aria-label="Indicador">${PL_IND.map(x=>`<button data-evk="${x[0]}" aria-pressed="${x[0]===k}">${x[1]}</button>`).join('')}</div>
+    ${W.length?plChart(W,k,inv):`<p class="small muted" style="margin:12px 0">${A.length?`Nenhuma análise nos últimos ${f} dias.`:'Faça a primeira análise da pele para começar o gráfico.'}</p>`}
+    ${W.length===1?`<p class="small muted">Só uma análise neste período. Com a próxima, a linha aparece.</p>`:''}
+    <p class="note">Só aparecem análises realmente feitas. ${inv?'Hidratação: quanto maior, melhor.':'Aqui, nota menor significa menos intensidade.'}</p></div>
+  ${W.length>=2?`<div class="pl-card"><div class="pl-ct"><b>Seus indicadores</b><small>${fmtD(fst.d)} → ${fmtD(lst.d)}</small></div>${PL_IND.map(([kk,l,i_,iv])=>`<button class="pl-ev" data-evk="${kk}"><span class="pl-ii">${ic(i_,18)}</span><b>${l}</b><span>${Math.round(fst[kk])} → ${Math.round(lst[kk])}</span>${plDelta(lst[kk],fst[kk],iv)}</button>`).join('')}</div>`:''}
+  ${hist.length?`<div class="pl-card"><div class="pl-ct"><b>Histórico de mudanças</b><small>entre análises</small></div>${hist.join('')}</div>`:''}
+  <h3 class="hj-h" style="margin:6px 0 -4px">Diário</h3>${viewDiario()}</div>`;
+}
 function viewAD(){
-  const F=S.fotos;
-  let cmp;
+  const F=S.fotos;let cmp,chg='';
   if(F.length<2){
     cmp=`<div class="ghosts"><div>${faceEmpty('var(--accent)')}Antes</div><div>${faceEmpty('var(--accent)')}Depois</div></div>
     <p class="small muted" style="margin-top:10px;text-align:center">${F.length?'1 de 2 fotos. Falta a segunda.':'Guarde 2 fotos para comparar.'}</p>`;
@@ -2709,19 +2809,24 @@ function viewAD(){
     const A=F[ia],B=F[ib],opts=v=>F.map(f=>`<option value="${f.d}" ${f.d===v?'selected':''}>${fmtD(f.d)}</option>`).join('');
     cmp=`<div class="cmp"><img src="${B.img}" alt="Depois"><img class="ca" src="${A.img}" alt="Antes"><span class="ch"></span><span class="cl a">Antes · ${fmtD(A.d)}</span><span class="cl b">Depois · ${fmtD(B.d)}</span><input id="cmp-r" type="range" min="0" max="100" value="50" aria-label="Arraste para comparar"></div>
     <div class="sel2"><label class="small muted">Antes<select id="cmp-a">${opts(A.d)}</select></label><label class="small muted">Depois<select id="cmp-b">${opts(B.d)}</select></label></div>`;
+    const an=S.analises.find(a=>a.d===A.d),bn=S.analises.find(a=>a.d===B.d);
+    chg=an&&bn&&A.d!==B.d?`<div class="pl-card"><div class="pl-ct"><b>O que mudou</b><small>${fmtD(A.d)} → ${fmtD(B.d)}</small></div>${PL_IND.map(([k,l,i_,inv])=>`<div class="pl-ev"><span class="pl-ii">${ic(i_,18)}</span><b>${l}</b><span>${Math.round(an[k])} → ${Math.round(bn[k])}</span>${plDelta(bn[k],an[k],inv)}</div>`).join('')}</div>`
+      :A.d!==B.d?`<p class="note">Não há análise da pele registrada nas duas datas, então não comparo os indicadores.</p>`:'';
   }
-  return `<div class="card"><h2>Antes e depois</h2><div style="margin-top:12px">${cmp}</div>${fotoBtns()}<p class="note">${ic('lock',12)} As fotos ficam só neste aparelho.</p></div>
-  ${F.length?`<div class="card"><div class="row" style="justify-content:space-between"><h3>Minhas fotos</h3><span class="small muted">${F.length}</span></div><div class="fgrid">${[...F].reverse().map(f=>`<figure><img src="${f.img}" alt="Foto de ${fmtD(f.d)}"><figcaption>${fmtD(f.d)}</figcaption><button data-rmf="${f.d}" aria-label="Remover foto de ${fmtD(f.d)}">×</button></figure>`).join('')}</div></div>`:''}`;
+  return `<div class="stack pl-in"><div class="pl-card"><div class="pl-ct"><b>Antes e depois</b></div><div style="margin-top:12px">${cmp}</div>${fotoBtns()}<p class="note">${ic('lock',12)} As fotos ficam só neste aparelho.</p></div>${chg}
+  ${F.length?`<div class="pl-card"><div class="pl-ct"><b>Minhas fotos</b><small>${F.length}</small></div><div class="fgrid">${[...F].reverse().map(f=>`<figure><img src="${f.img}" alt="Foto de ${fmtD(f.d)}"><figcaption>${fmtD(f.d)}</figcaption><button data-rmf="${f.d}" aria-label="Remover foto de ${fmtD(f.d)}">×</button></figure>`).join('')}</div></div>`:''}</div>`;
 }
 function viewRegistros(){
   const d=S.diary,A=S.analises,P_=S.prods,F=S.fotos;
-  const sec=(i_,t,n,body,empty)=>`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="display:flex;align-items:center;gap:8px"><span class="tile" style="width:32px;height:32px">${ic(i_,16)}</span>${t}</h3><span class="small muted">${n}</span></div>${n?body:`<p class="small muted" style="margin-top:8px">${empty}</p>`}</div>`;
-  return `<div class="cnts">${[['face','Análises',A.length,'analise'],['chart','Diário',d.length,'evo'],['image','Fotos',F.length,'ba'],['bottle','Produtos',P_.length,'prod']].map(([i_,l,n,go])=>`<button ${go==='prod'?'data-go="produtos|shelf"':`data-sub="${go}"`}>${ic(i_,20)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>
-  ${sec('face','Análises da pele',A.length,[...A].reverse().map(a=>`<div class="entry"><div class="wk">${fmtD(a.d)}</div><div><div class="small"><b>${esc(a.tipo)}</b></div><div class="small muted">Oleosidade ${a.oleo} · Hidratação ${a.hid} · Poros ${a.poros}</div></div></div>`).join(''),'Nenhuma análise ainda.')}
-  ${sec('chart','Diário',d.length,[...d].reverse().map(e=>`<div class="entry"><div class="wk">${fmtD(e.d)}</div><div><div class="small">Hidratação ${e.hid} · Oleosidade ${e.oleo} · Irritação ${e.irr}</div><div class="small muted">${entTxt(e)}${e.nota?(entTxt(e)?' · ':'')+esc(e.nota):''}</div></div></div>`).join(''),'Nenhum registro ainda.')}
-  ${sec('image','Fotos',F.length,`<div class="fgrid">${[...F].reverse().map(f=>`<figure><img src="${f.img}" alt="Foto de ${fmtD(f.d)}"><figcaption>${fmtD(f.d)}</figcaption></figure>`).join('')}</div>`,'Nenhuma foto guardada.')}
-  ${sec('bottle','Produtos escaneados',P_.length,P_.map(p=>`<div class="entry"><div class="wk">${fmtD(p.d)}</div><div><div class="small"><b>${esc(p.produto||'Produto')}</b></div><div class="small muted">${(VERD[p.veredito]||VERD.cuidado)[1]} · nota ${p.nota}</div></div></div>`).join(''),'Nenhum produto escaneado.')}
-  </div>`.replace(/<\/div>$/,'');
+  const ds=[...new Set([...A.map(a=>a.d),...d.map(e=>e.d),...F.map(f=>f.d),...P_.map(p=>p.d)])].sort().reverse();
+  const day=k=>{const a=A.find(x=>x.d===k),e=d.find(x=>x.d===k),fs=F.filter(f=>f.d===k),ps=P_.filter(p=>p.d===k);
+    return `<div class="pl-tl"><i></i><div class="pl-tc"><b>${fmtD(k)}</b>
+      ${a?`<div class="pl-ev2">${ic('face',16)}<span><b>Análise: pele ${esc(String(a.tipo).toLowerCase())}</b><small>Oleosidade ${a.oleo} · Hidratação ${a.hid} · Poros ${a.poros} · Manchas ${a.manchas} · Linhas ${a.linhas} · Vermelhidão ${a.verm}</small></span></div>`:''}
+      ${e?`<div class="pl-ev2">${ic('chart',16)}<span><b>Diário</b><small>Hidratação ${e.hid} · Oleosidade ${e.oleo} · Irritação ${e.irr}${entTxt(e)?' · '+entTxt(e):''}</small>${e.nota?`<small class="pl-nt">“${esc(e.nota)}”</small>`:''}</span></div>`:''}
+      ${fs.length?`<div class="pl-ev2">${ic('image',16)}<span class="pl-th">${fs.map(f=>`<img src="${f.img}" alt="Foto de ${fmtD(f.d)}">`).join('')}</span></div>`:''}
+      ${ps.map(p=>`<div class="pl-ev2">${ic('bottle',16)}<span><b>${esc(p.produto||'Produto')}</b><small>${(VERD[p.veredito]||VERD.cuidado)[1]} · nota ${p.nota}</small></span></div>`).join('')}</div></div>`};
+  return `<div class="stack pl-in"><div class="pl-nm">${[['face','Análises',A.length,'analise'],['chart','Diário',d.length,'evo'],['image','Fotos',F.length,'ba'],['bottle','Produtos',P_.length,'prod']].map(([i_,l,n,go])=>`<button ${go==='prod'?'data-go="produtos|shelf"':`data-sub="${go}"`}>${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>
+  <div class="pl-card"><div class="pl-ct"><b>Linha do tempo</b><small>${ds.length} ${ds.length===1?'dia':'dias'}</small></div>${ds.length?ds.map(day).join(''):'<p class="small muted" style="margin-top:8px">Nada registrado ainda. Faça uma análise ou um registro no diário.</p>'}</div></div>`;
 }
 
 function welcomeArt(){
@@ -3990,6 +4095,10 @@ document.addEventListener('click',e=>{
   else if(d.hdone){const l=dayLog(),a=l.xh||(l.xh=[]),ix=a.indexOf(d.hdone);if(ix>=0)a.splice(ix,1);else a.push(d.hdone);const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.hshelf&&S.hres){const x=hairPlan(S.hres).produtos.find(z=>z.k===d.hshelf);if(x){const n=((S.hres.marcas||{})[x.k]||{})[S.tier]||x.passo;if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,cat:'cabelo',nota:null,v:'serve',aberto:hoje(),meses:12});toast('Guardado na prateleira')}}const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.shrot){const [id,per]=d.shrot.split('|');const it=S.shelf.find(i=>i.id===id);if(it){const r=String(it.rot||'');it.rot=r.includes(per)?r.replace(per,''):r+per;toast(it.rot.includes(per)?'Adicionado à rotina da '+(per==='m'?'manhã':'noite'):'Tirado da rotina');const y=window.scrollY;render();window.scrollTo(0,y)}}
+  else if(d.pv!==undefined){if(d.pv==='cap'){S.pleCap=true;S.pv=null;S.file=null;S.photo=null;S.photoQ=null;S.err=null;S.okMsg=null}else if(d.pv==='capx'){S.pleCap=false;S.pv=null;S.file=null;S.photo=null;S.photoQ=null;S.err=null}else S.pv=d.pv||null;render();window.scrollTo(0,0)}
+  else if(d.plx){S.plOpen=S.plOpen||{};S.plOpen[d.plx]=!S.plOpen[d.plx];render()}
+  else if(d.evf){S.evoF=+d.evf;render()}
+  else if(d.evk){S.evoK=d.evk;render()}
   else if(d.rit){ritAct(d.rit)}
   else if(d.hrit){S.tab='rotina';S.rotFull=false;S.period=d.hrit;S.perMan=true;ritAct('start|'+d.hrit)}
   else if(d.rper){S.period=d.rper;S.perMan=true;render()}
@@ -3997,7 +4106,7 @@ document.addEventListener('click',e=>{
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
   else if(d.reg){const [k,v]=d.reg.split('|');S.reg[k]=S.reg[k]===v?null:v;document.querySelectorAll('[data-reg^="'+k+'|"]').forEach(b=>b.setAttribute('aria-pressed',String(S.reg[k]===b.dataset.reg.split('|')[1])))}
   else if(d.regc){S.reg.ciclo=!S.reg.ciclo;document.querySelector('[data-regc]').setAttribute('aria-pressed',String(S.reg.ciclo))}
-  else if(d.sub){S.peleSub=d.sub;render();window.scrollTo(0,0)}
+  else if(d.sub){S.peleSub=d.sub;S.pv=null;render();window.scrollTo(0,0)}
   else if(d.act==='shelf-add'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto';
     if(!S.shelf.some(i=>i.n===n)){S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
     gameCheck();render()}
@@ -4121,8 +4230,8 @@ document.addEventListener('change',e=>{
   }
   if((e.target.id==='foto-cam'||e.target.id==='foto-gal')&&e.target.files[0]){
     const f=e.target.files[0];
-    S.file=f;S.result=null;S.err=null;
-    const r=new FileReader();r.onload=()=>{S.photo=r.result;render()};r.readAsDataURL(f);
+    S.file=f;S.result=null;S.err=null;S.photoQ=null;
+    const r=new FileReader();r.onload=()=>{S.photo=r.result;render();peleQ(r.result)};r.readAsDataURL(f);
   }
 });
 
@@ -4163,7 +4272,7 @@ async function analisar(){
       desafio:['oleo','poros','linhas','manchas','verm','resseca'].includes(r.desafio)?r.desafio:null,desafioReg:(Array.isArray(r.desafio_regioes)?r.desafio_regioes:[]).map(String).filter(x=>ZONAS.some(z=>z[0]===x)).slice(0,3),forte:r.ponto_forte?String(r.ponto_forte).slice(0,40):null,prioridades:(Array.isArray(r.prioridades)?r.prioridades:[]).slice(0,3).map(String),atencao:r.atencao?String(r.atencao):null,zonas:(r.zonas&&typeof r.zonas==='object')?{manchas:(Array.isArray(r.zonas.manchas)?r.zonas.manchas:[]).map(String).slice(0,5),verm:(Array.isArray(r.zonas.verm)?r.zonas.verm:[]).map(String).slice(0,5)}:null};ok=true;S.analises=[...S.analises.filter(a=>a.d!==S.result.d),{...S.result}].slice(-30);S.nAn++;uso().an++;xp(50,'Análise concluída','an');if(S.photo)addFoto(S.photo,true)}
   }catch(e){const c=e&&e.code;S.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.');
     if(c==='srv'&&!S.ob.done&&((e.cod==='limite_gratis'&&/gratuita/.test(e.msg||''))||e.cod==='plus')){S.err=null;S.semGratis=true}}
-  if(ok){S.okMsg='pele';S.semGratis=false}
+  if(ok){S.okMsg='pele';S.semGratis=false;S.pleCap=false;S.pv=null}
   S.analyzing=false;gameCheck();if(S.semGratis&&!S.ob.done&&obStepAtual()==='scan')obIr('pronta');render();
   if(ok){if(S.ob.done)toast('Avaliação da pele concluída');window.scrollTo(0,0);if(S.plus)montarRotina()}
 }
