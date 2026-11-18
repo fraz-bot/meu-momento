@@ -259,6 +259,14 @@
 .ra-it>i{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid #D9C7B8;display:grid;place-items:center;color:#fff}.ra-it.ok>i{background:#7FA58C;border-color:#7FA58C}.ra-it.ok b{opacity:.65}.ra-th{flex:none;width:44px;height:52px;display:grid;place-items:center}
 .ra-dias{display:flex;gap:6px;flex-wrap:wrap}.ra-dp{padding:10px 12px;border-radius:999px;border:1.5px solid #D9C7B8;background:#fff;color:var(--ol,#4B2919);font:700 14px var(--f-body,inherit);cursor:pointer;min-width:46px}.ra-dp.on{background:#8A4F33;border-color:#8A4F33;color:#fff}
 .ra-ol{padding-left:18px;margin:0;display:flex;flex-direction:column;gap:6px;font-size:15px}.ra-hr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 0;border-top:1px solid #F0E6DC}.ra-hr b{font-family:var(--f-display)}.ra-hr small{grid-column:1/3;color:var(--muted)}.ra-cta p{color:var(--muted);font-size:15px;margin:0 0 12px}
+
+.mx{gap:10px}.mx-h h2{font-family:var(--f-display);font-size:34px;margin:4px 0 4px;color:var(--ol,#4B2919)}.mx-h p{margin:0 0 6px;color:var(--muted);font-size:16px}
+.mx-pro{border-radius:26px;padding:18px 18px 16px;color:#fff;background:linear-gradient(135deg,#6B3B25 0%,#9A5F43 55%,#C48B6A 100%);box-shadow:0 10px 26px rgba(75,41,25,.22);position:relative;overflow:hidden}.mx-pro:after{content:"";position:absolute;right:-30px;bottom:-40px;width:190px;height:190px;border-radius:50%;background:url(img/rotina-pele.webp) center/cover;opacity:.55;-webkit-mask-image:radial-gradient(circle,#000 35%,transparent 72%);mask-image:radial-gradient(circle,#000 35%,transparent 72%);pointer-events:none}
+.mx-pt{display:flex;align-items:center;gap:12px;position:relative;z-index:1}.mx-pt b{font-family:var(--f-display);font-size:26px;flex:1}.mx-pi{display:grid;place-items:center}.mx-st{background:#E4EFE6;color:#2F5B3E;border-radius:999px;padding:5px 14px;font-size:14px;font-weight:700}.mx-st.off{background:#F6E3D6;color:#8A4F33}
+.mx-pro p{margin:8px 0 14px;font-size:15px;opacity:.95;position:relative;z-index:1;max-width:70%}.mx-pb{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;background:#FFFDFB;color:#4B2919;border:0;border-radius:999px;padding:11px 18px;font:700 15px var(--f-body,inherit);cursor:pointer}
+.mx-g{font-family:var(--f-display);font-size:21px;margin:10px 2px 0;color:var(--ol,#4B2919)}
+.mx-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.mx-t{grid-column:span 2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:98px;padding:12px 6px;background:#FFFDFB;border:1px solid #EFE4D9;border-radius:20px;box-shadow:0 5px 14px rgba(75,41,25,.06);color:var(--ol,#4B2919);cursor:pointer;font:inherit}.mx-t:nth-child(n+4){grid-column:span 3}.mx-t b{font-size:14px;line-height:1.2;font-weight:600}.mx-ti{color:#8A5A3E}.mx-t em{position:absolute;top:7px;right:8px;font-style:normal;font-size:10px;font-weight:700;color:#8A4F33;background:#F6E3D6;border-radius:999px;padding:2px 7px}
+.mx-card{background:#FFFDFB;border:1px solid #EFE4D9;border-radius:22px;padding:2px 14px;box-shadow:0 6px 18px rgba(75,41,25,.06)}.mx-r{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #F0E6DC;padding:13px 0;color:var(--ol,#4B2919);font:inherit;cursor:pointer}.mx-card>.mx-r:first-child{border-top:0}.mx-ri{flex:none;width:42px;height:42px;border-radius:14px;background:#F6E8DE;color:#A8745A;display:grid;place-items:center}.mx-rt{flex:1;min-width:0}.mx-rt b{display:block;font-size:16px}.mx-rt span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mx-r>svg:last-child{color:var(--muted)}.mx-del{display:grid;gap:10px;text-align:center;padding:14px 0}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -3065,22 +3073,28 @@ function viewMais(){
   const sub=S.maisSub;
   const nc=conflitos().length;
   const row=(k,i_,t,d,attr)=>`<button class="mrow" ${attr||`data-mais="${k}"`}><span class="tile">${ic(i_,20)}</span><span class="mt"><b>${t}</b><span>${!S.plus&&k&&!LIVRES.includes(k)?'Pellie Pro':d}</span></span>${ic('chev',18)}</button>`;
-  if(!sub)return `<div class="stack"><h2>Mais</h2>
-    ${row('dicas','sparkle','Dicas para a pele','Alimentação, estação e maquiagem')}
-    ${row('medalhas','star','Medalhas e conquistas',`${MEDALS.filter(m=>S.badges[m.id]).length} de ${MEDALS.length} medalhas · ${S.xp} pts`)}
-    ${row('tema','sparkle','Aparência',(TEMAS.find(t=>t[0]===(S.tema||'rosa'))||TEMAS[0])[1])}
-    ${row('quiz','spot','Quiz da pele',Object.keys(S.quiz||{}).length?Object.keys(S.quiz).length+' de '+QZ.length+' respondidas':'10 perguntas rápidas')}
-    ${row('lembretes','bell','Horários e notificações',`Manhã ${S.rem.m} · Noite ${S.rem.n} · avisos ${S.notif&&S.notif.on?'ligados':'desligados'}`)}
-    ${row('fase','cal','Fase da pele',FASES[S.fase||'padrao'].t)}
-    ${row('ingredientes','leaf','Meus ingredientes',`${S.ing.evitar.length} evito · ${S.ing.fav.length} favoritos`)}
-    ${row('conflitos','alert','Combinações de ativos',nc?`${nc} para cuidar`:'Tudo certo')}
-    ${row('gastos','coin','Gastos do mês',brl(custoTier(S.tier))+' na rotina')}
-    ${row('relatorio','file','Relatório para a consulta','Resumo para o dermatologista')}
-    ${row('plano','crown','Plano Pellie Pro',S.plus?'Ativo':'Assinar')}
-    ${row('conta','cloud','Conta e nuvem',S.cloud?'Sincronizando':'Só neste aparelho')}
-    ${row('privacidade','lock','Privacidade e dados','Política, baixar dados, apagar conta')}
-    ${row('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
-    ${S.askDel?`<div class="card" style="text-align:center;display:grid;gap:10px"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:row('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"')}</div>`;
+  const pro=(k)=>(!S.plus&&k&&!LIVRES.includes(k));
+  const tl=(k,i_,t,d)=>`<button class="mx-t" data-mais="${k}"><span class="mx-ti">${ic(i_,26)}</span><b>${t}</b>${pro(k)?'<em>Pro</em>':''}</button>`;
+  const xr=(k,i_,t,d,attr)=>`<button class="mx-r" ${attr||`data-mais="${k}"`}><span class="mx-ri">${ic(i_,20)}</span><span class="mx-rt"><b>${t}</b><span>${pro(k)?'Pellie Pro':d}</span></span>${ic('chev',18)}</button>`;
+  const dels=S.askDel?`<div class="mx-del"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:xr('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"');
+  if(!sub)return `<div class="stack mx"><div class="mx-h"><h2>Mais</h2><p>Sua central de cuidados, preferências e conta.</p></div>
+    <div class="mx-pro"><div class="mx-pt"><span class="mx-pi">${ic('crown',34)}</span><b>Pellie Pro</b><span class="mx-st ${S.plus?'':'off'}">${S.plus?'Ativo':'Não assinado'}</span></div>
+      <p>${S.plus?'Sua experiência completa de cuidados.':'Desbloqueie a experiência completa de cuidados.'}</p>
+      <button class="mx-pb" data-mais="plano">${S.plus?'Gerenciar assinatura':'Assinar o Pellie Pro'}${ic('chev',16)}</button></div>
+    <h3 class="mx-g">Sua experiência</h3>
+    <div class="mx-grid">${tl('dicas','sparkle','Dicas para a pele')}${tl('medalhas','star','Medalhas e conquistas')}${tl('tema','sparkle','Aparência')}${tl('quiz','spot','Quiz da pele')}${tl('fase','cal','Fase da pele')}</div>
+    <h3 class="mx-g">Configurações dos cuidados</h3>
+    <div class="mx-card">${xr('lembretes','bell','Horários e notificações',`Manhã ${S.rem.m} · Noite ${S.rem.n} · avisos ${S.notif&&S.notif.on?'ligados':'desligados'}`)}
+      ${xr('ingredientes','leaf','Meus ingredientes',`${S.ing.evitar.length} evito · ${S.ing.fav.length} favoritos`)}
+      ${xr('conflitos','alert','Combinações de ativos',nc?`${nc} para cuidar`:'Tudo certo')}</div>
+    <h3 class="mx-g">Acompanhamento</h3>
+    <div class="mx-card">${xr('gastos','coin','Gastos do mês',brl(custoTier(S.tier))+' na rotina')}
+      ${xr('relatorio','file','Relatório para a consulta','Resumo para o dermatologista')}</div>
+    <h3 class="mx-g">Sua conta</h3>
+    <div class="mx-card">${xr('conta','cloud','Conta e nuvem',S.cloud?'Sincronizando':'Só neste aparelho')}
+      ${xr('privacidade','lock','Privacidade e dados','Política, baixar dados, apagar conta')}
+      ${xr('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
+      ${dels}</div></div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
   const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Pellie Pro','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
   return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-go="hoje">${ic('back',18)}Voltar</button></div>${V()}</div>`;
