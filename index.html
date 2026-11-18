@@ -1055,24 +1055,24 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .iny .mpw{--mw:max(110px,min(58vw,250px,calc((100dvh - 365px - env(safe-area-inset-top) - env(safe-area-inset-bottom))/1.9)));gap:6px;margin:0 auto}
 .iny .mpd-lb{min-height:34px}.iny .inh2{font-size:clamp(25px,7.4vw,32px);line-height:1.1;margin:0}.iny .obf{padding:0;margin:0}.iny .brand img{height:38px!important}
 .eclw{display:grid;justify-items:center;gap:10px;margin:2px 0}
-.ecl{--t:0;--kd:calc(var(--h) - 14px);--h:min(30vw,118px);position:relative;width:min(82vw,300px);height:var(--h);border-radius:999px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent;
-  box-shadow:0 0 0 5px #F1F3F5,0 0 0 6.5px #D6DCE2,inset 0 4px 10px rgba(30,50,80,.22),0 16px 30px rgba(40,50,80,calc(.14 + var(--t)*.16))}
+.ecl{--t:0;--w:min(62vw,228px);--h:min(23vw,86px);--kd:calc(var(--h) - 12px);position:relative;width:var(--w);height:var(--h);border-radius:999px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent;
+  box-shadow:0 0 0 4px #F1F3F5,0 0 0 5.5px #D6DCE2,inset 0 4px 10px rgba(30,50,80,.22),0 16px 30px rgba(40,50,80,calc(.14 + var(--t)*.16))}
 .ecl.drag{cursor:grabbing}.ecl:focus-visible{outline:3px solid #A76F5C;outline-offset:8px}
 .es-sky,.es-ngt{position:absolute;inset:0}.es-sky{background:linear-gradient(180deg,#9FCBDD,#B9DCE8)}.es-ngt{background:radial-gradient(120% 140% at 30% 20%,#2F4268,#1D2A47 70%);opacity:var(--t)}
 .es-st{position:absolute;left:0;top:0;width:70%;height:75%;opacity:calc(var(--t)*1.6 - .5)}.es-st path,.es-st circle{fill:#E8EEF8}.ecl.isn .es-st>*{animation:ectw 3.4s ease-in-out infinite;animation-delay:calc(var(--i)*-.5s)}
 @keyframes ectw{50%{opacity:.3}}
 .es-hl{position:absolute;left:0;right:0;bottom:0;width:100%;height:32%;opacity:var(--t)}.es-hl path{fill:#34466C}
 .es-cl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.es-cl path{fill:#F4F8FB}.es-cl .c2 path{fill:#fff}
-.es-cl g{transform:translateX(calc(var(--t)*60px));opacity:calc(1 - var(--t)*1.8);filter:drop-shadow(0 3px 4px rgba(60,90,120,.18))}.es-cl .c1{transform:translateX(calc(var(--t)*90px))}
-.es-k{position:absolute;top:7px;left:calc(7px + var(--t)*(100% - var(--kd) - 14px));width:var(--kd);height:var(--kd);border-radius:50%;filter:drop-shadow(0 6px 10px rgba(30,40,60,.3))}
-.ecl:not(.drag) .es-k{will-change:left}.es-k svg{width:100%;height:100%;display:block}
+.es-cl g{transform:translateX(calc(var(--t)*45px));opacity:calc(1 - var(--t)*1.8);filter:drop-shadow(0 3px 4px rgba(60,90,120,.18))}.es-cl .c1{transform:translateX(calc(var(--t)*90px))}
+.es-k{position:absolute;top:6px;left:6px;transform:translate3d(calc(var(--t)*(var(--w) - var(--kd) - 12px)),0,0);will-change:transform;width:var(--kd);height:var(--kd);border-radius:50%;filter:drop-shadow(0 6px 10px rgba(30,40,60,.3))}
+.ecl.drag .es-st>*{animation:none!important}.ecl.drag .es-k{filter:none}.es-cl g,.es-ngt,.es-st,.es-hl{will-change:opacity,transform}.es-k svg{width:100%;height:100%;display:block}
 .es-sn{opacity:calc(1 - var(--t)*1.15)}.es-sn line{stroke:#FFF3D2;stroke-width:2;stroke-linecap:round;opacity:.8}
 .es-mn{opacity:calc(var(--t)*1.3)}.es-cr circle{fill:#C9D1DA;opacity:calc(var(--t)*.9)}
-.es-cut{fill:#2E3F63;transform:translateX(calc((1 - var(--t))*70px))}
+.es-cut{fill:#2E3F63;transform:translateX(calc((1 - var(--t))*70px));will-change:transform}
 .ec-hand{position:absolute;inset:0;pointer-events:none;animation:echx 2.4s cubic-bezier(.45,0,.3,1) .6s 2 both,echo .4s 5.5s forwards}
 .ec-hand svg{position:absolute;left:calc(var(--kd)*.5);top:46%;filter:drop-shadow(0 4px 6px rgba(60,30,20,.3))}
 .ec-hand.out{animation:echo .25s forwards}
-@keyframes echx{0%{transform:translateX(0);opacity:0}12%{opacity:1;transform:translateX(0)}60%{transform:translateX(calc(min(82vw,300px) - var(--h)));opacity:1}80%,100%{transform:translateX(calc(min(82vw,300px) - var(--h)));opacity:0}}
+@keyframes echx{0%{transform:translateX(0);opacity:0}12%{opacity:1;transform:translateX(0)}60%{transform:translateX(calc(var(--w) - var(--h)));opacity:1}80%,100%{transform:translateX(calc(var(--w) - var(--h)));opacity:0}}
 @keyframes echo{to{opacity:0;visibility:hidden}}
 .ec-tabs{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}.ec-tabs span{min-width:120px;text-align:center}
 .ec-tabs button{display:flex;gap:5px;align-items:center;border:1px solid var(--line,#E4CFC3);background:#fff;border-radius:99px;padding:7px 12px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
@@ -1942,8 +1942,8 @@ function eclGo(to){const el=document.querySelector('.ecl');if(!el)return;cancelA
 function eclInit(){const el=document.querySelector('.ecl');if(!el||el._ok)return;el._ok=1;ECL.a=S.period==='n'?180:0;el.classList.toggle('isn',ECL.a>90);
   let drag=null;const span=()=>{const k=el.querySelector('.es-k');return Math.max(1,el.clientWidth-k.offsetWidth-2*k.offsetLeft)};
   el.addEventListener('pointerdown',e=>{cancelAnimationFrame(ECL.raf);drag={x:e.clientX,y:e.clientY,a:ECL.a,mv:0,w:span()};try{el.setPointerCapture(e.pointerId)}catch(_){}el.classList.add('drag');const h=el.querySelector('.ec-hand');if(h)h.classList.add('out');e.preventDefault()});
-  el.addEventListener('pointermove',e=>{if(!drag)return;drag.mv=Math.max(drag.mv,Math.hypot(e.clientX-drag.x,e.clientY-drag.y));eclSet(el,drag.a+(e.clientX-drag.x)/drag.w*180)});
-  const up=()=>{if(!drag)return;const g=drag;drag=null;el.classList.remove('drag');if(g.mv<6){eclGo(ECL.a>90?0:180);return}eclGo(ECL.a>90?180:0)};
+  el.addEventListener('pointermove',e=>{if(!drag)return;drag.mv=Math.max(drag.mv,Math.hypot(e.clientX-drag.x,e.clientY-drag.y));drag.nx=e.clientX;if(!drag.q){drag.q=requestAnimationFrame(()=>{if(!drag)return;drag.q=0;eclSet(el,drag.a+(drag.nx-drag.x)/drag.w*180)})}});
+  const up=()=>{if(!drag)return;const g=drag;drag=null;if(g.q){cancelAnimationFrame(g.q);if(g.nx!=null)eclSet(el,g.a+(g.nx-g.x)/g.w*180)}el.classList.remove('drag');if(g.mv<6){eclGo(ECL.a>90?0:180);return}eclGo(ECL.a>90?180:0)};
   el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
   el.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Enter',' '].includes(e.key)){e.preventDefault();const to=e.key==='ArrowLeft'||e.key==='ArrowUp'?0:e.key==='ArrowRight'||e.key==='ArrowDown'?180:(ECL.a>90?0:180);if(to!==(ECL.a>90?180:0))eclGo(to)}})}
 function viewRotina(){
