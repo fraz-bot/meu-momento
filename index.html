@@ -240,7 +240,7 @@
 .sht{background:#F8EFE6!important;padding:4px}.sht .gim{width:100%!important;height:100%!important}
 .rt-th{display:grid;place-items:center;background:#F8EFE6;border-radius:16px;overflow:hidden;padding:5px;box-sizing:border-box}
 .pk-im .gim{width:58px!important;height:70px!important}.pk-im.big .gim{width:94px!important;height:104px!important}
-.pxf.gen,.mp-scan.gen{background:linear-gradient(150deg,#FAF3EA,#EBD7C4)}.pxf.gen img,.mp-scan.gen img{object-fit:contain;padding:5%;box-sizing:border-box}.mp-scan.gen img{transform:none;padding:3% 12% 20%}.mp-scan.gen .mp-tag{top:auto;bottom:3.2cqw;left:0;right:0;margin:0 auto;width:max-content;white-space:nowrap}.mp-res{box-sizing:border-box;width:100%;min-width:0}.mp-res>div{min-width:0}.mp-res .mp-ch{display:flex;flex-wrap:wrap;gap:1.4cqw}
+.pxf.lor img{object-position:50% 42%}.pxo .pxf.lor{height:clamp(150px,26vh,215px)}.pxf.gen,.mp-scan.gen{background:linear-gradient(150deg,#FAF3EA,#EBD7C4)}.pxf.gen img,.mp-scan.gen img{object-fit:contain;padding:5%;box-sizing:border-box}.mp-scan.gen img{transform:none;padding:3% 12% 20%}.mp-scan.gen .mp-tag{top:auto;bottom:3.2cqw;left:0;right:0;margin:0 auto;width:max-content;white-space:nowrap}.mp-res{box-sizing:border-box;width:100%;min-width:0}.mp-res>div{min-width:0}.mp-res .mp-ch{display:flex;flex-wrap:wrap;gap:1.4cqw}
 .tt .gim{display:inline-block;vertical-align:middle;margin-right:8px;border-radius:8px}
 .pn .gim,.gb .gim{display:inline-block;vertical-align:middle;margin-right:6px}
 .mph-r span .gim,.mp-r span .gim,.ip-st span .gim{border-radius:6px}
@@ -1748,7 +1748,7 @@ function goTab(t,sub){
   if(t!=='pele'&&t!=='analise'&&t!=='diario')S.okMsg=null;
   if(t==='analise'){S.tab='pele';S.peleSub='analise'}
   else if(t==='diario'){S.tab='pele';S.peleSub='evo'}
-  else{S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos'){S.prodSub=sub==='shelf'?'shelf':'rec';S.pkList=false;S.pkDet=null}}
+  else{if(t==='mais')S.maisFrom=(sub&&S.tab!=='mais')?S.tab:(sub?S.maisFrom:null);S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos'){S.prodSub=sub==='shelf'?'shelf':'rec';S.pkList=false;S.pkDet=null}}
   render();window.scrollTo(0,0);
 }
 function nextStep(){
@@ -1823,7 +1823,7 @@ const ymM=()=>hoje().slice(0,7);
 function uso(){if(!S.uso||S.uso.ym!==ymM())S.uso={ym:ymM(),an:0,sc:0};return S.uso}
 const LIM={an:3,sc:5};
 const podeUsar=k=>!!S.plus||(k==='an'&&!S.ob.done);
-function limite(){toast('Esse recurso é do Pellie Pro');S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
+function limite(){toast('Esse recurso é do Pellie Pro');S.maisFrom=S.tab!=='mais'?S.tab:(S.maisFrom||null);S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
 /* ---------- Fase da pele ---------- */
 const FASES={
  padrao:{t:'Padrão',i:'sparkle',d:'Rotina normal'},
@@ -3097,7 +3097,7 @@ function viewMais(){
       ${dels}</div></div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
   const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Pellie Pro','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
-  return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-go="hoje">${ic('back',18)}Voltar</button></div>${V()}</div>`;
+  return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-act="mais-back">${ic('back',18)}Voltar</button></div>${V()}</div>`;
 }
 const head=(i_,t)=>`<h2 style="display:flex;align-items:center;gap:10px"><span class="tile" style="width:38px;height:38px">${ic(i_,20)}</span>${t}</h2>`;
 function vMedalhas(){
@@ -4071,7 +4071,7 @@ function viewOnboarding(){PFI=0;
   if(st==='scanprod'){const tp=S.result&&S.result.tipo?'pele '+String(S.result.tipo).toLowerCase():'sua pele';return `<div class="ob obx scx spx" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh spt">${nome?nome+', agora':'Agora'} a Pellie confere os produtos por você</h1>
     <p class="obs" style="margin:0">Com a sua análise pronta, cada rótulo é comparado com a sua ${tp.replace(/^sua /,'')}. Veja um exemplo:</p>
-    <div class="pxf spf gen"><img src="img/genericos/B157.webp" alt="Embalagem genérica de sérum sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="pxf spf lor"><img src="img/scanner-loreal.webp" alt="Base de maquiagem sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <ul class="spl" aria-live="polite"><li style="--d:.5s"><i>${ic('check',13)}</i>Lendo o rótulo</li><li style="--d:1.7s"><i>${ic('check',13)}</i>Conferindo os ingredientes</li><li style="--d:2.9s"><i>${ic('check',13)}</i>Comparando com a sua ${tp.replace(/^sua /,'')}</li></ul>
     <div class="obf"><button class="btn obc spb" data-act="ob-next" style="width:100%">Ver resultado do scan</button></div></div>`}
   if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=seco,oleo=r?Math.round(r.oleo):null;
@@ -4080,9 +4080,9 @@ function viewOnboarding(){PFI=0;
       :`<li class="bad"><i></i><span><b>Hidratante demais</b> para a sua oleosidade${oleo!=null?' ('+oleo+'/100)':''}.</span></li><li class="bad"><i></i><span><b>Muita hidratação</b> pode acentuar o brilho da pele oleosa.</span></li>`;
     return `<div class="ob obx pxo" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh pxt">Nem todo produto combina com a sua pele.</h1>
-    <div class="pxf gen"><img src="img/genericos/B157.webp" alt="Embalagem genérica de sérum sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="pxf lor"><img src="img/scanner-loreal.webp" alt="Base de maquiagem sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <div class="card pxr pxs" style="text-align:left"><div class="obk" style="display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
-      <div class="pxh"><div><b class="pxn">Sérum hidratante</b><span class="small muted">Exemplo genérico · sérum facial</span></div>
+      <div class="pxh"><div><b class="pxn">Base hidratante</b><span class="small muted">Exemplo · base de maquiagem</span></div>
       <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="${pc}% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="pxa" cx="32" cy="32" r="28" fill="none" stroke="${cor}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${da} 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">${pc}%</text></svg></div>
       <b class="pxv" style="color:${cor}">${lab}</b>
       <ul class="pxk">${li}</ul>
@@ -4358,10 +4358,10 @@ document.addEventListener('click',e=>{
   else if(d.act==='notif-ok'){const N=S.notif||(S.notif={on:false});(async()=>{try{if(!N.on){const LN=nativoNotif();let okp=true;if(LN){const rr=await LN.requestPermissions();okp=!!(rr&&rr.display==='granted')}else if('Notification' in window&&Notification.permission==='default'){try{okp=(await Notification.requestPermission())!=='denied'}catch(e){}}else if('Notification' in window&&Notification.permission==='denied')okp=false;if(okp){N.on=true;agendarNotif()}}}catch(e){}S.ob.step++;render();window.scrollTo(0,0)})()}
   else if(d.act==='ob-fechar'){S.pwSheet=false;if(S.ofVisto){S.ofOpen=false;S.ob.done=false;obIr('intro')}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
   else if(d.act==='of-no'){S.ofOpen=false;S.pwSheet=false;S.ob.done=false;obIr('intro');render();window.scrollTo(0,0)}
-  else if(d.act==='of-ok'){S.ofOpen=false;S.oferta=true;S.planSel='ano';S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
+  else if(d.act==='of-ok'){S.ofOpen=false;S.oferta=true;S.planSel='ano';S.ob.fresh=!AUTH.user;S.maisFrom=null;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='pw-sheet'){S.pwSheet=true;render()}
   else if(d.act==='pw-close'){S.pwSheet=false;render()}
-  else if(d.act==='ob-plano'){S.pwSheet=false;S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
+  else if(d.act==='ob-plano'){S.pwSheet=false;S.ob.fresh=!AUTH.user;S.maisFrom=null;S.ob.done=true;S.tab='mais';S.maisSub='plano';render();window.scrollTo(0,0)}
   else if(d.act==='cam-ajuda'){toast('Rosto inteiro no oval, com boa luz. Gire a cabeça devagar.')}
   else if(d.act==='cam-snap'){const u=OBCAM.snapNow&&OBCAM.snapNow();if(u)camFinish(u)}
   else if(d.act==='cam-fechar'){camStop();obIr('foto');render()}
@@ -4413,7 +4413,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='qz-pula'){S.qi=(S.qi||0)+1;render()}
   else if(d.act==='qz-volta'){S.qi=Math.max(0,(S.qi||0)-1);render()}
   else if(d.act==='qz-refazer'){S.quiz={};S.qi=0;render()}
-  else if(d.act==='ob-quiz'){S.ob.done=true;S.tab='mais';S.maisSub='quiz';S.qi=0;gameCheck();render();window.scrollTo(0,0)}
+  else if(d.act==='ob-quiz'){S.maisFrom=null;S.ob.done=true;S.tab='mais';S.maisSub='quiz';S.qi=0;gameCheck();render();window.scrollTo(0,0)}
   else if(d.act==='entrar'&&!AUTH.user){AUTH.want=true;render()}
   else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Bem-vinda de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
@@ -4423,7 +4423,8 @@ document.addEventListener('click',e=>{
   else if(d.tema){S.tema=d.tema;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='abrir-mais'){S.tab='mais';S.maisSub=null;render();window.scrollTo(0,0)}
   else if(d.act==='mais-voltar'){S.maisSub=null;render();window.scrollTo(0,0)}
-  else if(d.mais){S.maisSub=d.mais;if(d.mais==='comunidade')commStart();render();window.scrollTo(0,0)}
+  else if(d.act==='mais-back'){const f=S.maisFrom;S.maisFrom=null;if(f&&f!=='mais')goTab(f);else{S.maisSub=null;render();window.scrollTo(0,0)}}
+  else if(d.mais){if(!S.maisSub)S.maisFrom=null;S.maisSub=d.mais;if(d.mais==='comunidade')commStart();render();window.scrollTo(0,0)}
   else if(d.act==='notif-toggle'){notifToggle()}
   else if(d.ntk){const N=S.notif||(S.notif={on:false});if(N.on){N[d.ntk]=N[d.ntk]===false;agendarNotif();const y=window.scrollY;render();window.scrollTo(0,y)}}
   else if(d.act==='rem-toggle'){S.rem.on=!S.rem.on;render()}
