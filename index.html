@@ -1395,6 +1395,7 @@ const pad=n=>String(n).padStart(2,'0');
 const hoje=()=>{const t=new Date();return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate())};
 const fmtD=d=>d?d.slice(8,10)+'/'+d.slice(5,7):'';
 load();
+try{(S.shelf||[]).forEach(i=>{if(i.img&&i.imgv!==2)delete i.img})}catch(e){}
 if(!S.perMan)S.period=new Date().getHours()<16?'m':'n';
 if(S.result&&!S.analises.length)S.analises=[S.result];
 
@@ -2115,7 +2116,7 @@ function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.
 // Prateleira ilustrada: cresce uma tábua a cada 4 produtos
 function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img?`<span class="sht sv"><img src="${x.img}" alt=""></span>`:FOTOS?shelfThumb(x):pimgOld(shelfKey(x),58)}</div>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${FOTOS?shelfThumb(x):pimgOld(shelfKey(x),58)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
@@ -2226,7 +2227,7 @@ async function pfStart(){if(!S.plus){limite();return}if(!S.prodFile||(S.pf&&S.pf
     if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
     else{S.pf.idr={produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
-      ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60))};
+      ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null};
       S.pf.p=100;S.pf.st='conf'}
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;render()}
@@ -2249,8 +2250,10 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;const i=f.idr,a
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;gameCheck();render()}
-function pfThumb(src){return new Promise(res=>{if(!src)return res(null);const im=new Image();im.onload=()=>{try{const M=200,k=Math.min(1,M/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.82))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
-async function pfSetImg(it){if(!it||it.img||!S.pf||!S.pf.photo)return;const t=await pfThumb(S.pf.photo);if(t){it.img=t;save();render()}}
+function pfThumb(src,bx){return new Promise(res=>{if(!src||!bx)return res(null);let [x0,y0,x1,y1]=bx;if(x1<=x0||y1<=y0||(x1-x0)*(y1-y0)<.01)return res(null);const im=new Image();im.onload=()=>{try{const W=im.width,H=im.height,pd=.04;
+    x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);const sx=x0*W,sy=y0*H,sw=(x1-x0)*W,sh=(y1-y0)*H,M=220,k=Math.min(1,M/Math.max(sw,sh)),c=document.createElement('canvas');
+    c.width=Math.max(1,Math.round(sw*k));c.height=Math.max(1,Math.round(sh*k));c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.85))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
+async function pfSetImg(it){if(!it||it.img||!S.pf||!S.pf.photo||!S.pf.idr)return;const t=await pfThumb(S.pf.photo,S.pf.idr.caixa);if(t){it.img=t;it.imgv=2;save();render()}}
 const shTh=(i,sz)=>i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht ico" style="width:${sz}px;height:${sz}px">${ic(i.cat==='cabelo'?'hair':'bottle',Math.round(sz*.45))}</span>`;
 function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('bottle',18)}Adicionar à minha prateleira</button>`}
