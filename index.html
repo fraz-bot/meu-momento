@@ -307,8 +307,8 @@ nav button[aria-current="page"]{color:var(--accent);background:var(--soft)}
 .chips span{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface);color:var(--sage);border:1px solid var(--line)}
 .sh{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
 .sh:first-of-type{border-top:0}
-.shcut{max-width:62px;max-height:76px;object-fit:contain;filter:drop-shadow(0 4px 4px rgba(80,40,30,.25))}.sht.ld{background:linear-gradient(100deg,#fff 30%,#FBEDE4 50%,#fff 70%) 0 0/200% 100%;animation:pthsh 1.3s linear infinite}
-.sht{flex:none;border-radius:12px;background:#fff;border:1px solid var(--line,#EAD3C4);display:grid;place-items:center;overflow:hidden;padding:3px;box-sizing:border-box}.sht img{max-width:100%;max-height:100%;object-fit:contain;display:block}.sht.ico{background:var(--soft,#F6E3D8);color:#A76F5C;border:0}.sht.sv{width:54px;height:66px;background:none;border:0;padding:0;filter:drop-shadow(0 3px 4px rgba(80,40,30,.2))}.sht.sv img{border-radius:8px}
+.shcut{max-width:52px;max-height:64px;object-fit:contain;filter:drop-shadow(0 4px 4px rgba(80,40,30,.25))}.sht.ld{background:linear-gradient(100deg,#fff 30%,#FBEDE4 50%,#fff 70%) 0 0/200% 100%;animation:pthsh 1.3s linear infinite}
+.sht{flex:none;border-radius:12px;background:#fff;border:1px solid var(--line,#EAD3C4);display:grid;place-items:center;overflow:hidden;padding:3px;box-sizing:border-box}.sht img{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain;display:block}.sht.ico{background:var(--soft,#F6E3D8);color:#A76F5C;border:0}.sht.sv{width:54px;height:66px;background:none;border:0;padding:0;filter:drop-shadow(0 3px 4px rgba(80,40,30,.2))}.sht.sv img{border-radius:8px}
 .sh .sn2{width:44px;height:44px;border-radius:12px;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--f-display)}
 .sh .sn2.ok{background:var(--sage)}.sh .sn2.cuidado{background:var(--warn)}.sh .sn2.evitar{background:var(--alert)}
 .sh .si{flex:1;min-width:0}
@@ -2258,16 +2258,23 @@ function pfThumb(src,bx){return new Promise(res=>{if(!src||!bx)return res(null);
 let BGR=null;
 function bgrLoad(){if(BGR)return BGR;BGR=new Promise((ok,no)=>{const s=document.createElement('script');s.src='bgr/ort.wasm.min.js';s.onload=async()=>{try{ort.env.wasm.wasmPaths=new URL('bgr/',location.href).href;ort.env.wasm.numThreads=1;ok(await ort.InferenceSession.create('bgr/u2netp.onnx',{executionProviders:['wasm']}))}catch(e){BGR=null;no(e)}};s.onerror=()=>{BGR=null;no(new Error('load'))};document.head.appendChild(s)});return BGR}
 async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=src});
-  const W=im.width,H=im.height;let [x0,y0,x1,y1]=bx&&bx.length===4?bx:[0,0,1,1];const pd=.03;x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);
+  const W=im.width,H=im.height;let [x0,y0,x1,y1]=bx&&bx.length===4?bx:[0,0,1,1];const pd=Math.max(.06,.18*Math.max(x1-x0,y1-y0));x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);
   const sx=Math.round(x0*W),sy=Math.round(y0*H),sw=Math.max(1,Math.round((x1-x0)*W)),sh=Math.max(1,Math.round((y1-y0)*H));
   const S_=320,c=document.createElement('canvas');c.width=c.height=S_;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(im,sx,sy,sw,sh,0,0,S_,S_);const px=g.getImageData(0,0,S_,S_).data;
   let mx=0;for(let i=0;i<px.length;i+=4)mx=Math.max(mx,px[i],px[i+1],px[i+2]);mx=mx||255;
   const M=[.485,.456,.406],D=[.229,.224,.225],inp=new Float32Array(3*S_*S_);for(let i=0,p=0;i<S_*S_;i++,p+=4)for(let ch=0;ch<3;ch++)inp[ch*S_*S_+i]=(px[p+ch]/mx-M[ch])/D[ch];
   const ses=await bgrLoad();const out=await ses.run({[ses.inputNames[0]]:new ort.Tensor('float32',inp,[1,3,S_,S_])});const m=out[ses.outputNames[0]].data;
   let lo=1e9,hi=-1e9;for(let i=0;i<S_*S_;i++){lo=Math.min(lo,m[i]);hi=Math.max(hi,m[i])}
-  const mc=document.createElement('canvas');mc.width=mc.height=S_;const mg=mc.getContext('2d');const md=mg.createImageData(S_,S_);for(let i=0;i<S_*S_;i++){const v=(m[i]-lo)/((hi-lo)||1);md.data[i*4+3]=Math.round(255*Math.min(1,Math.max(0,(v-.15)/.7)))}mg.putImageData(md,0,0);
-  const OW=Math.min(sw,360),OH=Math.round(OW*sh/sw),oc=document.createElement('canvas');oc.width=OW;oc.height=OH;const og=oc.getContext('2d');og.drawImage(im,sx,sy,sw,sh,0,0,OW,OH);og.globalCompositeOperation='destination-in';og.imageSmoothingQuality='high';og.drawImage(mc,0,0,OW,OH);
-  const a=og.getImageData(0,0,OW,OH).data;let X0=OW,Y0=OH,X1=-1,Y1=-1,n=0;for(let y=0;y<OH;y++)for(let x=0;x<OW;x++)if(a[(y*OW+x)*4+3]>128){n++;if(x<X0)X0=x;if(x>X1)X1=x;if(y<Y0)Y0=y;if(y>Y1)Y1=y}
+  const nv=new Float32Array(S_*S_);for(let i=0;i<S_*S_;i++)nv[i]=(m[i]-lo)/((hi-lo)||1);
+  {const keep=new Uint8Array(S_*S_),bx0=bx&&bx.length===4?bx:[0,0,1,1],cx=Math.round(((bx0[0]+bx0[2])/2-x0)/(x1-x0)*S_),cy=Math.round(((bx0[1]+bx0[3])/2-y0)/(y1-y0)*S_);
+   let st=-1,bd=1e9;for(let y=0;y<S_;y+=2)for(let x=0;x<S_;x+=2){const i=y*S_+x;if(nv[i]>.5){const dd=(x-cx)**2+(y-cy)**2;if(dd<bd){bd=dd;st=i}}}
+   if(st>=0){const q=[st];keep[st]=1;while(q.length){const i=q.pop(),x=i%S_,y=(i/S_)|0;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const X=x+dx,Y=y+dy;if(X<0||Y<0||X>=S_||Y>=S_)continue;const j=Y*S_+X;if(!keep[j]&&nv[j]>.5){keep[j]=1;q.push(j)}}}
+     const R=2,k2=new Uint8Array(S_*S_);for(let y=0;y<S_;y++)for(let x=0;x<S_;x++)if(keep[y*S_+x])for(let dy=-R;dy<=R;dy++){const Y=y+dy;if(Y<0||Y>=S_)continue;for(let dx=-R;dx<=R;dx++){const X=x+dx;if(X>=0&&X<S_)k2[Y*S_+X]=1}}
+     for(let i=0;i<S_*S_;i++)if(!k2[i])nv[i]=0}}
+  const mc=document.createElement('canvas');mc.width=mc.height=S_;const mg=mc.getContext('2d');const md=mg.createImageData(S_,S_);for(let i=0;i<S_*S_;i++){const v=nv[i];md.data[i*4+3]=Math.round(255*Math.min(1,Math.max(0,(v-.15)/.7)))}mg.putImageData(md,0,0);
+  const OW=Math.min(sw,480),OH=Math.round(OW*sh/sw),oc=document.createElement('canvas');oc.width=OW;oc.height=OH;const og=oc.getContext('2d');og.drawImage(im,sx,sy,sw,sh,0,0,OW,OH);og.globalCompositeOperation='destination-in';og.imageSmoothingQuality='high';og.drawImage(mc,0,0,OW,OH);
+  const a=og.getImageData(0,0,OW,OH).data;let X0=OW,Y0=OH,X1=-1,Y1=-1,n=0;const rc=new Array(OH).fill(0),cc=new Array(OW).fill(0);for(let y=0;y<OH;y++)for(let x=0;x<OW;x++)if(a[(y*OW+x)*4+3]>128){n++;rc[y]++;cc[x]++}
+  for(let y=0;y<OH;y++)if(rc[y]>=Math.max(2,OW*.02)){if(y<Y0)Y0=y;Y1=y}for(let x=0;x<OW;x++)if(cc[x]>=Math.max(2,OH*.02)){if(x<X0)X0=x;X1=x}if(X1<0||Y1<0)return null;
   if(n<OW*OH*.03)return null;const tw=X1-X0+1,th=Y1-Y0+1,k=Math.min(1,240/Math.max(tw,th)),fc=document.createElement('canvas');fc.width=Math.round(tw*k);fc.height=Math.round(th*k);fc.getContext('2d').drawImage(oc,X0,Y0,tw,th,0,0,fc.width,fc.height);return fc.toDataURL('image/png')}
 async function pfSetImg(it){if(!it||it.imgv===3||!S.pf||!S.pf.photo||!S.pf.idr)return;const ph=S.pf.photo,bx=S.pf.idr.caixa;it.imgBusy=1;render();let t=null;try{t=await bgRemove(ph,bx)}catch(e){t=null}
   if(t){it.img=t;it.imgv=3}else{const c=await pfThumb(ph,bx);if(c){it.img=c;it.imgv=2}}delete it.imgBusy;save();render()}
