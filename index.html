@@ -1207,6 +1207,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pf-body{overflow-y:auto}@media(max-height:760px){.pf-big{font-size:clamp(88px,17vh,124px)}.pf-circ{--cs:clamp(80px,13vh,124px)}.pf-body{gap:8px}.pf-lab{font-size:15.5px}}
 .pf-hd .pf-sair{width:auto;height:auto;justify-self:end;font:inherit;font-size:14px;font-weight:700;color:#7C5A4B;background:#F3E3D9;border-radius:99px;padding:7px 14px}
 .pf-exit{display:inline-flex;gap:6px;align-items:center;justify-content:center;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:#9A7B6C;padding:10px 14px;cursor:pointer;margin:2px auto 0;text-decoration:underline;text-underline-offset:3px}
+.rsx-p{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px;padding:8px 10px;background:var(--soft,#FBF0EA);border-radius:12px;font-size:13px}.rsx-p span{display:flex;gap:5px;align-items:center;min-width:0}.rsx-p em{font-style:normal;color:var(--muted)}.rsx-p .chip{flex:none;display:inline-flex;gap:4px;align-items:center;font-size:12px;padding:4px 10px}.rsx-p b{flex:none;display:inline-flex;gap:4px;align-items:center;color:var(--sage,#4F8A6B);font-size:12px}
 .pf-shb{width:100%;display:flex;justify-content:center;gap:8px;margin-top:6px}.pf-shok{display:flex;gap:8px;align-items:center;justify-content:center;width:100%;color:#2F5B3E;font-weight:700;background:#E8F1EA;border-radius:14px;padding:10px 12px;margin-top:6px;font-size:14.5px}.pf-shok .chip{margin-left:auto;font-size:12px;padding:4px 10px}
 @media(prefers-reduced-motion:reduce){.pfg-go{animation:none}}
 /* exemplo do scanner */
@@ -2097,7 +2098,7 @@ function viewRotina(){
     <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
     ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
       <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
-      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];return ex&&FOTOS?prodCard(ex,k,S.tier):''})()}</div></div>`}).join('')}
+      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(!ex)return '';if(FOTOS)return prodCard(ex,k,S.tier);const ja=S.shelf.some(i=>i.n===ex&&stOf(i)==='tenho');return `<div class="rsx-p"><span>${ic('bottle',14)}<em>Sugestão:</em> ${esc(ex)}</span>${ja?`<b>${ic('check',13)}Na prateleira</b>`:`<button class="chip" data-rsh="${per}|${k}">${ic('plus',13)}Prateleira</button>`}</div>`})()}</div></div>`}).join('')}
   </div>
   ${tratRot(per)}
   ${shelfRot(per)}
@@ -2249,6 +2250,9 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;const i=f.idr,a
   if(S.pf)S.pf.busy=false;gameCheck();render()}
 function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('bottle',18)}Adicionar à minha prateleira</button>`}
+function pfRotBtn(){const f=S.pf,n=S.prodResult&&S.prodResult.produto;if(!f||!f.cmp||!n)return '';const ro=f.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn',lab={m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr];
+  const it=S.shelf.find(x=>x.n===n&&stOf(x)==='tenho'),ja=it&&[...pr].every(c=>inRot(it,c));
+  return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Na sua rotina ${lab}</span><button class="chip" data-act="pf-rot-ver">Ver rotina</button></div>`:`<button class="btn obc pf-shb" data-act="pf-rot">${ic(pr==='n'?'moon':'sun',18)}Adicionar à rotina ${lab}</button>`}
 function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img src="${f.photo}" alt="Foto do produto">`:`<span class="pf-noph">${ic('bottle',34)}</span>`;
   const voltar=['det','ing'].includes(f.st);
   const hd=`<div class="pf-hd">${voltar?`<button data-act="pf-back" aria-label="Voltar">${ic('back',22)}</button>`:'<span></span>'}<img src="pellie-logo.png" alt="Pellie"><button class="pf-sair" data-act="pf-close" aria-label="Sair da avaliação">Sair</button></div>`;
@@ -2285,7 +2289,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
       <div class="pf-blk"><h3>${ic('sparkle',16)}O que significa?</h3><p>${esc(c.finalidade)}</p></div>
       <div class="pf-blk"><h3>${ic('face',16)}${sc.cls==='baixa'?'Por que não combina tanto com você?':'Por que combina com você?'}</h3><p>${esc(c.por_que)}</p></div>
       <div class="pf-blk"><h3>${ic('routine',16)}Como ele se encaixa na sua rotina</h3><div class="pf-chips sm"><span>${ic(ro.periodo==='noite'?'moon':'sun',13)}${per}</span>${ro.etapa?`<span>Etapa: ${esc(ro.etapa)}</span>`:''}</div>${ro.como?`<p>${esc(ro.como)}</p>`:''}${ro.combinar?`<p class="pf-muted">${esc(ro.combinar)}</p>`:''}</div>
-      <div class="pf-ft">${pfShelf(true)}<button class="btn ${S.shelf.some(x=>x.n===(S.prodResult&&S.prodResult.produto))?'obc':'ghost'}" data-act="pf-ing" style="margin-top:6px">Ingredientes e alertas</button></div></div>`}
+      <div class="pf-ft">${pfRotBtn()}${pfShelf(false)}<button class="btn ghost" data-act="pf-ing" style="margin-top:6px">Ingredientes e alertas</button></div></div>`}
   else if(f.st==='ing'){const c=f.cmp,i=f.idr,al=[...c.evitar_encontrados.map(x=>({texto:`Contém ${x}, que você marcou para evitar.`,fundamento:'Da sua lista de ingredientes a evitar.'})),...c.alertas];const conh=c.ativos.filter(a=>a.origem==='conhecimento');
     b=`<div class="pf-body pf-in pf-scroll">${al.length?`<div class="pf-alert"><h3>${ic('alert',20)}Fique de olho</h3>${al.map(a=>`<p><b>${esc(a.texto)}</b>${a.fundamento?`<small>${esc(a.fundamento)}</small>`:''}</p>`).join('')}</div>`:`<div class="pf-rec pc-ok">${ic('checkc',20)}<div><b>Nenhum alerta importante</b><p>Não encontramos motivo para cuidados especiais com o seu perfil.</p></div></div>`}
       <div class="pf-blk"><h3>${ic('flask',16)}Principais ativos</h3>${c.ativos.length?`<div class="pf-atv">${c.ativos.map(a=>`<details><summary>${esc(a.nome)}${a.origem==='conhecimento'?'<em>não confirmado no rótulo</em>':''}</summary><dl>${a.o_que?`<dt>O que é</dt><dd>${esc(a.o_que)}</dd>`:''}${a.para_que?`<dt>Para que serve</dt><dd>${esc(a.para_que)}</dd>`:''}${a.beneficios?`<dt>Benefícios conhecidos</dt><dd>${esc(a.beneficios)}</dd>`:''}${a.cuidados?`<dt>Cuidados</dt><dd>${esc(a.cuidados)}</dd>`:''}</dl></details>`).join('')}</div>`:'<p class="pf-muted">Não foi possível identificar os ativos pela foto.</p>'}</div>
@@ -2295,7 +2299,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
         <p><u>Avaliação da IA:</u> compatibilidade, explicações e alertas, a partir do rótulo e do seu perfil.</p>
         ${c.nao_confirmado.length?`<p><u>Não confirmado:</u> ${c.nao_confirmado.map(esc).join('; ')}.</p>`:''}
         <small>A Pellie não consulta o site do fabricante. Teste numa área pequena antes de usar no rosto todo.</small></div></div>
-      <div class="pf-ft">${pfShelf(false)}<button class="btn obc" data-act="pf-new" style="margin-top:6px">${ic('scan',18)}Escanear outro produto</button></div></div>`}
+      <div class="pf-ft">${pfRotBtn()}${pfShelf(false)}<button class="btn ghost" data-act="pf-new" style="margin-top:6px">${ic('scan',18)}Escanear outro produto</button></div></div>`}
   const PN={id:1,conf:1,cmp:2,score:2,det:3,ing:4}[f.st],PT=['Identificar','Comparar','Resultado','Ingredientes'];
   const stp=`<div class="pf-stp" aria-label="Passo ${PN} de 4">${PT.map((t,i)=>`<span class="${i+1<PN?'ok':i+1===PN?'on':''}"><i></i>${t}</span>`).join('')}</div>`;
   const sair=`<button class="pf-exit" data-act="pf-close">${ic('x',14)}Sair da avaliação</button>`;
@@ -3796,6 +3800,12 @@ document.addEventListener('click',e=>{
   else if(d.act==='pf-shelf'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',it=S.shelf.find(i=>i.n===n);
     if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
     toast('Adicionado à sua prateleira');gameCheck();render()}
+  else if(d.act==='pf-rot'&&S.pf&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',ro=S.pf.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn';let it=S.shelf.find(i=>i.n===n);
+    if(!it){it={id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
+    it.st='tenho';if(!it.aberto)it.aberto=hoje();let rt=String(it.rot||'');for(const c of pr)if(!rt.includes(c))rt+=c;it.rot=rt;
+    toast('Na sua rotina '+{m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr]);gameCheck();render()}
+  else if(d.act==='pf-rot-ver'){const ro=S.pf&&S.pf.cmp?S.pf.cmp.rotina.periodo:'manha';S.pf=null;S.tab='rotina';S.period=ro==='noite'?'n':'m';S.perMan=true;render();window.scrollTo(0,0)}
+  else if(d.rsh){const [per,k]=d.rsh.split('|'),nm=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(nm){let it=S.shelf.find(i=>i.n===nm);if(!it){it={id:String(Date.now()),n:nm,tp:P[k].n,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}it.st='tenho';toast(nm+' na sua prateleira');gameCheck();const y=window.scrollY;render();window.scrollTo(0,y)}}
   else if(d.act==='pf-shelf-ver'){S.pf=null;S.tab='produtos';S.prodSub='shelf';render();window.scrollTo(0,0)}
   else if(d.act==='pf-det'&&S.pf){S.pf.st='det';render();window.scrollTo(0,0)}
   else if(d.act==='pf-ing'&&S.pf){S.pf.st='ing';render();window.scrollTo(0,0)}
