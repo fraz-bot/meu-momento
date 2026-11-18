@@ -1196,6 +1196,17 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pf-src{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px dashed #E2CFC3;border-radius:18px;padding:12px 14px;color:#7C5A4B}.pf-src b{display:block;color:var(--ink);font-size:14px}.pf-src p{margin:5px 0 0;font-size:13px;line-height:1.4}.pf-src u{text-decoration:none;font-weight:700;color:#4A2A1E}.pf-src small{display:block;margin-top:6px;font-size:12px}
 .pf-he{width:100%;border:0;background:none;font:inherit;cursor:pointer;color:inherit;align-items:center}
 @media(prefers-reduced-motion:reduce){.pf-in>*,.pf-flor,.pf-fac span,.pf-circ{animation:none}}
+.pfg h2{margin:4px 0 10px;font-size:22px;line-height:1.2}.pfg-k{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#A76F5C}
+.pfg-s{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:10px}.pfg-s li{display:flex;gap:12px;align-items:flex-start;color:#B9A497}.pfg-s li i{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid #E2CFC3;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px}
+.pfg-s li b{display:block;font-size:15px}.pfg-s li small{display:block;font-size:13px;color:var(--muted);margin-top:1px}.pfg-s li.on{color:var(--ink)}.pfg-s li.on i{background:#4A2A1E;border-color:#4A2A1E;color:#fff;box-shadow:0 0 0 5px rgba(74,42,30,.12)}.pfg-s li.ok{color:#4A2A1E}.pfg-s li.ok i{background:#A76F5C;border-color:#A76F5C;color:#fff}
+.pfg-tips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}.pfg-tips span{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:600;background:#F6E3D8;color:#8A4A34;border-radius:99px;padding:5px 10px}
+.pfg-go{width:100%;display:flex;justify-content:center;gap:8px;animation:pwp 2.4s ease-in-out infinite}
+.pfg-alt{display:flex;justify-content:center;gap:18px;margin-top:10px}.pfg-alt label{display:inline-flex;gap:6px;align-items:center;font-size:14px;font-weight:600;color:#7C5A4B;cursor:pointer;padding:6px}
+.pfg-prev{display:flex;gap:12px;align-items:center;background:#F3F7F2;border-radius:16px;padding:10px;margin-bottom:12px}.pfg-th{flex:none;width:58px;height:58px;border-radius:14px;background:#fff;padding:4px;box-sizing:border-box;display:grid}.pfg-th img{width:50px;height:50px;object-fit:contain;display:block}.pfg-prev b{display:block;color:#2F5B3E}.pfg-prev small{color:var(--muted)}
+.pf-stp{flex:none;display:flex;gap:6px;width:100%;max-width:560px;margin:0 auto;padding:0 22px 6px;box-sizing:border-box}.pf-stp span{flex:1;display:flex;flex-direction:column;gap:4px;font-size:10.5px;font-weight:700;color:#C9B2A5;text-align:center}.pf-stp i{height:4px;border-radius:3px;background:#EAD8CC}.pf-stp .ok{color:#A76F5C}.pf-stp .ok i{background:#A76F5C}.pf-stp .on{color:#4A2A1E}.pf-stp .on i{background:linear-gradient(90deg,#4A2A1E,#A76F5C)}
+.pf-body{overflow-y:auto}@media(max-height:760px){.pf-big{font-size:clamp(70px,13vh,96px)}.pf-circ{--cs:clamp(92px,15vh,140px)}.pf-body{gap:8px}.pf-lab{font-size:15.5px}}
+.pf-shb{width:100%;display:flex;justify-content:center;gap:8px;margin-top:6px}.pf-shok{display:flex;gap:8px;align-items:center;justify-content:center;width:100%;color:#2F5B3E;font-weight:700;background:#E8F1EA;border-radius:14px;padding:10px 12px;margin-top:6px;font-size:14.5px}.pf-shok .chip{margin-left:auto;font-size:12px;padding:4px 10px}
+@media(prefers-reduced-motion:reduce){.pfg-go{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2234,6 +2245,8 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;const i=f.idr,a
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;gameCheck();render()}
+function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
+  return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('bottle',18)}Adicionar à minha prateleira</button>`}
 function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img src="${f.photo}" alt="Foto do produto">`:`<span class="pf-noph">${ic('bottle',34)}</span>`;
   const voltar=['det','ing'].includes(f.st);
   const hd=`<div class="pf-hd"><button data-act="${voltar?'pf-back':'pf-close'}" aria-label="${voltar?'Voltar':'Fechar'}">${ic(voltar?'back':'x',22)}</button><img src="pellie-logo.png" alt="Pellie"><span></span></div>`;
@@ -2263,15 +2276,14 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
       <span class="pf-badge ${C[2]}">${ic(sc.cls==='boa'?'checkc':sc.cls==='mod'?'alert':'xc',18)}${C[0]}</span><p class="pf-s" style="margin:0">${esc(f.cmp.resumo)}</p>
       <details class="pf-det"><summary>Como calculamos</summary><ul class="pf-crit">${sc.parts.map(p=>`<li><span><b>${p.lab}</b>${p.mot?`<small>${esc(p.mot)}</small>`:''}</span><em>${p.pts}/${p.max}</em></li>`).join('')}${sc.pen?`<li><span><b>Ingredientes que você evita</b><small>${esc(f.cmp.evitar_encontrados.join(', '))}</small></span><em>-${sc.pen}</em></li>`:''}</ul>
         <small>${sc.teto?'Sem a lista de ingredientes na foto, a nota fica limitada a 80%. ':''}Os pontos de cada critério vêm da avaliação da IA sobre o que foi lido no rótulo e o seu perfil. É uma estimativa, não um teste clínico.</small></details>
-      <div class="pf-ft"><button class="btn obc" data-act="pf-det">Ver análise completa</button></div></div>`}
+      <div class="pf-ft"><button class="btn obc" data-act="pf-det">Ver análise completa</button>${pfShelf(false)}</div></div>`}
   else if(f.st==='det'){const sc=f.sc,C=PF_CLS[sc.cls],c=f.cmp,ro=c.rotina,per={manha:'Manhã',noite:'Noite',ambos:'Manhã e noite'}[ro.periodo];const naP=S.shelf.some(x=>x.n===(S.prodResult&&S.prodResult.produto));
     b=`<div class="pf-body pf-in pf-scroll"><div class="pf-top"><div class="pf-thumb">${ph}</div><div class="pf-ti"><b>${esc(f.nome)}</b>${f.marca?`<small>${esc(f.marca)}</small>`:''}<span class="pf-chips sm"><span>${esc(f.idr.categoria)}</span></span></div><div class="pf-mini ${C[2]}"><b>${sc.v}%</b><small>compatível</small></div></div>
       <div class="pf-rec ${C[2]}">${ic(sc.cls==='boa'?'checkc':sc.cls==='mod'?'alert':'xc',20)}<div><b>${C[1]}</b><p>${esc(c.resumo)}</p></div></div>
       <div class="pf-blk"><h3>${ic('sparkle',16)}O que significa?</h3><p>${esc(c.finalidade)}</p></div>
       <div class="pf-blk"><h3>${ic('face',16)}${sc.cls==='baixa'?'Por que não combina tanto com você?':'Por que combina com você?'}</h3><p>${esc(c.por_que)}</p></div>
       <div class="pf-blk"><h3>${ic('routine',16)}Como ele se encaixa na sua rotina</h3><div class="pf-chips sm"><span>${ic(ro.periodo==='noite'?'moon':'sun',13)}${per}</span>${ro.etapa?`<span>Etapa: ${esc(ro.etapa)}</span>`:''}</div>${ro.como?`<p>${esc(ro.como)}</p>`:''}${ro.combinar?`<p class="pf-muted">${esc(ro.combinar)}</p>`:''}</div>
-      ${naP?`<p class="small" style="color:var(--sage);font-weight:700;margin:0">${ic('checkc',16)} Está na sua prateleira</p>`:`<div class="row" style="gap:8px;flex-wrap:nowrap"><button class="btn ghost" data-act="shelf-add" style="flex:1">Já tenho</button><button class="btn ghost" data-act="shelf-want" style="flex:1">Quero comprar</button></div>`}
-      <div class="pf-ft"><button class="btn obc" data-act="pf-ing">Ingredientes e alertas</button></div></div>`}
+      <div class="pf-ft">${pfShelf(true)}<button class="btn ${S.shelf.some(x=>x.n===(S.prodResult&&S.prodResult.produto))?'obc':'ghost'}" data-act="pf-ing" style="margin-top:6px">Ingredientes e alertas</button></div></div>`}
   else if(f.st==='ing'){const c=f.cmp,i=f.idr,al=[...c.evitar_encontrados.map(x=>({texto:`Contém ${x}, que você marcou para evitar.`,fundamento:'Da sua lista de ingredientes a evitar.'})),...c.alertas];const conh=c.ativos.filter(a=>a.origem==='conhecimento');
     b=`<div class="pf-body pf-in pf-scroll">${al.length?`<div class="pf-alert"><h3>${ic('alert',20)}Fique de olho</h3>${al.map(a=>`<p><b>${esc(a.texto)}</b>${a.fundamento?`<small>${esc(a.fundamento)}</small>`:''}</p>`).join('')}</div>`:`<div class="pf-rec ok">${ic('checkc',20)}<div><b>Nenhum alerta importante</b><p>Não encontramos motivo para cuidados especiais com o seu perfil.</p></div></div>`}
       <div class="pf-blk"><h3>${ic('flask',16)}Principais ativos</h3>${c.ativos.length?`<div class="pf-atv">${c.ativos.map(a=>`<details><summary>${esc(a.nome)}${a.origem==='conhecimento'?'<em>não confirmado no rótulo</em>':''}</summary><dl>${a.o_que?`<dt>O que é</dt><dd>${esc(a.o_que)}</dd>`:''}${a.para_que?`<dt>Para que serve</dt><dd>${esc(a.para_que)}</dd>`:''}${a.beneficios?`<dt>Benefícios conhecidos</dt><dd>${esc(a.beneficios)}</dd>`:''}${a.cuidados?`<dt>Cuidados</dt><dd>${esc(a.cuidados)}</dd>`:''}</dl></details>`).join('')}</div>`:'<p class="pf-muted">Não foi possível identificar os ativos pela foto.</p>'}</div>
@@ -2281,8 +2293,10 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
         <p><u>Avaliação da IA:</u> compatibilidade, explicações e alertas, a partir do rótulo e do seu perfil.</p>
         ${c.nao_confirmado.length?`<p><u>Não confirmado:</u> ${c.nao_confirmado.map(esc).join('; ')}.</p>`:''}
         <small>A Pellie não consulta o site do fabricante. Teste numa área pequena antes de usar no rosto todo.</small></div></div>
-      <div class="pf-ft"><button class="btn obc" data-act="pf-new">${ic('scan',18)}Escanear outro produto</button></div></div>`}
-  return `<div class="pfw" data-st="${f.st}">${hd}${b}</div>`}
+      <div class="pf-ft">${pfShelf(false)}<button class="btn obc" data-act="pf-new" style="margin-top:6px">${ic('scan',18)}Escanear outro produto</button></div></div>`}
+  const PN={id:1,conf:1,cmp:2,score:2,det:3,ing:4}[f.st],PT=['Identificar','Comparar','Resultado','Ingredientes'];
+  const stp=`<div class="pf-stp" aria-label="Passo ${PN} de 4">${PT.map((t,i)=>`<span class="${i+1<PN?'ok':i+1===PN?'on':''}"><i></i>${t}</span>`).join('')}</div>`;
+  return `<div class="pfw" data-st="${f.st}">${hd}${stp}${b}</div>`}
 function viewEscanear(){
   if(S.pf)return pfView();
   const r=S.prodResult;
@@ -2298,16 +2312,16 @@ function viewEscanear(){
     :'';
   const hist=S.prods.length?`<div class="card"><h3>Já escaneados</h3>${S.prods.map((p,k)=>`<${p.snap?`button data-pfh="${k}" class="entry pf-he"`:'div class="entry"'}><div class="wk">${fmtD(p.d)}</div><div style="text-align:left;flex:1"><div class="small"><b>${esc(p.produto||'Produto')}</b>${p.marca?` <span class="muted">· ${esc(p.marca)}</span>`:''}</div><div class="small muted">${p.snap?(PF_CLS[p.snap.sc.cls]||PF_CLS.mod)[0]+' · '+p.nota+'%':(VERD[p.veredito]||VERD.cuidado)[1]+' · nota '+p.nota}</div></div>${p.snap?ic('chev',16):''}</${p.snap?'button':'div'}>`).join('')}</div>`:'';
   return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
-  <div class="card">
-    <h2>Esse produto serve para mim?</h2>
-    <p class="small muted" style="margin:6px 0 12px">Fotografe o rótulo com os ingredientes.</p>
-    ${img}
-    <div class="row" style="gap:8px;margin:12px 0 8px">
-      <input class="sr" id="prod-cam" type="file" accept="image/*" capture="environment"><label for="prod-cam" class="btn" style="cursor:pointer">${ic('camera')}Fotografar produto</label>
-      <input class="sr" id="prod-gal" type="file" accept="image/*"><label for="prod-gal" class="btn ghost" style="cursor:pointer">${ic('image')}Galeria</label>
-    </div>
-    <button class="btn" data-act="pf-start" ${!S.prodFile?'disabled':''} style="width:100%">${ic('sparkle')}${S.prodFile?'Analisar este produto':'Fotografe um produto para analisar'}</button>
-    ${S.prodErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.prodErr)}</p>`:`<p class="note">${S.result?'Comparado com a sua pele.':'Comparado com as suas respostas. <button class="chip" data-tab="analise" style="padding:3px 10px;font-size:12px">Analisar minha pele</button>'}</p>`}
+  ${(()=>{const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
+    return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>${S.nome?esc(S.nome)+', esse':'Esse'} produto combina com você?</h2>
+    <ol class="pfg-s">${passo(1,'Fotografe o produto','Mostre o nome e, se der, a lista de ingredientes.',!tem,tem)}${passo(2,'Confirme qual é o produto','A Pellie identifica e você confirma.',tem,false)}${passo(3,'Veja se combina com a sua pele','Compatibilidade, como usar e alertas.',false,false)}</ol>
+    ${tem?`<div class="pfg-prev"><div class="pfg-th"><img src="${S.prodPhoto||''}" alt="Foto do produto"></div><div><b>Foto pronta!</b><small>Agora toque em analisar.</small></div></div>
+      <button class="btn obc pfg-go" data-act="pf-start">${ic('sparkle',18)}Analisar este produto</button>
+      <div class="pfg-alt"><input class="sr" id="prod-cam" type="file" accept="image/*" capture="environment"><label for="prod-cam">${ic('camera',16)}Trocar foto</label><input class="sr" id="prod-gal" type="file" accept="image/*"><label for="prod-gal">${ic('image',16)}Galeria</label></div>`
+    :`<div class="pfg-tips"><span>${ic('sun',14)}Boa luz</span><span>${ic('tag',14)}Nome legível</span><span>${ic('file',14)}Ingredientes, se der</span></div>
+      <input class="sr" id="prod-cam" type="file" accept="image/*" capture="environment"><label for="prod-cam" class="btn obc pfg-go" style="cursor:pointer">${ic('camera',18)}Fotografar produto</label>
+      <div class="pfg-alt"><input class="sr" id="prod-gal" type="file" accept="image/*"><label for="prod-gal">${ic('image',16)}Escolher da galeria</label></div>`}
+    ${S.prodErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.prodErr)}</p>`:''}`})()}
   </div>${res}${hist}
   ${r&&Array.isArray(r.ativos)?guia('Quer testar outro produto?','Escanear outro','data-act="novo-prod"'):''}
   ${guia('Tudo certo por aqui','Voltar ao início','data-go="hoje"')}</div>`;
@@ -3775,6 +3789,10 @@ document.addEventListener('click',e=>{
   else if(d.act==='pf-close'){S.pf=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
   else if(d.act==='pf-retake'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();setTimeout(()=>{const i=document.getElementById('prod-cam');if(i)i.click()},50)}
   else if(d.act==='pf-ok'){pfCmp()}
+  else if(d.act==='pf-shelf'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',it=S.shelf.find(i=>i.n===n);
+    if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
+    toast('Adicionado à sua prateleira');gameCheck();render()}
+  else if(d.act==='pf-shelf-ver'){S.pf=null;S.tab='produtos';S.prodSub='shelf';render();window.scrollTo(0,0)}
   else if(d.act==='pf-det'&&S.pf){S.pf.st='det';render();window.scrollTo(0,0)}
   else if(d.act==='pf-ing'&&S.pf){S.pf.st='ing';render();window.scrollTo(0,0)}
   else if(d.act==='pf-back'&&S.pf){S.pf.st=S.pf.st==='ing'?'det':'score';render()}
