@@ -1096,6 +1096,34 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 @keyframes scspin2{to{transform:rotate(360deg)}}@keyframes sclok{from{transform:scale(.6)}}
 @media(prefers-reduced-motion:reduce){.scl li.now i{animation:none}}
 .spx .spt{font-size:clamp(23px,6.6vw,28px);margin:0;text-wrap:balance}.spx .pxf.spf{width:auto;height:clamp(140px,32vh,300px);aspect-ratio:1;margin:0 auto}.spx .spl{gap:7px}
+/* indicador animado */
+.odo{display:inline-flex;align-items:flex-start;font-variant-numeric:tabular-nums;line-height:1}.od-c{display:inline-block;height:1em;overflow:hidden}
+.od-s{display:flex;flex-direction:column;transform:translateY(0);transition:transform 1.25s cubic-bezier(.16,.84,.24,1)}.od-s i{font-style:normal;height:1em;line-height:1;text-align:center}
+.od-c:nth-child(2) .od-s{transition-delay:.06s}.od-c:nth-child(3) .od-s{transition-delay:.12s}
+.ind.go .od-s{transform:translateY(calc(var(--n)*-1em))}.odo em{font-style:normal;font-size:.5em;margin:.08em 0 0 .06em;opacity:0;transform:translateY(.4em);transition:opacity .4s .9s,transform .4s .9s}.ind.go .odo em{opacity:.75;transform:none}
+.ind.nt .od-s,.ind.nt .odo em,.ind.nt .ir-a,.ind.nt .bar b{transition:none!important}
+.ir{position:relative;display:grid;place-items:center;flex:none}.ir svg{position:absolute;inset:0;width:100%;height:100%}
+.ir-t{fill:none;stroke:rgba(120,80,60,.12);stroke-width:7}.ir-a{fill:none;stroke:var(--c);stroke-width:7;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:100;transition:stroke-dashoffset 1.25s cubic-bezier(.16,.84,.24,1)}
+.ind.go .ir-a{stroke-dashoffset:calc(100 - var(--v))}.ir-n{font-size:34px;font-weight:700;color:var(--ink,#2C1A12);letter-spacing:-.02em}
+.indm{display:flex;align-items:center;gap:14px;text-align:left;margin-top:6px;padding-top:12px;border-top:1px solid rgba(120,80,60,.12);width:100%;justify-content:center}.indm .ir{width:96px!important;height:96px!important}.indm .ir-n{font-size:26px}
+.indl b{display:block;font-size:15px;color:var(--ink,#2C1A12)}.indl small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.meter.ind{grid-template-columns:122px 1fr 46px}.meter.ind .bar b{width:0!important;animation:none!important;transition:width 1.25s cubic-bezier(.16,.84,.24,1)}.meter.ind.go .bar b{width:calc(var(--v)*1%)!important}.meter.ind .num{font-weight:700;text-align:right}
+/* resultado: atenção / positivo */
+.rsx{gap:clamp(8px,1.8vh,16px)}.rsh{margin:0;font-size:clamp(26px,7.4vw,34px)!important;text-wrap:balance}
+.rsc{display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 18px 18px!important;animation:rspop .6s cubic-bezier(.2,.9,.25,1.15) both}
+.rst{font-size:clamp(28px,8vw,36px);letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
+@keyframes rspop{from{opacity:0;transform:translateY(14px) scale(.97)}}
+.sig{position:relative;width:64px;height:64px;display:grid;place-items:center;margin-bottom:2px}.sig b{position:relative;z-index:2;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;animation:sigin .55s .2s cubic-bezier(.2,.9,.3,1.4) both}
+.sig.att b{background:linear-gradient(145deg,#E3A061,#C9763F);box-shadow:0 8px 18px rgba(201,118,63,.35)}.sig.ok b{background:linear-gradient(145deg,#6FAE8A,#4F8A6B);box-shadow:0 8px 18px rgba(79,138,107,.35)}
+.sig>i{position:absolute;inset:3px;border-radius:50%;animation:sigw 2.4s ease-out .7s infinite}.sig>i+i{animation-delay:1.9s}.sig.att>i{border:2px solid #E3A061}.sig.ok>i{border:2px solid #6FAE8A}
+.sig.att b svg{animation:sigsh 2.4s ease-in-out 1s infinite}
+.sig u{position:absolute;left:50%;top:50%;width:4px;height:12px;margin:-6px -2px;border-radius:3px;background:#8CC3A2;transform:rotate(var(--r)) translateY(-40px) scaleY(0);opacity:0;animation:sigb .7s .55s ease-out both}
+@keyframes sigin{from{transform:scale(0)}}@keyframes sigw{from{transform:scale(1);opacity:.7}to{transform:scale(1.7);opacity:0}}
+@keyframes sigsh{0%,60%,100%{transform:rotate(0)}66%{transform:rotate(-12deg)}74%{transform:rotate(10deg)}82%{transform:rotate(-6deg)}}
+@keyframes sigb{0%{opacity:0;transform:rotate(var(--r)) translateY(-30px) scaleY(0)}40%{opacity:1}100%{opacity:0;transform:rotate(var(--r)) translateY(-46px) scaleY(1)}}
+.rsr{margin:0;font-size:14px;line-height:1.45;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.rsr b{color:var(--ink)}
+.rsn{margin:0;font-size:11.5px;color:var(--muted);opacity:.85}
+@media(prefers-reduced-motion:reduce){.rsc,.sig b,.sig>i,.sig u,.sig.att b svg{animation:none}.sig u,.sig>i{display:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1794,7 +1822,7 @@ const guia=(t,b,attr)=>`<div class="cta go"><div class="gt">${t}</div><button cl
 function viewAnalise(){
   const rs=S.result,nome=esc(S.nome);
   const MI={'Oleosidade':'drop','Hidratação':'drops','Poros':'pores','Manchas':'spot','Linhas finas':'waves','Vermelhidão':'flame'};
-  const bar=(l,v,inv)=>`<div class="meter"><span class="ml">${ic(MI[l],16)}${l}</span><div class="bar"><b class="${bandC(inv?100-v:v)}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`;
+  const bar=(l,v,inv)=>`<div class="meter ind" data-k="${esc((rs&&rs.d||'')+l+v)}" style="--v:${v}"><span class="ml">${ic(MI[l],16)}${l}</span><div class="bar"><b class="${bandC(inv?100-v:v)}"></b></div><span class="num">${odo(v)}</span></div>`;
   const scan=S.analyzing?'<div class="scan"></div>':'';
   const shown=S.photo||(S.fotos.length?S.fotos[S.fotos.length-1].img:null);
   const box=shown?`<div class="face"><img class="photo" src="${shown}" alt="Sua foto">${scan}</div>`:`<div class="face">${rs?faceSvg(rs):faceEmpty()}${scan}</div>`;
@@ -3316,18 +3344,20 @@ function viewOnboarding(){PFI=0;
     <h1>${a?(nome?nome+', sua':'Sua')+' análise ficou pronta.':'Mas olha só o que encontramos…'}</h1>
     <p class="sp">${a?'Vamos te mostrar o que a sua pele precisa mais.':'Tem algo que a sua pele faz muito bem.'}</p>
     <div class="sd" aria-hidden="true"><i></i><i></i><i></i></div></div></div></div>`}
-  if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',tart:'a sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
-    <div class="obk">Sua análise</div><h1 class="obh">${nome?nome+', seu':'Seu'} maior desafio hoje é ${dn.tart||dn.t}.</h1>
-    <div class="card big" style="padding:30px 18px"><svg viewBox="0 0 120 100" width="64" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg>
-      <div class="obk att" style="margin:14px 0 4px">Ponto de atenção</div><div style="font-size:40px;font-weight:400;letter-spacing:-.02em;line-height:1.1">${dn.t}</div>${dn.pill?`<span class="pillo">${dn.pill}</span>`:''}</div>
-    ${d?`<p class="cmpt"><b>Você tem mais ${dn.t} do que ${cmpPct(dn.v)}% das mulheres.</b><small>Estimativa da Pellie a partir da sua análise, não é um dado clínico.</small></p>`:''}
-    ${S.result&&S.result.resumo?`<p class="small" style="margin:0;color:var(--muted);line-height:1.5"><b style="color:var(--ink)">O que vimos na sua foto:</b> ${esc(S.result.resumo)}</p>`:''}
+  if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',tart:'a sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx rsx scx" style="text-align:center">
+    <div class="obk">Sua análise</div><h1 class="obh rsh">${nome?nome+', seu':'Seu'} maior desafio hoje ${/^(as|os) /.test(dn.tart||'')?'são':'é'} ${dn.tart||dn.t}.</h1>
+    <div class="card rsc att"><span class="sig att" aria-hidden="true"><i></i><i></i><b>${ic('alert',26)}</b></span>
+      <div class="obk" style="margin:0;color:#B4652F">Ponto de atenção</div><div class="rst">${dn.t}</div>${dn.pill?`<span class="pillo" style="margin:0">${dn.pill}</span>`:''}
+      ${d?indMetric(d.k,'#C9763F'):''}</div>
+    ${S.result&&S.result.resumo?`<p class="rsr"><b>O que vimos na sua foto:</b> ${esc(S.result.resumo)}</p>`:''}
+    ${d?'<p class="rsn">Escala individual da sua foto, não é um dado clínico.</p>':''}
     ${cta(S.result&&d&&d.forte?'Continuar':'Ver meu caminho')}</div></div>`}
-  if(st==='analise2'){const d=desafio();if(!d||!d.forte)return '';return `<div class="ovl rose"><div class="ob obx" style="text-align:center">
-    <div class="obk">Mas temos uma boa notícia</div><h1 class="obh">${nome?nome+', você':'Você'} tem um ponto forte.</h1>
-    <div class="card big" style="padding:30px 18px"><span class="cic ok" style="width:64px;height:64px;margin:0 auto">${ic('drop',28)}</span>
-      <div class="obk ok" style="margin:14px 0 4px">Ponto forte</div><div style="font-size:34px;font-weight:400;letter-spacing:-.02em;line-height:1.15">${d.forte}</div></div>
-    <p class="cmpt"><b>Isso é melhor do que em ${cmpPct(d.fv)}% das mulheres.</b><small>Estimativa da Pellie a partir da sua análise, não é um dado clínico.</small></p>
+  if(st==='analise2'){const d=desafio();if(!d||!d.forte)return '';return `<div class="ovl rose"><div class="ob obx rsx scx" style="text-align:center">
+    <div class="obk">Mas temos uma boa notícia</div><h1 class="obh rsh">${nome?nome+', você':'Você'} tem um ponto forte.</h1>
+    <div class="card rsc ok"><span class="sig ok" aria-hidden="true"><i></i><i></i><b>${ic('check',28)}</b>${[0,1,2,3,4,5].map(i=>`<u style="--r:${i*60}deg"></u>`).join('')}</span>
+      <div class="obk ok" style="margin:0">Ponto forte</div><div class="rst">${esc(d.forte)}</div>
+      ${d.fk?indMetric(d.fk,'#4F8A6B'):''}</div>
+    ${d.fk?'<p class="rsn">Escala individual da sua foto, não é um dado clínico.</p>':''}
     ${cta('Ver meu caminho')}</div></div>`}
   if(st==='leva')return `<div class="ob obx">${back}
     <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
@@ -3376,7 +3406,18 @@ function desafio(){const r=S.result;if(!r)return null;
   const k=r.desafio&&N[r.desafio]?r.desafio:rk[0],[t,tart,v,regd]=N[k],nivel=v<35?'nível leve':v<65?'nível moderado':'nível alto';
   const reg=(r.desafioReg&&r.desafioReg.length)?zt(r.desafioReg):regd;
   const F=[['resseca',r.hid,'boa hidratação'],['oleo',100-r.oleo,'pouca oleosidade'],['poros',100-r.poros,'poros discretos'],['manchas',100-r.manchas,'tom uniforme'],['linhas',100-r.linhas,'poucas linhas finas'],['verm',100-r.verm,'pouca vermelhidão']].filter(x=>x[0]!==k).sort((a,b)=>b[1]-a[1]);
-  return{k,t,tart,v,fv:F[0]?F[0][1]:0,pill:nivel+(reg?' · '+reg:''),forte:r.forte||(F[0]&&F[0][1]>=55?F[0][2]:null)}}
+  return{k,fk:r.forte?fKey(r.forte):(F[0]&&F[0][1]>=55?F[0][0]:null),t,tart,v,fv:F[0]?F[0][1]:0,pill:nivel+(reg?' · '+reg:''),forte:r.forte||(F[0]&&F[0][1]>=55?F[0][2]:null)}}
+
+/* ===== Indicador animado: número em rolagem vertical + anel/barra sincronizados (só valores reais) ===== */
+const ODOSEEN=new Set();
+function odo(v){v=Math.max(0,Math.min(100,Math.round(+v||0)));const ds=String(v).split('');const col=(d,i)=>{const last=i===ds.length-1,n=+d+(last?10:0);return `<span class="od-c"><span class="od-s" style="--n:${n}">${'01234567890123456789'.split('').map(x=>`<i>${x}</i>`).join('')}</span></span>`};
+  return `<span class="odo" aria-label="${v}%"><span aria-hidden="true" style="display:inline-flex">${ds.map(col).join('')}</span><em aria-hidden="true">%</em></span>`}
+function indRing(v,cor,k,sz){v=Math.max(0,Math.min(100,Math.round(+v||0)));return `<span class="ind ir" data-k="${esc(k)}" style="--v:${v};--c:${cor};width:${sz||128}px;height:${sz||128}px"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ir-t"/><circle cx="60" cy="60" r="52" class="ir-a" pathLength="100" transform="rotate(-90 60 60)"/></svg><span class="ir-n">${odo(v)}</span></span>`}
+function indInit(){const red=matchMedia('(prefers-reduced-motion: reduce)').matches;document.querySelectorAll('.ind:not(.go)').forEach((el,i)=>{const k=el.dataset.k;
+    if(red||ODOSEEN.has(k)){el.classList.add('go','nt');return}ODOSEEN.add(k);setTimeout(()=>requestAnimationFrame(()=>el.classList.add('go')),120+i*90)})}
+const RAWM={oleo:['Oleosidade','oleo',0],poros:['Poros','poros',0],linhas:['Linhas finas','linhas',0],manchas:['Manchas','manchas',0],verm:['Vermelhidão','verm',0],resseca:['Hidratação','hid',1]};
+function fKey(t){t=String(t||'').toLowerCase();return /hidrat|ressec/.test(t)?'resseca':/oleos|brilho/.test(t)?'oleo':/poro|textura/.test(t)?'poros':/mancha|tom/.test(t)?'manchas':/linha|ruga/.test(t)?'linhas':/vermelh/.test(t)?'verm':null}
+function indMetric(k,cor,big){const m=RAWM[k],r=S.result;if(!m||!r||r[m[1]]==null)return '';return `<div class="indm">${indRing(r[m[1]],cor,(r.d||'')+k+r[m[1]],big)}<div class="indl"><b>${m[0]} na sua análise</b><small>Escala de 0 a 100 · quanto ${m[2]?'maior':'menor'}, melhor</small></div></div>`}
 const cmpPct=n=>Math.max(55,Math.min(95,Math.round(40+n*0.55)));
 const CAMT={oleo:['Menos oleosidade','oleosidade','menos sinais de oleosidade'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],linhas:['Linhas mais suaves','linhas finas','linhas finas mais suaves'],manchas:['Menos manchas','manchas','manchas mais discretas'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão'],resseca:['Mais hidratação','ressecamento','pele mais hidratada']};
 const OLD_CAMT={acne:['Menos espinhas','espinhas','menos espinhas novas'],manchas:['Menos manchas','manchas','manchas mais discretas'],linhas:['Menos linhas finas','linhas finas','linhas finas mais suaves'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],resseca:['Menos ressecamento','ressecamento','pele mais confortável'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão']};
@@ -3419,7 +3460,7 @@ function render(){
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  raspeInit();fitIp();eclInit();ecMiniInit();pthHidratar();
+  raspeInit();fitIp();eclInit();ecMiniInit();indInit();pthHidratar();
   f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();
