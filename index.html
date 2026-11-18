@@ -1140,7 +1140,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .rv-tag{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;border-radius:99px;padding:7px 16px;animation:rvup .5s .1s cubic-bezier(.2,.8,.2,1) both}
 .pos .rv-tag{background:#E9EFD9;color:#2E4636}.neg .rv-tag{background:#F6D9CC;color:#62301F}
 .rv-h{margin:0;color:#FBF4EC;font-size:clamp(25px,7.4vw,34px);line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wrap:balance;animation:rvup .55s .2s cubic-bezier(.2,.8,.2,1) both}
-.rv-card{flex:1 1 auto;min-height:0;width:100%;box-sizing:border-box;border-radius:30px;padding:clamp(14px,2.6vh,26px) 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,10px);position:relative;animation:rvcard .6s .35s cubic-bezier(.2,.9,.25,1.1) both}
+.rv-card{flex:1 1 auto;min-height:0;overflow:hidden;width:100%;box-sizing:border-box;border-radius:30px;padding:clamp(16px,2.6vh,26px) 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(2px,.9vh,10px);position:relative;animation:rvcard .6s .35s cubic-bezier(.2,.9,.25,1.1) both}
 .rv-card::before{content:"";position:absolute;inset:7px;border-radius:24px;border:1.5px solid;pointer-events:none}
 .pos .rv-card{background:#FBF6EC}.pos .rv-card::before{border-color:#C9D6BE}.neg .rv-card{background:#FBEDE6}.neg .rv-card::before{border-color:#EBC3B2}
 .rv-top{margin:0;font-size:clamp(17px,4.9vw,21px);line-height:1.25;color:#3B2216;font-weight:500;max-width:15em;text-wrap:balance}
@@ -3474,6 +3474,12 @@ function revela(pos,k){const r=S.result,m=MTX[k],d=desafio();if(!r||!m)return ''
       <p class="rv-msg">${pos?`Um resultado que merece ser celebrado.`:`Esse é o principal aspecto que merece sua atenção.${reg?` Mais visível em ${esc(reg)}.`:''}`}</p>
       <p class="rv-note">${c.est?'Estimativa da Pellie a partir da sua análise. Não é um dado clínico.':`Comparação com ${c.n.toLocaleString('pt-BR')} análises reais feitas na Pellie.`}</p></div>
     <button class="rv-btn" id="ob-go" data-act="ob-next">${pos?'Quero manter esse resultado':'Quero melhorar minha pele'}</button></div></div>`}
+function fitRv(){const c=document.querySelector('.rv-card');if(!c)return;const b=c.querySelector('.rv-big'),t=[c.querySelector('.rv-top'),c.querySelector('.rv-msg')];b.style.fontSize='';t.forEach(x=>x&&(x.style.fontSize=''));
+  let fs=parseFloat(getComputedStyle(b).fontSize),n=0;const over=()=>c.scrollHeight>c.clientHeight+1;
+  while(over()&&fs>64&&n++<40){fs-=4;b.style.fontSize=fs+'px'}
+  let tf=17;while(over()&&tf>13&&n++<60){tf-=1;t.forEach(x=>x&&(x.style.fontSize=tf+'px'))}}
+window.addEventListener('resize',()=>fitRv());
+try{document.fonts&&document.fonts.ready.then(()=>fitRv())}catch(e){}
 function posK(){const d=desafio();if(!d)return null;if(d.fk&&d.fk!==d.k)return d.fk;const r=S.result;const F=[['resseca',r.hid],['oleo',100-r.oleo],['poros',100-r.poros],['manchas',100-r.manchas],['linhas',100-r.linhas],['verm',100-r.verm]].filter(x=>x[0]!==d.k).sort((a,b)=>b[1]-a[1]);return F[0]&&F[0][1]>=55?F[0][0]:null}
 const cmpPct=n=>Math.max(55,Math.min(95,Math.round(40+n*0.55)));
 const CAMT={oleo:['Menos oleosidade','oleosidade','menos sinais de oleosidade'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],linhas:['Linhas mais suaves','linhas finas','linhas finas mais suaves'],manchas:['Menos manchas','manchas','manchas mais discretas'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão'],resseca:['Mais hidratação','ressecamento','pele mais hidratada']};
@@ -3517,7 +3523,7 @@ function render(){
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  raspeInit();fitIp();eclInit();ecMiniInit();indInit();if(!S.ob.done&&S.result&&['raspe','susp','analise','susp2'].includes(obStepAtual())){const d=desafio();if(d){pctFetch(d.k);const pk=posK();if(pk)pctFetch(pk)}}pthHidratar();
+  raspeInit();fitIp();eclInit();ecMiniInit();indInit();fitRv();if(document.querySelector('.rv-card'))setTimeout(fitRv,350);if(!S.ob.done&&S.result&&['raspe','susp','analise','susp2'].includes(obStepAtual())){const d=desafio();if(d){pctFetch(d.k);const pk=posK();if(pk)pctFetch(pk)}}pthHidratar();
   f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();
