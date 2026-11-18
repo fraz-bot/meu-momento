@@ -234,7 +234,7 @@
 .pk-vf{position:relative;aspect-ratio:4/5;max-height:50vh;margin:0 auto;width:100%;border-radius:28px;overflow:hidden;background:linear-gradient(150deg,#E9D3C0,#D8B9A0);display:grid;place-items:center;color:#fff;box-shadow:0 10px 26px rgba(170,128,86,.2)}.pk-vf img{width:100%;height:100%;object-fit:cover}.pk-vf .c{position:absolute;width:40px;height:40px;border:3px solid #fff}.pk-vf .tl{top:18px;left:18px;border-right:0;border-bottom:0;border-radius:16px 0 0 0}.pk-vf .tr{top:18px;right:18px;border-left:0;border-bottom:0;border-radius:0 16px 0 0}.pk-vf .bl{bottom:18px;left:18px;border-right:0;border-top:0;border-radius:0 0 0 16px}.pk-vf .br{bottom:18px;right:18px;border-left:0;border-top:0;border-radius:0 0 16px 0}
 .pk-vf .pk-ph{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:0 30px;color:#6B4A3C;font-size:14.5px}.pk-ph .pk-art{filter:drop-shadow(0 8px 12px rgba(74,42,30,.25))}
 .pk-sc{display:flex;flex-direction:column;gap:12px}.pk-sc .pl-go{margin-top:0}.pk-alt{display:flex;gap:10px}.pk-alt label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:99px;border:1.5px solid #4A2A1E;color:#4A2A1E;font-weight:700;font-size:15px;cursor:pointer;background:transparent}
-</style>
+.toast.ok{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px));z-index:9999;background:#2F5B3E;color:#fff;padding:13px 20px;border-radius:99px;font-size:15px;box-shadow:0 10px 26px rgba(30,60,40,.35);max-width:90vw;text-align:center;animation:tin .3s ease}@keyframes tin{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translateX(-50%)}}</style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
@@ -4171,7 +4171,7 @@ function render(){
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual())+'|'+(S.pf?S.pf.st:'');if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();
 }
-function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,2200)}
+function toast(t,ok){const e=$('#toast');e.textContent=t;e.className='toast'+(ok?' ok':'');e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,ok?3200:2200)}
 
 document.addEventListener('click',e=>{
   const b=e.target.closest('button,[data-zona]');if(!b)return;
@@ -4289,19 +4289,19 @@ document.addEventListener('click',e=>{
   else if(d.act&&d.act.startsWith('unl|')){S.unl[hoje()+d.act.slice(4)]=true;render()}
   else if(d.act==='analisar'){analisar()}
   else if(d.act==='analisar-prod'||d.act==='pf-start'){pfStart()}
-  else if(d.act==='pf-close'){S.pf=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
+  else if(d.act==='pf-close'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
   else if(d.act==='pf-retake'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();setTimeout(()=>{const i=document.getElementById('prod-cam');if(i)i.click()},50)}
   else if(d.act==='pf-ok'){pfCmp()}
   else if(d.act==='pf-shelf'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',it=S.shelf.find(i=>i.n===n);
     if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
-    {const it2=S.shelf.find(i=>i.n===n);pfSetImg(it2)}toast('Adicionado à sua prateleira');gameCheck();render()}
+    {const it2=S.shelf.find(i=>i.n===n);pfSetImg(it2)}toast('✓ Produto adicionado à sua prateleira',1);gameCheck();render()}
   else if(d.act==='pf-rot'&&S.pf&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',ro=S.pf.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn';let it=S.shelf.find(i=>i.n===n);
     if(!it){it={id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
     it.st='tenho';if(!it.aberto)it.aberto=hoje();let rt=String(it.rot||'');for(const c of pr)if(!rt.includes(c))rt+=c;it.rot=rt;
-    pfSetImg(it);toast('Na sua rotina '+{m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr]);gameCheck();render()}
-  else if(d.act==='pf-rot-ver'){const ro=S.pf&&S.pf.cmp?S.pf.cmp.rotina.periodo:'manha';S.pf=null;S.tab='rotina';S.period=ro==='noite'?'n':'m';S.perMan=true;render();window.scrollTo(0,0)}
+    pfSetImg(it);toast('✓ Adicionado à sua prateleira e à rotina '+{m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr],1);gameCheck();render()}
+  else if(d.act==='pf-rot-ver'){const ro=S.pf&&S.pf.cmp?S.pf.cmp.rotina.periodo:'manha';S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;S.tab='rotina';S.period=ro==='noite'?'n':'m';S.perMan=true;render();window.scrollTo(0,0)}
   else if(d.rsh){const [per,k]=d.rsh.split('|'),nm=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(nm){let it=S.shelf.find(i=>i.n===nm);if(!it){it={id:String(Date.now()),n:nm,tp:P[k].n,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}it.st='tenho';toast(nm+' na sua prateleira');gameCheck();const y=window.scrollY;render();window.scrollTo(0,y)}}
-  else if(d.act==='pf-shelf-ver'){S.pf=null;S.tab='produtos';S.prodSub='shelf';render();window.scrollTo(0,0)}
+  else if(d.act==='pf-shelf-ver'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;S.tab='produtos';S.prodSub='shelf';render();window.scrollTo(0,0)}
   else if(d.act==='pf-det'&&S.pf){S.pf.st='det';render();window.scrollTo(0,0)}
   else if(d.act==='pf-ing'&&S.pf){S.pf.st='ing';render();window.scrollTo(0,0)}
   else if(d.act==='pf-back'&&S.pf){S.pf.st=S.pf.st==='ing'?'det':'score';render()}
