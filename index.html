@@ -4071,18 +4071,18 @@ function viewOnboarding(){PFI=0;
   if(st==='scanprod'){const tp=S.result&&S.result.tipo?'pele '+String(S.result.tipo).toLowerCase():'sua pele';return `<div class="ob obx scx spx" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh spt">${nome?nome+', agora':'Agora'} a Pellie confere os produtos por você</h1>
     <p class="obs" style="margin:0">Com a sua análise pronta, cada rótulo é comparado com a sua ${tp.replace(/^sua /,'')}. Veja um exemplo:</p>
-    <div class="pxf spf lor"><img src="img/scanner-loreal.webp" alt="Base de maquiagem sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="pxf spf gen"><img style="mix-blend-mode:multiply" src="img/scanner-niacina.webp" alt="Sérum de niacinamida sendo escaneado" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <ul class="spl" aria-live="polite"><li style="--d:.5s"><i>${ic('check',13)}</i>Lendo o rótulo</li><li style="--d:1.7s"><i>${ic('check',13)}</i>Conferindo os ingredientes</li><li style="--d:2.9s"><i>${ic('check',13)}</i>Comparando com a sua ${tp.replace(/^sua /,'')}</li></ul>
     <div class="obf"><button class="btn obc spb" data-act="ob-next" style="width:100%">Ver resultado do scan</button></div></div>`}
-  if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=seco,oleo=r?Math.round(r.oleo):null;
+  if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=!seco,oleo=r?Math.round(r.oleo):null;
     const pc=ok?86:32,cor=ok?'#4F8A6B':'#C94A3F',lab=ok?'Alta compatibilidade':'Não recomendado',da=(pc/100*176).toFixed(1);
-    const li=ok?`<li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata a pele seca.</span></li><li class="ok"><i></i><span><b>Fórmula leve</b>, absorve rápido e não pesa.</span></li>`
-      :`<li class="bad"><i></i><span><b>Hidratante demais</b> para a sua oleosidade${oleo!=null?' ('+oleo+'/100)':''}.</span></li><li class="bad"><i></i><span><b>Muita hidratação</b> pode acentuar o brilho da pele oleosa.</span></li>`;
+    const li=ok?`<li class="ok"><i></i><span><b>Niacinamida 10%</b> ajuda a controlar a oleosidade e os poros.</span></li><li class="ok"><i></i><span><b>Zinco PCA</b> ajuda contra o brilho e as espinhas.</span></li>`
+      :`<li class="bad"><i></i><span><b>Niacinamida 10%</b> é uma concentração alta para a sua pele seca.</span></li><li class="bad"><i></i><span><b>Foco em oleosidade</b>: não é o que a sua pele mais precisa.</span></li>`;
     return `<div class="ob obx pxo" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh pxt">Nem todo produto combina com a sua pele.</h1>
-    <div class="pxf lor"><img src="img/scanner-loreal.webp" alt="Base de maquiagem sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="pxf gen"><img style="mix-blend-mode:multiply" src="img/scanner-niacina.webp" alt="Sérum de niacinamida sendo escaneado" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <div class="card pxr pxs" style="text-align:left"><div class="obk" style="display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
-      <div class="pxh"><div><b class="pxn">Base hidratante</b><span class="small muted">Exemplo · base de maquiagem</span></div>
+      <div class="pxh"><div><b class="pxn">Sérum de niacinamida</b><span class="small muted">Exemplo · sérum facial</span></div>
       <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="${pc}% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="pxa" cx="32" cy="32" r="28" fill="none" stroke="${cor}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${da} 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">${pc}%</text></svg></div>
       <b class="pxv" style="color:${cor}">${lab}</b>
       <ul class="pxk">${li}</ul>
