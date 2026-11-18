@@ -997,7 +997,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .ipi{position:absolute;top:9px;left:50%;margin-left:-32px;width:64px;height:19px;border-radius:12px;background:#0B0806;z-index:5}
 .ipb{position:absolute;top:10px;left:0;right:0;display:flex;justify-content:space-between;padding:0 22px 0 24px;font-size:11px;font-weight:700;color:#2C1A12;z-index:4;pointer-events:none}.ipb span{display:flex;gap:4px;align-items:center}
 .ip-sl{position:absolute;inset:0;padding:40px 12px 12px;opacity:0;display:flex;flex-direction:column;gap:7px;text-align:left;animation:ipcy 15s infinite both}
-.ip-sl:nth-child(1){animation-delay:0s}.ip-sl:nth-child(2){animation-delay:3s}.ip-sl:nth-child(3){animation-delay:6s}.ip-sl:nth-child(4){animation-delay:9s}.ip-sl:nth-child(5){animation-delay:12s}
+.ip-sl{animation-delay:var(--sd,0s)}
 @keyframes ipcy{0%{opacity:0;transform:translateX(18px)}3%,20%{opacity:1;transform:none}23%,100%{opacity:0;transform:translateX(-18px)}}
 .ip-sl.a{background:linear-gradient(180deg,#C98F7C 0%,#A76F5C 40%,#8C5846 100%);color:#fff;align-items:center}.ip-sl.a>small{font-size:12px;font-weight:600;margin-top:4px}
 .ip-sl.b,.ip-sl.c,.ip-sl.d,.ip-sl.e{background:linear-gradient(180deg,#F7E7DC,#FDF8F3 50%);color:#2C1A12}
@@ -1095,6 +1095,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .scl li.ok{color:#4A2A1E}.scl li.ok i{background:#A76F5C;border-color:#A76F5C;color:#fff;animation:sclok .35s ease}
 @keyframes scspin2{to{transform:rotate(360deg)}}@keyframes sclok{from{transform:scale(.6)}}
 @media(prefers-reduced-motion:reduce){.scl li.now i{animation:none}}
+.spx .spt{font-size:clamp(23px,6.6vw,28px);margin:0;text-wrap:balance}.spx .pxf.spf{width:auto;height:clamp(140px,32vh,300px);aspect-ratio:1;margin:0 auto}.spx .spl{gap:7px}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1445,7 +1446,7 @@ function goTab(t,sub){
 function nextStep(){
   const h=new Date().getHours(),l=S.log[hoje()]||{};
   if(!S.result)return{t:'Vamos analisar a sua pele',s:'Uma foto do rosto e eu monto a sua rotina.',i:'face',go:'pele|analise',b:'Analisar agora'};
-  if(!S.plus)return{t:'Veja como cuidar da pele todos os dias',s:'',i:'crown',go:'mais|plano',b:'Conhecer Pellie+'};
+  if(!S.plus)return{t:'Veja como cuidar da pele todos os dias',s:'',i:'crown',go:'mais|plano',b:'Conhecer Pellie Pro'};
   if(!S.rot)return{t:'Monte a sua rotina',s:'Personalizada com o resultado da sua análise.',i:'sparkle',act:'montar-rotina',b:'Montar rotina'};
   if(!S.diary.some(e=>e.d===hoje()))return{t:'Como está a sua pele hoje?',s:'Um registro rápido alimenta o seu gráfico de evolução.',i:'chart',go:'pele|evo',b:'Registrar'};
   return{t:'Tudo feito por hoje',s:'Volte amanhã para manter a sua sequência.',i:'checkc',done:true};
@@ -1514,7 +1515,7 @@ const ymM=()=>hoje().slice(0,7);
 function uso(){if(!S.uso||S.uso.ym!==ymM())S.uso={ym:ymM(),an:0,sc:0};return S.uso}
 const LIM={an:3,sc:5};
 const podeUsar=k=>!!S.plus||(k==='an'&&!S.ob.done);
-function limite(){toast('Esse recurso é do Pellie+');S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
+function limite(){toast('Esse recurso é do Pellie Pro');S.tab='mais';S.maisSub='plano';S.analyzing=false;S.prodBusy=false;render();window.scrollTo(0,0)}
 /* ---------- Fase da pele ---------- */
 const FASES={
  padrao:{t:'Padrão',i:'sparkle',d:'Rotina normal'},
@@ -1594,7 +1595,7 @@ function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fot
 async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&(!S.ob.done||S.ob.fresh)){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}if(S.ob)S.ob.fresh=false;}catch(e){}}
 function cloudPush(now){if(!CL.ok||!S.cloud)return;clearTimeout(CL.t);CL.t=setTimeout(()=>cloudNow().catch(()=>{}),now?0:3000)}
 async function cloudNow(){const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
-const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie+.',limite_gratis:'Esse recurso é do Pellie+.',limite_mes:'Você chegou ao limite de análises deste mês.',limite_dia:'Você já usou o Resgate da Pele 3 vezes hoje. Tente de novo amanhã.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
+const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie Pro.',limite_gratis:'Esse recurso é do Pellie Pro.',limite_mes:'Você chegou ao limite de análises deste mês.',limite_dia:'Você já usou o Resgate da Pele 3 vezes hoje. Tente de novo amanhã.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
 function authView(){
@@ -1633,7 +1634,7 @@ async function entrou(u){
 let _lastPf=0;
 async function atualizaPlano(){
   if(!AUTH.user||Date.now()-_lastPf<15000)return;_lastPf=Date.now();
-  const antes=S.plus;await carregaPerfil();if(S.plus!==antes){render();toast(S.plus?'Pellie+ ativado':'Plano atualizado')}
+  const antes=S.plus;await carregaPerfil();if(S.plus!==antes){render();toast(S.plus?'Pellie Pro ativado':'Plano atualizado')}
 }
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)atualizaPlano()});
 window.addEventListener('focus',atualizaPlano);
@@ -1766,13 +1767,13 @@ function ofertaPlus(titulo){return `<div class="card oferta"><h3 style="color:va
   <div class="pl"><div class="best"><span class="pr2">R$ 149,90 <small>/ano</small></span><div class="small">Equivale a R$ 12,49 por mês · melhor valor</div></div><div><span class="pr2">R$ 59,90 <small>/mês</small></span></div></div>
   <button class="btn" data-act="plus-toggle" style="width:100%">${ic('crown',18)}Assinar agora</button>
   <p class="small" style="opacity:.9;margin:8px 0 0">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</p></div>`}
-function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Pellie+.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Pellie+</button></div>`}
+function paywall(t,i_,d){return `<div class="card pw"><span class="tile">${ic(i_,24)}</span><h3>${t}</h3><p class="small muted">${d||'Faz parte do Pellie Pro.'}</p><button class="btn" data-go="mais|plano">${ic('crown',18)}Conhecer o Pellie Pro</button></div>`}
 function precisaAnalise(t){return `<div class="card pw"><span class="tile">${ic('face',24)}</span><h3>Primeiro, a análise da pele</h3><p class="small muted">${t||'A rotina é montada a partir da foto analisada. Sem a análise, ela não pode ser gerada.'}</p><button class="btn" data-go="pele|analise">${ic('camera',18)}Fazer a análise agora</button></div>`}
 const PAN=()=>S.oferta?{p:'R$ 119,90',m:'R$ 9,99',e:'83%'}:{p:'R$ 149,90',m:'R$ 12,49',e:'79%'};
 function viewPaywall(){
   const an=S.planSel!=='mes',PA=PAN();
   return `<div class="pwx">
-    <div style="text-align:center"><span class="vbadge">${ic('crown',14)}Pellie+</span></div>
+    <div style="text-align:center"><span class="vbadge">${ic('crown',14)}Pellie Pro</span></div>
     <h1 class="obh" style="text-align:center"><span style="font-weight:500">${S.nome?esc(S.nome)+', a':'A'} sua rotina de skincare</span><br>está a um passo.</h1>
     <p class="obs">Análise da pele e do cabelo por foto, rotina, produtos e scanner, tudo liberado.</p>
     <div class="pwm">${obPhone()}</div>
@@ -2222,7 +2223,7 @@ function viewCabeloTab(){return viewCabelo()}
 function viewPele0(){
   const sub=S.peleSub,SUBS=[['analise','face','Análise'],['evo','chart','Evolução'],['ba','image','Antes/depois'],['reg','routine','Registros']];
   return `<div class="stack"><div class="seg four" role="group" aria-label="Seção da pele">${SUBS.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}${l}</button>`).join('')}</div>
-    ${!S.plus&&sub!=='analise'?paywall({evo:'Diário e evolução',ba:'Antes e depois',reg:'Registros'}[sub]||'Recurso do Pellie+',{evo:'chart',ba:'image',reg:'routine'}[sub]||'crown','Acompanhe a sua pele ao longo do tempo.'):sub==='evo'?viewDiario():sub==='ba'?viewAD():sub==='reg'?viewRegistros():viewAnalise()}</div>`;
+    ${!S.plus&&sub!=='analise'?paywall({evo:'Diário e evolução',ba:'Antes e depois',reg:'Registros'}[sub]||'Recurso do Pellie Pro',{evo:'chart',ba:'image',reg:'routine'}[sub]||'crown','Acompanhe a sua pele ao longo do tempo.'):sub==='evo'?viewDiario():sub==='ba'?viewAD():sub==='reg'?viewRegistros():viewAnalise()}</div>`;
 }
 function fotoBtns(){return `<div class="row" style="gap:8px;margin-top:10px;flex-wrap:nowrap">
       <input class="sr" id="evo-cam" type="file" accept="image/*" capture="user"><label for="evo-cam" class="btn" style="cursor:pointer;flex:1">${ic('camera')}Tirar foto</label>
@@ -2310,7 +2311,7 @@ function planPreview(){
 function viewMais(){
   const sub=S.maisSub;
   const nc=conflitos().length;
-  const row=(k,i_,t,d,attr)=>`<button class="mrow" ${attr||`data-mais="${k}"`}><span class="tile">${ic(i_,20)}</span><span class="mt"><b>${t}</b><span>${!S.plus&&k&&!LIVRES.includes(k)?'Pellie+':d}</span></span>${ic('chev',18)}</button>`;
+  const row=(k,i_,t,d,attr)=>`<button class="mrow" ${attr||`data-mais="${k}"`}><span class="tile">${ic(i_,20)}</span><span class="mt"><b>${t}</b><span>${!S.plus&&k&&!LIVRES.includes(k)?'Pellie Pro':d}</span></span>${ic('chev',18)}</button>`;
   if(!sub)return `<div class="stack"><h2>Mais</h2>
     ${row('dicas','sparkle','Dicas para a pele','Alimentação, estação e maquiagem')}
     ${row('medalhas','star','Medalhas e conquistas',`${MEDALS.filter(m=>S.badges[m.id]).length} de ${MEDALS.length} medalhas · ${S.xp} pts`)}
@@ -2322,13 +2323,13 @@ function viewMais(){
     ${row('conflitos','alert','Combinações de ativos',nc?`${nc} para cuidar`:'Tudo certo')}
     ${row('gastos','coin','Gastos do mês',brl(custoTier(S.tier))+' na rotina')}
     ${row('relatorio','file','Relatório para a consulta','Resumo para o dermatologista')}
-    ${row('plano','crown','Plano Pellie+',S.plus?'Ativo':'Assinar')}
+    ${row('plano','crown','Plano Pellie Pro',S.plus?'Ativo':'Assinar')}
     ${row('conta','cloud','Conta e nuvem',S.cloud?'Sincronizando':'Só neste aparelho')}
     ${row('privacidade','lock','Privacidade e dados','Política, baixar dados, apagar conta')}
     ${row('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
     ${S.askDel?`<div class="card" style="text-align:center;display:grid;gap:10px"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:row('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"')}</div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
-  const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Pellie+','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
+  const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Pellie Pro','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
   return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-go="hoje">${ic('back',18)}Voltar</button></div>${V()}</div>`;
 }
 const head=(i_,t)=>`<h2 style="display:flex;align-items:center;gap:10px"><span class="tile" style="width:38px;height:38px">${ic(i_,20)}</span>${t}</h2>`;
@@ -2493,7 +2494,7 @@ function vCom(){
     :`<div class="card" style="text-align:center"><p class="small muted">Ninguém publicou ainda. Seja a primeira.</p></div>`}`;}
 function vPlano(){
   const u=uso(),bar=(k,l,i_)=>`<div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="display:flex;gap:8px;align-items:center">${ic(i_,16)}${l}</b><span class="small muted">${S.plus?'ilimitado':u[k]+' de '+LIM[k]}</span></div><div class="use"><b style="width:${S.plus?100:Math.min(100,u[k]/LIM[k]*100)}%"></b></div></div>`;
-  return `<div class="plus">${head('crown','Pellie+').replace('class="tile"','class="tile" style="background:rgba(255,255,255,.2);color:var(--ongrad)"')}
+  return `<div class="plus">${head('crown','Pellie Pro').replace('class="tile"','class="tile" style="background:rgba(255,255,255,.2);color:var(--ongrad)"')}
     <div class="small" style="opacity:.9;margin:-2px 0 2px">Tudo liberado com a assinatura:</div>
     ${[['face','Análise da pele por foto, sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['bottle','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
     <div style="display:grid;gap:8px;margin-top:6px">
@@ -2501,7 +2502,7 @@ function vPlano(){
       <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 568,90 no ano.</div></div>
     </div>
     <div class="small" style="opacity:.95;margin:2px 0 4px">Assinatura com renovação automática. Cancele quando quiser, nos ajustes da loja.</div>
-    <button class="btn" data-act="plus-toggle">${S.plus?'Seu plano: Pellie+':'Pagamento em breve'}</button></div>
+    <button class="btn" data-act="plus-toggle">${S.plus?'Seu plano: Pellie Pro':'Pagamento em breve'}</button></div>
   <div class="card"><h3>Sem assinar</h3><div class="perk" style="color:var(--ink)">${ic('lock',18)}Sua conta, privacidade e exclusão de dados</div><div class="perk" style="color:var(--ink)">${ic('star',18)}Medalhas e aparência do app</div><div class="perk" style="color:var(--ink)">${ic('spot',18)}Quiz da pele</div></div>
   <p class="note">Ainda não há cobrança. Os valores acima são os do lançamento.</p>`;}
 function vConta(){
@@ -3204,11 +3205,12 @@ function viewOnboarding(){PFI=0;
     <div class="whl ln"><div class="whb"></div><div class="wheel" id="time-wheel" data-per="${per}" tabindex="0" aria-label="Horário">${horaSlots(per).map(t=>`<div class="wi" data-t="${t}">${t}</div>`).join('')}</div></div>
     <p class="small muted" id="rem-txt" style="display:flex;gap:8px;justify-content:center;align-items:center;margin-top:auto">${ic('bell',15)}<span>Lembrete todos os dias às ${h}</span></p>
     ${cta('Continuar')}</div>`}
-  if(st==='scanprod')return `<div class="ob obx" style="text-align:center">${back}
-    <div class="obk">Scanner de produtos</div><h1 class="obh">Escaneando o produto…</h1>
+  if(st==='scanprod'){const tp=S.result&&S.result.tipo?'pele '+String(S.result.tipo).toLowerCase():'sua pele';return `<div class="ob obx scx spx" style="text-align:center">${back}
+    <div class="obk">Scanner de produtos</div><h1 class="obh spt">${nome?nome+', agora':'Agora'} a Pellie confere os produtos por você</h1>
+    <p class="obs" style="margin:0">Com a sua análise pronta, cada rótulo é comparado com a sua ${tp.replace(/^sua /,'')}. Veja um exemplo:</p>
     <div class="pxf spf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
-    <ul class="spl" aria-live="polite"><li style="--d:.5s"><i>${ic('check',13)}</i>Lendo o rótulo</li><li style="--d:1.7s"><i>${ic('check',13)}</i>Conferindo os ingredientes</li><li style="--d:2.9s"><i>${ic('check',13)}</i>Comparando com a sua pele</li></ul>
-    <div class="obf"><button class="btn obc spb" data-act="ob-next" style="width:100%">Ver resultado do scan</button></div></div>`;
+    <ul class="spl" aria-live="polite"><li style="--d:.5s"><i>${ic('check',13)}</i>Lendo o rótulo</li><li style="--d:1.7s"><i>${ic('check',13)}</i>Conferindo os ingredientes</li><li style="--d:2.9s"><i>${ic('check',13)}</i>Comparando com a sua ${tp.replace(/^sua /,'')}</li></ul>
+    <div class="obf"><button class="btn obc spb" data-act="ob-next" style="width:100%">Ver resultado do scan</button></div></div>`}
   if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=seco,oleo=r?Math.round(r.oleo):null;
     const pc=ok?86:32,cor=ok?'#4F8A6B':'#C94A3F',lab=ok?'Alta compatibilidade':'Não recomendado',da=(pc/100*176).toFixed(1);
     const li=ok?`<li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata a pele seca.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b>, acabamento uniforme.</span></li>`
@@ -3334,14 +3336,14 @@ function viewOnboarding(){PFI=0;
     ${cta('Vamos começar',true,'ob-next')}</div>`;
   if(st==='pronta'){const PA=PAN(),an=S.planSel!=='mes',pm=an?PA.m:'R$ 59,90',sub=an?`${PA.p} cobrado por ano · cancele quando quiser`:'Cobrado todo mês · cancele quando quiser',dia=an?(S.oferta?'R$ 0,33':'R$ 0,41'):'R$ 1,97';
     const sh=[['limpador','hidr','fps','niacina'],['vitc','bha','calmante','retinol'],['hialu','hidr','niacina','fps']];
-    return `<div class="pwz"><button class="pwx2" data-act="ob-fechar" aria-label="Fechar">${ic('x',22)}</button><div class="brand" style="justify-content:center;align-items:center"><img src="pellie-logo.png" alt="Pellie" style="height:34px;width:auto"><span class="pwp">PLUS</span></div>
+    return `<div class="pwz"><button class="pwx2" data-act="ob-fechar" aria-label="Fechar">${ic('x',22)}</button><div class="brand" style="justify-content:center;align-items:center"><img src="pellie-logo.png" alt="Pellie" style="height:34px;width:auto"><span class="pwp">PRO</span></div>
     <h1 class="pwh"><span>A rotina perfeita</span><b>para sua pele está pronta.</b></h1>
     <p class="pws">Tudo que você precisa para cuidar da sua pele está aqui.</p>
     <div class="p3" aria-hidden="true">
       ${(()=>{const SB=`<div class="ipb"><b>9:41</b><span><svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="#2C1A12"/><rect x="4.3" y="4" width="3" height="6" rx="1" fill="#2C1A12"/><rect x="8.6" y="2" width="3" height="8" rx="1" fill="#2C1A12"/><rect x="13" y="0" width="3" height="10" rx="1" fill="#2C1A12"/></svg><svg width="22" height="10" viewBox="0 0 22 10"><rect x=".5" y=".5" width="18" height="9" rx="3" fill="none" stroke="#2C1A12" opacity=".5"/><rect x="2" y="2" width="15" height="6" rx="2" fill="#2C1A12"/><rect x="20" y="3.5" width="1.6" height="3" rx=".8" fill="#2C1A12" opacity=".5"/></svg></span></div>`,TAB=`<div class="ip-tab"><span>${ic('home',20)}</span><span>${ic('face',20)}</span><span>${ic('bottle',20)}</span><span>${ic('users',20)}</span></div><div class="ip-hb"></div>`,
         A=`<div class="ip-sl a"><small>Rotina da manhã</small><div class="ip-btn">${ic('check',40)}<b>Começar</b></div>${[['Limpeza','limpador'],['Tratamento','niacina'],['Hidratação','hidr'],['Proteção','fps']].map(([a,k],i)=>`<div class="ip-st"><em>${i+1}</em><span>${pimg(k,22)}</span><div><b>${a}</b><i></i></div>${ic('check',13)}</div>`).join('')}</div>`,B=`<div class="ip-sl b"><div class="ip-h">Minha estante<u>Editar</u></div>${sh.map(r=>`<div class="ip-r">${r.map(k=>`<span>${pimg(k,30)}</span>`).join('')}</div>`).join('')}<div class="ip-g">Recomendados pra você</div></div>`,C=`<div class="ip-sl c"><div class="ip-h">Olá${S.nome?', '+esc(S.nome):''}<u>Hoje</u></div><div class="ip-w">${['D','S','T','Q','Q','S','S'].map((d,i)=>`<span class="${i<3?'on':''}">${d}</span>`).join('')}</div><div class="ip-k">${ic('flame',26)}<b>1 dia</b><small>de rotina em dia</small></div><div class="ip-c"><b>Rotina da manhã</b>4 passos para hoje</div><div class="ip-c"><b>Rotina da noite</b>3 passos para hoje</div></div>`,Dd=`<div class="ip-sl d"><div class="ip-h">Sua análise<u>Pele</u></div><span class="ip-ex">Exemplo</span>${[['Oleosidade','72%'],['Poros','58%'],['Hidratação','40%'],['Linhas finas','25%']].map(([t,v])=>`<div class="ip-bar"><span>${t}</span><div><i style="--v:${v}"></i></div></div>`).join('')}<div class="ip-c" style="margin-top:4px"><b>Maior desafio</b>Veja o que sua pele mais precisa</div></div>`,E=`<div class="ip-sl e"><div class="ip-h">Scanner<u>Produtos</u></div><span class="ip-ex">Exemplo</span><div class="ip-sc">${pimg('hidr',64)}</div><div class="ip-ok">${ic('check',16)}Combina com a sua pele</div><div class="ip-c">Veja a compatibilidade antes de comprar.</div></div>`,
         ph=(cls,x)=>`<div class="ipw ${cls}"><div class="ip"><div class="ips"><div class="ipi"></div>${SB}${x}${TAB}</div></div></div>`;
-        return ph('l',B)+ph('r',C)+ph('c',A+Dd+E+B+C)})()}
+        return ph('l',B)+ph('r',C)+ph('c',[A,Dd,E,B,C].map((x,i)=>x.replace('<div class="ip-sl','<div style="--sd:'+i*3+'s" class="ip-sl')).join(''))})()}
     </div>
     <div class="pwb2"><div class="pwn"><b>${pm}</b><span>/mês</span></div><p class="pwc">${an?`${PA.p} por ano · menos de <b>${dia}</b> por dia`:sub}</p>
       <button class="btn obc pwk" data-act="pw-sheet">Quero meu plano agora</button>
@@ -3537,7 +3539,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='conta-apagar-ask'){S.askConta=true;AUTH.derr=null;render()}
   else if(d.act==='conta-apagar-nao'){S.askConta=false;render()}
   else if(d.act==='conta-apagar'){apagarConta()}
-  else if(d.act==='plus-refresh'){_lastPf=0;atualizaPlano().then(()=>toast(S.plus?'Pellie+ ativo':'Ainda não consta assinatura'))}
+  else if(d.act==='plus-refresh'){_lastPf=0;atualizaPlano().then(()=>toast(S.plus?'Pellie Pro ativo':'Ainda não consta assinatura'))}
   else if(d.act==='sair-conta'){sairConta()}
   else if(d.act==='apagar-ask'){S.askDel=true;render()}
   else if(d.act==='apagar-nao'){S.askDel=false;render()}
