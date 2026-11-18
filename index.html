@@ -1159,7 +1159,7 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 /* Scanner Pro */
 .app:has(.pfw){padding-bottom:0!important}body:has(.pfw)>nav,.app:has(.pfw)>header{visibility:hidden!important}#view:has(.pfw){animation:none!important}html:has(.pfw),body:has(.pfw){overflow:hidden;height:100%}
 .pfw{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;background:radial-gradient(90% 50% at 50% 0%,#FBEDE4 0%,rgba(251,237,228,0) 70%),linear-gradient(180deg,#FBF4EE,#F6EAE1);color:var(--ink,#2C1A12)}
-.pf-hd{flex:none;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:calc(6px + env(safe-area-inset-top)) 12px 4px;max-width:560px;width:100%;margin:0 auto;box-sizing:border-box}.pf-hd button{width:44px;height:44px;border:0;background:none;color:#4A2A1E;display:grid;place-items:center;cursor:pointer}.pf-hd img{height:30px;width:auto;justify-self:center}
+.pf-hd{flex:none;display:grid;grid-template-columns:64px 1fr 64px;align-items:center;padding:calc(6px + env(safe-area-inset-top)) 12px 4px;max-width:560px;width:100%;margin:0 auto;box-sizing:border-box}.pf-hd button{width:44px;height:44px;border:0;background:none;color:#4A2A1E;display:grid;place-items:center;cursor:pointer}.pf-hd img{height:30px;width:auto;justify-self:center}
 .pf-proc,.pf-body{flex:1;min-height:0;width:100%;max-width:560px;margin:0 auto;box-sizing:border-box;padding:6px 22px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6vh,14px);text-align:center}
 .pf-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:left;align-items:stretch}
 .pf-in>*{animation:rvup .5s cubic-bezier(.2,.8,.2,1) backwards}.pf-in>*:nth-child(2){animation-delay:.06s}.pf-in>*:nth-child(3){animation-delay:.12s}.pf-in>*:nth-child(4){animation-delay:.18s}.pf-in>*:nth-child(5){animation-delay:.24s}.pf-in>*:nth-child(n+6){animation-delay:.3s}
@@ -1205,6 +1205,8 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pfg-prev{display:flex;gap:12px;align-items:center;background:#F3F7F2;border-radius:16px;padding:10px;margin-bottom:12px}.pfg-th{flex:none;width:58px;height:58px;border-radius:14px;background:#fff;padding:4px;box-sizing:border-box;display:grid}.pfg-th img{width:50px;height:50px;object-fit:contain;display:block}.pfg-prev b{display:block;color:#2F5B3E}.pfg-prev small{color:var(--muted)}
 .pf-stp{flex:none;display:flex;gap:6px;width:100%;max-width:560px;margin:0 auto;padding:0 22px 6px;box-sizing:border-box}.pf-stp span{flex:1;display:flex;flex-direction:column;gap:4px;font-size:10.5px;font-weight:700;color:#C9B2A5;text-align:center}.pf-stp i{height:4px;border-radius:3px;background:#EAD8CC}.pf-stp .ok{color:#A76F5C}.pf-stp .ok i{background:#A76F5C}.pf-stp .on{color:#4A2A1E}.pf-stp .on i{background:linear-gradient(90deg,#4A2A1E,#A76F5C)}
 .pf-body{overflow-y:auto}@media(max-height:760px){.pf-big{font-size:clamp(70px,13vh,96px)}.pf-circ{--cs:clamp(92px,15vh,140px)}.pf-body{gap:8px}.pf-lab{font-size:15.5px}}
+.pf-hd .pf-sair{width:auto;height:auto;justify-self:end;font:inherit;font-size:14px;font-weight:700;color:#7C5A4B;background:#F3E3D9;border-radius:99px;padding:7px 14px}
+.pf-exit{display:inline-flex;gap:6px;align-items:center;justify-content:center;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:#9A7B6C;padding:10px 14px;cursor:pointer;margin:2px auto 0;text-decoration:underline;text-underline-offset:3px}
 .pf-shb{width:100%;display:flex;justify-content:center;gap:8px;margin-top:6px}.pf-shok{display:flex;gap:8px;align-items:center;justify-content:center;width:100%;color:#2F5B3E;font-weight:700;background:#E8F1EA;border-radius:14px;padding:10px 12px;margin-top:6px;font-size:14.5px}.pf-shok .chip{margin-left:auto;font-size:12px;padding:4px 10px}
 @media(prefers-reduced-motion:reduce){.pfg-go{animation:none}}
 /* exemplo do scanner */
@@ -2249,7 +2251,7 @@ function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return ''
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('bottle',18)}Adicionar à minha prateleira</button>`}
 function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img src="${f.photo}" alt="Foto do produto">`:`<span class="pf-noph">${ic('bottle',34)}</span>`;
   const voltar=['det','ing'].includes(f.st);
-  const hd=`<div class="pf-hd"><button data-act="${voltar?'pf-back':'pf-close'}" aria-label="${voltar?'Voltar':'Fechar'}">${ic(voltar?'back':'x',22)}</button><img src="pellie-logo.png" alt="Pellie"><span></span></div>`;
+  const hd=`<div class="pf-hd">${voltar?`<button data-act="pf-back" aria-label="Voltar">${ic('back',22)}</button>`:'<span></span>'}<img src="pellie-logo.png" alt="Pellie"><button class="pf-sair" data-act="pf-close" aria-label="Sair da avaliação">Sair</button></div>`;
   let b='';
   if(f.st==='id'||f.st==='cmp'){const cmp=f.st==='cmp',up=S.photo||(S.fotos&&S.fotos.length?S.fotos[S.fotos.length-1].img:null);
     const steps=PF_STEPS.slice(cmp?3:0,cmp?5:3);
@@ -2296,6 +2298,8 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
       <div class="pf-ft">${pfShelf(false)}<button class="btn obc" data-act="pf-new" style="margin-top:6px">${ic('scan',18)}Escanear outro produto</button></div></div>`}
   const PN={id:1,conf:1,cmp:2,score:2,det:3,ing:4}[f.st],PT=['Identificar','Comparar','Resultado','Ingredientes'];
   const stp=`<div class="pf-stp" aria-label="Passo ${PN} de 4">${PT.map((t,i)=>`<span class="${i+1<PN?'ok':i+1===PN?'on':''}"><i></i>${t}</span>`).join('')}</div>`;
+  const sair=`<button class="pf-exit" data-act="pf-close">${ic('x',14)}Sair da avaliação</button>`;
+  if((f.st==='id'||f.st==='cmp')&&!f.err)b=b.replace(/<\/div>$/,sair+'</div>');
   return `<div class="pfw" data-st="${f.st}">${hd}${stp}${b}</div>`}
 function viewEscanear(){
   if(S.pf)return pfView();
