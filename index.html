@@ -307,6 +307,7 @@ nav button[aria-current="page"]{color:var(--accent);background:var(--soft)}
 .chips span{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface);color:var(--sage);border:1px solid var(--line)}
 .sh{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
 .sh:first-of-type{border-top:0}
+.sht{flex:none;border-radius:12px;background:#fff;border:1px solid var(--line,#EAD3C4);display:grid;place-items:center;overflow:hidden;padding:3px;box-sizing:border-box}.sht img{max-width:100%;max-height:100%;object-fit:contain;display:block}.sht.ico{background:var(--soft,#F6E3D8);color:#A76F5C;border:0}.sht.sv{width:54px;height:66px;background:none;border:0;padding:0;filter:drop-shadow(0 3px 4px rgba(80,40,30,.2))}.sht.sv img{border-radius:8px}
 .sh .sn2{width:44px;height:44px;border-radius:12px;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--f-display)}
 .sh .sn2.ok{background:var(--sage)}.sh .sn2.cuidado{background:var(--warn)}.sh .sn2.evitar{background:var(--alert)}
 .sh .si{flex:1;min-width:0}
@@ -2114,14 +2115,14 @@ function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.
 // Prateleira ilustrada: cresce uma tábua a cada 4 produtos
 function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${FOTOS?shelfThumb(x):pimgOld(shelfKey(x),58)}</div>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img?`<span class="sht sv"><img src="${x.img}" alt=""></span>`:FOTOS?shelfThumb(x):pimgOld(shelfKey(x),58)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
   return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
 function viewShelf(){
   const it=S.shelf,soon=shelfSoon().length,nT=temP().length,nQ=it.filter(i=>stOf(i)==='quero').length;
-  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}">${FOTOS?shelfThumb(i):''}<span class="sn2 ${i.cat==='cabelo'?'ok':v[0]}">${i.cat==='cabelo'?ic('hair',18):i.nota}</span><div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
+  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}">${FOTOS?shelfThumb(i):''}${shTh(i,44)}<div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
 </div>
     <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
     <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shst="${i.id}|${k}" aria-pressed="${stOf(i)===k}">${t}</button>`).join('')}</div>
@@ -2248,6 +2249,9 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;const i=f.idr,a
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;gameCheck();render()}
+function pfThumb(src){return new Promise(res=>{if(!src)return res(null);const im=new Image();im.onload=()=>{try{const M=200,k=Math.min(1,M/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.82))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
+async function pfSetImg(it){if(!it||it.img||!S.pf||!S.pf.photo)return;const t=await pfThumb(S.pf.photo);if(t){it.img=t;save();render()}}
+const shTh=(i,sz)=>i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht ico" style="width:${sz}px;height:${sz}px">${ic(i.cat==='cabelo'?'hair':'bottle',Math.round(sz*.45))}</span>`;
 function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('bottle',18)}Adicionar à minha prateleira</button>`}
 function pfRotBtn(){const f=S.pf,n=S.prodResult&&S.prodResult.produto;if(!f||!f.cmp||!n)return '';const ro=f.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn',lab={m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr];
@@ -3799,11 +3803,11 @@ document.addEventListener('click',e=>{
   else if(d.act==='pf-ok'){pfCmp()}
   else if(d.act==='pf-shelf'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',it=S.shelf.find(i=>i.n===n);
     if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
-    toast('Adicionado à sua prateleira');gameCheck();render()}
+    {const it2=S.shelf.find(i=>i.n===n);pfSetImg(it2)}toast('Adicionado à sua prateleira');gameCheck();render()}
   else if(d.act==='pf-rot'&&S.pf&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',ro=S.pf.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn';let it=S.shelf.find(i=>i.n===n);
     if(!it){it={id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
     it.st='tenho';if(!it.aberto)it.aberto=hoje();let rt=String(it.rot||'');for(const c of pr)if(!rt.includes(c))rt+=c;it.rot=rt;
-    toast('Na sua rotina '+{m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr]);gameCheck();render()}
+    pfSetImg(it);toast('Na sua rotina '+{m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr]);gameCheck();render()}
   else if(d.act==='pf-rot-ver'){const ro=S.pf&&S.pf.cmp?S.pf.cmp.rotina.periodo:'manha';S.pf=null;S.tab='rotina';S.period=ro==='noite'?'n':'m';S.perMan=true;render();window.scrollTo(0,0)}
   else if(d.rsh){const [per,k]=d.rsh.split('|'),nm=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(nm){let it=S.shelf.find(i=>i.n===nm);if(!it){it={id:String(Date.now()),n:nm,tp:P[k].n,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}it.st='tenho';toast(nm+' na sua prateleira');gameCheck();const y=window.scrollY;render();window.scrollTo(0,y)}}
   else if(d.act==='pf-shelf-ver'){S.pf=null;S.tab='produtos';S.prodSub='shelf';render();window.scrollTo(0,0)}
