@@ -1054,6 +1054,35 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .iny{height:100dvh;max-height:100dvh;overflow:hidden;gap:8px;padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;justify-content:space-between}
 .iny .mpw{--mw:max(110px,min(58vw,250px,calc((100dvh - 365px - env(safe-area-inset-top) - env(safe-area-inset-bottom))/1.9)));gap:6px;margin:0 auto}
 .iny .mpd-lb{min-height:34px}.iny .inh2{font-size:clamp(25px,7.4vw,32px);line-height:1.1;margin:0}.iny .obf{padding:0;margin:0}.iny .brand img{height:38px!important}
+.eclw{display:grid;justify-items:center;gap:10px;margin:2px 0}
+.ecl{--t:0;--a:0deg;position:relative;width:min(62vw,232px);aspect-ratio:1;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;border-radius:50%;outline:none;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 18px 26px rgba(90,50,40,calc(.16 + var(--t)*.14)))}
+.ecl.drag{cursor:grabbing}.ecl:focus-visible{box-shadow:0 0 0 3px #fff,0 0 0 5px #A76F5C}
+.ecl>svg{display:block;width:100%;height:100%;overflow:visible}
+.ec-trk{fill:none;stroke:#E7D2C5;stroke-width:3;stroke-dasharray:1 7;stroke-linecap:round;opacity:calc(.9 - var(--t)*.3)}
+.ec-rot{transform-origin:110px 110px;transform:rotate(var(--a))}
+.ec-nt{opacity:var(--t)}.ec-hn{opacity:var(--t)}
+.ec-st circle{fill:#FFF8E8;opacity:calc(var(--t)*var(--t))}.ecl.isn .ec-st circle{animation:ectw 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*-.45s)}
+@keyframes ectw{50%{opacity:.35}}
+.ec-cl ellipse{fill:#fff;opacity:calc(.75 - var(--t)*1.4)}
+.ec-sh{fill:#4A3A4A;opacity:calc(sin(var(--t)*3.1416)*.92);transform-box:fill-box;transform-origin:center;transform:translateX(calc((1 - var(--t)*2)*30px))}
+.ec-glow{opacity:calc(1 - var(--t)*1.6)}
+.ec-cor{fill:none;stroke:#FFE7C2;stroke-width:3;opacity:calc(sin(var(--t)*3.1416)*.8);filter:blur(1.5px)}.ec-mg{fill:#E9E4F4;opacity:calc(var(--t)*var(--t)*.18);filter:blur(4px)}
+.ec-knob{fill:#fff;stroke:#A76F5C;stroke-width:2.5;filter:drop-shadow(0 2px 3px rgba(80,40,30,.3))}
+.ec-lb{position:absolute;left:0;right:0;bottom:15%;text-align:center;pointer-events:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.ec-lb b{position:absolute;left:0;right:0;transition:opacity .25s}.ec-lb .m{color:#6B3F2E;opacity:calc(1 - var(--t)*2)}.ec-lb .n{color:#E9E4F4;opacity:calc(var(--t)*2 - 1)}
+.ec-tabs{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}.ec-tabs span{min-width:120px;text-align:center}
+.ec-tabs button{display:flex;gap:5px;align-items:center;border:1px solid var(--line,#E4CFC3);background:#fff;border-radius:99px;padding:7px 12px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
+.ec-tabs button[aria-pressed=true]{background:#4A2A1E;border-color:#4A2A1E;color:#fff}
+.ec-hand{position:absolute;inset:0;pointer-events:none;animation:echr 2.6s cubic-bezier(.45,0,.3,1) .6s 2 both,echo .4s 5.9s forwards}
+.ec-hand svg{position:absolute;right:-4%;top:6%;filter:drop-shadow(0 4px 6px rgba(60,30,20,.3));transform:rotate(-18deg)}
+.ec-hand i{position:absolute;right:13%;top:5%;width:16px;height:16px;border-radius:50%;background:rgba(167,111,92,.35);animation:ectp 2.6s .6s 2 both}
+.ec-hand.out{animation:echo .25s forwards}
+@keyframes echr{0%{transform:rotate(-8deg);opacity:0}12%{opacity:1;transform:rotate(-8deg)}62%{transform:rotate(58deg);opacity:1}82%,100%{transform:rotate(58deg);opacity:0}}
+@keyframes ectp{0%,10%{transform:scale(.4);opacity:0}16%{transform:scale(1);opacity:1}62%{opacity:1}75%,100%{opacity:0}}
+@keyframes echo{to{opacity:0;visibility:hidden}}
+.rsw{animation:rswin .5s cubic-bezier(.22,.8,.2,1) both}.rsw .step{animation:rswin .5s cubic-bezier(.22,.8,.2,1) backwards}.rsw .step:nth-of-type(2){animation-delay:.05s}.rsw .step:nth-of-type(3){animation-delay:.1s}.rsw .step:nth-of-type(4){animation-delay:.15s}.rsw .step:nth-of-type(5){animation-delay:.2s}
+@keyframes rswin{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){.ec-hand,.ec-hand i,.ecl.isn .ec-st circle,.rsw,.rsw .step{animation:none}.ec-hand{opacity:1}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1231,14 +1260,14 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
 const hoje=()=>{const t=new Date();return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate())};
 const fmtD=d=>d?d.slice(8,10)+'/'+d.slice(5,7):'';
 load();
-S.period=new Date().getHours()<16?'m':'n';
+if(!S.perMan)S.period=new Date().getHours()<16?'m':'n';
 if(S.result&&!S.analises.length)S.analises=[S.result];
 
 const $=s=>document.querySelector(s);
@@ -1885,6 +1914,52 @@ function tratRot(per){
     <p class="small muted" style="margin:6px 0 10px">${X.calm?'Sua pele está sensível agora, então o foco é acalmar antes de tratar.':'Escolhidos pelas notas do scanner facial, do mais importante para o menos.'}</p>
     ${mostra.map(card).join('')}${cron}
     <p class="small muted" style="margin:10px 0 0">Orientações gerais, que não substituem a avaliação de um dermatologista.</p></div>`}
+
+/* ===== Eclipse: controle giratório Manhã/Noite ===== */
+function eclipseCtl(per){const a=per==='n'?180:0,st=[[38,58,1.1],[62,40,.8],[148,52,1],[160,84,.7],[52,92,.7],[128,30,.9],[86,26,.6],[170,64,.6]];
+  return `<div class="eclw"><div class="ecl" role="slider" tabindex="0" aria-label="Gire para trocar entre rotina da manhã e da noite" aria-valuemin="0" aria-valuemax="1" aria-valuenow="${per==='n'?1:0}" aria-valuetext="${per==='n'?'Rotina da noite':'Rotina da manhã'}" style="--t:${a/180};--a:${a}deg">
+    <svg viewBox="0 0 220 220" aria-hidden="true">
+      <defs><radialGradient id="ecd" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#FDF3E9"/><stop offset=".55" stop-color="#F7DCC9"/><stop offset="1" stop-color="#E9BBA3"/></radialGradient>
+        <radialGradient id="ecn" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#3B4673"/><stop offset=".6" stop-color="#232A4C"/><stop offset="1" stop-color="#141830"/></radialGradient>
+        <radialGradient id="ecs" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#F6C27A"/><stop offset="1" stop-color="#E39A5C"/></radialGradient>
+        <radialGradient id="ecg" r=".5"><stop offset=".45" stop-color="#FFE3B0" stop-opacity=".75"/><stop offset="1" stop-color="#FFE3B0" stop-opacity="0"/></radialGradient>
+        <radialGradient id="ecm" cx=".35" cy=".35" r=".8"><stop offset="0" stop-color="#FBF6EC"/><stop offset="1" stop-color="#D9D3C6"/></radialGradient>
+        <linearGradient id="ech" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7C3AE"/><stop offset="1" stop-color="#D3A48C"/></linearGradient>
+        <linearGradient id="echn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3157"/><stop offset="1" stop-color="#171B33"/></linearGradient>
+        <clipPath id="ecc"><circle cx="110" cy="110" r="92"/></clipPath><mask id="ecmk"><circle cx="110" cy="46" r="17" fill="#fff"/><circle cx="119" cy="40" r="15" fill="#000"/></mask></defs>
+      <circle class="ec-trk" cx="110" cy="110" r="104"/>
+      <g clip-path="url(#ecc)">
+        <rect width="220" height="220" fill="url(#ecd)"/><rect class="ec-nt" width="220" height="220" fill="url(#ecn)"/>
+        <g class="ec-st">${st.map(([x,y,r],i)=>`<circle cx="${x}" cy="${y}" r="${r}" style="--i:${i}"/>`).join('')}</g>
+        <g class="ec-cl"><ellipse cx="62" cy="76" rx="22" ry="7"/><ellipse cx="74" cy="71" rx="13" ry="8"/><ellipse cx="160" cy="98" rx="20" ry="6"/><ellipse cx="150" cy="94" rx="11" ry="7"/></g>
+        <g class="ec-rot"><circle cx="110" cy="46" r="34" fill="url(#ecg)" class="ec-glow"/><circle cx="110" cy="46" r="24" class="ec-cor"/><circle cx="110" cy="46" r="19" fill="url(#ecs)"/>
+          <circle class="ec-sh" cx="110" cy="46" r="19.5"/>
+          <g transform="rotate(180 110 110)"><circle cx="110" cy="46" r="26" class="ec-mg"/><g mask="url(#ecmk)"><circle cx="110" cy="46" r="17" fill="url(#ecm)"/><circle cx="103" cy="52" r="2" fill="#CFC7B8" opacity=".7"/><circle cx="100" cy="44" r="1.3" fill="#CFC7B8" opacity=".6"/></g></g></g>
+        <path d="M0 140 C50 128 80 136 110 132 S180 126 220 138 V220 H0Z" fill="url(#ech)"/><path class="ec-hn" d="M0 140 C50 128 80 136 110 132 S180 126 220 138 V220 H0Z" fill="url(#echn)"/>
+      </g>
+      <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>
+      <g class="ec-rot"><circle class="ec-knob" cx="110" cy="6" r="7"/></g>
+    </svg>
+    <div class="ec-lb"><b class="m">Manhã</b><b class="n">Noite</b></div>
+    ${S.eclHint?'':`<div class="ec-hand" aria-hidden="true"><svg viewBox="0 0 40 48" width="34" height="41"><path d="M15 6c0-2.2 1.8-4 4-4s4 1.8 4 4v14l2.4-.6c2.6-.6 5.1 1.3 5.1 4l.5 9.4c.2 4-1.2 7.9-3.9 10.8L25 46H12.6l-6.8-10.4c-1.4-2.1-.9-4.9 1.1-6.4 1.9-1.4 4.6-1.1 6.1.8L15 32z" fill="#fff" stroke="#4A2A1E" stroke-width="1.8" stroke-linejoin="round"/></svg><i></i></div>`}
+  </div>
+  <div class="ec-tabs"><button data-per="m" aria-pressed="${per==='m'}">${ic('sun',16)}Manhã</button><span>${S.eclHint?'Gire ou toque para trocar':'Gire o círculo'}</span><button data-per="n" aria-pressed="${per==='n'}">${ic('moon',16)}Noite</button></div></div>`}
+const ECL={};
+function eclSet(el,a){a=Math.max(0,Math.min(180,a));ECL.a=a;el.style.setProperty('--a',a+'deg');el.style.setProperty('--t',(a/180).toFixed(3));el.classList.toggle('isn',a>90);return a}
+function eclDone(){const el=document.querySelector('.ecl');const per=ECL.a>90?'n':'m',mud=per!==S.period;S.eclHint=true;
+  if(mud){S.period=per;S.perMan=true;render._rsw=1;render();render._rsw=0;try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}else if(el){const h=el.querySelector('.ec-hand');if(h)h.remove();save()}}
+function eclGo(to){const el=document.querySelector('.ecl');if(!el)return;cancelAnimationFrame(ECL.raf);const fr=ECL.a||0,red=matchMedia('(prefers-reduced-motion: reduce)').matches,D=red?1:Math.max(320,800*Math.abs(to-fr)/180),t0=performance.now();
+  el.classList.add('anim');const h=el.querySelector('.ec-hand');if(h)h.remove();
+  const st=n=>{const k=Math.min(1,(n-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;eclSet(el,fr+(to-fr)*e);if(k<1)ECL.raf=requestAnimationFrame(st);else{el.classList.remove('anim');eclDone()}};ECL.raf=requestAnimationFrame(st)}
+function eclInit(){const el=document.querySelector('.ecl');if(!el||el._ok)return;el._ok=1;ECL.a=S.period==='n'?180:0;el.classList.toggle('isn',ECL.a>90);
+  const ang=e=>{const r=el.getBoundingClientRect();return Math.atan2(e.clientX-(r.left+r.width/2),-(e.clientY-(r.top+r.height/2)))*180/Math.PI};
+  let drag=null;
+  el.addEventListener('pointerdown',e=>{cancelAnimationFrame(ECL.raf);drag={p:ang(e),a:ECL.a,x:e.clientX,y:e.clientY,mv:0};try{el.setPointerCapture(e.pointerId)}catch(_){}el.classList.add('drag');const h=el.querySelector('.ec-hand');if(h)h.classList.add('out');e.preventDefault()});
+  el.addEventListener('pointermove',e=>{if(!drag)return;let d=ang(e)-drag.p;if(d>180)d-=360;if(d<-180)d+=360;drag.p+=d;drag.a+=d;drag.mv=Math.max(drag.mv,Math.hypot(e.clientX-drag.x,e.clientY-drag.y));eclSet(el,drag.a)});
+  const up=e=>{if(!drag)return;const g=drag;drag=null;el.classList.remove('drag');
+    if(g.mv<6){eclGo(ECL.a>90?0:180);return}eclGo(ECL.a>90?180:0)};
+  el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+  el.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Enter',' '].includes(e.key)){e.preventDefault();const to=e.key==='ArrowLeft'||e.key==='ArrowUp'?0:e.key==='ArrowRight'||e.key==='ArrowDown'?180:(ECL.a>90?0:180);if(to!==(ECL.a>90?180:0))eclGo(to)}})}
 function viewRotina(){
   const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n;
   const id=k=>per+k;
@@ -1900,10 +1975,8 @@ function viewRotina(){
   return `<div class="stack">${head}
   ${fn?`<button class="alertc" data-go="mais|fase" style="border-color:var(--accent)">${ic(FASES[S.fase].i,22)}<span><b>${FASES[S.fase].t}</b><span class="small muted" style="display:block">${fn}</span></span></button>`:''}
   ${nc?`<button class="alertc" data-go="mais|conflitos">${ic('alert',22)}<span><b>${nc} ${nc===1?'combinação':'combinações'} para cuidar</b><span class="small muted" style="display:block">Toque para ver</span></span></button>`:''}
-  <div class="seg two" role="group" aria-label="Período">
-    <button data-per="m" aria-pressed="${per==='m'}">${ic('sun',18)}Manhã</button>
-    <button data-per="n" aria-pressed="${per==='n'}">${ic('moon',18)}Noite</button></div>
-  <div class="card">
+  ${eclipseCtl(per)}
+  <div class="card${render._rsw?' rsw':''}">
     <div class="row" style="justify-content:space-between"><h3>${per==='m'?'Manhã':'Noite'}</h3><span class="small muted">${feitos} de ${ks.length} hoje</span></div>
     <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
     ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
@@ -3339,7 +3412,7 @@ function render(){
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  raspeInit();fitIp();pthHidratar();
+  raspeInit();fitIp();eclInit();pthHidratar();
   f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();
@@ -3445,7 +3518,7 @@ document.addEventListener('click',e=>{
   else if(d.like){const x=(POSTS||[]).find(p=>p.id===d.like);if(x){const l=(x.likes||[]).includes(CL.uid)?(x.likes||[]).filter(u=>u!==CL.uid):[...(x.likes||[]),CL.uid];CL.db.doc('posts/'+x.id).update({likes:l}).catch(()=>toast('Não consegui curtir'))}}
   else if(d.delpost){CL.db.doc('posts/'+d.delpost).delete().catch(()=>toast('Não consegui apagar'))}
   else if(d.act==='fechar-cele'){S.cele=S.celeQ.shift()||null;render()}
-  else if(d.per){S.period=d.per;render()}
+  else if(d.per){if(document.querySelector('.ecl')&&d.per!==S.period){eclGo(d.per==='n'?180:0);return}S.period=d.per;S.perMan=true;render()}
   else if(d.tier){S.tier=d.tier;render()}
   else if(d.done){const [per,k]=d.done.split('|');const bl=bloq(per);if(bl&&!isDone(per,k)){toast('Libera às '+libHora(per)+', em '+fmtDur(bl));return}toggleStep(per,k)}
   else if(d.act&&d.act.startsWith('unl|')){S.unl[hoje()+d.act.slice(4)]=true;render()}
