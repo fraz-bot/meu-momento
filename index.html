@@ -3462,7 +3462,7 @@ function pctFetch(k){const r=S.result,m=MTX[k];if(!r||!m||r[m.f]==null)return;co
 /* pos=true: % de pessoas com resultado PIOR que o seu; pos=false: % com resultado MELHOR que o seu */
 function pctDe(k,pos){const r=S.result,m=MTX[k];if(!r||!m)return null;const b=PCT[(r.d||'')+k+r[m.f]];if(!b||b.n<PCT_MIN)return null;
   const piores=m.maior?b.abaixo:b.acima,melhores=m.maior?b.acima:b.abaixo;return {pct:Math.round(100*(pos?piores:melhores)/b.n),n:b.n}}
-function revela(pos,k){const r=S.result,m=MTX[k],d=desafio();if(!r||!m)return '';const nome=S.nome?esc(S.nome):'',v=Math.round(+r[m.f]||0),c=pctDe(k,pos);
+function revela(pos,k){const r=S.result,m=MTX[k],d=desafio();if(!r||!m)return '';const nome=S.nome?esc(S.nome):'',v=Math.round(+r[m.f]||0),real=pctDe(k,pos),bom=m.maior?v:100-v,c=real||{pct:cmpPct(pos?bom:100-bom),est:1};
   const reg=!pos&&d&&d.pill&&d.pill.includes(' · ')?d.pill.split(' · ')[1]:'';
   const big=c?`<div class="rv-big ind" data-k="${esc('rv'+(r.d||'')+k+c.pct)}" data-dl="650">${odo(c.pct)}</div><div class="rv-das">das pessoas</div>`
     :`<div class="rv-big ind" data-k="${esc('rvi'+(r.d||'')+k+v)}" data-dl="650">${odo(v,'')}<small>/100</small></div><div class="rv-das">${m.maior?'quanto maior, melhor':'quanto menor, melhor'}</div>`;
@@ -3472,7 +3472,7 @@ function revela(pos,k){const r=S.result,m=MTX[k],d=desafio();if(!r||!m)return ''
     <h1 class="rv-h">${pos?`${nome?nome+', sua':'Sua'} pele se destaca em relação ${m.as}!`:`Precisamos cuidar ${m.da}${nome?', '+nome:''}.`}</h1>
     <div class="rv-card"><p class="rv-top">${c?(pos?m.menos:m.mais):`Sua nota de ${m.lab} na análise`}</p>${big}<i class="rv-hr"></i>
       <p class="rv-msg">${pos?`Um resultado que merece ser celebrado.`:`Esse é o principal aspecto que merece sua atenção.${reg?` Mais visível em ${esc(reg)}.`:''}`}</p>
-      <p class="rv-note">${c?`Comparação com ${c.n.toLocaleString('pt-BR')} análises reais feitas na Pellie.`:'Nota individual da sua foto, de 0 a 100. Não é um dado clínico.'}</p></div>
+      <p class="rv-note">${c.est?'Estimativa da Pellie a partir da sua análise. Não é um dado clínico.':`Comparação com ${c.n.toLocaleString('pt-BR')} análises reais feitas na Pellie.`}</p></div>
     <button class="rv-btn" id="ob-go" data-act="ob-next">${pos?'Quero manter esse resultado':'Quero melhorar minha pele'}</button></div></div>`}
 function posK(){const d=desafio();if(!d)return null;if(d.fk&&d.fk!==d.k)return d.fk;const r=S.result;const F=[['resseca',r.hid],['oleo',100-r.oleo],['poros',100-r.poros],['manchas',100-r.manchas],['linhas',100-r.linhas],['verm',100-r.verm]].filter(x=>x[0]!==d.k).sort((a,b)=>b[1]-a[1]);return F[0]&&F[0][1]>=55?F[0][0]:null}
 const cmpPct=n=>Math.max(55,Math.min(95,Math.round(40+n*0.55)));
