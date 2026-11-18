@@ -196,6 +196,21 @@
 @media(max-width:360px){.pl-ir{grid-template-columns:24px 92px 1fr 40px;font-size:13.5px}.pl-pic{width:98px;height:126px}}
 @media(prefers-reduced-motion:reduce){.pl-orb i,.pl-ind i,.pl-msg span,.pl-in,.pl-proc{animation:none}.pl-msg span:first-child{opacity:1}}
 .pl-chk li{justify-content:flex-start;border:0;padding:0;background:none;box-shadow:none;margin:0;min-height:0}.pl-st{list-style:decimal}.pl-st li{border:0;padding:0;background:none;box-shadow:none;margin:0;display:list-item;justify-content:flex-start}
+/* Aba Cabelo (redesign) */
+.hf{gap:14px}.hf-in{animation:plIn .45s ease both}.hf[data-d="-1"].hf-in{animation-name:hfBk}@keyframes hfBk{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.hf-t{margin:0;font-size:clamp(24px,7vw,29px);color:#4A2A1E;letter-spacing:-.02em;line-height:1.1}
+.hf-hero{display:flex;gap:14px;align-items:center;border-radius:26px;padding:16px;background:linear-gradient(150deg,#FFF6EA,#F9E4D2);box-shadow:0 10px 26px rgba(170,128,86,.14)}.hf-art{flex:none;border-radius:20px;background:rgba(255,255,255,.55);padding:10px 8px 0;overflow:hidden}
+.hf-li,.hf-tips,.hf-st{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;font-size:14px;color:#4A2A1E}.hf-li li,.hf-tips li,.hf-st li{display:flex;gap:9px;align-items:flex-start;justify-content:flex-start;border:0;padding:0;line-height:1.3}.hf-li svg,.hf-tips svg,.hf-st svg{flex:none;color:#A76F5C;margin-top:1px}.hf-st{font-size:14.5px;gap:10px}
+.hf-tp{display:flex;align-items:center;gap:12px}.hf-tp small{font-size:13.5px;font-weight:700;color:#8A6F62;min-width:44px;text-align:right}.hf-pg{flex:1;height:7px;border-radius:99px;background:#EBD8CB;overflow:hidden}.hf-pg i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#C99580,#4A2A1E);transition:width .4s}
+.hf-qh{display:flex;gap:12px;align-items:center;margin-top:6px}.hf-qh h2{margin:0;font-size:clamp(23px,6.6vw,27px);line-height:1.12;color:#4A2A1E;letter-spacing:-.02em}
+.hf-os{display:flex;flex-direction:column;gap:10px}.hf-o{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font:inherit;font-size:16.5px;font-weight:600;min-height:58px;border:1.5px solid #EBD8CB;border-radius:20px;background:#FFFCF9;color:#4A2A1E;padding:0 18px;cursor:pointer;box-shadow:0 6px 16px rgba(170,128,86,.08);transition:all .2s}.hf-o i{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid #D9B8A6;display:grid;place-items:center;color:transparent}
+.hf-o[aria-pressed="true"]{background:linear-gradient(135deg,#FBE8DA,#F6D9C6);border-color:#A76F5C}.hf-o[aria-pressed="true"] i{background:#4A2A1E;border-color:#4A2A1E;color:#fff}
+.hf-nv{display:flex;gap:10px;margin-top:4px}.hf-nv .btn{flex:1;min-height:52px;justify-content:center;border-radius:99px}.hf-nv .pl-go{margin-top:0;flex:1.4}.hf-lb{cursor:pointer;display:flex;align-items:center}
+.hf-pv{position:relative;border-radius:26px;overflow:hidden;background:#F3E8DF;aspect-ratio:3/4;max-height:50vh;margin:0 auto;box-shadow:0 10px 26px rgba(170,128,86,.16)}.hf-pv img{width:100%;height:100%;object-fit:cover;display:block}.hf-ok{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;border-radius:99px;padding:7px 13px;background:#E4EFE6;color:#2F5B3E}
+.hf-dn{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding-top:6px}.hf-ck{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#C99580,#A76F5C);box-shadow:0 10px 24px rgba(167,111,92,.35);animation:hfPop .5s ease both}@keyframes hfPop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.hf-sm{display:flex;gap:14px;align-items:center}.hf-sm img{flex:none;width:70px;height:88px;object-fit:cover;border-radius:16px}.hf-sm b{display:flex;align-items:center;gap:5px;color:#2F5B3E;font-size:15px}.hf-sm small{display:block;color:#7C5A4B;font-size:13px;margin-top:2px}
+.hf-an{display:flex;flex-direction:column;margin-top:8px}.hf-an button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;font:inherit;border:0;border-bottom:1px solid #F0E3D8;background:none;color:#4A2A1E;padding:10px 0;cursor:pointer}.hf-an button:last-child{border:0}.hf-an small{font-size:13px;color:#7C5A4B;flex:1}.hf-an b{font-size:14px;text-align:right}
+@media(prefers-reduced-motion:reduce){.hf-in,.hf-ck{animation:none}}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -3254,13 +3269,74 @@ async function analisarCabelo(){
       S.hres={d:hoje(),tipo:String(r.tipo||'Liso'),resumo:r.resumo?String(r.resumo):'',raiz:num(r.raiz),pontas:num(r.pontas),poro:num(r.poro),danos:num(r.danos),frizz:num(r.frizz),
         atencao:r.atencao?String(r.atencao):null,marcas:{}};
 
-      xp(40,'Análise do cabelo','hair');S.okMsg='cabelo'}
+      xp(40,'Análise do cabelo','hair');S.okMsg='cabelo';S.hflow=null;S.hConf=false}
   }catch(e){const c=e&&e.code;S.hErr=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Toque em analisar de novo.')}
   S.hBusy=false;render();
   if(S.okMsg==='cabelo'){toast('Análise do cabelo concluída');window.scrollTo(0,0)}
 }
+/* ---------- Aba Cabelo (redesign): fluxo guiado. Perguntas, análise e dados são os de sempre ---------- */
+function hairArt(w){return `<svg viewBox="0 0 160 200" width="${w||150}" role="img" aria-label="Ilustração de uma pessoa de costas com o cabelo solto" style="display:block"><defs><linearGradient id="hfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5236"/><stop offset="1" stop-color="#5A2F1E"/></linearGradient></defs>
+  <path d="M28 200c2-30 22-44 52-44s50 14 52 44z" fill="#E8CDBE"/>
+  <path d="M42 70C40 28 60 10 80 10s40 18 38 60c-1 36 6 72 14 104-14 8-30 8-38 2-8 6-24 6-38-2 8-32 15-68 14-104z" fill="url(#hfh)"/>
+  <path d="M62 24c8-6 28-6 36 0M56 60c4 30 2 70-8 104M104 60c-4 30-2 70 8 104M80 40c-2 40 0 90 0 126" fill="none" stroke="#B57B58" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+  <path d="M66 150q14 10 28 0v-6H66z" fill="#E8CDBE"/></svg>`}
+function hfQ(url){const im=new Image();im.onload=()=>{try{const n=96,c=document.createElement('canvas');c.width=c.height=n;const g=c.getContext('2d');g.drawImage(im,0,0,n,n);const d=g.getImageData(0,0,n,n).data,Y=new Float32Array(n*n);let s=0;for(let i=0;i<n*n;i++){Y[i]=.2126*d[i*4]+.7152*d[i*4+1]+.0722*d[i*4+2];s+=Y[i]}s/=n*n;
+    let v=0,m=0;for(let y=1;y<n-1;y++)for(let x=1;x<n-1;x++){const l=4*Y[y*n+x]-Y[y*n+x-1]-Y[y*n+x+1]-Y[(y-1)*n+x]-Y[(y+1)*n+x];v+=l*l;m++}v/=m;
+    S.hQ={luz:s<70?'baixa':s>205?'alta':'ok',nit:v<12?'baixa':'ok',res:Math.min(im.width,im.height)<400?'baixa':'ok'}}catch(e){S.hQ=null}
+  if(S.hPhoto===url&&S.tab==='cabelo'&&!S.hBusy)render()};im.src=url}
+const HFN=HQ.length;
+function hfHome(){const li=['Tipo de cabelo e notas de 0 a 100','Prioridades para você','Produtos e custo estimado por mês','Cronograma capilar'];
+  return `<div class="stack hf hf-in"><div class="pl-h"><h1>Cabelo</h1><p>Analise e entenda as necessidades do seu cabelo para um cuidado mais eficaz.</p></div>
+  <div class="hf-hero"><div class="hf-art">${hairArt(112)}</div><ul class="hf-li">${li.map(x=>`<li>${ic('check',15)}${x}</li>`).join('')}</ul></div>
+  <div class="pl-card"><b style="font-size:18px">Vamos entender melhor o seu cabelo?</b><p class="small muted" style="margin:6px 0 10px">Responda a ${HFN} perguntas rápidas e envie uma foto. Leva cerca de 2 minutos.</p>
+    <ul class="hf-st"><li>${ic('clock',16)}${HFN} perguntas, uma por tela</li><li>${ic('camera',16)}1 foto do cabelo, que você confere antes de enviar</li><li>${ic('sparkle',16)}Resultado personalizado, com produtos e cronograma</li></ul></div>
+  <button class="btn pl-go" data-hf="start">${ic('sparkle',18)}Iniciar análise</button><p class="note">Sua foto não é guardada.</p></div>`}
+function hfRedo(){return `<div class="pl-card"><div class="row" style="flex-wrap:nowrap;gap:12px"><span class="pl-ri">${ic('hair',22)}</span><div><b style="font-size:17px">Refazer a análise</b><p class="small muted" style="margin-top:2px">Responda às perguntas de novo e envie outra foto.</p></div></div><button class="btn pl-go" data-hf="start" style="margin-top:12px">${ic('camera',18)}Nova análise</button></div>`}
+function hfProc(){return `<div class="pl-proc"><div class="pl-orb"><i></i><i></i><i></i><span>${ic('hair',34)}</span></div><h2>Analisando seu cabelo…</h2>
+  <p class="pl-msg"><span>Analisando características do seu cabelo</span><span>Observando raiz, pontas e porosidade</span><span>Preparando suas prioridades</span></p><div class="pl-ind"><i></i></div><p class="pl-priv">${ic('lock',14)} Sua foto não é guardada.</p></div>`}
+const hfTop=(n,t)=>`<div class="hf-tp"><button class="pl-bk" data-hf="back" aria-label="Voltar">${ic('chev',20)}</button><span class="hf-pg"><i style="width:${Math.round(n/(HFN+1)*100)}%"></i></span><small>${t}</small></div>`;
+function hfView(){
+  const f=S.hflow,q=S.hq||{};
+  if(f==='q'){const i=Math.max(0,Math.min(HFN-1,S.hqi||0)),[k,l,i_,o]=HQ[i],cur=q[k];
+    return `<div class="stack hf hf-in" data-d="${S.hdir||1}">${hfTop(i+1,`${i+1} de ${HFN}`)}
+    <div class="hf-qh"><span class="pl-ri">${ic(i_==='flask'?'drops':i_,22)}</span><h2>${esc(l)}</h2></div>
+    <div class="hf-os" role="group" aria-label="${esc(l)}">${o.map(([v,t])=>`<button class="hf-o" data-hq="${k}|${v}" aria-pressed="${cur===v}"><span>${esc(t)}</span><i>${ic('check',14)}</i></button>`).join('')}</div>
+    <div class="hf-nv"><button class="btn ghost" data-hf="back">Voltar</button><button class="btn pl-go" data-hf="next" ${cur?'':'disabled'}>${i===HFN-1?'Ir para a foto':'Próximo'}${ic('chev',16)}</button></div></div>`}
+  const qi=S.hQ,it=(ok,t)=>`<li class="${ok?'ok':'warn'}">${ic(ok?'check':'alert',14)}${t}</li>`;
+  if(f==='photo'&&!S.hPhoto){
+    return `<div class="stack hf hf-in">${hfTop(HFN+1,'Foto')}
+    <div><h2 class="hf-t">Vamos fotografar seu cabelo</h2><p class="small muted" style="margin-top:6px">Uma boa fotografia ajuda nossa tecnologia a analisar melhor as características visíveis do seu cabelo.</p></div>
+    <div class="hf-hero"><div class="hf-art">${hairArt(104)}</div><ul class="hf-tips"><li>${ic('hair',15)}Cabelo solto, de preferência seco</li><li>${ic('camera',15)}De costas, para mostrar comprimento e pontas</li><li>${ic('sun',15)}Luz natural</li><li>${ic('image',15)}Sem filtros nem edições</li><li>${ic('check',15)}Sem acessórios que escondam o cabelo</li></ul></div>
+    ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:''}
+    <div class="hf-nv"><input class="sr" id="hair-cam" type="file" accept="image/*" capture="environment"><label for="hair-cam" class="btn pl-go hf-lb">${ic('camera',18)}Tirar foto</label>
+      <input class="sr" id="hair-gal" type="file" accept="image/*"><label for="hair-gal" class="btn ghost hf-lb">${ic('image',18)}Galeria</label></div>
+    <p class="note">Sua foto não é guardada.</p></div>`}
+  if(f==='photo'&&!S.hConf){
+    return `<div class="stack hf hf-in">${hfTop(HFN+1,'Foto')}
+    <div class="hf-pv"><img src="${S.hPhoto}" alt="Foto do cabelo selecionada"><span class="hf-ok">${ic('check',15)}Foto selecionada</span></div>
+    ${qi?`<ul class="pl-chk">${it(qi.luz==='ok',qi.luz==='ok'?'Boa iluminação':qi.luz==='baixa'?'Foto escura. Tente com mais luz natural':'Foto muito clara. Evite luz direta')}${it(qi.nit==='ok',qi.nit==='ok'?'Imagem nítida':'Foto pode estar tremida ou fora de foco')}${qi.res==='baixa'?it(false,'Foto pequena. Prefira a câmera do aparelho'):''}</ul><p class="note">Verificação simples feita no aparelho (luz e nitidez). Não é análise por IA.</p>`:''}
+    ${qi&&(qi.luz!=='ok'||qi.nit!=='ok'||qi.res==='baixa')?`<p class="small muted">Você pode trocar a foto ou seguir com esta mesma.</p>`:''}
+    <div class="hf-nv"><input class="sr" id="hair-cam" type="file" accept="image/*" capture="environment"><label for="hair-cam" class="btn ghost hf-lb">${ic('camera',18)}Refazer</label>
+      <input class="sr" id="hair-gal" type="file" accept="image/*"><label for="hair-gal" class="btn ghost hf-lb">${ic('image',18)}Galeria</label></div>
+    <button class="btn pl-go" data-hf="conf" style="margin-top:0">${ic('check',18)}Confirmar fotografia</button></div>`}
+  return `<div class="stack hf hf-in">${hfTop(HFN+1,'Resumo')}
+    <div class="hf-dn"><span class="hf-ck">${ic('check',34)}</span><h2 class="hf-t">Questionário concluído!</h2><p class="small muted">Agora, vamos gerar a análise do seu cabelo com base nas suas respostas e na sua foto.</p></div>
+    <div class="pl-card hf-sm"><img src="${S.hPhoto}" alt="Foto do cabelo"><div><b>${ic('check',14)} Foto selecionada</b><small>Você conferiu a imagem</small><button class="pl-lk" data-hf="back" style="justify-content:flex-start;padding:4px 0">Trocar foto</button></div></div>
+    <div class="pl-card"><b style="font-size:17px">Suas respostas</b><div class="hf-an">${HQ.map(([k,l,,o],i)=>{const a=(o.find(x=>x[0]===q[k])||[])[1];return `<button data-hf="go|${i}"><small>${esc(l)}</small><b>${a?esc(a):'Sem resposta'}</b></button>`}).join('')}</div></div>
+    ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:''}
+    <button class="btn pl-go" data-act="analisar-cabelo" ${S.hBusy||!S.hFile||!hqDone()?'disabled':''}>${ic('sparkle',18)}${hqDone()?'Analisar meu cabelo':'Responda todas as perguntas'}</button><p class="note">Sua foto não é guardada.</p></div>`;
+}
+function hfAct(v){const [a,n]=v.split('|');
+  if(a==='start'){S.hflow='q';S.hqi=0;S.hdir=1;S.hFile=null;S.hPhoto=null;S.hQ=null;S.hConf=false;S.hErr=null;S.okMsg=null}
+  else if(a==='next'){if(S.hqi<HFN-1){S.hqi++;S.hdir=1}else S.hflow='photo';S.hdir=1}
+  else if(a==='back'){S.hdir=-1;if(S.hflow==='q'){if(S.hqi>0)S.hqi--;else S.hflow=null}else if(S.hConf)S.hConf=false;else if(S.hPhoto){S.hFile=null;S.hPhoto=null;S.hQ=null}else{S.hflow='q';S.hqi=HFN-1}}
+  else if(a==='conf'){if(S.hFile)S.hConf=true}
+  else if(a==='go'){S.hflow='q';S.hqi=+n;S.hConf=false}
+  render();window.scrollTo(0,0)}
 function viewCabelo(){
   const r=S.hres,q=S.hq;
+  if(S.hBusy)return hfProc();
+  if(S.hflow)return hfView();
   const bar=(l,v,i_)=>`<div class="meter"><span class="ml">${ic(i_,16)}${l}</span><div class="bar"><b class="${bandC(v)}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`;
   const box=S.hPhoto?`<div class="face"><img class="photo" src="${S.hPhoto}" alt="Foto do cabelo">${S.hBusy?'<div class="scan"></div>':''}</div>`:`<div class="face" style="display:grid;place-items:center;color:var(--accent)">${ic('hair',64)}</div>`;
   const QCARD=`<div class="card"><div class="row" style="justify-content:space-between"><h3>Questionário do cabelo</h3><span class="badge">${HQ.filter(([k])=>q[k]).length} de ${HQ.length}</span></div><p class="small muted" style="margin:4px 0 6px">A foto mostra só o dia de hoje. Suas respostas completam a análise.</p>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px;margin-top:8px">${ic(i_==='flask'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t_])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t_}</button>`).join('')}</div>`).join('')}</div>`;
@@ -3274,7 +3350,7 @@ function viewCabelo(){
       <button class="btn" data-act="analisar-cabelo" ${S.hBusy||!S.hFile||!hqDone()?'disabled':''} style="width:100%">${ic('sparkle')}${S.hBusy?'Analisando o cabelo…':!hqDone()?'Responda o questionário':S.hFile?'Analisar meu cabelo':'Tire uma foto para analisar'}</button>
       ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:S.hFile&&!S.hBusy&&S.okMsg!=='cabelo'?`<p class="note" style="color:var(--sage);font-weight:600">${ic('check',12)} Foto pronta. ${hqDone()?'Toque em Analisar meu cabelo.':'Falta responder o questionário.'}</p>`:'<p class="note">Sua foto não é guardada.</p>'}</div></div></div>
     `;
-  if(!r)return `<div class="stack">${inp}</div>`;
+  if(!r)return hfHome();
   const tier=S.tier,tn={econ:'Econômico',mid:'Intermediário',prem:'Premium'},pl=hairPlan(r),mk=r.marcas||{},custoH=pl.produtos.reduce((a,x)=>{const t=(HAIRT[x.k]||{})[tier];return a+(t?t[0]/t[1]:0)},0);
   return `<div class="stack">${S.okMsg==='cabelo'?`<div class="card" role="status" style="border-color:var(--sage);display:flex;gap:12px;align-items:flex-start"><span class="tile" style="background:var(--sage);color:#fff;flex:none">${ic('check',20)}</span><div><b>Análise do cabelo concluída!</b><div class="small muted" style="margin-top:2px">Veja abaixo o seu resultado, os produtos e o cronograma capilar.</div></div></div>`:''}
   <div class="card"><div class="row" style="justify-content:space-between"><h3>Tipo de cabelo</h3><b style="font-family:var(--f-display);font-size:20px">${esc(r.tipo)}</b></div>
@@ -3291,7 +3367,7 @@ function viewCabelo(){
       <div class="hpb"><button class="rg" data-hrot="${x.k}" aria-pressed="${hInRot(x.k)}">${ic(hInRot(x.k)?'check':'routine',14)}${hInRot(x.k)?'Na rotina':'Pôr na rotina'}</button><button class="rg" data-hshelf="${x.k}" aria-pressed="${naP}" ${naP?'disabled':''}>${ic(naP?'check':'bottle',14)}${naP?'Na prateleira':'Guardar na prateleira'}</button></div></div>`}).join('')}
     <p class="note">Valores e exemplos são estimativas para o Brasil e mudam por loja e promoção. Confira os ingredientes no rótulo.</p></div>`:''}
   ${pl.crono.length?`<div class="card"><h3>Cronograma capilar</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.crono.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
-  <h3 style="margin:6px 4px -4px">Refazer a análise</h3>${inp}
+  ${hfRedo()}
   <p class="note">Não é diagnóstico. Queda forte, falhas ou coceira que não passa: procure um dermatologista ou tricologista.</p></div>`;
 }
 
@@ -4128,6 +4204,7 @@ document.addEventListener('click',e=>{
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
   else if(d.hq){const [k,v]=d.hq.split('|');S.hq[k]=S.hq[k]===v?null:v;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='analisar-cabelo'){analisarCabelo()}
+  else if(d.hf){hfAct(d.hf)}
   else if(d.tema){S.tema=d.tema;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='abrir-mais'){S.tab='mais';S.maisSub=null;render();window.scrollTo(0,0)}
   else if(d.act==='mais-voltar'){S.maisSub=null;render();window.scrollTo(0,0)}
@@ -4209,7 +4286,7 @@ document.addEventListener('input',e=>{
   if(m)document.getElementById('v-'+m[1]).textContent=e.target.value;
 });
 document.addEventListener('change',e=>{
-  if((e.target.id==='hair-cam'||e.target.id==='hair-gal')&&e.target.files[0]){const f=e.target.files[0];S.hFile=f;S.hErr=null;const r=new FileReader();r.onload=()=>{S.hPhoto=r.result;render()};r.readAsDataURL(f)}
+  if((e.target.id==='hair-cam'||e.target.id==='hair-gal')&&e.target.files[0]){const f=e.target.files[0];S.hFile=f;S.hErr=null;S.hQ=null;S.hConf=false;const r=new FileReader();r.onload=()=>{S.hPhoto=r.result;render();hfQ(r.result)};r.readAsDataURL(f);e.target.value=''}
   if((e.target.id==='sos-cam'||e.target.id==='sos-gal')&&e.target.files[0]){
     const f=e.target.files[0];S.sosFile=f;S.sosRes=null;S.sosErr=null;
     const r=new FileReader();r.onload=()=>{S.sosPhoto=r.result;render()};r.readAsDataURL(f);e.target.value='';return}
