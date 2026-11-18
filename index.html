@@ -2228,7 +2228,7 @@ async function pfStart(){if(!S.plus){limite();return}if(!S.prodFile||(S.pf&&S.pf
     if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
     else{S.pf.idr={produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
-      ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null};
+      ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
       S.pf.p=100;S.pf.st='conf'}
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;render()}
@@ -2251,25 +2251,14 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;const i=f.idr,a
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;gameCheck();render()}
-function pfThumb(src,bx,MX){return new Promise(res=>{if(!src||!bx)return res(null);let [x0,y0,x1,y1]=bx;if(x1<=x0||y1<=y0||(x1-x0)*(y1-y0)<.01)return res(null);const im=new Image();im.onload=()=>{try{const W=im.width,H=im.height,pd=.04;
-    x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);const sx=x0*W,sy=y0*H,sw=(x1-x0)*W,sh=(y1-y0)*H,M=MX||220,k=Math.min(1,M/Math.max(sw,sh)),c=document.createElement('canvas');
+function pfThumb(src,bx){return new Promise(res=>{if(!src||!bx)return res(null);let [x0,y0,x1,y1]=bx;if(x1<=x0||y1<=y0||(x1-x0)*(y1-y0)<.01)return res(null);const im=new Image();im.onload=()=>{try{const W=im.width,H=im.height,pd=.04;
+    x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);const sx=x0*W,sy=y0*H,sw=(x1-x0)*W,sh=(y1-y0)*H,M=220,k=Math.min(1,M/Math.max(sw,sh)),c=document.createElement('canvas');
     c.width=Math.max(1,Math.round(sw*k));c.height=Math.max(1,Math.round(sh*k));c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.85))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
 /* Remoção de fundo no próprio aparelho: U²-Net pequeno (u2netp, Apache-2.0, via rembg MIT) com ONNX Runtime Web (MIT). Carrega só quando precisa. */
-let BGR=null,BGR_HAND=false;
+let BGR=null;
 function bgrLoad(){if(BGR)return BGR;BGR=new Promise((ok,no)=>{const s=document.createElement('script');s.src='bgr/ort.wasm.min.js';s.onload=async()=>{try{ort.env.wasm.wasmPaths=new URL('bgr/',location.href).href;ort.env.wasm.numThreads=1;ok(await ort.InferenceSession.create('bgr/u2netp.onnx',{executionProviders:['wasm']}))}catch(e){BGR=null;no(e)}};s.onerror=()=>{BGR=null;no(new Error('load'))};document.head.appendChild(s)});return BGR}
-/* Mão: MediaPipe Hands (Apache-2.0) roda no aparelho, carrega só quando precisa (pasta mediapipe/hands/). Devolve os 21 pontos de cada mão ou null se não achar/der erro. */
-let HND=null;
-function handsLoad(){if(HND)return HND;HND=new Promise((ok,no)=>{const s=document.createElement('script');s.src='mediapipe/hands/hands.js';s.onload=()=>{try{const h=new window.Hands({locateFile:f=>'mediapipe/hands/'+f});h.setOptions({maxNumHands:2,modelComplexity:0,minDetectionConfidence:.3,minTrackingConfidence:.3});h.onResults(r=>{if(h._res)h._res(r)});ok(h)}catch(e){HND=null;no(e)}};s.onerror=()=>{HND=null;no(new Error('hands'))};document.head.appendChild(s)});return HND}
-async function handsFind(im){try{const h=await Promise.race([handsLoad(),new Promise((_,no)=>setTimeout(()=>no(new Error('t')),25000))]);const k=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-  const r=await Promise.race([new Promise(ok=>{h._res=ok;h.send({image:c}).catch(()=>ok(null))}),new Promise(ok=>setTimeout(()=>ok(null),20000))]);h._res=null;return r&&r.multiHandLandmarks&&r.multiHandLandmarks.length?r.multiHandLandmarks:null}catch(e){return null}}
-/* desenha as mãos numa máscara SxS (coordenadas do recorte); devolve Uint8Array 0/1 */
-function handMask(hs,W,H,sx,sy,sw,sh,S_){const c=document.createElement('canvas');c.width=c.height=S_;const g=c.getContext('2d');g.fillStyle=g.strokeStyle='#000';g.lineCap=g.lineJoin='round';
-  for(const L of hs){const P=L.map(p=>[(p.x*W-sx)/sw*S_,(p.y*H-sy)/sh*S_]),pw=Math.hypot(P[5][0]-P[17][0],P[5][1]-P[17][1])||S_*.1;
-   g.lineWidth=pw*.42;for(const ch of [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]]){g.beginPath();g.moveTo(P[ch[0]][0],P[ch[0]][1]);for(let i=1;i<ch.length;i++)g.lineTo(P[ch[i]][0],P[ch[i]][1]);g.stroke()}
-   g.beginPath();[0,1,5,9,13,17].forEach((i,j)=>j?g.lineTo(P[i][0],P[i][1]):g.moveTo(P[i][0],P[i][1]));g.closePath();g.fill();g.lineWidth=pw*.5;g.stroke()}
-  const d=g.getImageData(0,0,S_,S_).data,m=new Uint8Array(S_*S_);for(let i=0;i<S_*S_;i++)m[i]=d[i*4+3]>100?1:0;return m}
 async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=src});
-  const W=im.width,H=im.height,HS=await handsFind(im);BGR_HAND=!!HS;let [x0,y0,x1,y1]=bx&&bx.length===4?bx:[0,0,1,1];const pd=Math.max(.06,.18*Math.max(x1-x0,y1-y0));x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);
+  const W=im.width,H=im.height;let [x0,y0,x1,y1]=bx&&bx.length===4?bx:[0,0,1,1];const pd=Math.max(.06,.18*Math.max(x1-x0,y1-y0));x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);
   const sx=Math.round(x0*W),sy=Math.round(y0*H),sw=Math.max(1,Math.round((x1-x0)*W)),sh=Math.max(1,Math.round((y1-y0)*H));
   const S_=320,c=document.createElement('canvas');c.width=c.height=S_;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(im,sx,sy,sw,sh,0,0,S_,S_);const px=g.getImageData(0,0,S_,S_).data;
   let mx=0;for(let i=0;i<px.length;i+=4)mx=Math.max(mx,px[i],px[i+1],px[i+2]);mx=mx||255;
@@ -2277,56 +2266,17 @@ async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new
   const ses=await bgrLoad();const out=await ses.run({[ses.inputNames[0]]:new ort.Tensor('float32',inp,[1,3,S_,S_])});const m=out[ses.outputNames[0]].data;
   let lo=1e9,hi=-1e9;for(let i=0;i<S_*S_;i++){lo=Math.min(lo,m[i]);hi=Math.max(hi,m[i])}
   const nv=new Float32Array(S_*S_);for(let i=0;i<S_*S_;i++)nv[i]=(m[i]-lo)/((hi-lo)||1);
-  let HM=null;
-  /* Mão: 1) corta tudo fora da caixa do produto (a IA já exclui a mão); 2) tira pixels de cor de pele, a menos que o produto em si seja cor de pele */
-  if(bx&&bx.length===4){const pp=.03,fx=v=>(v-x0)/(x1-x0)*S_,fy=v=>(v-y0)/(y1-y0)*S_,a0=Math.floor(fx(bx[0]-pp)),a1=Math.ceil(fx(bx[2]+pp)),b0=Math.floor(fy(bx[1]-pp)),b1=Math.ceil(fy(bx[3]+pp));
-   for(let y=0;y<S_;y++)for(let x=0;x<S_;x++)if(x<a0||x>a1||y<b0||y>b1)nv[y*S_+x]=0;
-   if(HS){HM=handMask(HS,W,H,sx,sy,sw,sh,S_);for(let i=0;i<S_*S_;i++)if(HM[i])nv[i]=0}
-   const sk=new Uint8Array(S_*S_);let tot=0,nsk=0;
-   for(let i=0;i<S_*S_;i++)if(nv[i]>.5){tot++;const r=px[i*4],g_=px[i*4+1],b=px[i*4+2],Y=.299*r+.587*g_+.114*b,cb=128-.168736*r-.331264*g_+.5*b,cr=128+.5*r-.418688*g_-.081312*b;
-    if(Y>45&&cb>=77&&cb<=127&&cr>=133&&cr<=173&&r>g_&&r>b&&r-g_>12){sk[i]=1;nsk++}}
-   if(!HS&&tot&&nsk/tot<.5){for(let y=0;y<S_;y++)for(let x=0;x<S_;x++){let h=0;for(let dy=-1;dy<=1&&!h;dy++)for(let dx=-1;dx<=1;dx++){const X=x+dx,Y2=y+dy;if(X>=0&&Y2>=0&&X<S_&&Y2<S_&&sk[Y2*S_+X]){h=1;break}}if(h)nv[y*S_+x]=0}}}
   {const keep=new Uint8Array(S_*S_),bx0=bx&&bx.length===4?bx:[0,0,1,1],cx=Math.round(((bx0[0]+bx0[2])/2-x0)/(x1-x0)*S_),cy=Math.round(((bx0[1]+bx0[3])/2-y0)/(y1-y0)*S_);
    let st=-1,bd=1e9;for(let y=0;y<S_;y+=2)for(let x=0;x<S_;x+=2){const i=y*S_+x;if(nv[i]>.5){const dd=(x-cx)**2+(y-cy)**2;if(dd<bd){bd=dd;st=i}}}
    if(st>=0){const q=[st];keep[st]=1;while(q.length){const i=q.pop(),x=i%S_,y=(i/S_)|0;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const X=x+dx,Y=y+dy;if(X<0||Y<0||X>=S_||Y>=S_)continue;const j=Y*S_+X;if(!keep[j]&&nv[j]>.5){keep[j]=1;q.push(j)}}}
      const R=2,k2=new Uint8Array(S_*S_);for(let y=0;y<S_;y++)for(let x=0;x<S_;x++)if(keep[y*S_+x])for(let dy=-R;dy<=R;dy++){const Y=y+dy;if(Y<0||Y>=S_)continue;for(let dx=-R;dx<=R;dx++){const X=x+dx;if(X>=0&&X<S_)k2[Y*S_+X]=1}}
-     {const out=new Uint8Array(S_*S_),q2=[];const pu=(x,y)=>{const j=y*S_+x;if(!k2[j]&&!out[j]){out[j]=1;q2.push(j)}};for(let t=0;t<S_;t++){pu(t,0);pu(t,S_-1);pu(0,t);pu(S_-1,t)}
-      while(q2.length){const j=q2.pop(),x=j%S_,y=(j/S_)|0;if(x>0)pu(x-1,y);if(x<S_-1)pu(x+1,y);if(y>0)pu(x,y-1);if(y<S_-1)pu(x,y+1)}
-      for(let i=0;i<S_*S_;i++)if(!k2[i]&&!out[i]&&!(HM&&HM[i])){k2[i]=1;nv[i]=1}}
      for(let i=0;i<S_*S_;i++)if(!k2[i])nv[i]=0}}
   const mc=document.createElement('canvas');mc.width=mc.height=S_;const mg=mc.getContext('2d');const md=mg.createImageData(S_,S_);for(let i=0;i<S_*S_;i++){const v=nv[i];md.data[i*4+3]=Math.round(255*Math.min(1,Math.max(0,(v-.15)/.7)))}mg.putImageData(md,0,0);
-  const OW=Math.min(sw,480),OH=Math.round(OW*sh/sw),oc=document.createElement('canvas');oc.width=OW;oc.height=OH;const og=oc.getContext('2d');og.drawImage(im,sx,sy,sw,sh,0,0,OW,OH);og.imageSmoothingQuality='high';
-  let did=false;
-  if(HM){/* reconstrução local: onde a mão cobria o produto, preenche com a cor vizinha do próprio produto (sem inventar texto) */
-   const mk=document.createElement('canvas');mk.width=OW;mk.height=OH;const kg=mk.getContext('2d',{willReadFrequently:true});kg.imageSmoothingQuality='high';kg.drawImage(mc,0,0,OW,OH);
-   const ma=kg.getImageData(0,0,OW,OH).data,id=og.getImageData(0,0,OW,OH),d=id.data,N=OW*OH,hh=new Uint8Array(N),kn=new Uint8Array(N);
-   for(let y=0;y<OH;y++){const yy=Math.min(S_-1,(y*S_/OH)|0);for(let x=0;x<OW;x++){const i=y*OW+x;hh[i]=HM[yy*S_+Math.min(S_-1,(x*S_/OW)|0)];kn[i]=(!hh[i]&&ma[i*4+3]>128)?1:0}}
-   const un=new Uint8Array(N);let nu=0;
-   for(let y=0;y<OH;y++){let mn=OW,mx=-1;for(let x=0;x<OW;x++)if(kn[y*OW+x]){if(x<mn)mn=x;mx=x}
-    if(mx>=0)for(let x=mn;x<=mx;x++){const i=y*OW+x;if(hh[i]&&!kn[i]){un[i]=1;nu++}}}
-   if(nu>0&&nu<N*.5){const R=new Float32Array(N),G=new Float32Array(N),B=new Float32Array(N),ok=new Uint8Array(kn);for(let i=0;i<N;i++)if(kn[i]){R[i]=d[i*4];G[i]=d[i*4+1];B[i]=d[i*4+2]}
-    let left=nu,guard=0;while(left>0&&guard++<80){const add=[];for(let y=0;y<OH;y++)for(let x=0;x<OW;x++){const i=y*OW+x;if(!un[i]||ok[i])continue;let r=0,g=0,b=0,c=0;
-      for(const j of [x>0?i-1:-1,x<OW-1?i+1:-1,y>0?i-OW:-1,y<OH-1?i+OW:-1])if(j>=0&&ok[j]){r+=R[j];g+=G[j];b+=B[j];c++}
-      if(c)add.push(i,r/c,g/c,b/c)}
-     if(!add.length)break;for(let t=0;t<add.length;t+=4){const i=add[t];R[i]=add[t+1];G[i]=add[t+2];B[i]=add[t+3];ok[i]=1;left--}}
-    for(let i=0;i<N;i++){if(un[i]&&ok[i]){d[i*4]=R[i];d[i*4+1]=G[i];d[i*4+2]=B[i];d[i*4+3]=255}else d[i*4+3]=hh[i]?0:ma[i*4+3]}
-    og.putImageData(id,0,0);did=true}}
-  if(!did){og.globalCompositeOperation='destination-in';og.drawImage(mc,0,0,OW,OH)}
-  /* Endireita: gira pelo eixo principal do produto (sem virar de cabeça para baixo) */
-  let src2=oc,W2=OW,H2=OH;
-  {const d0=og.getImageData(0,0,OW,OH).data;let n0=0,mx=0,my=0;for(let y=0;y<OH;y++)for(let x=0;x<OW;x++)if(d0[(y*OW+x)*4+3]>128){n0++;mx+=x;my+=y}
-   if(n0>50){mx/=n0;my/=n0;let sxx=0,syy=0,sxy=0;for(let y=0;y<OH;y++)for(let x=0;x<OW;x++)if(d0[(y*OW+x)*4+3]>128){const dx=x-mx,dy=y-my;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy}
-    sxx/=n0;syy/=n0;sxy/=n0;const tr=sxx+syy,df=Math.sqrt(Math.max(0,(sxx-syy)**2/4+sxy*sxy)),l1=tr/2+df,l2=Math.max(1e-6,tr/2-df);
-    if(l1/l2>1.4){const a=.5*Math.atan2(2*sxy,sxx-syy)*180/Math.PI;let r=90-a;if(r>90)r-=180;if(r<=-90)r+=180;
-     if(Math.abs(r)>=2&&Math.abs(r)<=50){const rad=r*Math.PI/180,D=Math.ceil(Math.hypot(OW,OH))+4,rc=document.createElement('canvas');rc.width=rc.height=D;const rg=rc.getContext('2d');rg.imageSmoothingQuality='high';rg.translate(D/2,D/2);rg.rotate(rad);rg.drawImage(oc,-mx,-my);src2=rc;W2=D;H2=D}}}}
-  const g2=src2.getContext('2d',{willReadFrequently:true}),a=g2.getImageData(0,0,W2,H2).data;let X0=W2,Y0=H2,X1=-1,Y1=-1,n=0;const rc2=new Array(H2).fill(0),cc2=new Array(W2).fill(0);for(let y=0;y<H2;y++)for(let x=0;x<W2;x++)if(a[(y*W2+x)*4+3]>128){n++;rc2[y]++;cc2[x]++}
-  for(let y=0;y<H2;y++)if(rc2[y]>=Math.max(2,W2*.02*(W2===OW?1:.5))){if(y<Y0)Y0=y;Y1=y}for(let x=0;x<W2;x++)if(cc2[x]>=Math.max(2,H2*.02*(H2===OH?1:.5))){if(x<X0)X0=x;X1=x}if(X1<0||Y1<0)return null;
-  if(n<OW*OH*.03)return null;const tw=X1-X0+1,th=Y1-Y0+1,k=Math.min(1,240/Math.max(tw,th)),mg2=Math.round(Math.max(tw,th)*k*.04),fc=document.createElement('canvas');fc.width=Math.round(tw*k)+2*mg2;fc.height=Math.round(th*k)+2*mg2;fc.getContext('2d').drawImage(src2,X0,Y0,tw,th,mg2,mg2,Math.round(tw*k),Math.round(th*k));return fc.toDataURL('image/png')}
-/* Reconstrução por IA (só Pellie Pro, só quando havia mão): o servidor tira a mão e refaz a parte coberta; depois o recorte roda de novo na imagem limpa. Qualquer falha mantém o recorte local. */
-async function pfLimpaIA(ph,bx){try{if(!S.plus||!AUTH.user)return null;const f=await pfThumb(ph,bx,768);if(!f)return null;const {data,error}=await sb.functions.invoke('limpar-produto',{body:{imagem:f.split(',')[1],media_type:'image/jpeg'}});
-  if(error||!data||data.ok!==true||!data.imagem)return null;const src='data:'+(data.media_type||'image/png')+';base64,'+data.imagem;return await bgRemove(src,null)}catch(e){return null}}
-async function pfSetImg(it){if(!it||it.imgv===3||!S.pf||!S.pf.photo||!S.pf.idr)return;const ph=S.pf.photo,bx=S.pf.idr.caixa;it.imgBusy=1;render();let t=null,hand=false;try{t=await bgRemove(ph,bx);hand=BGR_HAND}catch(e){t=null}
-  if(t&&hand){const t2=await pfLimpaIA(ph,bx);if(t2)t=t2}
+  const OW=Math.min(sw,480),OH=Math.round(OW*sh/sw),oc=document.createElement('canvas');oc.width=OW;oc.height=OH;const og=oc.getContext('2d');og.drawImage(im,sx,sy,sw,sh,0,0,OW,OH);og.globalCompositeOperation='destination-in';og.imageSmoothingQuality='high';og.drawImage(mc,0,0,OW,OH);
+  const a=og.getImageData(0,0,OW,OH).data;let X0=OW,Y0=OH,X1=-1,Y1=-1,n=0;const rc=new Array(OH).fill(0),cc=new Array(OW).fill(0);for(let y=0;y<OH;y++)for(let x=0;x<OW;x++)if(a[(y*OW+x)*4+3]>128){n++;rc[y]++;cc[x]++}
+  for(let y=0;y<OH;y++)if(rc[y]>=Math.max(2,OW*.02)){if(y<Y0)Y0=y;Y1=y}for(let x=0;x<OW;x++)if(cc[x]>=Math.max(2,OH*.02)){if(x<X0)X0=x;X1=x}if(X1<0||Y1<0)return null;
+  if(n<OW*OH*.03)return null;const tw=X1-X0+1,th=Y1-Y0+1,k=Math.min(1,240/Math.max(tw,th)),fc=document.createElement('canvas');fc.width=Math.round(tw*k);fc.height=Math.round(th*k);fc.getContext('2d').drawImage(oc,X0,Y0,tw,th,0,0,fc.width,fc.height);return fc.toDataURL('image/png')}
+async function pfSetImg(it){if(!it||it.imgv===3||!S.pf||!S.pf.photo||!S.pf.idr)return;const ph=S.pf.photo,bx=S.pf.idr.caixa;it.imgBusy=1;render();let t=null;try{t=await bgRemove(ph,bx)}catch(e){t=null}
   if(t){it.img=t;it.imgv=3}else{const c=await pfThumb(ph,bx);if(c){it.img=c;it.imgv=2}}delete it.imgBusy;save();render()}
 const shTh=(i,sz)=>i.imgBusy?`<span class="sht ld" style="width:${sz}px;height:${sz}px"></span>`:i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht ico" style="width:${sz}px;height:${sz}px">${ic(i.cat==='cabelo'?'hair':'bottle',Math.round(sz*.45))}</span>`;
 function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
@@ -2351,6 +2301,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
     const conf=i.confianca>=80?'alta':i.confianca>=60?'média':'baixa';
     b=`<div class="pf-body pf-in"><span class="pf-ok ${duv?'q':''}">${ic(duv?'alert':'checkc',18)}${duv?'Confirme o produto':'Produto identificado!'}</span>
       <div class="pf-photo">${ph}</div>
+      ${i.na_mao?`<p class="note" style="margin:0;text-align:left">Dica: o produto estava na mão. Para a miniatura ficar melhor, fotografe ele sozinho numa superfície lisa.</p>`:''}
       ${duv&&opts.length?`<p class="pf-s" style="margin:0">Encontrei mais de uma possibilidade. Qual é o seu?</p><div class="pf-opts" role="radiogroup">${opts.map((o,k)=>`<button role="radio" aria-checked="${f.sel===k+base}" data-pfsel="${k+base}"><i></i><span><b>${esc(o.produto)}</b>${o.marca?`<small>${esc(o.marca)}</small>`:''}</span></button>`).join('')}</div>`
         :`<h1 class="pf-name">${esc(i.produto||'Produto sem nome legível')}</h1>${i.marca?`<p class="pf-brand">${esc(i.marca)}</p>`:''}`}
       <div class="pf-chips"><span>${esc(i.categoria)}</span>${i.volume?`<span>${esc(i.volume)}</span>`:''}</div>
@@ -2403,7 +2354,7 @@ function viewEscanear(){
   return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
   ${(()=>{const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
     return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>${S.nome?esc(S.nome)+', esse':'Esse'} produto combina com você?</h2>
-    <ol class="pfg-s">${passo(1,'Fotografe o produto','Sozinho, numa superfície lisa (sem a mão). Mostre o nome e, se der, os ingredientes.',!tem,tem)}${passo(2,'Confirme qual é o produto','A Pellie identifica e você confirma.',tem,false)}${passo(3,'Veja se combina com a sua pele','Compatibilidade, como usar e alertas.',false,false)}</ol>
+    <ol class="pfg-s">${passo(1,'Fotografe o produto','Mostre o nome e, se der, a lista de ingredientes.',!tem,tem)}${passo(2,'Confirme qual é o produto','A Pellie identifica e você confirma.',tem,false)}${passo(3,'Veja se combina com a sua pele','Compatibilidade, como usar e alertas.',false,false)}</ol>
     ${tem?`<div class="pfg-prev"><div class="pfg-th"><img src="${S.prodPhoto||''}" alt="Foto do produto"></div><div><b>Foto pronta!</b><small>Agora toque em analisar.</small></div></div>
       <button class="btn obc pfg-go" data-act="pf-start">${ic('sparkle',18)}Analisar este produto</button>
       <div class="pfg-alt"><input class="sr" id="prod-cam" type="file" accept="image/*" capture="environment"><label for="prod-cam">${ic('camera',16)}Trocar foto</label><input class="sr" id="prod-gal" type="file" accept="image/*"><label for="prod-gal">${ic('image',16)}Galeria</label></div>`

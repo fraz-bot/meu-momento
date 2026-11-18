@@ -63,10 +63,11 @@ O rótulo pode estar em português, inglês, coreano, japonês ou outro idioma: 
 Responda SOMENTE com um JSON.
 Se a imagem não mostrar um produto cosmético de pele ou cabelo, ou não der para ler nada útil, responda {"erro":"frase curta em português pedindo outra foto, mostrando o nome do produto e, se possível, a lista de ingredientes"}.
 Caso contrário, use este formato:
-{"produto":"nome comercial exatamente como aparece, ou null","marca":"marca como aparece, ou null","categoria":"limpador|sérum|hidratante|protetor solar|esfoliante|máscara|tônico|maquiagem|cabelo|outro","volume":"como está escrito (ex.: 30 ml), ou null","confianca":0-100,"alternativas":[{"produto":"nome","marca":"marca"}],"texto_lido":["até 8 termos ou frases lidos literalmente na embalagem"],"ingredientes_lidos":["ingredientes da lista INCI lidos no rótulo, na ordem, até 30, ou []"],"lista_lida":true ou false,"ativos_declarados":["ativos que a embalagem anuncia, como 'niacinamida 10%', ou []"],"caixa":[x0,y0,x1,y1]}
+{"produto":"nome comercial exatamente como aparece, ou null","marca":"marca como aparece, ou null","categoria":"limpador|sérum|hidratante|protetor solar|esfoliante|máscara|tônico|maquiagem|cabelo|outro","volume":"como está escrito (ex.: 30 ml), ou null","confianca":0-100,"alternativas":[{"produto":"nome","marca":"marca"}],"texto_lido":["até 8 termos ou frases lidos literalmente na embalagem"],"ingredientes_lidos":["ingredientes da lista INCI lidos no rótulo, na ordem, até 30, ou []"],"lista_lida":true ou false,"ativos_declarados":["ativos que a embalagem anuncia, como 'niacinamida 10%', ou []"],"caixa":[x0,y0,x1,y1],"na_mao":true ou false}
 confianca = quão seguro você está de que identificou o produto certo pelo que está legível (nome e marca legíveis = alta; só a cor ou o formato = baixa).
 alternativas: só se houver dúvida real entre produtos parecidos (até 3); se não houver dúvida, [].
 lista_lida = true só se a lista de ingredientes aparece legível na foto.
+na_mao = true somente se uma mão ou dedos aparecem segurando o produto ou tocando nele na foto; se o produto está apoiado numa superfície ou não há mão visível, false.
 caixa = retângulo justo em volta da embalagem do produto na imagem, em frações de 0 a 1 (x0,y0 = canto superior esquerdo; x1,y1 = canto inferior direito), sem incluir mão, fundo ou barras de tela; se não der para saber, use null.
 Nunca invente nome, marca, volume ou ingredientes que não estejam legíveis. Se o nome não estiver legível, use null e confianca baixa.`,
   },
