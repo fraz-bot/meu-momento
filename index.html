@@ -199,7 +199,7 @@
 /* Aba Cabelo (redesign) */
 .hf{gap:14px}.hf-in{animation:plIn .45s ease both}.hf[data-d="-1"].hf-in{animation-name:hfBk}@keyframes hfBk{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
 .hf-t{margin:0;font-size:clamp(24px,7vw,29px);color:#4A2A1E;letter-spacing:-.02em;line-height:1.1}
-.hf-hero{display:flex;gap:14px;align-items:center;border-radius:26px;padding:16px;background:linear-gradient(150deg,#FFF6EA,#F9E4D2);box-shadow:0 10px 26px rgba(170,128,86,.14)}.hf-art{flex:none;border-radius:20px;background:rgba(255,255,255,.55);padding:10px 8px 0;overflow:hidden}
+.hf-hero{display:flex;gap:14px;align-items:center;border-radius:26px;padding:16px;background:linear-gradient(150deg,#FFF6EA,#F9E4D2);box-shadow:0 10px 26px rgba(170,128,86,.14)}.hf-art{flex:none;border-radius:22px;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.9),rgba(255,255,255,.35));padding:6px 2px 0;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(201,149,128,.25)}
 .hf-li,.hf-tips,.hf-st{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;font-size:14px;color:#4A2A1E}.hf-li li,.hf-tips li,.hf-st li{display:flex;gap:9px;align-items:flex-start;justify-content:flex-start;border:0;padding:0;line-height:1.3}.hf-li svg,.hf-tips svg,.hf-st svg{flex:none;color:#A76F5C;margin-top:1px}.hf-st{font-size:14.5px;gap:10px}
 .hf-tp{display:flex;align-items:center;gap:12px}.hf-tp small{font-size:13.5px;font-weight:700;color:#8A6F62;min-width:44px;text-align:right}.hf-pg{flex:1;height:7px;border-radius:99px;background:#EBD8CB;overflow:hidden}.hf-pg i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#C99580,#4A2A1E);transition:width .4s}
 .hf-qh{display:flex;gap:12px;align-items:center;margin-top:6px}.hf-qh h2{margin:0;font-size:clamp(23px,6.6vw,27px);line-height:1.12;color:#4A2A1E;letter-spacing:-.02em}
@@ -3275,11 +3275,32 @@ async function analisarCabelo(){
   if(S.okMsg==='cabelo'){toast('Análise do cabelo concluída');window.scrollTo(0,0)}
 }
 /* ---------- Aba Cabelo (redesign): fluxo guiado. Perguntas, análise e dados são os de sempre ---------- */
-function hairArt(w){return `<svg viewBox="0 0 160 200" width="${w||150}" role="img" aria-label="Ilustração de uma pessoa de costas com o cabelo solto" style="display:block"><defs><linearGradient id="hfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5236"/><stop offset="1" stop-color="#5A2F1E"/></linearGradient></defs>
-  <path d="M28 200c2-30 22-44 52-44s50 14 52 44z" fill="#E8CDBE"/>
-  <path d="M42 70C40 28 60 10 80 10s40 18 38 60c-1 36 6 72 14 104-14 8-30 8-38 2-8 6-24 6-38-2 8-32 15-68 14-104z" fill="url(#hfh)"/>
-  <path d="M62 24c8-6 28-6 36 0M56 60c4 30 2 70-8 104M104 60c-4 30-2 70 8 104M80 40c-2 40 0 90 0 126" fill="none" stroke="#B57B58" stroke-width="2" stroke-linecap="round" opacity=".55"/>
-  <path d="M66 150q14 10 28 0v-6H66z" fill="#E8CDBE"/></svg>`}
+function hairArt(w){w=w||150;
+  const rib=(k,hl)=>{const x0=54+k*6.2,sg=(x0-100)/46,len=176+((k*5)%4)*6,w0=hl?2.4:21,ph=k*.9,pts=[];
+    for(let i=0;i<=26;i++){const t=i/26,y=8+t*(len+16),cx=x0+sg*14*Math.sin(Math.PI*Math.min(1,t*.95))+sg*5*t+(4+7*t)*Math.pow(t,1.4)*Math.sin(t*6.4+ph),wd=hl?w0:w0*(.55+.45*Math.sin(Math.PI*Math.min(1,t*.55+.35)))*Math.sqrt(Math.max(.04,1-Math.pow(Math.max(0,(t-.86)/.14),2)));pts.push([cx,y,wd/2])}
+    const L=pts.map(q=>(q[0]-q[2]).toFixed(1)+' '+q[1].toFixed(1)),R=pts.slice().reverse().map(q=>(q[0]+q[2]).toFixed(1)+' '+q[1].toFixed(1));
+    return `<path d="M${L.join('L')}L${R.join('L')}Z" fill="${hl?'#F0C79F':'url(#ha'+(k%3)+')'}" ${hl?'opacity=".42"':''}/>`};
+  const order=[0,13,1,12,2,11,3,10,4,9,5,8,6,7],hlk=[2,4,9,11];
+  return `<svg viewBox="0 0 200 250" width="${w}" role="img" aria-label="Ilustração de uma mulher de costas com o cabelo longo e solto" style="display:block"><defs>
+  <linearGradient id="ha0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9794F"/><stop offset=".55" stop-color="#7B4529"/><stop offset="1" stop-color="#55291A"/></linearGradient>
+  <linearGradient id="ha1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A5D3B"/><stop offset=".55" stop-color="#683620"/><stop offset="1" stop-color="#46210F"/></linearGradient>
+  <linearGradient id="ha2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8683F"/><stop offset=".55" stop-color="#8A502F"/><stop offset="1" stop-color="#5C2E1B"/></linearGradient>
+  <linearGradient id="haS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6DFD0"/><stop offset="1" stop-color="#E2B9A4"/></linearGradient>
+  <radialGradient id="haG" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFE9DA"/><stop offset="1" stop-color="#FFE9DA" stop-opacity="0"/></radialGradient>
+  <radialGradient id="haH" cx=".34" cy=".26" r=".5"><stop offset="0" stop-color="#FFE6CC" stop-opacity=".55"/><stop offset="1" stop-color="#FFE6CC" stop-opacity="0"/></radialGradient>
+  <filter id="haF" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter><filter id="haF2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".8"/></filter></defs>
+  <circle cx="100" cy="112" r="98" fill="url(#haG)"/>
+  <circle cx="100" cy="112" r="85" fill="none" stroke="#C99580" stroke-opacity=".3" stroke-width="1" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <path d="M6 250c4-32 34-48 72-54h44c38 6 68 22 72 54z" fill="url(#haS)"/>
+  <path d="M80 196c8 8 32 8 40 0" fill="none" stroke="#C99580" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round"/>
+  <ellipse cx="100" cy="206" rx="60" ry="10" fill="#4A2418" opacity=".25" filter="url(#haF)"/>
+  <clipPath id="haC"><path d="M100 17C62 17 41 50 41 98L38 250H162L159 98C159 50 138 17 100 17Z"/></clipPath>
+  <g clip-path="url(#haC)"><path d="M100 18C64 18 46 50 46 96c0 6-1 10-2 14h112c-1-4-2-8-2-14 0-46-18-78-54-78z" fill="#3A1A10"/>
+  ${order.map(k=>rib(k,false)).join('')}</g>
+  <path d="M100 19C98 60 98 110 99 150" fill="none" stroke="#2A100A" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/>
+  <g filter="url(#haF2)" clip-path="url(#haC)">${hlk.map(k=>rib(k,true)).join('')}</g>
+  <ellipse cx="80" cy="62" rx="40" ry="48" fill="url(#haH)"/>
+  <g fill="#C99580"><path d="M170 40q0 6 6 6q-6 0-6 6q0-6-6-6q6 0 6-6z" opacity=".85"/><path d="M28 80q0 4 4 4q-4 0-4 4q0-4-4-4q4 0 4-4z" opacity=".7"/><path d="M178 122q0 3 3 3q-3 0-3 3q0-3-3-3q3 0 3-3z" opacity=".6"/></g></svg>`}
 function hfQ(url){const im=new Image();im.onload=()=>{try{const n=96,c=document.createElement('canvas');c.width=c.height=n;const g=c.getContext('2d');g.drawImage(im,0,0,n,n);const d=g.getImageData(0,0,n,n).data,Y=new Float32Array(n*n);let s=0;for(let i=0;i<n*n;i++){Y[i]=.2126*d[i*4]+.7152*d[i*4+1]+.0722*d[i*4+2];s+=Y[i]}s/=n*n;
     let v=0,m=0;for(let y=1;y<n-1;y++)for(let x=1;x<n-1;x++){const l=4*Y[y*n+x]-Y[y*n+x-1]-Y[y*n+x+1]-Y[(y-1)*n+x]-Y[(y+1)*n+x];v+=l*l;m++}v/=m;
     S.hQ={luz:s<70?'baixa':s>205?'alta':'ok',nit:v<12?'baixa':'ok',res:Math.min(im.width,im.height)<400?'baixa':'ok'}}catch(e){S.hQ=null}
@@ -3287,7 +3308,7 @@ function hfQ(url){const im=new Image();im.onload=()=>{try{const n=96,c=document.
 const HFN=HQ.length;
 function hfHome(){const li=['Tipo de cabelo e notas de 0 a 100','Prioridades para você','Produtos e custo estimado por mês','Cronograma capilar'];
   return `<div class="stack hf hf-in"><div class="pl-h"><h1>Cabelo</h1><p>Analise e entenda as necessidades do seu cabelo para um cuidado mais eficaz.</p></div>
-  <div class="hf-hero"><div class="hf-art">${hairArt(112)}</div><ul class="hf-li">${li.map(x=>`<li>${ic('check',15)}${x}</li>`).join('')}</ul></div>
+  <div class="hf-hero"><div class="hf-art">${hairArt(124)}</div><ul class="hf-li">${li.map(x=>`<li>${ic('check',15)}${x}</li>`).join('')}</ul></div>
   <div class="pl-card"><b style="font-size:18px">Vamos entender melhor o seu cabelo?</b><p class="small muted" style="margin:6px 0 10px">Responda a ${HFN} perguntas rápidas e envie uma foto. Leva cerca de 2 minutos.</p>
     <ul class="hf-st"><li>${ic('clock',16)}${HFN} perguntas, uma por tela</li><li>${ic('camera',16)}1 foto do cabelo, que você confere antes de enviar</li><li>${ic('sparkle',16)}Resultado personalizado, com produtos e cronograma</li></ul></div>
   <button class="btn pl-go" data-hf="start">${ic('sparkle',18)}Iniciar análise</button><p class="note">Sua foto não é guardada.</p></div>`}
@@ -3306,7 +3327,7 @@ function hfView(){
   if(f==='photo'&&!S.hPhoto){
     return `<div class="stack hf hf-in">${hfTop(HFN+1,'Foto')}
     <div><h2 class="hf-t">Vamos fotografar seu cabelo</h2><p class="small muted" style="margin-top:6px">Uma boa fotografia ajuda nossa tecnologia a analisar melhor as características visíveis do seu cabelo.</p></div>
-    <div class="hf-hero"><div class="hf-art">${hairArt(104)}</div><ul class="hf-tips"><li>${ic('hair',15)}Cabelo solto, de preferência seco</li><li>${ic('camera',15)}De costas, para mostrar comprimento e pontas</li><li>${ic('sun',15)}Luz natural</li><li>${ic('image',15)}Sem filtros nem edições</li><li>${ic('check',15)}Sem acessórios que escondam o cabelo</li></ul></div>
+    <div class="hf-hero"><div class="hf-art">${hairArt(124)}</div><ul class="hf-tips"><li>${ic('hair',15)}Cabelo solto, de preferência seco</li><li>${ic('camera',15)}De costas, para mostrar comprimento e pontas</li><li>${ic('sun',15)}Luz natural</li><li>${ic('image',15)}Sem filtros nem edições</li><li>${ic('check',15)}Sem acessórios que escondam o cabelo</li></ul></div>
     ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:''}
     <div class="hf-nv"><input class="sr" id="hair-cam" type="file" accept="image/*" capture="environment"><label for="hair-cam" class="btn pl-go hf-lb">${ic('camera',18)}Tirar foto</label>
       <input class="sr" id="hair-gal" type="file" accept="image/*"><label for="hair-gal" class="btn ghost hf-lb">${ic('image',18)}Galeria</label></div>
