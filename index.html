@@ -1130,6 +1130,32 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .rsb>div{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.rsb span{display:inline-flex;gap:5px;align-items:center;background:#EAF3EE;color:#3E6B53;border-radius:99px;padding:6px 11px;font-size:13.5px;font-weight:600;animation:rspop .45s cubic-bezier(.2,.9,.25,1.2) both;animation-delay:calc(1.2s + var(--i)*.15s)}
 @media(max-height:700px){.rsx .rst{font-size:24px}.rsx .rsc{padding:12px 14px 12px!important;gap:5px}.rsb{padding-top:8px;gap:5px}.rsb span{padding:4px 9px;font-size:12.5px}.rsx .indm{padding-top:8px;margin-top:2px}.rsx .rsr{-webkit-line-clamp:2}.rsx .indm .ir{width:80px!important;height:80px!important}.rsx .indm .ir-n{font-size:22px}.rsx .sig{transform:scale(.85);margin:-4px 0}.rsk{font-size:15.5px}}
 @media(prefers-reduced-motion:reduce){.rsk,.rsb span{animation:none}}
+/* revelação de resultados */
+.app:has(.rvw){padding-bottom:0!important}html:has(.rvw),body:has(.rvw){overflow:hidden;height:100%}
+.rvw{position:fixed;inset:0;z-index:30;overflow:hidden;animation:rvbg .5s ease both}
+.rvw.pos{background:radial-gradient(120% 70% at 80% 10%,#4E6E57 0%,rgba(78,110,87,0) 60%),linear-gradient(165deg,#2E4636 0%,#38533F 55%,#2A3E30 100%)}
+.rvw.neg{background:radial-gradient(120% 70% at 85% 8%,#8A4A34 0%,rgba(138,74,52,0) 60%),linear-gradient(165deg,#4A2519 0%,#62301F 55%,#41211A 100%)}
+.rv-in{height:100%;max-width:520px;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6vh,16px);padding:calc(14px + env(safe-area-inset-top)) 20px calc(16px + env(safe-area-inset-bottom));text-align:center}
+.rv-logo{height:clamp(26px,4vh,34px);width:auto;filter:brightness(0) invert(1);opacity:.92}
+.rv-tag{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;border-radius:99px;padding:7px 16px;animation:rvup .5s .1s cubic-bezier(.2,.8,.2,1) both}
+.pos .rv-tag{background:#E9EFD9;color:#2E4636}.neg .rv-tag{background:#F6D9CC;color:#62301F}
+.rv-h{margin:0;color:#FBF4EC;font-size:clamp(25px,7.4vw,34px);line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wrap:balance;animation:rvup .55s .2s cubic-bezier(.2,.8,.2,1) both}
+.rv-card{flex:1 1 auto;min-height:0;width:100%;box-sizing:border-box;border-radius:30px;padding:clamp(14px,2.6vh,26px) 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,10px);position:relative;animation:rvcard .6s .35s cubic-bezier(.2,.9,.25,1.1) both}
+.rv-card::before{content:"";position:absolute;inset:7px;border-radius:24px;border:1.5px solid;pointer-events:none}
+.pos .rv-card{background:#FBF6EC}.pos .rv-card::before{border-color:#C9D6BE}.neg .rv-card{background:#FBEDE6}.neg .rv-card::before{border-color:#EBC3B2}
+.rv-top{margin:0;font-size:clamp(17px,4.9vw,21px);line-height:1.25;color:#3B2216;font-weight:500;max-width:15em;text-wrap:balance}
+.rv-big{font-family:ui-serif,'New York',Georgia,'Times New Roman',serif;font-weight:700;font-size:clamp(90px,min(40vw,19vh),176px);line-height:.95;letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;display:flex;align-items:flex-start;justify-content:center}
+.pos .rv-big{color:#2F5B3E}.neg .rv-big{color:#B9472C}
+.rv-big .odo{align-items:flex-end}.rv-big .odo em{font-size:.58em;opacity:0;margin:0 0 .04em .02em;font-weight:700;line-height:1}.rv-big.go .odo em{opacity:1}.rv-big small{font-family:inherit;font-size:.26em;align-self:flex-end;margin:0 0 .2em .08em;opacity:.7}
+.rv-das{font-size:clamp(14px,4vw,17px);font-weight:800;letter-spacing:.24em;text-transform:uppercase;animation:rvup .5s 1.3s ease both}.pos .rv-das{color:#2F5B3E}.neg .rv-das{color:#B9472C}
+.rv-hr{width:42%;height:1.5px;margin:4px 0;background:linear-gradient(90deg,transparent,#C9A88F,transparent);animation:rvfd .5s 1.4s both}
+.rv-msg{margin:0;font-size:clamp(17px,4.8vw,20px);line-height:1.3;color:#3B2216;font-weight:500;text-wrap:balance;animation:rvup .5s 1.5s ease both}
+.rv-note{margin:0;font-size:12px;color:#7C5A4B;line-height:1.35;animation:rvfd .5s 1.6s both}
+.rv-btn{flex:none;width:100%;border:0;border-radius:99px;padding:18px;font:inherit;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.22);animation:rvup .5s 1.8s cubic-bezier(.2,.8,.2,1) both}
+.pos .rv-btn{background:#FBF6EC;color:#2E4636}.neg .rv-btn{background:#FBEDE6;color:#4A2519}.rv-btn:active{transform:scale(.98)}
+@keyframes rvbg{from{opacity:0}}@keyframes rvup{from{opacity:0;transform:translateY(14px)}}@keyframes rvfd{from{opacity:0}}@keyframes rvcard{from{opacity:0;transform:scale(.92)}}
+.rsm .meter{margin:7px 0}
+@media(prefers-reduced-motion:reduce){.rvw,.rv-tag,.rv-h,.rv-card,.rv-das,.rv-hr,.rv-msg,.rv-note,.rv-btn{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2760,7 +2786,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','susp','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanprod','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'rotok','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','susp','analise',...(S.result&&posK()?['susp2','analise2']:[]),'resumo','caminho','sol','acido','gest','scanprod','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'rotok','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -3350,24 +3376,17 @@ function viewOnboarding(){PFI=0;
     <h1>${a?(nome?nome+', temos':'Temos')+' um ponto de atenção para te contar.':'Calma'+(nome?', '+nome:'')+'.'}</h1>
     <p class="sp">${a?'Ele apareceu só na sua análise, e é por ele que a sua rotina começa.':'Encontramos coisas muito boas na sua pele, e elas são só suas.'}</p>
     <div class="sd" aria-hidden="true"><i></i><i></i><i></i></div></div></div></div>`}
-  if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',tart:'a sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx rsx scx" style="text-align:center">
-    <div class="obk">Só para você</div><h1 class="obh rsh">${nome?nome+', seu':'Seu'} maior desafio hoje ${/^(as|os) /.test(dn.tart||'')?'são':'é'} ${dn.tart||dn.t}.</h1>
-    <div class="card rsc att"><span class="sig att" aria-hidden="true"><i></i><i></i><b>${ic('alert',26)}</b></span>
-      <div class="obk" style="margin:0;color:#B4652F">Ponto de atenção</div><div class="rst">${dn.t}</div>${dn.pill?`<span class="pillo" style="margin:0">${dn.pill}</span>`:''}
-      ${d?indMetric(d.k,'#C9763F'):''}</div>
-    ${d?`<p class="rsk att">Você tem mais ${dn.t} do que <b class="ind cmpn" data-k="${esc('c'+(S.result.d||'')+d.k+d.v)}">${odo(cmpPct(d.v))}</b> das mulheres.</p>`:''}
-    ${S.result&&S.result.resumo?`<p class="rsr"><b>O que vimos na sua foto:</b> ${esc(S.result.resumo)}</p>`:''}
-    ${d?'<p class="rsn">Estimativa da Pellie a partir da sua foto, não é um dado clínico.</p>':''}
-    ${cta(S.result&&d&&d.forte?'Continuar':'Ver meu caminho')}</div></div>`}
-  if(st==='analise2'){const d=desafio();if(!d||!d.forte)return '';return `<div class="ovl rose"><div class="ob obx rsx scx" style="text-align:center">
-    <div class="obk">Seus pontos fortes</div><h1 class="obh rsh">${nome?nome+', olha':'Olha'} o que a sua pele faz de melhor.</h1>
-    <div class="card rsc ok"><span class="sig ok" aria-hidden="true"><i></i><i></i><b>${ic('check',28)}</b>${[0,1,2,3,4,5].map(i=>`<u style="--r:${i*60}deg"></u>`).join('')}</span>
-      <div class="obk ok" style="margin:0">Ponto forte</div><div class="rst">${esc(d.forte)}</div>
-      ${d.fk?indMetric(d.fk,'#4F8A6B'):''}
-      ${(()=>{const L=boas(d.fk);return L.length?`<div class="rsb"><small>Também está ótimo em você</small><div>${L.map((t,i)=>`<span style="--i:${i}">${ic('check',13)}${t}</span>`).join('')}</div></div>`:''})()}</div>
-    <p class="rsk ok">Isso é melhor do que em <b class="ind cmpn" data-k="${esc('f'+(S.result.d||'')+d.fv)}">${odo(cmpPct(d.fv))}</b> das mulheres.</p>
-    <p class="rsn">Estimativa da Pellie a partir da sua foto, não é um dado clínico.</p>
-    ${cta('Ver meu caminho')}</div></div>`}
+  if(st==='analise'){const d=desafio();if(!d)return '';return revela(false,d.k)}
+  if(st==='analise2'){const k=posK();if(!k)return '';return revela(true,k)}
+  if(st==='resumo'){const r=S.result;if(!r)return '';const L=boas(posK());const MI2={'Oleosidade':'drop','Hidratação':'drops','Poros':'pores','Manchas':'spot','Linhas finas':'waves','Vermelhidão':'flame'};
+    const bar=(l,v,inv)=>`<div class="meter ind" data-k="${esc('rs'+(r.d||'')+l+v)}" style="--v:${v}"><span class="ml">${ic(MI2[l],16)}${l}</span><div class="bar"><b class="${bandC(inv?100-v:v)}"></b></div><span class="num">${odo(v)}</span></div>`;
+    return `<div class="ob obx scx rsm" style="text-align:center">${back}
+    <div class="obk">Resumo da sua análise</div><h1 class="obh" style="margin:0;font-size:clamp(24px,7vw,30px)">${nome?nome+', sua':'Sua'} pele em detalhes</h1>
+    <span class="pillo" style="margin:0 auto">Pele ${esc(String(r.tipo||'').toLowerCase())}</span>
+    <div class="card" style="text-align:left;padding:8px 16px">${bar('Oleosidade',r.oleo)}${bar('Hidratação',r.hid,1)}${bar('Poros',r.poros)}${bar('Manchas',r.manchas)}${bar('Linhas finas',r.linhas)}${bar('Vermelhidão',r.verm)}</div>
+    ${L.length?`<div class="rsb" style="border:0;padding:0"><small>Outras descobertas boas</small><div>${L.map((t,i)=>`<span style="--i:${i}">${ic('check',13)}${t}</span>`).join('')}</div></div>`:''}
+    <p class="rsn">Notas da sua foto, de 0 a 100. Não é um dado clínico.</p>
+    ${cta('Ver meu caminho')}</div>`}
   if(st==='leva')return `<div class="ob obx">${back}
     <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
     <div style="text-align:center;margin-top:12px"><h1 class="obh" style="font-size:36px">O que você leva</h1><p class="obs" style="margin-top:8px">Tudo para cuidar da sua pele e do seu cabelo, num só lugar.</p></div>
@@ -3420,15 +3439,42 @@ function desafio(){const r=S.result;if(!r)return null;
 
 /* ===== Indicador animado: número em rolagem vertical + anel/barra sincronizados (só valores reais) ===== */
 const ODOSEEN=new Set();
-function odo(v){v=Math.max(0,Math.min(100,Math.round(+v||0)));const ds=String(v).split('');const col=(d,i)=>{const last=i===ds.length-1,n=+d+(last?10:0);return `<span class="od-c"><span class="od-s" style="--n:${n}">${'01234567890123456789'.split('').map(x=>`<i>${x}</i>`).join('')}</span></span>`};
-  return `<span class="odo" aria-label="${v}%"><span aria-hidden="true" style="display:inline-flex">${ds.map(col).join('')}</span><em aria-hidden="true">%</em></span>`}
+function odo(v,suf){suf=suf==null?'%':suf;v=Math.max(0,Math.min(100,Math.round(+v||0)));const ds=String(v).split('');const col=(d,i)=>{const last=i===ds.length-1,n=+d+(last?10:0);return `<span class="od-c"><span class="od-s" style="--n:${n}">${'01234567890123456789'.split('').map(x=>`<i>${x}</i>`).join('')}</span></span>`};
+  return `<span class="odo" aria-label="${v}${suf}"><span aria-hidden="true" style="display:inline-flex">${ds.map(col).join('')}</span>${suf?`<em aria-hidden="true">${suf}</em>`:''}</span>`}
 function indRing(v,cor,k,sz){v=Math.max(0,Math.min(100,Math.round(+v||0)));return `<span class="ind ir" data-k="${esc(k)}" style="--v:${v};--c:${cor};width:${sz||128}px;height:${sz||128}px"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ir-t"/><circle cx="60" cy="60" r="52" class="ir-a" pathLength="100" transform="rotate(-90 60 60)"/></svg><span class="ir-n">${odo(v)}</span></span>`}
 function indInit(){const red=matchMedia('(prefers-reduced-motion: reduce)').matches;document.querySelectorAll('.ind:not(.go)').forEach((el,i)=>{const k=el.dataset.k;
-    if(red||ODOSEEN.has(k)){el.classList.add('go','nt');return}ODOSEEN.add(k);setTimeout(()=>requestAnimationFrame(()=>el.classList.add('go')),120+i*90)})}
+    if(red||ODOSEEN.has(k)){el.classList.add('go','nt');return}ODOSEEN.add(k);setTimeout(()=>requestAnimationFrame(()=>el.classList.add('go')),el.dataset.dl?+el.dataset.dl:120+i*90)})}
 function boas(fk){const r=S.result;if(!r)return [];const d=desafio();return [['resseca',r.hid,'Hidratação'],['oleo',100-r.oleo,'Oleosidade sob controle'],['poros',100-r.poros,'Poros discretos'],['manchas',100-r.manchas,'Tom uniforme'],['linhas',100-r.linhas,'Poucas linhas finas'],['verm',100-r.verm,'Pouca vermelhidão']].filter(x=>x[0]!==fk&&x[0]!==(d&&d.k)&&x[1]>=60).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[2])}
 const RAWM={oleo:['Oleosidade','oleo',0],poros:['Poros','poros',0],linhas:['Linhas finas','linhas',0],manchas:['Manchas','manchas',0],verm:['Vermelhidão','verm',0],resseca:['Hidratação','hid',1]};
 function fKey(t){t=String(t||'').toLowerCase();return /hidrat|ressec/.test(t)?'resseca':/oleos|brilho/.test(t)?'oleo':/poro|textura/.test(t)?'poros':/mancha|tom/.test(t)?'manchas':/linha|ruga/.test(t)?'linhas':/vermelh/.test(t)?'verm':null}
 function indMetric(k,cor,big){const m=RAWM[k],r=S.result;if(!m||!r||r[m[1]]==null)return '';return `<div class="indm">${indRing(r[m[1]],cor,(r.d||'')+k+r[m[1]],big)}<div class="indl"><b>${m[0]} na sua análise</b><small>Escala de 0 a 100 · quanto ${m[2]?'maior':'menor'}, melhor</small></div></div>`}
+
+/* ===== Comparação com a base REAL de análises da Pellie (função pellie_percentil no Supabase). Sem base suficiente, só a nota individual. ===== */
+const PCT_MIN=200,PCT={};
+const MTX={oleo:{f:'oleo',lab:'oleosidade',da:'da oleosidade',as:'à oleosidade',mais:'Você apresenta mais oleosidade que',menos:'Sua pele tem menos oleosidade que'},
+  poros:{f:'poros',lab:'poros',da:'dos poros',as:'aos poros',mais:'Seus poros aparecem mais que os de',menos:'Seus poros aparecem menos que os de'},
+  manchas:{f:'manchas',lab:'manchas',da:'das manchas',as:'às manchas',mais:'Você apresenta mais manchas aparentes que',menos:'Sua pele tem menos manchas aparentes que'},
+  linhas:{f:'linhas',lab:'linhas finas',da:'das linhas finas',as:'às linhas finas',mais:'Você apresenta mais linhas finas que',menos:'Você tem menos linhas finas que'},
+  verm:{f:'verm',lab:'vermelhidão',da:'da vermelhidão',as:'à vermelhidão',mais:'Você apresenta mais vermelhidão que',menos:'Sua pele tem menos vermelhidão que'},
+  resseca:{f:'hid',lab:'hidratação',da:'da hidratação',as:'à hidratação',mais:'Sua pele está menos hidratada que',menos:'Sua pele está mais hidratada que',maior:1}};
+function pctFetch(k){const r=S.result,m=MTX[k];if(!r||!m||r[m.f]==null)return;const key=(r.d||'')+k+r[m.f];if(PCT[key]!==undefined)return;PCT[key]=null;
+  try{sb.rpc('pellie_percentil',{metrica:m.f,valor:+r[m.f]}).then(({data,error})=>{PCT[key]=(!error&&data&&typeof data.n==='number')?data:false}).catch(()=>{PCT[key]=false})}catch(e){PCT[key]=false}}
+/* pos=true: % de pessoas com resultado PIOR que o seu; pos=false: % com resultado MELHOR que o seu */
+function pctDe(k,pos){const r=S.result,m=MTX[k];if(!r||!m)return null;const b=PCT[(r.d||'')+k+r[m.f]];if(!b||b.n<PCT_MIN)return null;
+  const piores=m.maior?b.abaixo:b.acima,melhores=m.maior?b.acima:b.abaixo;return {pct:Math.round(100*(pos?piores:melhores)/b.n),n:b.n}}
+function revela(pos,k){const r=S.result,m=MTX[k],d=desafio();if(!r||!m)return '';const nome=S.nome?esc(S.nome):'',v=Math.round(+r[m.f]||0),c=pctDe(k,pos);
+  const reg=!pos&&d&&d.pill&&d.pill.includes(' · ')?d.pill.split(' · ')[1]:'';
+  const big=c?`<div class="rv-big ind" data-k="${esc('rv'+(r.d||'')+k+c.pct)}" data-dl="650">${odo(c.pct)}</div><div class="rv-das">das pessoas</div>`
+    :`<div class="rv-big ind" data-k="${esc('rvi'+(r.d||'')+k+v)}" data-dl="650">${odo(v,'')}<small>/100</small></div><div class="rv-das">${m.maior?'quanto maior, melhor':'quanto menor, melhor'}</div>`;
+  return `<div class="rvw ${pos?'pos':'neg'}"><div class="rv-in">
+    <img class="rv-logo" src="pellie-logo.png" alt="Pellie">
+    <span class="rv-tag">${pos?'Seu ponto forte':'Seu principal desafio'}</span>
+    <h1 class="rv-h">${pos?`${nome?nome+', sua':'Sua'} pele se destaca em relação ${m.as}!`:`Precisamos cuidar ${m.da}${nome?', '+nome:''}.`}</h1>
+    <div class="rv-card"><p class="rv-top">${c?(pos?m.menos:m.mais):`Sua nota de ${m.lab} na análise`}</p>${big}<i class="rv-hr"></i>
+      <p class="rv-msg">${pos?`Um resultado que merece ser celebrado.`:`Esse é o principal aspecto que merece sua atenção.${reg?` Mais visível em ${esc(reg)}.`:''}`}</p>
+      <p class="rv-note">${c?`Comparação com ${c.n.toLocaleString('pt-BR')} análises reais feitas na Pellie.`:'Nota individual da sua foto, de 0 a 100. Não é um dado clínico.'}</p></div>
+    <button class="rv-btn" id="ob-go" data-act="ob-next">${pos?'Quero manter esse resultado':'Quero melhorar minha pele'}</button></div></div>`}
+function posK(){const d=desafio();if(!d)return null;if(d.fk&&d.fk!==d.k)return d.fk;const r=S.result;const F=[['resseca',r.hid],['oleo',100-r.oleo],['poros',100-r.poros],['manchas',100-r.manchas],['linhas',100-r.linhas],['verm',100-r.verm]].filter(x=>x[0]!==d.k).sort((a,b)=>b[1]-a[1]);return F[0]&&F[0][1]>=55?F[0][0]:null}
 const cmpPct=n=>Math.max(55,Math.min(95,Math.round(40+n*0.55)));
 const CAMT={oleo:['Menos oleosidade','oleosidade','menos sinais de oleosidade'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],linhas:['Linhas mais suaves','linhas finas','linhas finas mais suaves'],manchas:['Menos manchas','manchas','manchas mais discretas'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão'],resseca:['Mais hidratação','ressecamento','pele mais hidratada']};
 const OLD_CAMT={acne:['Menos espinhas','espinhas','menos espinhas novas'],manchas:['Menos manchas','manchas','manchas mais discretas'],linhas:['Menos linhas finas','linhas finas','linhas finas mais suaves'],poros:['Poros mais discretos','poros dilatados','poros menos evidentes'],resseca:['Menos ressecamento','ressecamento','pele mais confortável'],verm:['Menos vermelhidão','vermelhidão','menos sinais de vermelhidão']};
@@ -3466,12 +3512,12 @@ function render(){
   ajustaRot();
   renderChrome();
   clearTimeout(render._su);if(!S.ob.done){const a=obStepAtual();if(a==='susp'||a==='susp2')render._su=setTimeout(()=>{if(!S.ob.done&&obStepAtual()===a){S.ob.step++;render();window.scrollTo(0,0)}},3200)}
-  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='raspe'||a==='susp'||a==='susp2'||a==='analise2')&&!S.result))obIr('foto')}
+  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='raspe'||a==='susp'||a==='susp2'||a==='analise2'||a==='resumo')&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
-  raspeInit();fitIp();eclInit();ecMiniInit();indInit();pthHidratar();
+  raspeInit();fitIp();eclInit();ecMiniInit();indInit();if(!S.ob.done&&S.result&&['raspe','susp','analise','susp2'].includes(obStepAtual())){const d=desafio();if(d){pctFetch(d.k);const pk=posK();if(pk)pctFetch(pk)}}pthHidratar();
   f3scan();fimgScan();tut3Scan();camSync();
   {const v=$('#view'),k=S.tab+'|'+S.peleSub+'|'+S.prodSub+'|'+S.maisSub+'|'+(S.ob.done?'':obStepAtual());if(render._k!==k){render._k=k;const ix=S.ob.done?-1:obSteps().indexOf(obStepAtual()),dr=ix>=0&&render._i>=0?(ix>render._i?'vf':ix<render._i?'vb':''):'';render._i=ix;v.classList.remove('vin','vf','vb');void v.offsetWidth;v.classList.add('vin');if(dr)v.classList.add(dr);clearTimeout(render._t);render._t=setTimeout(()=>v.classList.remove('vin','vf','vb'),1300)}}
   save();
