@@ -212,6 +212,28 @@
 .hf-an{display:flex;flex-direction:column;margin-top:8px}.hf-an button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;font:inherit;border:0;border-bottom:1px solid #F0E3D8;background:none;color:#4A2A1E;padding:10px 0;cursor:pointer}.hf-an button:last-child{border:0}.hf-an small{font-size:13px;color:#7C5A4B;flex:1}.hf-an b{font-size:14px;text-align:right}
 @media(prefers-reduced-motion:reduce){.hf-in,.hf-ck{animation:none}}
 .hf-art{width:132px;padding:0!important;background:none!important;box-shadow:0 8px 20px rgba(74,42,30,.22)!important;border-radius:20px}.hf-art img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 30%}
+/* Aba Produtos (redesign) */
+.pk{gap:14px}
+.seg.psg{grid-template-columns:repeat(3,1fr);gap:8px}.seg.psg button{flex-direction:column;gap:6px;min-height:64px;font-size:13px;font-weight:700;border:0;border-radius:18px;background:#FFFCF9;color:#4A2A1E;box-shadow:0 6px 16px rgba(170,128,86,.09);padding:8px 2px}.seg.psg button svg{color:#A76F5C}
+.seg.psg button[aria-pressed="true"]{background:linear-gradient(135deg,#6B3A27,#4A2A1E);color:#fff;box-shadow:0 8px 18px rgba(74,42,30,.25)}.seg.psg button[aria-pressed="true"] svg{color:#fff}
+.pk-hero{display:flex;gap:10px;align-items:center;border-radius:26px;padding:20px 18px;background:linear-gradient(150deg,#F6DCC9,#EEC7AE);box-shadow:0 10px 26px rgba(170,128,86,.18);color:#4A2A1E}.pk-hero>div:first-child{flex:1;min-width:0}.pk-hero h2{margin:0 0 6px;font-size:clamp(26px,7.4vw,32px);line-height:1.05;letter-spacing:-.02em}.pk-hero p{margin:0 0 14px;font-size:14.5px;line-height:1.4;color:#6B4A3C}.pk-hero .pl-go{margin-top:0;width:auto;padding:0 22px;white-space:nowrap;justify-content:center;gap:6px}
+.pk-art{flex:none;display:flex;align-items:flex-end;gap:2px;filter:drop-shadow(0 8px 10px rgba(74,42,30,.2))}
+.pk-q{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pk-q button{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font:inherit;border:0;border-radius:22px;background:#FFFCF9;padding:16px 6px 14px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 20px rgba(170,128,86,.1)}.pk-q span{color:#A76F5C;display:flex}.pk-q b{font-size:13.5px;line-height:1.15}.pk-q small{font-size:12px;color:#8A6F62}
+.pk-c{display:flex;align-items:center;gap:12px;text-align:left;width:100%;font:inherit;border:0;border-radius:22px;background:#FFFCF9;padding:14px;color:#4A2A1E;cursor:pointer;box-shadow:0 8px 20px rgba(170,128,86,.1)}.pk-im{flex:none;width:72px;height:84px;border-radius:16px;background:#F8EFE6;display:grid;place-items:center}.pk-im.big{width:104px;height:116px;border-radius:22px}
+.pk-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.pk-tx em{align-self:flex-start;font-style:normal;font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px;background:#F8EBD3;color:#8A5A1C}.pk-tx b{font-size:16.5px;line-height:1.15}.pk-tx strong{font-size:16px}.pk-tx strong small{font-weight:500;color:#8A6F62;font-size:12.5px}.pk-tx>small{font-size:13px;color:#7C5A4B;line-height:1.35}
+.pk-w{display:flex;gap:6px}.pk-w i{display:inline-flex;align-items:center;gap:4px;font-style:normal;font-size:12px;font-weight:700;color:#2F5B3E;background:#E4EFE6;border-radius:99px;padding:3px 9px}
+.pk-dh{display:flex;gap:14px;align-items:center}.pk-dh h2{margin:8px 0 2px;font-size:24px;line-height:1.1;color:#4A2A1E}.pk-pr{display:flex;justify-content:space-between;align-items:center}.pk-pr b{font-size:28px;color:#4A2A1E}.pk-pr span{display:inline-flex;gap:5px;align-items:center;font-size:14px;color:#7C5A4B}
+.shelfv{background:linear-gradient(180deg,#FBF1E6,#F4E3D2)!important;border:0!important;border-radius:26px!important;padding:18px 16px 8px!important;box-shadow:0 12px 28px rgba(170,128,86,.16),inset 0 2px 10px rgba(255,255,255,.7)}
+.srow{min-height:100px!important;gap:8px!important}.sbot{min-height:90px!important}
+.splank{height:16px!important;border-radius:5px!important;background:repeating-linear-gradient(92deg,rgba(255,255,255,.07) 0 2px,transparent 2px 9px),linear-gradient(180deg,#E3BE95 0,#C99B6E 45%,#A97B52 100%)!important;box-shadow:0 10px 10px -6px rgba(60,35,15,.45),inset 0 1px 0 rgba(255,255,255,.45)!important;margin:0 -8px 14px!important}
+.sgh{width:56px!important;height:56px!important;min-height:56px!important;align-self:end;border:2px dashed #A76F5C!important;color:#A76F5C!important}
+.pk-sl{display:flex;flex-direction:column;gap:10px}.pk-sr{border-radius:22px;background:#FFFCF9;box-shadow:0 8px 20px rgba(170,128,86,.1);overflow:hidden}.pk-sr.gone{opacity:.75}
+.pk-sh{display:flex;align-items:center;gap:12px;text-align:left;width:100%;font:inherit;border:0;background:none;padding:12px 14px;color:#4A2A1E;cursor:pointer}.pk-sh .si{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.pk-sh .si b{font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pk-sh small{font-size:12.5px;color:#7C5A4B}
+.pk-st{align-self:flex-start;font-style:normal;font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px}.pk-st.tenho{background:#E4EFE6;color:#2F5B3E}.pk-st.quero{background:#F8EBD3;color:#8A5A1C}.pk-st.acabou{background:#F0E3D8;color:#7C5A4B}
+.pk-sh[aria-expanded="true"]>svg:last-child{transform:rotate(90deg)}.pk-ct{display:flex;flex-direction:column;gap:10px;padding:0 14px 14px;border-top:1px solid #F0E3D8;padding-top:12px}
+.pk-vf{position:relative;aspect-ratio:4/5;max-height:50vh;margin:0 auto;width:100%;border-radius:28px;overflow:hidden;background:linear-gradient(150deg,#E9D3C0,#D8B9A0);display:grid;place-items:center;color:#fff;box-shadow:0 10px 26px rgba(170,128,86,.2)}.pk-vf img{width:100%;height:100%;object-fit:cover}.pk-vf .c{position:absolute;width:40px;height:40px;border:3px solid #fff}.pk-vf .tl{top:18px;left:18px;border-right:0;border-bottom:0;border-radius:16px 0 0 0}.pk-vf .tr{top:18px;right:18px;border-left:0;border-bottom:0;border-radius:0 16px 0 0}.pk-vf .bl{bottom:18px;left:18px;border-right:0;border-top:0;border-radius:0 0 0 16px}.pk-vf .br{bottom:18px;right:18px;border-left:0;border-top:0;border-radius:0 0 16px 0}
+.pk-vf .pk-ph{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:0 30px;color:#6B4A3C;font-size:14.5px}.pk-ph .pk-art{filter:drop-shadow(0 8px 12px rgba(74,42,30,.25))}
+.pk-sc{display:flex;flex-direction:column;gap:12px}.pk-sc .pl-go{margin-top:0}.pk-alt{display:flex;gap:10px}.pk-alt label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:99px;border:1.5px solid #4A2A1E;color:#4A2A1E;font-weight:700;font-size:15px;cursor:pointer;background:transparent}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -1695,7 +1717,7 @@ function goTab(t,sub){
   if(t!=='pele'&&t!=='analise'&&t!=='diario')S.okMsg=null;
   if(t==='analise'){S.tab='pele';S.peleSub='analise'}
   else if(t==='diario'){S.tab='pele';S.peleSub='evo'}
-  else{S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos')S.prodSub=sub==='shelf'?'shelf':'rec'}
+  else{S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos'){S.prodSub=sub==='shelf'?'shelf':'rec';S.pkList=false;S.pkDet=null}}
   render();window.scrollTo(0,0);
 }
 function nextStep(){
@@ -2341,54 +2363,87 @@ function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
   for(const [r,k] of T)if(r.test(t))return k;return 'hidr'}
 // Prateleira ilustrada: cresce uma tábua a cada 4 produtos
-function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(1,Math.ceil((n+1)/per));let h='';
+/* ---------- Aba Produtos (redesign): só apresentação e navegação antes da análise. O scanner (pf*) não foi alterado ---------- */
+const PK_CAT={limpador:'Limpeza',fps:'Proteção',vitc:'Tratamento',niacina:'Tratamento',retinol:'Tratamento',bha:'Tratamento',hialu:'Hidratação',calmante:'Hidratação',hidr:'Hidratação'};
+const shCat=i=>i.cat==='cabelo'?'cabelo':(i.cat==='corpo'||/corpo|corporal|body/i.test((i.n||'')+' '+(i.tp||'')))?'corpo':'rosto';
+const pkHead=(t,s)=>`<div class="pl-h"><h1>${t}</h1><p>${s}</p></div><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>`;
+function pkHome(){
+  const nT=temP().length,soon=shelfSoon().length,tem=!!S.result;
+  return `<div class="stack pk pl-in">${pkHead('Produtos','Indicações, sua prateleira e escaneamento.')}
+  <div class="pk-hero"><div><h2>Produtos<br>para você</h2><p>${tem?'Recomendações personalizadas para a sua pele e rotina.':'Faça a análise da pele para ver os produtos indicados.'}</p>
+    ${tem?`<button class="btn pl-go" data-pk="rec">Ver indicações${ic('chev',16)}</button>`:`<button class="btn pl-go" data-go="pele|analise">${ic('face',18)}Analisar a minha pele</button>`}</div>
+    <div class="pk-art" aria-hidden="true">${pimgOld('niacina',74)}${pimgOld('hidr',64)}</div></div>
+  <div class="pk-q"><button data-psub="shelf"><span>${ic('bottle',24)}</span><b>Minha prateleira</b><small>${nT} ${nT===1?'produto':'produtos'}</small></button>
+    <button data-go="escanear"><span>${ic('scan',24)}</span><b>Escanear produto</b><small>Veja se combina</small></button>
+    <button data-go="mais|gastos"><span>${ic('coin',24)}</span><b>Planejar gastos</b><small>Custo por mês</small></button></div>
+  ${soon?`<button class="alertc" data-psub="shelf">${ic('alert',22)}<span><b>${soon===1?'1 produto vence':soon+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}
+  </div>`}
+function pkList(){
+  const ks=routineKeys(),R_k=getR(),mensal=ks.reduce((s,k)=>s+mes(k),0),F=S.pkF||'todos',cats=['Limpeza','Tratamento','Hidratação','Proteção'].filter(c=>ks.some(k=>PK_CAT[k]===c));
+  const lista=ks.filter(k=>F==='todos'||PK_CAT[k]===F);
+  return `<div class="stack pk pl-in">${pkHead('Produtos indicados',`Baseado na análise da sua pele${S.result?' ('+esc(String(S.result.tipo).toLowerCase())+')':''} e na sua rotina.`)}
+  <div class="seg" role="group" aria-label="Faixa de preço">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[k],18)}${l}<small>${brl(Math.round(ks.reduce((s,x)=>{const [p,m]=P[x].t[k];return s+p/m},0)))}/mês</small></button>`).join('')}</div>
+  <div class="total"><div class="small">${ic('tag',16)} Custo da rotina completa (estimativa)</div><div class="price">${brl(Math.round(mensal))} por mês</div><div class="small">${ks.length} produtos</div></div>
+  <div class="pl-chips" role="group" aria-label="Categoria">${['todos',...cats].map(c=>`<button data-pk="cf|${c}" aria-pressed="${F===c}">${c==='todos'?'Todos':c}</button>`).join('')}</div>
+  ${lista.map(k=>{const t=P[k].t,sel=(S.ptier&&S.ptier[k])||S.tier,cur=t[sel],f=infoAny(k);return `<button class="pk-c" data-pk="det|${k}"><span class="pk-im">${pimgOld(k,58)}</span><span class="pk-tx"><em>${PK_CAT[k]||'Cuidado'}</em><b>${P[k].n}</b><strong>${brl(cur[0])}<small> · dura ~${String(cur[1]).replace('.',',')} meses</small></strong>
+    <span class="pk-w">${R_k.m.includes(k)?`<i>${ic('sun',12)}Manhã</i>`:''}${R_k.n.includes(k)?`<i>${ic('moon',12)}Noite</i>`:''}</span><small>${esc((f&&f.motivo)||P[k].a)}</small></span>${ic('chev',16)}</button>`}).join('')}
+  <p class="note">Marcas são sugestões e os preços são estimativas. Confira na loja.</p>
+  ${guia('Já tem um produto em casa?','Ver se serve','data-go="escanear"')}</div>`}
+function pkDet(k){
+  const t=P[k].t,sel=(S.ptier&&S.ptier[k])||S.tier,cur=t[sel],f=infoAny(k),R_k=getR(),tb=S.pkT||'sobre',nome=(cur[3]||[])[0]||P[k].n,ja=S.shelf.some(i=>i.n===nome);
+  const body=tb==='ing'?`<div class="ler"><div class="ir" style="margin:0"><span class="ib" style="background:var(--surface)">${ic('scan',16)}</span><div><b>No rótulo, procure</b>${P[k].ler}</div></div></div>`
+    :tb==='uso'?`<div class="pl-card"><b>Como usar</b><p class="small muted" style="margin-top:6px">${esc((f&&f.como)||STEPS[k]||'')}</p><p class="small muted">${R_k.m.includes(k)?'Na rotina da manhã. ':''}${R_k.n.includes(k)?'Na rotina da noite.':''}</p></div>`
+    :`${f&&f.motivo?`<div class="ir"><span class="ib">${ic('heart',16)}</span><div><b>Por que para você</b>${esc(f.motivo)}</div></div>`:''}<div class="ir"><span class="ib">${ic('leaf',16)}</span><div><b>Como é</b>${cur[2]}</div></div>${exList(cur[3],k)}
+      <div class="tiers" role="group" aria-label="Faixa deste produto">${TIERS.map(([x,l])=>`<button class="tier ${x===sel?'on':''}" data-ptier="${k}|${x}" aria-pressed="${x===sel}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[x],16)}${l}<b>${brl(Math.round(t[x][0]/t[x][1]))}/mês</b></button>`).join('')}</div>`;
+  return `<div class="stack pk pl-in">${plBack('Detalhes').replace('data-pv=""','data-pk="back"')}
+  <div class="pk-dh"><span class="pk-im big">${pimgOld(k,96)}</span><div><span class="pl-chip">${PK_CAT[k]||'Cuidado'}</span><h2>${P[k].n}</h2><p class="small muted">${P[k].a}</p></div></div>
+  <div class="pk-pr"><b>${brl(cur[0])}</b><span>${ic('clock',14)} Dura ~${String(cur[1]).replace('.',',')} meses</span></div>
+  <div class="pl-chips" role="group" aria-label="Seção">${[['sobre','Sobre'],['ing','Ingredientes'],['uso','Como usar']].map(([x,l])=>`<button data-pk="tab|${x}" aria-pressed="${tb===x}">${l}</button>`).join('')}</div>
+  ${body}
+  ${ja?`<div class="pf-shok">${ic('checkc',18)}<span>Já está na sua prateleira</span></div>`:`<button class="btn pl-go" data-pk="want|${k}">${ic('bottle',18)}Quero comprar · guardar na prateleira</button>`}</div>`}
+function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(2,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):pimgOld(shelfKey(x),58)}</div>`;
-    else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',20)}</button>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):pimgOld(shelfKey(x),62)}</div>`;
+    else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
   return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
 function viewShelf(){
-  const it=S.shelf,soon=shelfSoon().length,nT=temP().length,nQ=it.filter(i=>stOf(i)==='quero').length;
-  const row=i=>{const f=shelfInfo(i),v=VERD[i.v]||VERD.cuidado,tm=stOf(i)==='tenho';return `<div class="sh${tm?'':' gone'}">${FOTOS?shelfThumb(i):''}${shTh(i,44)}<div class="si"><b>${esc(i.n)}</b>${i.cat==='cabelo'?'<div class="small muted">Cabelo</div>':''}${tm?`<div class="exp ${f.cls}">${f.txt}</div>`:`<div class="exp">${stOf(i)==='quero'?'Na lista de compras':'Acabou'}</div>`}
-</div>
-    <button class="chip" data-rm="${i.id}" style="font-size:12px">Remover</button>
-    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shst="${i.id}|${k}" aria-pressed="${stOf(i)===k}">${t}</button>`).join('')}</div>
-    ${tm?`    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
-    <div class="regg" style="flex-basis:100%;margin:0 0 0 56px;gap:6px"><span class="small muted" style="align-self:center">Na rotina:</span>${[['m','Manhã'],['n','Noite']].map(([k,t])=>`<button class="rg" style="padding:4px 10px;font-size:12px" data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}">${t}</button>`).join('')}</div>`:''}</div>`};
-  return `<div class="stack">${it.length?`${shelfViz(it)}<div class="card"><div class="row" style="justify-content:space-between"><h3>Minha prateleira</h3><span class="small muted">${nT} ${nT===1?'produto':'produtos'}${nQ?` · ${nQ} para comprar`:''}${soon?` · ${soon} vencendo`:''}</span></div>
-    <p class="note" style="margin-top:2px">Marque se você tem, quer comprar ou o produto acabou. Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>${it.map(row).join('')}</div>`
-    :`<div class="card" style="text-align:center;padding:28px 18px"><div style="margin:-6px -6px 14px">${shelfViz([])}</div><h3>Sua prateleira está vazia</h3><p class="small muted" style="margin-top:4px">Escaneie um produto e guarde aqui.</p></div>`}
-    ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`;
-}
+  const all=S.shelf,F=S.shF||'todos',it=all.filter(i=>F==='todos'||shCat(i)===F),soon=shelfSoon().length,nT=temP().length,nQ=all.filter(i=>stOf(i)==='quero').length;S.shOpen=S.shOpen||{};
+  const row=i=>{const f=shelfInfo(i),tm=stOf(i)==='tenho',op=!!S.shOpen[i.id],st=stOf(i),ab=i.aberto?i.aberto.split('-').reverse().slice(0,2).join('/'):'';
+    return `<div class="pk-sr${tm?'':' gone'}"><button class="pk-sh" data-pk="sh|${i.id}" aria-expanded="${op}">${FOTOS?shelfThumb(i):''}${shTh(i,52)}<span class="si"><b>${esc(i.n)}</b><em class="pk-st ${st}">${{tenho:'Em uso',quero:'Quero comprar',acabou:'Acabou'}[st]}</em>
+      <small>${tm?`${ab?'Abriu em '+ab+' · ':''}<span class="exp ${f.cls}">${f.txt}</span>`:st==='quero'?'Na lista de compras':'Acabou'}</small></span>${ic('chev',16)}</button>
+    ${op?`<div class="pk-ct"><div class="regg">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" data-shst="${i.id}|${k}" aria-pressed="${st===k}">${t}</button>`).join('')}</div>
+      ${tm?`<div class="regg"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
+      <div class="regg"><span class="small muted" style="align-self:center">Na rotina:</span>${[['m','Manhã'],['n','Noite']].map(([k,t])=>`<button class="rg" data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}">${t}</button>`).join('')}</div>`:''}
+      <button class="chip" data-rm="${i.id}" style="font-size:12px;align-self:flex-start">Remover</button></div>`:''}</div>`};
+  return `<div class="stack pk pl-in">${pkHead('Minha prateleira',`${nT} ${nT===1?'produto':'produtos'}${nQ?` · ${nQ} para comprar`:''}${soon?` · ${soon} vencendo`:''}`)}
+    <div class="pl-chips" role="group" aria-label="Categoria">${[['todos','Todos'],['rosto','Rosto'],['cabelo','Cabelo'],['corpo','Corpo']].map(([k,l])=>`<button data-pk="shf|${k}" aria-pressed="${F===k}">${l}</button>`).join('')}</div>
+    ${shelfViz(it)}
+    ${it.length?`<div class="pk-sl">${it.map(row).join('')}</div><p class="note">Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>`
+      :`<div class="pl-card" style="text-align:center"><h3>${all.length?'Nenhum produto nesta categoria':'Sua prateleira está vazia'}</h3><p class="small muted" style="margin-top:4px">${all.length?'Escolha outra categoria acima.':'Escaneie um produto e guarde aqui.'}</p></div>`}
+    ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`}
 function viewProdutos(){
-  if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>${paywall('Prateleira','bottle','Guarde os seus produtos e acompanhe a validade.')}</div>`;
-  if(S.prodSub==='shelf')return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>${viewShelf().replace('<div class="stack">','').replace(/<\/div>$/,'')}</div>`;
-  if(!S.result)return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
+  if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack">${pkHead('Minha prateleira','Guarde os seus produtos.')}${paywall('Prateleira','bottle','Guarde os seus produtos e acompanhe a validade.')}</div>`;
+  if(S.prodSub==='shelf')return viewShelf();
+  if(!S.pkList&&!S.pkDet)return pkHome();
+  if(!S.result)return `<div class="stack">${pkHead('Produtos indicados','')}
   <div class="card" style="text-align:center;display:grid;justify-items:center;gap:10px;padding:26px 18px"><span class="tile" style="width:56px;height:56px;border-radius:18px">${ic('face',28)}</span><h2>Primeiro, a análise da pele</h2>
   <p class="small muted">Os produtos e o custo do tratamento são escolhidos de acordo com a sua pele. Faça a análise para ver.</p>
   <button class="btn" data-go="pele|analise">${ic('face',18)}Analisar a minha pele</button></div></div>`;
-  const ks=routineKeys(),R_k=getR();
-  const mensal=ks.reduce((s,k)=>s+mes(k),0);
-  return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
-  <div class="card"><h2>Produtos da rotina</h2><p class="small muted" style="margin-top:6px">Custo por mês de uso.</p></div>
-  <div class="seg" role="group" aria-label="Faixa de preço">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[k],18)}${l}<small>${brl(Math.round(ks.reduce((s,x)=>{const [p,m]=P[x].t[k];return s+p/m},0)))}/mês</small></button>`).join('')}</div>
-  <div class="total"><div class="small">${ic('tag',16)} Custo da rotina completa (estimativa)</div>
-    <div class="price">${brl(Math.round(mensal))} por mês</div>
-    <div class="small">${ks.length} produtos</div></div>
-  ${ks.map(k=>{const t=P[k].t,sel=(S.ptier&&S.ptier[k])||S.tier,cur=t[sel],f=infoAny(k);return `<div class="card">
-    <div class="prodhead"><span class="tile">${ic(P[k].ic,22)}</span>
-      <div style="flex:1;min-width:0"><div class="tt" style="display:block">${P[k].n}</div><div class="small muted">${P[k].a}</div><div class="when">${R_k.m.includes(k)?`<span>${ic('sun',13)}Manhã</span>`:''}${R_k.n.includes(k)?`<span>${ic('moon',13)}Noite</span>`:''}</div></div>
-      <div class="pr"><div class="price">${brl(cur[0])}</div><div class="small muted">dura ~${String(cur[1]).replace('.',',')} meses</div></div></div>
-    ${f&&f.motivo?`<div class="ir"><span class="ib">${ic('heart',16)}</span><div><b>Por que para você</b>${esc(f.motivo)}</div></div>`:''}
-    <div class="ir"><span class="ib">${ic('leaf',16)}</span><div><b>Como é</b>${cur[2]}</div></div>
-    ${exList(cur[3],k)}
-    <div class="tiers" role="group" aria-label="Faixa deste produto">${TIERS.map(([x,l])=>`<button class="tier ${x===sel?'on':''}" data-ptier="${k}|${x}" aria-pressed="${x===sel}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[x],16)}${l}<b>${brl(Math.round(t[x][0]/t[x][1]))}/mês</b></button>`).join('')}</div>
-    <div class="ler"><div class="ir" style="margin:0"><span class="ib" style="background:var(--surface)">${ic('scan',16)}</span><div><b>No rótulo, procure</b>${P[k].ler}</div></div></div></div>`}).join('')}
-  <p class="note">Marcas são sugestões e os preços são estimativas. Confira na loja.</p>
-  ${guia('Já tem um produto em casa?','Ver se serve','data-go="escanear"')}</div>`;
+  if(S.pkDet&&P[S.pkDet])return pkDet(S.pkDet);
+  return pkList();
 }
-
+function pkAct(v){const [a,n]=v.split('|');
+  if(a==='rec'){S.prodSub='rec';S.pkList=true;S.pkDet=null}
+  else if(a==='det'){S.pkDet=n;S.pkT='sobre'}
+  else if(a==='back'){S.pkDet=null}
+  else if(a==='tab'){S.pkT=n}
+  else if(a==='cf'){S.pkF=n}
+  else if(a==='shf'){S.shF=n}
+  else if(a==='sh'){S.shOpen=S.shOpen||{};S.shOpen[n]=!S.shOpen[n]}
+  else if(a==='want'){const t=P[n].t[(S.ptier&&S.ptier[n])||S.tier],nome=(t[3]||[])[0]||P[n].n;if(!S.shelf.some(i=>i.n===nome)){S.shelf.unshift({id:String(Date.now()),n:nome,tp:P[n].n,aberto:hoje(),meses:12,st:'quero'});toast('Na sua lista de compras')}}
+  const y=(a==='cf'||a==='shf'||a==='sh'||a==='tab')?window.scrollY:0;render();window.scrollTo(0,y)}
 function chart(){
   const d=S.diary.slice(-12),W=320,H=170,L=30,B=24,T=10,R_=12;
   const x=i=>L+(d.length===1?0:i*(W-L-R_)/(d.length-1));
@@ -4161,7 +4216,8 @@ document.addEventListener('click',e=>{
   else if(d.act==='editar-reg'){S.editReg=true;const e=S.diary.find(x=>x.d===hoje());if(e)S.reg={...regNew(),...Object.fromEntries(Object.entries(e).filter(([k])=>k in regNew()))};render()}
   else if(d.rmf){S.fotos=S.fotos.filter(f=>f.d!==d.rmf);render()}
   else if(d.ptier){const [k,x]=d.ptier.split('|');S.ptier=S.ptier||{};S.ptier[k]=x;const y=window.scrollY;render();window.scrollTo(0,y)}
-  else if(d.psub){S.tab='produtos';S.prodSub=d.psub;render();window.scrollTo(0,0)}
+  else if(d.pk!==undefined){pkAct(d.pk)}
+  else if(d.psub){S.tab='produtos';S.prodSub=d.psub;if(d.psub==='rec'){S.pkList=true;S.pkDet=null}render();window.scrollTo(0,0)}
   else if(d.pao){const [id,m]=d.pao.split('|');const it=S.shelf.find(i=>i.id===id);if(it){it.meses=+m;render()}}
   else if(d.hrot){const a=S.hrot||(S.hrot=[]),ix=a.indexOf(d.hrot);if(ix>=0)a.splice(ix,1);else a.push(d.hrot);toast(ix>=0?'Tirado da rotina':'Adicionado à rotina');const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='hrot-all'&&S.hres){const ks=hairPlan(S.hres).produtos.map(x=>x.k);S.hrot=[...new Set([...(S.hrot||[]),...ks])];toast('Cuidados do cabelo incluídos na rotina');const y=window.scrollY;render();window.scrollTo(0,y)}
