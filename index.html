@@ -234,7 +234,17 @@
 .pk-vf{position:relative;aspect-ratio:4/5;max-height:50vh;margin:0 auto;width:100%;border-radius:28px;overflow:hidden;background:linear-gradient(150deg,#E9D3C0,#D8B9A0);display:grid;place-items:center;color:#fff;box-shadow:0 10px 26px rgba(170,128,86,.2)}.pk-vf img{width:100%;height:100%;object-fit:cover}.pk-vf .c{position:absolute;width:40px;height:40px;border:3px solid #fff}.pk-vf .tl{top:18px;left:18px;border-right:0;border-bottom:0;border-radius:16px 0 0 0}.pk-vf .tr{top:18px;right:18px;border-left:0;border-bottom:0;border-radius:0 16px 0 0}.pk-vf .bl{bottom:18px;left:18px;border-right:0;border-top:0;border-radius:0 0 0 16px}.pk-vf .br{bottom:18px;right:18px;border-left:0;border-top:0;border-radius:0 0 16px 0}
 .pk-vf .pk-ph{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:0 30px;color:#6B4A3C;font-size:14.5px}.pk-ph .pk-art{filter:drop-shadow(0 8px 12px rgba(74,42,30,.25))}
 .pk-sc{display:flex;flex-direction:column;gap:12px}.pk-sc .pl-go{margin-top:0}.pk-alt{display:flex;gap:10px}.pk-alt label{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:99px;border:1.5px solid #4A2A1E;color:#4A2A1E;font-weight:700;font-size:15px;cursor:pointer;background:transparent}
-.toast.ok{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px));z-index:9999;background:#2F5B3E;color:#fff;padding:13px 20px;border-radius:99px;font-size:15px;box-shadow:0 10px 26px rgba(30,60,40,.35);max-width:90vw;text-align:center;animation:tin .3s ease}@keyframes tin{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translateX(-50%)}}.pfg-dica{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px 14px;border-radius:16px;background:#F8EBD3;color:#6B4A1C;font-size:13.5px;line-height:1.4}.pfg-dica svg{flex:none;margin-top:2px}</style>
+.toast.ok{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px));z-index:9999;background:#2F5B3E;color:#fff;padding:13px 20px;border-radius:99px;font-size:15px;box-shadow:0 10px 26px rgba(30,60,40,.35);max-width:90vw;text-align:center;animation:tin .3s ease}@keyframes tin{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translateX(-50%)}}.pfg-dica{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px 14px;border-radius:16px;background:#F8EBD3;color:#6B4A1C;font-size:13.5px;line-height:1.4}.pfg-dica svg{flex:none;margin-top:2px}/* fotos genéricas de embalagem */
+.gim{display:block;object-fit:contain;flex:none}.gph{background:#F3E6DB;border-radius:10px}
+.pimg{display:grid;place-items:center;background:#F8EFE6;border-radius:14px;overflow:hidden}
+.sht{background:#F8EFE6!important;padding:4px}.sht .gim{width:100%!important;height:100%!important}
+.rt-th{display:grid;place-items:center;background:#F8EFE6;border-radius:16px;overflow:hidden;padding:5px;box-sizing:border-box}
+.pk-im .gim{width:58px!important;height:70px!important}.pk-im.big .gim{width:94px!important;height:104px!important}
+.pxf.gen,.mp-scan.gen{background:linear-gradient(150deg,#FAF3EA,#EBD7C4)}.pxf.gen img,.mp-scan.gen img{object-fit:contain;padding:5%;box-sizing:border-box}
+.tt .gim{display:inline-block;vertical-align:middle;margin-right:8px;border-radius:8px}
+.pn .gim,.gb .gim{display:inline-block;vertical-align:middle;margin-right:6px}
+.mph-r span .gim,.mp-r span .gim,.ip-st span .gim{border-radius:6px}
+</style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
@@ -1409,7 +1419,6 @@ const IC={
   hair:'<path d="M6 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M12 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M18 3c3 3-3 6 0 9s-3 6 0 9"/>',
   face:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 10h.01M15 10h.01"/>',
   routine:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>',
-  bottle:'<path d="M9 3h6v3H9z"/><path d="M8 6h8l1 4v10a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V10z"/><path d="M7 13h10"/>',
   scan:'<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 12h8"/>',
   chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
   camera:'<path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>',
@@ -1431,7 +1440,6 @@ const IC={
   flame:'<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-9z"/>',
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400"/>',
   moon:'<path d="M20 14.500A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500z"/>',
-  flask:'<path d="M9 3h6M10 3v6l-5.500 9.500A1.500 1.500 0 0 0 5.800 21h12.400a1.500 1.500 0 0 0 1.300-2.500L14 9V3"/><path d="M7.500 15h9"/>',
   bubbles:'<circle cx="8" cy="15" r="4"/><circle cx="16.500" cy="9" r="3"/><circle cx="16" cy="17" r="2"/>',
   home:'<path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>',
   coin:'<circle cx="12" cy="12" r="9"/><path d="M14.500 9.200c-.6-.8-1.500-1.200-2.600-1.200-1.500 0-2.500.8-2.500 1.900 0 2.800 5.200 1.300 5.200 4.100 0 1.100-1.100 1.900-2.700 1.900-1.200 0-2.200-.5-2.800-1.400M12 6.500V8M12 16v1.500"/>',
@@ -1456,7 +1464,7 @@ const IC={
   citrus:'<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M6.300 6.300l11.400 11.400M17.700 6.300L6.300 17.700"/>'
 };
 const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
-const ICONS={hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('bottle',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22)};
+const ICONS={hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('tag',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22)};
 const LOGO=`<img class="logo" src="pellie-flor.png" alt="">`;
 const TABS=[['hoje','Hoje'],['pele','Pele'],['cabelo','Cabelo'],['rotina','Rotina'],['produtos','Produtos'],['mais','Mais']];
 const AGES=[['20','Até 29 anos'],['30','30 a 39 anos'],['40','40 a 49 anos'],['50','50 anos ou mais']];
@@ -1476,7 +1484,7 @@ const P={
    t:{econ:[90,2,'Vitamina C estável, 10 a 12%',['The Ordinary Ascorbyl Glucoside Solution 12%']],
       mid:[220,2,'Vitamina C com antioxidantes de apoio',['La Roche-Posay Pure Vitamin C10 Serum']],
       prem:[380,2,'Vitamina C dermocosmética',['Vichy LiftActiv Vitamin C','SkinCeuticals C E Ferulic']]}},
- niacina:{n:'Sérum de niacinamida',a:'Controla oleosidade e uniformiza o tom',ic:'flask',
+ niacina:{n:'Sérum de niacinamida',a:'Controla oleosidade e uniformiza o tom',ic:'drops',
    dica:'Ativo barato e bem estudado. 5% já traz resultado.',
    ler:'Niacinamida entre 5 e 10%. Zinco ajuda no brilho. Acima de 10% pode irritar pele sensível.',
    t:{econ:[60,3,'Niacinamida 5 a 10% com zinco',['The Ordinary Niacinamide 10% + Zinc 1%']],
@@ -1651,7 +1659,7 @@ const BADGES=[
  {id:'duplo',n:'Manhã e noite',d:'Fez as duas rotinas no mesmo dia',i:'moon',t:()=>Object.values(S.log).some(l=>l.mOk&&l.nOk)},
  {id:'diario',n:'Diário em dia',d:'3 registros no diário',i:'chart',t:()=>S.diary.length>=3},
  {id:'sol',n:'Escudo solar',d:'Passou protetor solar em 5 dias',i:'sun',t:()=>Object.values(S.log).filter(l=>l.m&&l.m.includes('fps')).length>=5},
- {id:'prat',n:'Prateleira em dia',d:'3 produtos na prateleira',i:'bottle',t:()=>temP().length>=3},
+ {id:'prat',n:'Prateleira em dia',d:'3 produtos na prateleira',i:'tag',t:()=>temP().length>=3},
  {id:'antes',n:'Antes e depois',d:'Guardou 2 fotos para comparar',i:'image',t:()=>S.fotos.length>=2},
  {id:'s3',n:'3 dias seguidos',d:'Cuidou da pele por 3 dias seguidos',i:'flame',t:()=>streak()>=3},
  {id:'s7',n:'Semana de viço',d:'7 dias seguidos de cuidado',i:'star',t:()=>streak()>=7},
@@ -2086,7 +2094,7 @@ function shelfRot(per){
   const meus=temP().filter(i=>inRot(i,per)),fora=temP().filter(i=>!inRot(i,per)),nm=per==='m'?'manhã':'noite';
   return `<div class="card"><div class="row" style="justify-content:space-between"><h3>Meus produtos</h3><span class="small muted">${meus.length?meus.filter(i=>shDone(per,i.id)).length+' de '+meus.length+' hoje':'da prateleira'}</span></div>
     ${meus.map(i=>`<div class="step ${shDone(per,i.id)?'done':''}"><button class="ck" data-shdone="${per}|${i.id}" aria-label="Marcar ${esc(i.n)}" aria-pressed="${shDone(per,i.id)}">${ic('check',16)}</button>
-      <div><div class="tt">${ic('bottle',16)}${esc(i.n)}<button class="chip" data-shrot="${i.id}|${per}" style="margin-left:auto;font-size:12px">Tirar</button></div>${i.v==='evitar'?`<div class="small" style="color:var(--alert);margin-top:4px">O scanner sugeriu evitar este produto para a sua pele.</div>`:i.v==='cuidado'?`<div class="small muted" style="margin-top:4px">O scanner pediu cuidado com este produto. Comece aos poucos.</div>`:''}</div></div>`).join('')}
+      <div><div class="tt">${ic('tag',16)}${esc(i.n)}<button class="chip" data-shrot="${i.id}|${per}" style="margin-left:auto;font-size:12px">Tirar</button></div>${i.v==='evitar'?`<div class="small" style="color:var(--alert);margin-top:4px">O scanner sugeriu evitar este produto para a sua pele.</div>`:i.v==='cuidado'?`<div class="small muted" style="margin-top:4px">O scanner pediu cuidado com este produto. Comece aos poucos.</div>`:''}</div></div>`).join('')}
     ${fora.length?`<p class="small muted" style="margin-top:${meus.length?12:6}px">Toque para usar na rotina da ${nm}:</p><div class="regg" style="gap:6px;margin-top:6px">${fora.map(i=>`<button class="rg" style="font-size:13px" data-shrot="${i.id}|${per}">+ ${esc(i.n)}</button>`).join('')}</div>`
       :temP().length?'':`<p class="small muted" style="margin-top:6px">Guarde um produto na prateleira para usar aqui na sua rotina.</p>`}
     ${temP().length?'':`<button class="btn ghost" data-go="escanear" style="margin-top:10px;width:100%">${ic('scan',18)}Escanear um produto</button>`}
@@ -2247,7 +2255,7 @@ function ritAct(v){
       const s=Math.max(0,Math.ceil((R.tm-Date.now())/1000));e.textContent=s>0?s+' s':'Tempo concluído';
       if(s<=0){clearInterval(ritAct._t);R.tm=0;try{navigator.vibrate&&navigator.vibrate(120)}catch(_){}}},250);render()}
 }
-function ritThumb(it,sz,k){return it&&it.img?`<img class="rt-th" style="width:${sz}px;height:${sz}px" src="${it.img}" alt="">`:`<span class="rt-th ico" style="width:${sz}px;height:${sz}px">${ic(k&&P[k]?P[k].ic:'bottle',Math.round(sz*.4))}</span>`}
+function ritThumb(it,sz,k){return it&&it.img?`<img class="rt-th" style="width:${sz}px;height:${sz}px" src="${it.img}" alt="">`:`<span class="rt-th" style="width:${sz}px;height:${sz}px">${it?gShelf(it,sz-10):pimg(k||'hidr',sz-10)}</span>`}
 function ritView(){
   const R=S.rit,per=R.per,steps=ritSteps(per),n=steps.length,pn=RT_NM[per];
   if(!n){S.rit=null;return rotHome()}
@@ -2349,7 +2357,7 @@ function viewRotinaFull(){
     <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
     ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
       <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
-      <div><div class="tt">${ic(P[k].ic,16)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(!ex)return '';if(FOTOS)return prodCard(ex,k,S.tier);const ja=S.shelf.some(i=>i.n===ex&&stOf(i)==='tenho');return `<div class="rsx-p"><span>${ic('bottle',14)}<em>Sugestão:</em> ${esc(ex)}</span>${ja?`<b>${ic('check',13)}Na prateleira</b>`:`<button class="chip" data-rsh="${per}|${k}">${ic('plus',13)}Prateleira</button>`}</div>`})()}</div></div>`}).join('')}
+      <div><div class="tt">${pimg(k,26)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(!ex)return '';if(FOTOS)return prodCard(ex,k,S.tier);const ja=S.shelf.some(i=>i.n===ex&&stOf(i)==='tenho');return `<div class="rsx-p"><span>${ic('tag',14)}<em>Sugestão:</em> ${esc(ex)}</span>${ja?`<b>${ic('check',13)}Na prateleira</b>`:`<button class="chip" data-rsh="${per}|${k}">${ic('plus',13)}Prateleira</button>`}</div>`})()}</div></div>`}).join('')}
   </div>
   ${tratRot(per)}
   ${shelfRot(per)}
@@ -2357,8 +2365,8 @@ function viewRotinaFull(){
   ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
 }
 
-const exList=(a,k)=>a&&a.length?(FOTOS?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('bottle',16)}${esc(n)}</li>`).join('')}</ul>`):'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
-const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('bottle',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button>`;
+const exList=(a,k)=>a&&a.length?(FOTOS?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('tag',16)}${esc(n)}</li>`).join('')}</ul>`):'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
+const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('tag',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button>`;
 function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.n||'').toLowerCase();
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
   for(const [r,k] of T)if(r.test(t))return k;return 'hidr'}
@@ -2372,8 +2380,8 @@ function pkHome(){
   return `<div class="stack pk pl-in">${pkHead('Produtos','Indicações, sua prateleira e escaneamento.')}
   <div class="pk-hero"><div><h2>Produtos<br>para você</h2><p>${tem?'Recomendações personalizadas para a sua pele e rotina.':'Faça a análise da pele para ver os produtos indicados.'}</p>
     ${tem?`<button class="btn pl-go" data-pk="rec">Ver indicações${ic('chev',16)}</button>`:`<button class="btn pl-go" data-go="pele|analise">${ic('face',18)}Analisar a minha pele</button>`}</div>
-    <div class="pk-art" aria-hidden="true">${pimgOld('niacina',74)}${pimgOld('hidr',64)}</div></div>
-  <div class="pk-q"><button data-psub="shelf"><span>${ic('bottle',24)}</span><b>Minha prateleira</b><small>${nT} ${nT===1?'produto':'produtos'}</small></button>
+    <div class="pk-art" aria-hidden="true">${dimg('niacina',74)}${dimg('hidr',64)}</div></div>
+  <div class="pk-q"><button data-psub="shelf"><span>${ic('tag',24)}</span><b>Minha prateleira</b><small>${nT} ${nT===1?'produto':'produtos'}</small></button>
     <button data-go="escanear"><span>${ic('scan',24)}</span><b>Escanear produto</b><small>Veja se combina</small></button>
     <button data-go="mais|gastos"><span>${ic('coin',24)}</span><b>Planejar gastos</b><small>Custo por mês</small></button></div>
   ${soon?`<button class="alertc" data-psub="shelf">${ic('alert',22)}<span><b>${soon===1?'1 produto vence':soon+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}
@@ -2385,7 +2393,7 @@ function pkList(){
   <div class="seg" role="group" aria-label="Faixa de preço">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[k],18)}${l}<small>${brl(Math.round(ks.reduce((s,x)=>{const [p,m]=P[x].t[k];return s+p/m},0)))}/mês</small></button>`).join('')}</div>
   <div class="total"><div class="small">${ic('tag',16)} Custo da rotina completa (estimativa)</div><div class="price">${brl(Math.round(mensal))} por mês</div><div class="small">${ks.length} produtos</div></div>
   <div class="pl-chips" role="group" aria-label="Categoria">${['todos',...cats].map(c=>`<button data-pk="cf|${c}" aria-pressed="${F===c}">${c==='todos'?'Todos':c}</button>`).join('')}</div>
-  ${lista.map(k=>{const t=P[k].t,sel=(S.ptier&&S.ptier[k])||S.tier,cur=t[sel],f=infoAny(k);return `<button class="pk-c" data-pk="det|${k}"><span class="pk-im">${pimgOld(k,58)}</span><span class="pk-tx"><em>${PK_CAT[k]||'Cuidado'}</em><b>${P[k].n}</b><strong>${brl(cur[0])}<small> · dura ~${String(cur[1]).replace('.',',')} meses</small></strong>
+  ${lista.map(k=>{const t=P[k].t,sel=(S.ptier&&S.ptier[k])||S.tier,cur=t[sel],f=infoAny(k);return `<button class="pk-c" data-pk="det|${k}"><span class="pk-im">${pimg(k,58)}</span><span class="pk-tx"><em>${PK_CAT[k]||'Cuidado'}</em><b>${P[k].n}</b><strong>${brl(cur[0])}<small> · dura ~${String(cur[1]).replace('.',',')} meses</small></strong>
     <span class="pk-w">${R_k.m.includes(k)?`<i>${ic('sun',12)}Manhã</i>`:''}${R_k.n.includes(k)?`<i>${ic('moon',12)}Noite</i>`:''}</span><small>${esc((f&&f.motivo)||P[k].a)}</small></span>${ic('chev',16)}</button>`}).join('')}
   <p class="note">Marcas são sugestões e os preços são estimativas. Confira na loja.</p>
   ${guia('Já tem um produto em casa?','Ver se serve','data-go="escanear"')}</div>`}
@@ -2396,14 +2404,14 @@ function pkDet(k){
     :`${f&&f.motivo?`<div class="ir"><span class="ib">${ic('heart',16)}</span><div><b>Por que para você</b>${esc(f.motivo)}</div></div>`:''}<div class="ir"><span class="ib">${ic('leaf',16)}</span><div><b>Como é</b>${cur[2]}</div></div>${exList(cur[3],k)}
       <div class="tiers" role="group" aria-label="Faixa deste produto">${TIERS.map(([x,l])=>`<button class="tier ${x===sel?'on':''}" data-ptier="${k}|${x}" aria-pressed="${x===sel}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[x],16)}${l}<b>${brl(Math.round(t[x][0]/t[x][1]))}/mês</b></button>`).join('')}</div>`;
   return `<div class="stack pk pl-in">${plBack('Detalhes').replace('data-pv=""','data-pk="back"')}
-  <div class="pk-dh"><span class="pk-im big">${pimgOld(k,96)}</span><div><span class="pl-chip">${PK_CAT[k]||'Cuidado'}</span><h2>${P[k].n}</h2><p class="small muted">${P[k].a}</p></div></div>
+  <div class="pk-dh"><span class="pk-im big">${pimg(k,96)}</span><div><span class="pl-chip">${PK_CAT[k]||'Cuidado'}</span><h2>${P[k].n}</h2><p class="small muted">${P[k].a}</p></div></div>
   <div class="pk-pr"><b>${brl(cur[0])}</b><span>${ic('clock',14)} Dura ~${String(cur[1]).replace('.',',')} meses</span></div>
   <div class="pl-chips" role="group" aria-label="Seção">${[['sobre','Sobre'],['ing','Ingredientes'],['uso','Como usar']].map(([x,l])=>`<button data-pk="tab|${x}" aria-pressed="${tb===x}">${l}</button>`).join('')}</div>
   ${body}
-  ${ja?`<div class="pf-shok">${ic('checkc',18)}<span>Já está na sua prateleira</span></div>`:`<button class="btn pl-go" data-pk="want|${k}">${ic('bottle',18)}Quero comprar · guardar na prateleira</button>`}</div>`}
+  ${ja?`<div class="pf-shok">${ic('checkc',18)}<span>Já está na sua prateleira</span></div>`:`<button class="btn pl-go" data-pk="want|${k}">${ic('tag',18)}Quero comprar · guardar na prateleira</button>`}</div>`}
 function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(2,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):pimgOld(shelfKey(x),62)}</div>`;
+    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
@@ -2424,7 +2432,7 @@ function viewShelf(){
       :`<div class="pl-card" style="text-align:center"><h3>${all.length?'Nenhum produto nesta categoria':'Sua prateleira está vazia'}</h3><p class="small muted" style="margin-top:4px">${all.length?'Escolha outra categoria acima.':'Escaneie um produto e guarde aqui.'}</p></div>`}
     ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`}
 function viewProdutos(){
-  if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack">${pkHead('Minha prateleira','Guarde os seus produtos.')}${paywall('Prateleira','bottle','Guarde os seus produtos e acompanhe a validade.')}</div>`;
+  if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack">${pkHead('Minha prateleira','Guarde os seus produtos.')}${paywall('Prateleira','tag','Guarde os seus produtos e acompanhe a validade.')}</div>`;
   if(S.prodSub==='shelf')return viewShelf();
   if(!S.pkList&&!S.pkDet)return pkHome();
   if(!S.result)return `<div class="stack">${pkHead('Produtos indicados','')}
@@ -2559,13 +2567,13 @@ async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new
   if(n<OW*OH*.03)return null;const tw=X1-X0+1,th=Y1-Y0+1,k=Math.min(1,240/Math.max(tw,th)),fc=document.createElement('canvas');fc.width=Math.round(tw*k);fc.height=Math.round(th*k);fc.getContext('2d').drawImage(oc,X0,Y0,tw,th,0,0,fc.width,fc.height);return fc.toDataURL('image/png')}
 async function pfSetImg(it){if(!it||it.imgv===3||!S.pf||!S.pf.photo||!S.pf.idr)return;const ph=S.pf.photo,bx=S.pf.idr.caixa;it.imgBusy=1;render();let t=null;try{t=await bgRemove(ph,bx)}catch(e){t=null}
   if(t){it.img=t;it.imgv=3}else{const c=await pfThumb(ph,bx);if(c){it.img=c;it.imgv=2}}delete it.imgBusy;save();render()}
-const shTh=(i,sz)=>i.imgBusy?`<span class="sht ld" style="width:${sz}px;height:${sz}px"></span>`:i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht ico" style="width:${sz}px;height:${sz}px">${ic(i.cat==='cabelo'?'hair':'bottle',Math.round(sz*.45))}</span>`;
+const shTh=(i,sz)=>i.imgBusy?`<span class="sht ld" style="width:${sz}px;height:${sz}px"></span>`:i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht" style="width:${sz}px;height:${sz}px">${gShelf(i,sz-8)}</span>`;
 function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
-  return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('bottle',18)}Adicionar à minha prateleira</button>`}
+  return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('tag',18)}Adicionar à minha prateleira</button>`}
 function pfRotBtn(){const f=S.pf,n=S.prodResult&&S.prodResult.produto;if(!f||!f.cmp||!n)return '';const ro=f.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn',lab={m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr];
   const it=S.shelf.find(x=>x.n===n&&stOf(x)==='tenho'),ja=it&&[...pr].every(c=>inRot(it,c));
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Na sua rotina ${lab}</span><button class="chip" data-act="pf-rot-ver">Ver rotina</button></div>`:`<button class="btn obc pf-shb" data-act="pf-rot">${ic(pr==='n'?'moon':'sun',18)}Adicionar à rotina ${lab}</button>`}
-function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img src="${f.photo}" alt="Foto do produto">`:`<span class="pf-noph">${ic('bottle',34)}</span>`;
+function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img src="${f.photo}" alt="Foto do produto">`:`<span class="pf-noph">${ic('tag',34)}</span>`;
   const voltar=['det','ing'].includes(f.st);
   const hd=`<div class="pf-hd">${voltar?`<button data-act="pf-back" aria-label="Voltar">${ic('back',22)}</button>`:'<span></span>'}<img src="pellie-logo.png" alt="Pellie"><button class="pf-sair" data-act="pf-close" aria-label="Sair da avaliação">Sair</button></div>`;
   let b='';
@@ -2605,7 +2613,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
       <div class="pf-ft">${pfRotBtn()}${pfShelf(false)}<button class="btn ghost" data-act="pf-ing" style="margin-top:6px">Ingredientes e alertas</button></div></div>`}
   else if(f.st==='ing'){const c=f.cmp,i=f.idr,al=[...c.evitar_encontrados.map(x=>({texto:`Contém ${x}, que você marcou para evitar.`,fundamento:'Da sua lista de ingredientes a evitar.'})),...c.alertas];const conh=c.ativos.filter(a=>a.origem==='conhecimento');
     b=`<div class="pf-body pf-in pf-scroll">${al.length?`<div class="pf-alert"><h3>${ic('alert',20)}Fique de olho</h3>${al.map(a=>`<p><b>${esc(a.texto)}</b>${a.fundamento?`<small>${esc(a.fundamento)}</small>`:''}</p>`).join('')}</div>`:`<div class="pf-rec pc-ok">${ic('checkc',20)}<div><b>Nenhum alerta importante</b><p>Não encontramos motivo para cuidados especiais com o seu perfil.</p></div></div>`}
-      <div class="pf-blk"><h3>${ic('flask',16)}Principais ativos</h3>${c.ativos.length?`<div class="pf-atv">${c.ativos.map(a=>`<details><summary>${esc(a.nome)}${a.origem==='conhecimento'?'<em>não confirmado no rótulo</em>':''}</summary><dl>${a.o_que?`<dt>O que é</dt><dd>${esc(a.o_que)}</dd>`:''}${a.para_que?`<dt>Para que serve</dt><dd>${esc(a.para_que)}</dd>`:''}${a.beneficios?`<dt>Benefícios conhecidos</dt><dd>${esc(a.beneficios)}</dd>`:''}${a.cuidados?`<dt>Cuidados</dt><dd>${esc(a.cuidados)}</dd>`:''}</dl></details>`).join('')}</div>`:'<p class="pf-muted">Não foi possível identificar os ativos pela foto.</p>'}</div>
+      <div class="pf-blk"><h3>${ic('drops',16)}Principais ativos</h3>${c.ativos.length?`<div class="pf-atv">${c.ativos.map(a=>`<details><summary>${esc(a.nome)}${a.origem==='conhecimento'?'<em>não confirmado no rótulo</em>':''}</summary><dl>${a.o_que?`<dt>O que é</dt><dd>${esc(a.o_que)}</dd>`:''}${a.para_que?`<dt>Para que serve</dt><dd>${esc(a.para_que)}</dd>`:''}${a.beneficios?`<dt>Benefícios conhecidos</dt><dd>${esc(a.beneficios)}</dd>`:''}${a.cuidados?`<dt>Cuidados</dt><dd>${esc(a.cuidados)}</dd>`:''}</dl></details>`).join('')}</div>`:'<p class="pf-muted">Não foi possível identificar os ativos pela foto.</p>'}</div>
       <div class="pf-src">${ic('file',16)}<div><b>De onde vêm essas informações</b>
         <p><u>Lido na embalagem:</u> ${[i.produto&&'nome',i.marca&&'marca',i.volume&&'volume'].filter(Boolean).join(', ')||'pouco texto legível'}${i.lista_lida?`, lista de ingredientes (${i.ingredientes_lidos.length} itens)`:'; a lista de ingredientes não apareceu na foto'}.</p>
         ${conh.length?`<p><u>Conhecimento geral da IA:</u> ${conh.map(a=>esc(a.nome)).join(', ')}.</p>`:''}
@@ -2657,7 +2665,7 @@ function viewSos(){
     <div class="row" style="gap:10px;flex-wrap:nowrap"><span class="tile" style="flex:none">${ic('spot',22)}</span><div><h3 style="text-transform:capitalize">${esc(r.aspecto||'Sua pele')}</h3><p class="small muted" style="margin-top:2px">${esc(r.resumo)}</p></div></div>
     ${r.medico?`<div class="alertc" style="margin-top:12px;border-color:var(--alert)">${ic('alert',22)}<span><b>Vale falar com um dermatologista</b><span class="small muted" style="display:block">${esc(r.medico)}</span></span></div>`:''}
     ${r.agora.length?`<h3 class="ttl pri" style="margin-top:16px">Faça agora</h3><ul class="list small">${r.agora.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
-    ${r.usar.length?`<h3 class="ttl ok" style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${FOTOS?shelfThumb(u.it):pimgOld(shelfKey(u.it),46)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
+    ${r.usar.length?`<h3 class="ttl ok" style="margin-top:16px">Use do que você já tem</h3>${r.usar.map(u=>`<div class="hp"><div class="vp"><span class="pimg">${FOTOS?shelfThumb(u.it):gShelf(u.it,46)}</span><span><b>${esc(u.it.n)}</b><small>${esc(u.como)}</small></span></div></div>`).join('')}`
       :`<h3 class="ttl neu" style="margin-top:16px">Dos seus produtos</h3><p class="small muted">${tem.length?'Nenhum dos seus produtos é indicado para este caso.':'Você ainda não marcou nenhum produto como Tenho.'}</p>`}
     ${r.faltou?`<p class="small" style="margin-top:10px">${ic('tag',14)} <b>O que ajudaria:</b> ${esc(r.faltou)}. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Minha prateleira</button></p>`:''}
     ${r.evitar.length?`<h3 class="ttl att" style="margin-top:16px">Evite agora</h3><ul class="list small">${r.evitar.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
@@ -2667,7 +2675,7 @@ function viewSos(){
   return `<div class="stack">
   <div class="card"><h2>Resgate da Pele</h2>
     <p class="small muted" style="margin:6px 0 12px">Fotografe de perto, com boa luz. Você recebe o que fazer agora, com os produtos que já tem.</p>
-    <div class="small" style="margin-bottom:12px">${ic('bottle',14)} ${tem.length?`Vou usar os seus <b>${tem.length}</b> ${tem.length===1?'produto marcado':'produtos marcados'} como Tenho.`:`Nenhum produto marcado como Tenho. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Abrir prateleira</button>`}</div>
+    <div class="small" style="margin-bottom:12px">${ic('tag',14)} ${tem.length?`Vou usar os seus <b>${tem.length}</b> ${tem.length===1?'produto marcado':'produtos marcados'} como Tenho.`:`Nenhum produto marcado como Tenho. <button class="chip" data-go="produtos|shelf" style="padding:3px 10px;font-size:12px">Abrir prateleira</button>`}</div>
     ${img}
     <div class="row" style="gap:8px;margin:12px 0 8px">
       <input class="sr" id="sos-cam" type="file" accept="image/*" capture="environment"><label for="sos-cam" class="btn" style="cursor:pointer">${ic('camera')}Fotografar</label>
@@ -2737,7 +2745,7 @@ function viewHoje(){
   const nums=S.plus?[['image','Antes/depois',S.fotos.length,'ba'],['chart','Diário',S.diary.length,'evo'],['face','Análises',S.analises.length,'analise'],['routine','Registros',S.diary.length+S.analises.length+S.prods.length,'reg']]:null;
   /* dica do dia: relação com os cuidados só quando há dado real */
   const kk=HJ_KEY[tip[0]],noRot=kk&&(R_.m.includes(kk)?'manhã':R_.n.includes(kk)?'noite':''),noShelf=kk&&temP().find(i=>shelfKey(i)===kk&&i.v!=='evitar');
-  const rel=[noRot?`<span>${ic('check',13)}Faz parte da sua rotina da ${noRot}</span>`:'',noShelf?`<span>${ic('bottle',13)}Você tem: ${esc(noShelf.n)}</span>`:''].join('');
+  const rel=[noRot?`<span>${ic('check',13)}Faz parte da sua rotina da ${noRot}</span>`:'',noShelf?`<span>${ic('tag',13)}Você tem: ${esc(noShelf.n)}</span>`:''].join('');
   const ben=(HJ_BEN[tip[0]]||[]).map(b=>`<span>${esc(b)}</span>`).join('');
   const got=BADGES.filter(b=>S.badges[b.id]),nxtB=BADGES.find(b=>!S.badges[b.id]),last=got.slice().sort((a,b)=>String(S.badges[b.id])<String(S.badges[a.id])?-1:1)[0];
   return `<div class="stack hj">
@@ -2828,7 +2836,7 @@ function viewAnalise(){
     ${L.map(t=>{const op=!!S.plOpen[t.id];return `<div class="pl-card pl-pr"><div class="pl-ph"><b>${esc(t.ttl)}</b>${t.lvl?`<span class="pl-lv ${t.lvl==='Alta'?'a':t.lvl==='Média'?'m':'b'}">${t.lvl} prioridade</span>`:''}</div>
       ${t.alvo?`<p class="small muted">${esc(t.alvo)}${t.prazo?' · resultado em '+esc(t.prazo):''}</p>`:''}
       ${t.ing.length?`<div class="pl-tg"><small>Ingredientes relevantes</small>${t.ing.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
-      ${t.prod.length?`<div class="pl-tg ok"><small>Na sua prateleira</small>${t.prod.map(i=>`<span>${ic('bottle',13)}${esc(i.n)}</span>`).join('')}</div>`:t.ing.length?`<p class="small muted" style="margin-top:8px">Nenhum produto da sua prateleira combina com este cuidado ainda.</p>`:''}
+      ${t.prod.length?`<div class="pl-tg ok"><small>Na sua prateleira</small>${t.prod.map(i=>`<span>${ic('tag',13)}${esc(i.n)}</span>`).join('')}</div>`:t.ing.length?`<p class="small muted" style="margin-top:8px">Nenhum produto da sua prateleira combina com este cuidado ainda.</p>`:''}
       ${t.passos.length?`<button class="pl-mo" data-plx="${t.id}" aria-expanded="${op}">${op?'Menos informações':'Mais informações'}${ic('chev',14)}</button>${op?`<ol class="pl-st">${t.passos.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="trw">${ic('alert',14)}<span>${esc(t.cuidado)}</span></p>`:''}`:''}</div>`}).join('')}
     <button class="btn pl-go" data-go="rotina">${ic('routine',18)}Ver rotina personalizada</button>
     <p class="note">Orientações gerais, que não substituem a avaliação de um dermatologista.</p></div>`}
@@ -2895,8 +2903,8 @@ function viewRegistros(){
       ${a?`<div class="pl-ev2">${ic('face',16)}<span><b>Análise: pele ${esc(String(a.tipo).toLowerCase())}</b><small>Oleosidade ${a.oleo} · Hidratação ${a.hid} · Poros ${a.poros} · Manchas ${a.manchas} · Linhas ${a.linhas} · Vermelhidão ${a.verm}</small></span></div>`:''}
       ${e?`<div class="pl-ev2">${ic('chart',16)}<span><b>Diário</b><small>Hidratação ${e.hid} · Oleosidade ${e.oleo} · Irritação ${e.irr}${entTxt(e)?' · '+entTxt(e):''}</small>${e.nota?`<small class="pl-nt">“${esc(e.nota)}”</small>`:''}</span></div>`:''}
       ${fs.length?`<div class="pl-ev2">${ic('image',16)}<span class="pl-th">${fs.map(f=>`<img src="${f.img}" alt="Foto de ${fmtD(f.d)}">`).join('')}</span></div>`:''}
-      ${ps.map(p=>`<div class="pl-ev2">${ic('bottle',16)}<span><b>${esc(p.produto||'Produto')}</b><small>${(VERD[p.veredito]||VERD.cuidado)[1]} · nota ${p.nota}</small></span></div>`).join('')}</div></div>`};
-  return `<div class="stack pl-in"><div class="pl-nm">${[['face','Análises',A.length,'analise'],['chart','Diário',d.length,'evo'],['image','Fotos',F.length,'ba'],['bottle','Produtos',P_.length,'prod']].map(([i_,l,n,go])=>`<button ${go==='prod'?'data-go="produtos|shelf"':`data-sub="${go}"`}>${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>
+      ${ps.map(p=>`<div class="pl-ev2">${ic('tag',16)}<span><b>${esc(p.produto||'Produto')}</b><small>${(VERD[p.veredito]||VERD.cuidado)[1]} · nota ${p.nota}</small></span></div>`).join('')}</div></div>`};
+  return `<div class="stack pl-in"><div class="pl-nm">${[['face','Análises',A.length,'analise'],['chart','Diário',d.length,'evo'],['image','Fotos',F.length,'ba'],['tag','Produtos',P_.length,'prod']].map(([i_,l,n,go])=>`<button ${go==='prod'?'data-go="produtos|shelf"':`data-sub="${go}"`}>${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>
   <div class="pl-card"><div class="pl-ct"><b>Linha do tempo</b><small>${ds.length} ${ds.length===1?'dia':'dias'}</small></div>${ds.length?ds.map(day).join(''):'<p class="small muted" style="margin-top:8px">Nada registrado ainda. Faça uma análise ou um registro no diário.</p>'}</div></div>`;
 }
 
@@ -2943,7 +2951,7 @@ function welcomeArt(){
 }
 function planPreview(){
   const R_=getR(),pick=!!S.ans.tier,t=S.tier;
-  const lista=ks=>ks.map(k=>`<li><span class="pn">${ic(P[k].ic,15)}${P[k].n}</span><span class="pp">${brl(Math.round(mes(k)))}</span></li>`).join('');
+  const lista=ks=>ks.map(k=>`<li><span class="pn">${pimg(k,22)}${P[k].n}</span><span class="pp">${brl(Math.round(mes(k)))}</span></li>`).join('');
   return `<div class="card plan" aria-live="polite">
     <div class="kick">Seu plano personalizado</div>
     <h3>${pick?`Rotina completa por cerca de ${brl(custoTier(t))} ao mês`:'Veja quanto custa uma rotina completa'}</h3>
@@ -3040,7 +3048,7 @@ function vDicas(){
   return `<div class="card">${head('sparkle','Dicas para a sua pele')}<div class="seg three" role="group" aria-label="Tipo de dica" style="margin-top:12px">${TB.map(([k,i_,l])=>`<button data-dtab="${k}" aria-pressed="${tb===k}">${ic(i_,18)}${l}</button>`).join('')}</div></div>${body}`;
 }
 /* ---------- Notificações (agendadas no aparelho quando o app é empacotado para as lojas) ---------- */
-const NT=[['rot','sun','Hora da rotina','Um aviso de manhã e outro à noite, nos seus horários.'],['seq','flame','Sequência em risco','Quando falta só uma rotina para manter os dias seguidos.'],['volta','heart','Saudade de você','Se você ficar 3, 7 ou 14 dias sem abrir o app.'],['val','bottle','Validade dos produtos','Quando um produto da prateleira estiver perto de vencer.'],['foto','face','Nova análise','Uma vez por mês, para acompanhar a evolução da pele.']];
+const NT=[['rot','sun','Hora da rotina','Um aviso de manhã e outro à noite, nos seus horários.'],['seq','flame','Sequência em risco','Quando falta só uma rotina para manter os dias seguidos.'],['volta','heart','Saudade de você','Se você ficar 3, 7 ou 14 dias sem abrir o app.'],['val','tag','Validade dos produtos','Quando um produto da prateleira estiver perto de vencer.'],['foto','face','Nova análise','Uma vez por mês, para acompanhar a evolução da pele.']];
 const NMSG={
   m:['Bom dia! Agora é o seu momento de se cuidar.','Sua rotina da manhã está te esperando.','5 minutinhos para a sua pele? Comece a rotina do dia.','Comece o dia cuidando de você.'],
   n:['Seu momento chegou. Hora da rotina da noite.','Antes de dormir, um carinho na sua pele.','Sua rotina da noite está te esperando.','Feche o dia cuidando de você.'],
@@ -3113,7 +3121,7 @@ function vGastos(){
   return `<div class="card">${head('coin','Gastos do mês')}</div>
   <div class="seg" role="group" aria-label="Faixa de preço">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[k],18)}${l}<small>${brl(custoTier(k))}/mês</small></button>`).join('')}</div>
   <div class="total"><div class="small">${ic('tag',16)} Por mês</div><div class="price">${brl(cur)}</div><div class="small">${brl(cur*12)} por ano</div></div>
-  <div class="card"><h3>Onde vai o dinheiro</h3>${rows.map(r=>`<div class="gb"><span>${ic(P[r.k].ic,14)} ${P[r.k].n.split(' ')[0]}</span><i><b style="width:${r.v/max*100}%"></b></i><span><b>${brl(Math.round(r.v))}</b></span></div>`).join('')}</div>
+  <div class="card"><h3>Onde vai o dinheiro</h3>${rows.map(r=>`<div class="gb"><span>${pimg(r.k,20)} ${P[r.k].n.split(' ')[0]}</span><i><b style="width:${r.v/max*100}%"></b></i><span><b>${brl(Math.round(r.v))}</b></span></div>`).join('')}</div>
   ${cur>econ&&sav&&sav.s>1?`<div class="ins">${ic('sparkle',14)} Economize ${brl(Math.round(sav.s))} por mês trocando <b>${P[sav.k].n}</b> pelo econômico. Tudo no econômico: ${brl(econ)} por mês.</div>`:''}
   ${temP().length?`<div class="card"><h3>Prateleira</h3><p class="small muted" style="margin-top:4px">${temP().length} ${temP().length===1?'produto':'produtos'}${shelfSoon().length?`, ${shelfSoon().length} vencendo`:''}.</p></div>`:''}
   <p class="note">Valores estimados pelo preço do frasco e pelo tempo que ele dura.</p>`;}
@@ -3123,7 +3131,7 @@ function vRel(){
   return `<div class="card">${head('file','Relatório para a consulta')}
     ${li('face',['Pele',LBL[S.pele]||'-'])}${li('spot',['Incômodos',S.pref.map(k=>LBL[k]).join(', ')||'-'])}
     ${li('chart',['Análise',rs?`${esc(rs.tipo)} · ${fmtD(rs.d)}`:'Sem análise'])}${li('routine',['Rotina',S.result&&S.rot?`${getR().m.length} de manhã, ${getR().n.length} à noite`:'Sem rotina (falta a análise da pele)'])}
-    ${li('bottle',['Produtos',S.shelf.length+' na prateleira'])}${li('spot',['Quiz',quizTxt()?'respondido':'-'])}${li('alert',['Evito',S.ing.evitar.join(', ')||'-'])}${li('image',['Fotos',F.length+' guardadas'])}${li('drops',['Diário',d.length+' registros'])}</div>
+    ${li('tag',['Produtos',S.shelf.length+' na prateleira'])}${li('spot',['Quiz',quizTxt()?'respondido':'-'])}${li('alert',['Evito',S.ing.evitar.join(', ')||'-'])}${li('image',['Fotos',F.length+' guardadas'])}${li('drops',['Diário',d.length+' registros'])}</div>
   <button class="btn" data-act="rel-salvar">${ic('down',18)}Salvar relatório</button>
   <button class="btn ghost" data-act="rel-copiar">${ic('copy',18)}Copiar resumo</button>
   <p class="note">Não é diagnóstico. Leve para a consulta como apoio.</p>`;}
@@ -3142,7 +3150,7 @@ function vPlano(){
   const u=uso(),bar=(k,l,i_)=>`<div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b style="display:flex;gap:8px;align-items:center">${ic(i_,16)}${l}</b><span class="small muted">${S.plus?'ilimitado':u[k]+' de '+LIM[k]}</span></div><div class="use"><b style="width:${S.plus?100:Math.min(100,u[k]/LIM[k]*100)}%"></b></div></div>`;
   return `<div class="plus">${head('crown','Pellie Pro').replace('class="tile"','class="tile" style="background:rgba(255,255,255,.2);color:var(--ongrad)"')}
     <div class="small" style="opacity:.9;margin:-2px 0 2px">Tudo liberado com a assinatura:</div>
-    ${[['face','Análise da pele por foto, sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['bottle','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
+    ${[['face','Análise da pele por foto, sempre que quiser'],['hair','Análise do cabelo e cronograma'],['routine','Rotina personalizada e lembretes'],['scan','Scanner de produtos'],['chart','Diário e antes e depois'],['tag','Prateleira com validade'],['file','Relatório para a consulta'],['cloud','Dados na nuvem']].map(([i_,t])=>`<div class="perk">${ic(i_,18)}${t}</div>`).join('')}
     <div style="display:grid;gap:8px;margin-top:6px">
       <div style="background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 59,90<span style="font-size:14px;font-weight:500"> /mês</span></div></div>
       <div style="background:rgba(255,255,255,.26);border-radius:14px;padding:10px 14px;border:1.5px solid rgba(255,255,255,.6)"><div style="font-family:var(--f-display);font-size:26px;font-weight:700">R$ 149,90<span style="font-size:14px;font-weight:500"> /ano</span></div><div class="small" style="opacity:.95">Equivale a R$ 12,49 por mês. Economia de R$ 568,90 no ano.</div></div>
@@ -3198,7 +3206,7 @@ function vTema(){
 }
 
 /* ---------- Cabelo ---------- */
-const HQ=[['obj','Qual é o seu maior objetivo?','sparkle',[['cresc','Crescer e fortalecer'],['hid','Hidratar'],['frizz','Controlar o frizz'],['def','Definir cachos ou ondas'],['oleo','Reduzir a oleosidade'],['rep','Reparar danos']]],['couro','Como é o seu couro cabeludo?','drop',[['normal','Normal'],['oleoso','Oleoso'],['seco','Seco'],['caspa','Caspa ou coceira']]],['queda','Queda de cabelo','alert',[['normal','Normal'],['mais','Maior que o normal']]],['quim','Química no cabelo','flask',[['nao','Nenhuma'],['tint','Tintura'],['alis','Alisamento']]],['calor','Uso de calor (secador, chapinha)','sun',[['nunca','Quase nunca'],['as','Às vezes'],['sempre','Sempre']]],['lav','Lavagens por semana','drops',[['1','1 a 2'],['3','3 a 4'],['5','5 ou mais']]],['corte','Último corte das pontas','clock',[['rec','Menos de 3 meses'],['med','3 a 6 meses'],['velho','Mais de 6 meses']]],['agua','Sol, piscina ou mar','sun',[['nao','Quase nunca'],['as','Às vezes'],['freq','Com frequência']]]];
+const HQ=[['obj','Qual é o seu maior objetivo?','sparkle',[['cresc','Crescer e fortalecer'],['hid','Hidratar'],['frizz','Controlar o frizz'],['def','Definir cachos ou ondas'],['oleo','Reduzir a oleosidade'],['rep','Reparar danos']]],['couro','Como é o seu couro cabeludo?','drop',[['normal','Normal'],['oleoso','Oleoso'],['seco','Seco'],['caspa','Caspa ou coceira']]],['queda','Queda de cabelo','alert',[['normal','Normal'],['mais','Maior que o normal']]],['quim','Química no cabelo','drops',[['nao','Nenhuma'],['tint','Tintura'],['alis','Alisamento']]],['calor','Uso de calor (secador, chapinha)','sun',[['nunca','Quase nunca'],['as','Às vezes'],['sempre','Sempre']]],['lav','Lavagens por semana','drops',[['1','1 a 2'],['3','3 a 4'],['5','5 ou mais']]],['corte','Último corte das pontas','clock',[['rec','Menos de 3 meses'],['med','3 a 6 meses'],['velho','Mais de 6 meses']]],['agua','Sol, piscina ou mar','sun',[['nao','Quase nunca'],['as','Às vezes'],['freq','Com frequência']]]];
 const hqDone=()=>HQ.every(([k])=>S.hq&&S.hq[k]);
 const HQL={obj:{cresc:'quer crescer e fortalecer o cabelo',hid:'quer hidratar o cabelo',frizz:'quer controlar o frizz',def:'quer definir cachos ou ondas',oleo:'quer reduzir a oleosidade',rep:'quer reparar danos'},couro:{normal:'couro cabeludo normal',oleoso:'couro cabeludo oleoso',seco:'couro cabeludo seco',caspa:'couro cabeludo com caspa ou coceira'},queda:{normal:'queda de cabelo normal',mais:'queda maior que o normal'},quim:{nao:'sem química',tint:'com tintura',alis:'com alisamento ou progressiva'},calor:{nunca:'quase nunca usa calor',as:'usa calor às vezes',sempre:'usa calor sempre'},lav:{'1':'lava 1 a 2 vezes por semana','3':'lava 3 a 4 vezes por semana','5':'lava 5 ou mais vezes por semana'},corte:{rec:'cortou as pontas há menos de 3 meses',med:'cortou as pontas há 3 a 6 meses',velho:'não corta as pontas há mais de 6 meses'},agua:{nao:'quase não pega sol, piscina ou mar',as:'pega sol, piscina ou mar às vezes',freq:'pega sol, piscina ou mar com frequência'}};
 const hqTxt=()=>Object.keys(S.hq).filter(k=>S.hq[k]&&HQL[k]&&HQL[k][S.hq[k]]).map(k=>HQL[k][S.hq[k]]).join('; ');
@@ -3351,7 +3359,7 @@ function hfView(){
   const f=S.hflow,q=S.hq||{};
   if(f==='q'){const i=Math.max(0,Math.min(HFN-1,S.hqi||0)),[k,l,i_,o]=HQ[i],cur=q[k];
     return `<div class="stack hf hf-in" data-d="${S.hdir||1}">${hfTop(i+1,`${i+1} de ${HFN}`)}
-    <div class="hf-qh"><span class="pl-ri">${ic(i_==='flask'?'drops':i_,22)}</span><h2>${esc(l)}</h2></div>
+    <div class="hf-qh"><span class="pl-ri">${ic(i_==='drops'?'drops':i_,22)}</span><h2>${esc(l)}</h2></div>
     <div class="hf-os" role="group" aria-label="${esc(l)}">${o.map(([v,t])=>`<button class="hf-o" data-hq="${k}|${v}" aria-pressed="${cur===v}"><span>${esc(t)}</span><i>${ic('check',14)}</i></button>`).join('')}</div>
     <div class="hf-nv"><button class="btn ghost" data-hf="back">Voltar</button><button class="btn pl-go" data-hf="next" ${cur?'':'disabled'}>${i===HFN-1?'Ir para a foto':'Próximo'}${ic('chev',16)}</button></div></div>`}
   const qi=S.hQ,it=(ok,t)=>`<li class="${ok?'ok':'warn'}">${ic(ok?'check':'alert',14)}${t}</li>`;
@@ -3391,7 +3399,7 @@ function viewCabelo(){
   if(S.hflow)return hfView();
   const bar=(l,v,i_)=>`<div class="meter"><span class="ml">${ic(i_,16)}${l}</span><div class="bar"><b class="${bandC(v)}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`;
   const box=S.hPhoto?`<div class="face"><img class="photo" src="${S.hPhoto}" alt="Foto do cabelo">${S.hBusy?'<div class="scan"></div>':''}</div>`:`<div class="face" style="display:grid;place-items:center;color:var(--accent)">${ic('hair',64)}</div>`;
-  const QCARD=`<div class="card"><div class="row" style="justify-content:space-between"><h3>Questionário do cabelo</h3><span class="badge">${HQ.filter(([k])=>q[k]).length} de ${HQ.length}</span></div><p class="small muted" style="margin:4px 0 6px">A foto mostra só o dia de hoje. Suas respostas completam a análise.</p>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px;margin-top:8px">${ic(i_==='flask'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t_])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t_}</button>`).join('')}</div>`).join('')}</div>`;
+  const QCARD=`<div class="card"><div class="row" style="justify-content:space-between"><h3>Questionário do cabelo</h3><span class="badge">${HQ.filter(([k])=>q[k]).length} de ${HQ.length}</span></div><p class="small muted" style="margin:4px 0 6px">A foto mostra só o dia de hoje. Suas respostas completam a análise.</p>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px;margin-top:8px">${ic(i_==='drops'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t_])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t_}</button>`).join('')}</div>`).join('')}</div>`;
   const inp=`${QCARD}<div class="card">
     <div class="row" style="justify-content:space-between"><h2>${r?'Seu cabelo':'Vamos ver o seu cabelo'}</h2>${r?`<span class="badge">${fmtD(r.d)}</span>`:''}</div>
     <div class="face-wrap" style="margin-top:12px">${box}<div>
@@ -3416,7 +3424,7 @@ function viewCabelo(){
     <div class="total" style="margin-bottom:8px"><div class="small">${ic('tag',16)} Custo estimado do cuidado capilar (${tn[tier].toLowerCase()})</div><div class="price">${brl(Math.round(custoH))} por mês</div></div>
     <button class="btn" data-act="hrot-all" style="width:100%;margin-bottom:6px">${ic('routine',18)}${pl.produtos.every(x=>hInRot(x.k))?'Cuidados do cabelo já estão na rotina':'Incluir o cuidado do cabelo na rotina'}</button>
     ${pl.produtos.map(x=>{const mt=(mk[x.k]||{})[tier],nm=mt||x.passo,naP=S.shelf.some(i=>i.n===nm);return `<div class="hp"><div class="vp"><span class="pimg">${pimg(x.k,46)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small>${x.por?`<small style="color:var(--muted)">Por quê: ${esc(x.por)}</small>`:''}${(()=>{const t=(HAIRT[x.k]||{})[tier];return t?`<small class="hpr">Cerca de ${brl(t[0])} o frasco · dura uns ${t[1]} meses · ${brl(Math.round(t[0]/t[1]))}/mês</small>${exList(t[2])}`:''})()}</span></div>
-      <div class="hpb"><button class="rg" data-hrot="${x.k}" aria-pressed="${hInRot(x.k)}">${ic(hInRot(x.k)?'check':'routine',14)}${hInRot(x.k)?'Na rotina':'Pôr na rotina'}</button><button class="rg" data-hshelf="${x.k}" aria-pressed="${naP}" ${naP?'disabled':''}>${ic(naP?'check':'bottle',14)}${naP?'Na prateleira':'Guardar na prateleira'}</button></div></div>`}).join('')}
+      <div class="hpb"><button class="rg" data-hrot="${x.k}" aria-pressed="${hInRot(x.k)}">${ic(hInRot(x.k)?'check':'routine',14)}${hInRot(x.k)?'Na rotina':'Pôr na rotina'}</button><button class="rg" data-hshelf="${x.k}" aria-pressed="${naP}" ${naP?'disabled':''}>${ic(naP?'check':'tag',14)}${naP?'Na prateleira':'Guardar na prateleira'}</button></div></div>`}).join('')}
     <p class="note">Valores e exemplos são estimativas para o Brasil e mudam por loja e promoção. Confira os ingredientes no rótulo.</p></div>`:''}
   ${pl.crono.length?`<div class="card"><h3>Cronograma capilar</h3><ol class="small" style="padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px">${pl.crono.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
   ${hfRedo()}
@@ -3659,15 +3667,54 @@ function prodCard(nome,k,tier,extra){const p=pSplit(nome),c=P[k]||{},t=(c.t&&c.t
     <div class="pcb">${c.a?`<p>${esc(c.a)}</p>`:''}${t?`<p class="small muted">Cerca de ${brl(t[0])} o frasco · dura uns ${t[1]} meses.</p>`:''}${c.ler?`<p class="small"><b>O que procurar:</b> ${esc(c.ler)}</p>`:''}${extra||''}</div></details>`}
 function shelfThumb(i){const p=pSplit(i.n);if(i.marca)p.marca=i.marca;if(i.img){IMGC[pKey(p)]=IMGC[pKey(p)]||{u:i.img,t:Date.now()}}return pthHtml(p,'sm')}
 const REP={limpador:"La Roche-Posay Effaclar Gel",vitc:"La Roche-Posay Pure Vitamin C10 Serum",niacina:"The Ordinary Niacinamide 10% + Zinc 1%",retinol:"The Ordinary Retinol 0,2% em Esqualano",bha:"The Ordinary Salicylic Acid 2% Solution",hialu:"The Ordinary Hyaluronic Acid 2% + B5",calmante:"La Roche-Posay Cicaplast Baume B5",hidr:"La Roche-Posay Toleriane Double Repair",fps:"La Roche-Posay Anthelios XL Toque Seco"};
-function pimg(k,w=44){if(!FOTOS)return pimgOld(k,w);if(!REP[k])return `<span class="pth err mini" style="width:${w}px;height:${w}px;border-radius:${Math.round(w*.27)}px"><i></i></span>`;return pthHtml(pSplit(REP[k]),'',w)}
-function pimgOld(k,w=44){
-  const T={limpador:['tube','#EBD9C8','#8A6A48'],fps:['tube','#F6E3B8','#C8892B'],vitc:['drop','#C9822B','#F4C27A'],niacina:['drop','#E8DFD2','#8A6A48'],retinol:['drop','#5A2E14','#D9B79A'],bha:['drop','#CFE3D8','#3E7B67'],hialu:['drop','#D9E6EE','#5A86A3'],calmante:['jar','#DCE9DF','#3E7B67'],hidr:['jar','#F3E6DB','#8A6A48'],cabelo:['pump','#EBD9C8','#8A6A48']};
-  const [f,c1,c2]=T[k]||['jar','#F3E6DB','#8A6A48'];
-  const sh={tube:`<path d="M20 8h24l-3 12H23z" fill="${c2}"/><path d="M19 20h26l-2 36a3 3 0 0 1-3 3H24a3 3 0 0 1-3-3z" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="26" y="30" width="12" height="2.200" rx="1" fill="${c2}" opacity=".6"/><rect x="28" y="36" width="8" height="2.200" rx="1" fill="${c2}" opacity=".4"/>`,
-    drop:`<rect x="29" y="6" width="6" height="8" rx="2" fill="${c2}"/><path d="M26 14h12v8H26z" fill="#2C2118" opacity=".85"/><rect x="19" y="22" width="26" height="36" rx="6" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="24" y="32" width="16" height="12" rx="2" fill="#fff" opacity=".55"/>`,
-    jar:`<rect x="14" y="16" width="36" height="9" rx="3" fill="${c2}"/><rect x="12" y="25" width="40" height="30" rx="8" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="22" y="34" width="20" height="9" rx="2" fill="#fff" opacity=".55"/>`,
-    pump:`<path d="M28 6h12v5h-4v5h-4v-5h-4z" fill="${c2}"/><rect x="20" y="16" width="24" height="42" rx="6" fill="${c1}" stroke="${c2}" stroke-width="1.5"/><rect x="25" y="30" width="14" height="12" rx="2" fill="#fff" opacity=".55"/>`}[f];
-  return `<svg viewBox="0 0 64 64" width="${w}" height="${w}" role="img" aria-label="Ilustração do produto" style="display:block">${sh}</svg>`}
+/* ===== Fotos genéricas de embalagem (sem marca, sem rótulo) =====
+   Nunca são a foto do produto real: o nome real aparece sempre como texto ao lado. */
+const GEN={d:null,by:null,used:new Set(),cur:{},prev:null,need:false,dir:'img/genericos/',m:{}};
+try{GEN.m=JSON.parse(localStorage.getItem('mm_gmap')||'{}')||{}}catch(e){}
+const GEN_STEP={limpador:'limpador',vitc:'serum',niacina:'serum',retinol:'serum',bha:'serum',hialu:'serum',calmante:'calmante',hidr:'hidr',fps:'fps',
+  shampoo:'shampoo',clarif:'shampoo',esfol:'shampoo',cond:'cond',mascara:'mcap',ligacao:'mcap',leave:'leave',termico:'leave',solar:'leave',oleo:'ocap',defin:'pent',tonico:'tonico'};
+const GEN_CATS={limpador:['limpador_gel','limpador_creme','sabonete_facial','agua_micelar','demaquilante'],serum:['serum_facial','oleo_facial'],calmante:['hidratante_creme'],hidr:['hidratante_creme','hidratante_fluido'],fps:['protetor_solar'],
+  tonico:['tonico'],bruma:['bruma_facial'],shampoo:['shampoo'],cond:['condicionador'],mcap:['mascara_capilar'],leave:['leave_in'],ocap:['oleo_capilar'],pent:['creme_de_pentear']};
+const GEN_ALT={limpador:'limpador facial',serum:'sérum',calmante:'creme',hidr:'hidratante',fps:'protetor solar',tonico:'tônico',bruma:'bruma',shampoo:'shampoo',cond:'condicionador',mcap:'máscara capilar',leave:'leave-in',ocap:'óleo capilar',pent:'creme de pentear'};
+const GEN_HAIR={shampoo:1,cond:1,mcap:1,leave:1,ocap:1,pent:1};
+const GEN_FAM=['bege','branco','rosa','marrom','verde','transparente','dourado'];
+/* demonstrações (onboarding, paywall, mockups): imagens fixas, escolhidas e conferidas uma a uma */
+const DEMO_IMG={limpador:'B011',limpador2:'B355',niacina:'B006',serum2:'B157',vitc:'B168',bha:'B075',hialu:'B150',retinol:'B034',calmante:'B039',hidr:'B073',hidr2:'B054',hidr3:'B069',fps:'B228',bruma:'B113',tonico:'B058'};
+function gHash(t){let h=2166136261;for(const c of String(t)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function gLoad(){fetch('genericos.json').then(r=>r.ok?r.json():null).then(j=>{if(!j)return;GEN.d=j;GEN.by={};j.forEach(x=>GEN.by[x.id]=x);if(GEN.need){GEN.need=false;render()}}).catch(()=>{})}
+function gImgHtml(id,w,alt){return `<img class="gim" src="${GEN.dir}${id}.webp" alt="${alt}" width="${w}" height="${w}" loading="lazy" decoding="async" style="width:${w}px;height:${w}px" onerror="this.style.visibility='hidden'">`}
+function gPh(w){return `<span class="gim gph" style="width:${w}px;height:${w}px" aria-hidden="true"></span>`}
+function gPick(passo,pid,op){
+  op=op||{};if(!GEN.d){GEN.need=true;return null}
+  const cats=GEN_CATS[passo];if(!cats)return null;
+  const key=passo+'|'+pid,hair=!!GEN_HAIR[passo],by=GEN.by,used=GEN.used;
+  if(GEN.cur[key])return GEN.cur[key];
+  const dupHit=id=>{const x=by[id];return used.has(id)||(x.dupDe&&used.has(x.dupDe))||[...used].some(u=>by[u]&&by[u].dupDe===id)};
+  let id=GEN.m[key];
+  if(id&&by[id]&&by[id].status==='usar'&&!dupHit(id)){used.add(id);GEN.prev=by[id].tipo;GEN.cur[key]=id;return id}
+  const okDom=x=>hair?(x.dom==='haircare'||x.dom==='ambos'):true;
+  const inCat=x=>cats.includes(x.sug)||x.cats.some(c=>cats.includes(c));
+  const pool=GEN.d.filter(x=>okDom(x)&&x.status!=='descartar'&&inCat(x));
+  const pref=l=>{if(passo==='fps')return l;const p=l.filter(x=>GEN_FAM.includes(x.familia));return p.length>=4?p:l};
+  const t0=pref(pool.filter(x=>x.status==='usar'&&cats.includes(x.sug))),t1=pref(pool.filter(x=>x.status==='usar'&&!cats.includes(x.sug))),t2=pool.filter(x=>x.status==='ajustar');
+  const h=gHash(key);let pick=null;
+  for(const t of [t0,t1,t2]){if(!t.length||pick)continue;const n=t.length;
+    for(const strict of [true,false]){for(let k=0;k<n&&!pick;k++){const x=t[(h+k)%n];if(dupHit(x.id))continue;if(strict&&GEN.prev&&x.tipo===GEN.prev)continue;pick=x}if(pick)break}}
+  if(!pick)return null;
+  GEN.m[key]=pick.id;try{localStorage.setItem('mm_gmap',JSON.stringify(GEN.m))}catch(e){}
+  used.add(pick.id);GEN.prev=pick.tipo;GEN.cur[key]=pick.id;return pick.id}
+/* devolve o caminho (id) da foto genérica; null se ainda não carregou */
+function fotoGenerica(passo,produtoId,opcoes){return gPick(GEN_STEP[passo]||passo,produtoId,opcoes)}
+function gimg(passo,pid,w,op){const p=GEN_STEP[passo]||passo,id=gPick(p,pid,op);return id?gImgHtml(id,w,'Embalagem genérica de '+(GEN_ALT[p]||'produto')):gPh(w)}
+function dimg(k,w){const id=DEMO_IMG[k]||DEMO_IMG.hidr;return gImgHtml(id,w,'Embalagem genérica de '+(GEN_ALT[GEN_STEP[k]||k.replace(/\d$/,'')]||'produto'))}
+function pimg(k,w=44,pid){if(FOTOS&&REP[k])return pthHtml(pSplit(REP[k]),'',w);return gimg(k,pid||('p:'+k),w)}
+/* item da prateleira/scanner: passo pelo nome (ou cabelo) */
+function gStepOf(i){const t=String(i.tp||i.n||'').toLowerCase();
+  if(i.cat==='cabelo'){return /condicion/.test(t)?'cond':/m[aá]scara|reconstr|ampola/.test(t)?'mcap':/leave|finaliz|t[eé]rmic/.test(t)?'leave':/[oó]leo/.test(t)?'ocap':/pentear|defin|ativador/.test(t)?'pent':'shampoo'}
+  if(/bruma|spray|mist/.test(t)&&!/protetor|fps|solar/.test(t))return 'bruma';
+  if(/t[oô]nico|tonico|toner/.test(t))return 'tonico';
+  const k=shelfKey(i);return GEN_STEP[k]||'hidr'}
+function gShelf(i,w){return gimg(gStepOf(i),'s:'+(i.id||i.n),w)}
 function qArt(k){
   const bg=`<defs><linearGradient id="qb${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0D3BC"/><stop offset="1" stop-color="#E2B696"/></linearGradient></defs><rect width="96" height="64" fill="url(#qb${k})"/>`;
   const A={
@@ -3790,22 +3837,22 @@ function startScan(){
 }
 function obPhone(){return `<div class="mph" aria-hidden="true"><div class="mph-s"><div class="mph-n"></div>
   <div class="mph-h"><span>Rotina da manhã</span><b>4 passos</b><i>Proteção e hidratação</i><u>${ic('sun',12)}Começar</u></div>
-  ${[['Limpador suave','Gel de limpeza','limpador'],['Sérum','Niacinamida','niacina'],['Hidratante','Com ceramidas','hidr'],['Protetor solar','FPS 50+','fps']].map(([a,b,k],i)=>`<div class="mph-r"><em>${i+1}</em><span>${pimg(k,22)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
+  ${[['Limpador suave','Gel de limpeza','limpador'],['Sérum','Niacinamida','niacina'],['Hidratante','Com ceramidas','hidr'],['Protetor solar','FPS 50+','fps']].map(([a,b,k],i)=>`<div class="mph-r"><em>${i+1}</em><span>${dimg(k,22)}</span><div><small>${a}</small><b>${b}</b></div></div>`).join('')}</div></div>`}
 const DEMO_SC=[['Rotina personalizada','Passo a passo, com o tempo de cada etapa'],['Análise da pele','Oleosidade, hidratação, poros e manchas'],['Scanner de produtos','Compatibilidade antes de comprar'],['Minha estante','Seus produtos, organizados'],['Sua evolução','Compare suas análises ao longo do tempo']];
 function obPhoneDemo(){
   const bar=(l,v,c,d)=>`<div class="mp-b a" style="--d:${d}s"><span>${l}</span><div><i class="${c}" style="--w:${v}%"></i></div><em>${v}</em></div>`;
-  const steps=[['Limpeza','Gel suave','limpador','2 min'],['Sérum','Niacinamida','niacina','2 min'],['Hidratante','Ceramidas','hidr','1 min'],['Protetor solar','FPS 50+','fps','2 min']].map(([a,b,k,t],i)=>`<div class="mp-r a" style="--d:${.25+i*.12}s"><em>${i+1}</em><span>${pimg(k,24)}</span><div><small>${a}</small><b>${b}</b></div><u>${t}</u></div>`).join('');
-  const sh=(ks,d)=>`<div class="mpsh a" style="--d:${d}s">${ks.map((k,i)=>`<span style="--d:${d+.15+i*.08}s">${pimg(k,36)}</span>`).join('')}</div>`;
+  const steps=[['Limpeza','Gel suave','limpador','2 min'],['Sérum','Niacinamida','niacina','2 min'],['Hidratante','Ceramidas','hidr','1 min'],['Protetor solar','FPS 50+','fps','2 min']].map(([a,b,k,t],i)=>`<div class="mp-r a" style="--d:${.25+i*.12}s"><em>${i+1}</em><span>${dimg(k,24)}</span><div><small>${a}</small><b>${b}</b></div><u>${t}</u></div>`).join('');
+  const sh=(ks,d)=>`<div class="mpsh a" style="--d:${d}s">${ks.map((k,i)=>`<span style="--d:${d+.15+i*.08}s">${dimg(k,36)}</span>`).join('')}</div>`;
   const ev=(l,a,b,good,d)=>`<div class="mp-e a" style="--d:${d}s"><span>${l}</span><div><b>${a}</b><svg width="10" height="8" viewBox="0 0 10 8"><path d="M0 4h8M5 1l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><b>${b}</b></div><u class="${good?'ok':'att'}">${b-a>0?'+':''}${b-a}</u></div>`;
   const dots=DEMO_SC.map((s,i)=>`<button type="button" data-demo="${i}" class="${i?'':'on'}" aria-label="${s[0]}"><i></i></button>`).join('');
   return `<div class="mpw"><div class="mpd" aria-hidden="true"><div class="mpd-s"><i class="mpd-n"></i><span class="mpd-t">9:41</span><span class="mpd-bt"></span>
    <div class="mps on" data-i="0"><div class="mp-hd a"><small>Rotina da manhã</small><b>4 passos</b><span>Cerca de 7 min · Proteção e hidratação</span></div><div class="mp-sg a" style="--d:.15s"><u class="on">Manhã</u><u>Noite</u></div>${steps}</div>
    <div class="mps" data-i="1"><div class="mp-an a"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="mp-arc" cx="32" cy="32" r="28" fill="none" stroke="#A76F5C" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="46" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="17" font-weight="700" fill="#4B2919">74</text></svg><div><small>Análise da pele</small><b>Pele mista</b><span>Nota geral</span></div></div>
      <div class="mp-bs">${bar('Oleosidade',62,'md',.3)}${bar('Hidratação',74,'ok',.4)}${bar('Poros',48,'md',.5)}${bar('Manchas',31,'ok',.6)}${bar('Linhas',22,'ok',.7)}</div><div class="mp-pri a" style="--d:.85s">${ic('sparkle',11)}<span><b>Prioridade:</b> controlar o brilho sem ressecar</span></div></div>
-   <div class="mps" data-i="2"><div class="mp-scan a"><img src="exemplo-base.jpg" alt="" width="150" height="150"><i class="mp-line"></i><span class="mp-tag">${ic('sparkle',10)}Ácido hialurônico</span></div>
-     <div class="mp-res a" style="--d:1.1s"><svg viewBox="0 0 64 64" width="52" height="52"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3.5"/><circle class="mp-arc2" cx="32" cy="32" r="28" fill="none" stroke="#4F8A6B" stroke-width="4" stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="25" transform="rotate(-90 32 32)"/><text x="32" y="37.5" text-anchor="middle" font-size="16" font-weight="700" fill="#4B2919">86%</text></svg><div><b>Accord Parfait</b><span>Alta compatibilidade</span><div class="mp-ch"><u class="ok">Pode usar</u><u>Base líquida</u></div></div></div>
+   <div class="mps" data-i="2"><div class="mp-scan a gen"><img src="img/genericos/B157.webp" alt="Embalagem genérica de sérum" width="150" height="150"><i class="mp-line"></i><span class="mp-tag">${ic('sparkle',10)}Ácido hialurônico</span></div>
+     <div class="mp-res a" style="--d:1.1s"><svg viewBox="0 0 64 64" width="52" height="52"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3.5"/><circle class="mp-arc2" cx="32" cy="32" r="28" fill="none" stroke="#4F8A6B" stroke-width="4" stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="25" transform="rotate(-90 32 32)"/><text x="32" y="37.5" text-anchor="middle" font-size="16" font-weight="700" fill="#4B2919">86%</text></svg><div><b>Sérum hidratante</b><span>Alta compatibilidade</span><div class="mp-ch"><u class="ok">Pode usar</u><u>Sérum facial</u></div></div></div>
      <div class="mp-ing a" style="--d:1.5s"><div><i class="ok"></i><span><b>Ácido hialurônico</b> hidrata sem pesar</span></div><div><i class="ok"></i><span><b>Todos os tipos de pele</b></span></div><div><i class="att"></i><span><b>FPS 20</b> não substitui o protetor</span></div></div></div>
-   <div class="mps" data-i="3"><div class="mp-top a"><b>Minha estante</b><u>Editar</u></div>${sh(['hidr','niacina','vitc','limpador'],.15)}${sh(['fps','limpador','hialu'],.35)}<div class="mp-rec a" style="--d:.7s"><b>Recomendados pra você</b><div><span>${pimg('limpador',26)}<small>Limpador suave</small><u>Na estante</u></span><span>${pimg('niacina',26)}<small>Sérum</small><u>Na estante</u></span></div></div></div>
+   <div class="mps" data-i="3"><div class="mp-top a"><b>Minha estante</b><u>Editar</u></div>${sh(['hidr','niacina','vitc','limpador'],.15)}${sh(['fps','limpador2','hialu'],.35)}<div class="mp-rec a" style="--d:.7s"><b>Recomendados pra você</b><div><span>${dimg('limpador2',26)}<small>Limpador suave</small><u>Na estante</u></span><span>${dimg('serum2',26)}<small>Sérum</small><u>Na estante</u></span></div></div></div>
    <div class="mps" data-i="4"><div class="mp-top a"><b>Sua evolução</b><u>6 semanas</u></div>
      <div class="mp-ch2 a" style="--d:.15s"><svg viewBox="0 0 180 70" width="100%" height="70" preserveAspectRatio="none"><defs><linearGradient id="mpg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#A76F5C" stop-opacity=".28"/><stop offset="1" stop-color="#A76F5C" stop-opacity="0"/></linearGradient></defs><path d="M4 56 C30 52 44 44 70 40 S112 30 128 24 S160 14 176 10 V70 H4Z" fill="url(#mpg)"/><path class="mp-ln" d="M4 56 C30 52 44 44 70 40 S112 30 128 24 S160 14 176 10" fill="none" stroke="#A76F5C" stroke-width="2.4" stroke-linecap="round" pathLength="1"/><circle cx="4" cy="56" r="3.2" fill="#fff" stroke="#A76F5C" stroke-width="1.6"/><circle class="mp-pt" cx="176" cy="10" r="3.8" fill="#A76F5C"/></svg><div class="mp-sc"><span>Nota da pele</span><b>62 <svg width="10" height="8" viewBox="0 0 10 8"><path d="M0 4h8M5 1l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> 79</b></div></div>
      <div class="mp-cmp">${ev('Oleosidade',68,54,true,.45)}${ev('Hidratação',52,71,true,.57)}${ev('Manchas',40,31,true,.69)}${ev('Poros',55,49,true,.81)}</div></div>
@@ -3911,18 +3958,18 @@ function viewOnboarding(){PFI=0;
   if(st==='scanprod'){const tp=S.result&&S.result.tipo?'pele '+String(S.result.tipo).toLowerCase():'sua pele';return `<div class="ob obx scx spx" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh spt">${nome?nome+', agora':'Agora'} a Pellie confere os produtos por você</h1>
     <p class="obs" style="margin:0">Com a sua análise pronta, cada rótulo é comparado com a sua ${tp.replace(/^sua /,'')}. Veja um exemplo:</p>
-    <div class="pxf spf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="pxf spf gen"><img src="img/genericos/B157.webp" alt="Embalagem genérica de sérum sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <ul class="spl" aria-live="polite"><li style="--d:.5s"><i>${ic('check',13)}</i>Lendo o rótulo</li><li style="--d:1.7s"><i>${ic('check',13)}</i>Conferindo os ingredientes</li><li style="--d:2.9s"><i>${ic('check',13)}</i>Comparando com a sua ${tp.replace(/^sua /,'')}</li></ul>
     <div class="obf"><button class="btn obc spb" data-act="ob-next" style="width:100%">Ver resultado do scan</button></div></div>`}
   if(st==='scanner'){const r=S.result,seco=!!r&&(r.tipo==='Seca'||r.hid<40),ok=seco,oleo=r?Math.round(r.oleo):null;
     const pc=ok?86:32,cor=ok?'#4F8A6B':'#C94A3F',lab=ok?'Alta compatibilidade':'Não recomendado',da=(pc/100*176).toFixed(1);
-    const li=ok?`<li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata a pele seca.</span></li><li class="ok"><i></i><span><b>Todos os tipos de pele</b>, acabamento uniforme.</span></li>`
-      :`<li class="bad"><i></i><span><b>Hidratante demais</b> para a sua oleosidade${oleo!=null?' ('+oleo+'/100)':''}.</span></li><li class="bad"><i></i><span><b>Textura líquida</b> pode acentuar o brilho.</span></li>`;
+    const li=ok?`<li class="ok"><i></i><span><b>Ácido hialurônico</b> hidrata a pele seca.</span></li><li class="ok"><i></i><span><b>Fórmula leve</b>, absorve rápido e não pesa.</span></li>`
+      :`<li class="bad"><i></i><span><b>Hidratante demais</b> para a sua oleosidade${oleo!=null?' ('+oleo+'/100)':''}.</span></li><li class="bad"><i></i><span><b>Muita hidratação</b> pode acentuar o brilho da pele oleosa.</span></li>`;
     return `<div class="ob obx pxo" style="text-align:center">${back}
     <div class="obk">Scanner de produtos</div><h1 class="obh pxt">Nem todo produto combina com a sua pele.</h1>
-    <div class="pxf"><img src="exemplo-base.jpg" alt="Base L'Oréal Paris Accord Parfait sendo escaneada" width="680" height="680" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
+    <div class="pxf gen"><img src="img/genericos/B157.webp" alt="Embalagem genérica de sérum sendo escaneada" width="400" height="400" decoding="async"><i class="pxl"></i><span class="pxc c1"></span><span class="pxc c2"></span><span class="pxc c3"></span><span class="pxc c4"></span></div>
     <div class="card pxr pxs" style="text-align:left"><div class="obk" style="display:flex;gap:8px;align-items:center">${ic('sparkle',14)}Analisado pela Pellie</div>
-      <div class="pxh"><div><b class="pxn">Accord Parfait</b><span class="small muted">L'Oréal Paris · base líquida</span></div>
+      <div class="pxh"><div><b class="pxn">Sérum hidratante</b><span class="small muted">Exemplo genérico · sérum facial</span></div>
       <svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="${pc}% de compatibilidade"><circle cx="32" cy="32" r="28" fill="none" stroke="#EAD3C4" stroke-width="3"/><circle class="pxa" cx="32" cy="32" r="28" fill="none" stroke="${cor}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${da} 176" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="600" fill="#4B2919">${pc}%</text></svg></div>
       <b class="pxv" style="color:${cor}">${lab}</b>
       <ul class="pxk">${li}</ul>
@@ -3942,7 +3989,7 @@ function viewOnboarding(){PFI=0;
       <svg viewBox="0 0 358 440" width="100%" aria-hidden="true" style="position:absolute;inset:0"><g fill="none" stroke="#5A2E14" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="1.5 7"><path d="M64 52C92 96 150 104 178 122"/><path d="M192 170C208 204 236 216 245 236"/><path d="M252 290C262 322 284 336 290 346"/></g></svg>
       <div class="zn" style="left:17%;top:4.500%"><span class="cic">${ic('face',24)}</span><div style="left:34px"><b>Hoje: ${T[1]}</b><small>foi o que sua análise mostrou</small></div></div>
       <div class="zn" style="left:52%;top:31.500%"><span class="cic">${ic('routine',24)}</span><div style="left:34px;width:150px"><b>Passo 1</b><small>rotina montada para o que sua pele precisa</small></div></div>
-      <div class="zn" style="left:69%;top:58.500%"><span class="cic">${ic('bottle',24)}</span><div class="l" style="right:34px;width:170px"><b>Passo 2</b><small>produtos certos, com compatibilidade antes de comprar</small></div></div>
+      <div class="zn" style="left:69%;top:58.500%"><span class="cic">${ic('tag',24)}</span><div class="l" style="right:34px;width:170px"><b>Passo 2</b><small>produtos certos, com compatibilidade antes de comprar</small></div></div>
       <div class="zn big" style="left:81.500%;top:84%"><span class="cic on">${ic('sparkle',30)}</span><div class="l" style="right:34px;width:190px"><b>Passo 3</b><small>sua meta: ${T[2]}</small></div></div>
     </div>
     <p class="small muted" style="text-align:center;margin:0">Meta estimada. Os resultados podem variar.</p>${cta('Quero chegar lá')}</div>`}
@@ -3997,7 +4044,7 @@ function viewOnboarding(){PFI=0;
     const NN=[['oleosidade',r?r.oleo:0],['poros dilatados',r?r.poros:0],['linhas finas',r?r.linhas:0],['manchas',r?r.manchas:0],['vermelhidão',r?r.verm:0],['ressecamento',r?100-r.hid:0]].filter(x=>x[1]>=45).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);
     const nl=NN.length?NN:[d?d.t:'cuidado diário'],nt=nl.length>1?nl.slice(0,-1).join(', ')+' e '+nl[nl.length-1]:nl[0];
     const rg=zonasTxt()||((d&&d.pill.split(' · ')[1])||''),mt=METAS.find(x=>x[0]===S.meta);
-    const TL=[['face','Hoje',T[1]+', como a sua análise mostrou'],['routine','Passo 1','rotina personalizada'],['bottle','Passo 2','produtos compatíveis com a sua pele'],['chart','Passo 3','acompanhamento da sua evolução']];
+    const TL=[['face','Hoje',T[1]+', como a sua análise mostrou'],['routine','Passo 1','rotina personalizada'],['tag','Passo 2','produtos compatíveis com a sua pele'],['chart','Passo 3','acompanhamento da sua evolução']];
     return `<div class="ob obx" style="text-align:center">
     <span class="rkc" aria-hidden="true">${ic('check',34)}</span>
     <h1 class="obh">${nome?esc(nome)+', sua':'Sua'} rotina para cuidar da sua pele está pronta.</h1>
@@ -4012,7 +4059,7 @@ function viewOnboarding(){PFI=0;
     <div class="card rkr"><div class="rkp"><figure><img src="${esc(a.antes)}" alt="Antes, ${esc(a.nome)}" loading="lazy"><figcaption>Antes</figcaption></figure><figure><img src="${esc(a.depois)}" alt="Depois, ${esc(a.nome)}" loading="lazy"><figcaption class="d">Depois</figcaption></figure></div><div class="small" style="margin-top:10px"><b>${esc(a.nome)}</b> <span class="muted">· ${esc(a.leg)}</span></div></div>
     <p class="small muted" style="margin:0">Com autorização. Resultados individuais variam.</p><hr class="rkd">`)(ANTESDEPOIS[0]):''}
     <h2 class="rkh">${ic('gift',20)}O que você leva</h2><p class="small muted" style="margin:-8px 0 0">Tudo para cuidar da sua pele e do seu cabelo.</p>
-    <div class="lv rkl">${[['face','Análise de pele com IA','Acompanhe a evolução da sua pele.'],['hair','Análise de cabelo','Praticidade para o seu dia a dia.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['bottle','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes e cartas','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:54px;height:54px;flex:none">${ic(i_,24)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+    <div class="lv rkl">${[['face','Análise de pele com IA','Acompanhe a evolução da sua pele.'],['hair','Análise de cabelo','Praticidade para o seu dia a dia.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['scan','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes e cartas','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:54px;height:54px;flex:none">${ic(i_,24)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     ${cta('Vamos começar!',true,'ob-next')}</div>`}
   if(st==='susp'||st==='susp2'){const a=st==='susp';return `<div class="ovl rose"><div class="ob obx"><div class="susp" role="status" aria-live="polite">
     <div class="sf"><svg viewBox="0 0 120 100" width="72" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(k=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${k} 60 50)"/>`).join('')}</g></svg></div>
@@ -4033,17 +4080,17 @@ function viewOnboarding(){PFI=0;
   if(st==='leva')return `<div class="ob obx">${back}
     <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
     <div style="text-align:center;margin-top:12px"><h1 class="obh" style="font-size:36px">O que você leva</h1><p class="obs" style="margin-top:8px">Tudo para cuidar da sua pele e do seu cabelo, num só lugar.</p></div>
-    <div class="lv">${[['face','Análise de pele','Acompanhe a evolução da sua pele.'],['hair','Análise de cabelo','Praticidade para o seu dia a dia.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['bottle','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:62px;height:62px">${ic(i_,26)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
+    <div class="lv">${[['face','Análise de pele','Acompanhe a evolução da sua pele.'],['hair','Análise de cabelo','Praticidade para o seu dia a dia.'],['routine','Rotina personalizada','Passos de manhã e à noite para você.'],['scan','Scanner de produtos','Veja a compatibilidade antes de comprar.'],['bell','Lembretes','Mantenha sua rotina em dia.']].map(([i_,t,d])=>`<div><span class="cic" style="width:62px;height:62px">${ic(i_,26)}</span><span><b>${t}</b><small>${d}</small></span></div>`).join('')}</div>
     ${cta('Vamos começar',true,'ob-next')}</div>`;
   if(st==='pronta'){const PA=PAN(),an=S.planSel!=='mes',pm=an?PA.m:'R$ 59,90',sub=an?`${PA.p} cobrado por ano · cancele quando quiser`:'Cobrado todo mês · cancele quando quiser',dia=an?(S.oferta?'R$ 0,33':'R$ 0,41'):'R$ 1,97';
-    const sh=[['limpador','hidr','fps','niacina'],['vitc','bha','calmante','retinol'],['hialu','hidr','niacina','fps']];
+    const sh=[['limpador','hidr','fps','niacina'],['vitc','bha','calmante','retinol'],['hialu','hidr2','serum2','limpador2']];
     return `<div class="pwz"><button class="pwx2" data-act="ob-fechar" aria-label="Fechar">${ic('x',22)}</button><div class="brand" style="justify-content:center;align-items:center"><img src="pellie-logo.png" alt="Pellie" style="height:34px;width:auto"><span class="pwp">PRO</span></div>
     ${S.semGratis&&!S.result?`<h1 class="pwh"><span>Sua análise gratuita</span><b>já foi usada.</b></h1>
     <p class="pws">${S.nome?esc(S.nome)+', continue':'Continue'} com o Pellie Pro: análise da sua pele, rotina feita para você e scanner de produtos.</p>`:`<h1 class="pwh"><span>A rotina perfeita</span><b>para sua pele está pronta.</b></h1>
     <p class="pws">Tudo que você precisa para cuidar da sua pele está aqui.</p>`}
     <div class="p3" aria-hidden="true">
-      ${(()=>{const SB=`<div class="ipb"><b>9:41</b><span><svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="#2C1A12"/><rect x="4.3" y="4" width="3" height="6" rx="1" fill="#2C1A12"/><rect x="8.6" y="2" width="3" height="8" rx="1" fill="#2C1A12"/><rect x="13" y="0" width="3" height="10" rx="1" fill="#2C1A12"/></svg><svg width="22" height="10" viewBox="0 0 22 10"><rect x=".5" y=".5" width="18" height="9" rx="3" fill="none" stroke="#2C1A12" opacity=".5"/><rect x="2" y="2" width="15" height="6" rx="2" fill="#2C1A12"/><rect x="20" y="3.5" width="1.6" height="3" rx=".8" fill="#2C1A12" opacity=".5"/></svg></span></div>`,TAB=`<div class="ip-tab"><span>${ic('home',20)}</span><span>${ic('face',20)}</span><span>${ic('bottle',20)}</span><span>${ic('users',20)}</span></div><div class="ip-hb"></div>`,
-        A=`<div class="ip-sl a"><small>Rotina da manhã</small><div class="ip-btn">${ic('check',40)}<b>Começar</b></div>${[['Limpeza','limpador'],['Tratamento','niacina'],['Hidratação','hidr'],['Proteção','fps']].map(([a,k],i)=>`<div class="ip-st"><em>${i+1}</em><span>${pimg(k,22)}</span><div><b>${a}</b><i></i></div>${ic('check',13)}</div>`).join('')}</div>`,B=`<div class="ip-sl b"><div class="ip-h">Minha estante<u>Editar</u></div>${sh.map(r=>`<div class="ip-r">${r.map(k=>`<span>${pimg(k,30)}</span>`).join('')}</div>`).join('')}<div class="ip-g">Recomendados pra você</div></div>`,C=`<div class="ip-sl c"><div class="ip-h">Olá${S.nome?', '+esc(S.nome):''}<u>Hoje</u></div><div class="ip-w">${['D','S','T','Q','Q','S','S'].map((d,i)=>`<span class="${i<3?'on':''}">${d}</span>`).join('')}</div><div class="ip-k">${ic('flame',26)}<b>1 dia</b><small>de rotina em dia</small></div><div class="ip-c"><b>Rotina da manhã</b>4 passos para hoje</div><div class="ip-c"><b>Rotina da noite</b>3 passos para hoje</div></div>`,Dd=`<div class="ip-sl d"><div class="ip-h">Sua análise<u>Pele</u></div><span class="ip-ex">Exemplo</span>${[['Oleosidade','72%'],['Poros','58%'],['Hidratação','40%'],['Linhas finas','25%']].map(([t,v])=>`<div class="ip-bar"><span>${t}</span><div><i style="--v:${v}"></i></div></div>`).join('')}<div class="ip-c" style="margin-top:4px"><b>Maior desafio</b>Veja o que sua pele mais precisa</div></div>`,E=`<div class="ip-sl e"><div class="ip-h">Scanner<u>Produtos</u></div><span class="ip-ex">Exemplo</span><div class="ip-sc">${pimg('hidr',64)}</div><div class="ip-ok">${ic('check',16)}Combina com a sua pele</div><div class="ip-c">Veja a compatibilidade antes de comprar.</div></div>`,
+      ${(()=>{const SB=`<div class="ipb"><b>9:41</b><span><svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="#2C1A12"/><rect x="4.3" y="4" width="3" height="6" rx="1" fill="#2C1A12"/><rect x="8.6" y="2" width="3" height="8" rx="1" fill="#2C1A12"/><rect x="13" y="0" width="3" height="10" rx="1" fill="#2C1A12"/></svg><svg width="22" height="10" viewBox="0 0 22 10"><rect x=".5" y=".5" width="18" height="9" rx="3" fill="none" stroke="#2C1A12" opacity=".5"/><rect x="2" y="2" width="15" height="6" rx="2" fill="#2C1A12"/><rect x="20" y="3.5" width="1.6" height="3" rx=".8" fill="#2C1A12" opacity=".5"/></svg></span></div>`,TAB=`<div class="ip-tab"><span>${ic('home',20)}</span><span>${ic('face',20)}</span><span>${ic('tag',20)}</span><span>${ic('users',20)}</span></div><div class="ip-hb"></div>`,
+        A=`<div class="ip-sl a"><small>Rotina da manhã</small><div class="ip-btn">${ic('check',40)}<b>Começar</b></div>${[['Limpeza','limpador'],['Tratamento','niacina'],['Hidratação','hidr'],['Proteção','fps']].map(([a,k],i)=>`<div class="ip-st"><em>${i+1}</em><span>${dimg(k,22)}</span><div><b>${a}</b><i></i></div>${ic('check',13)}</div>`).join('')}</div>`,B=`<div class="ip-sl b"><div class="ip-h">Minha estante<u>Editar</u></div>${sh.map(r=>`<div class="ip-r">${r.map(k=>`<span>${dimg(k,30)}</span>`).join('')}</div>`).join('')}<div class="ip-g">Recomendados pra você</div></div>`,C=`<div class="ip-sl c"><div class="ip-h">Olá${S.nome?', '+esc(S.nome):''}<u>Hoje</u></div><div class="ip-w">${['D','S','T','Q','Q','S','S'].map((d,i)=>`<span class="${i<3?'on':''}">${d}</span>`).join('')}</div><div class="ip-k">${ic('flame',26)}<b>1 dia</b><small>de rotina em dia</small></div><div class="ip-c"><b>Rotina da manhã</b>4 passos para hoje</div><div class="ip-c"><b>Rotina da noite</b>3 passos para hoje</div></div>`,Dd=`<div class="ip-sl d"><div class="ip-h">Sua análise<u>Pele</u></div><span class="ip-ex">Exemplo</span>${[['Oleosidade','72%'],['Poros','58%'],['Hidratação','40%'],['Linhas finas','25%']].map(([t,v])=>`<div class="ip-bar"><span>${t}</span><div><i style="--v:${v}"></i></div></div>`).join('')}<div class="ip-c" style="margin-top:4px"><b>Maior desafio</b>Veja o que sua pele mais precisa</div></div>`,E=`<div class="ip-sl e"><div class="ip-h">Scanner<u>Produtos</u></div><span class="ip-ex">Exemplo</span><div class="ip-sc">${pimg('hidr',64)}</div><div class="ip-ok">${ic('check',16)}Combina com a sua pele</div><div class="ip-c">Veja a compatibilidade antes de comprar.</div></div>`,
         ph=(cls,x)=>`<div class="ipw ${cls}"><div class="ip"><div class="ips"><div class="ipi"></div>${SB}${x}${TAB}</div></div></div>`;
         return ph('l',B)+ph('r',C)+ph('c',[A,Dd,E,B,C].map((x,i)=>x.replace('<div class="ip-sl','<div style="--sd:'+i*3+'s" class="ip-sl')).join(''))})()}
     </div>
@@ -4157,6 +4204,7 @@ function wheelInit(w){
 }
 
 function render(){
+  GEN.used.clear();GEN.prev=null;GEN.cur={};
   {const a=authView();if(a){document.querySelector('header').hidden=true;document.querySelector('nav').hidden=true;$('#view').innerHTML=a;return}}
   ajustaRot();
   renderChrome();
@@ -4479,6 +4527,7 @@ gameCheck();render();
 /* fontes carregam depois, sem travar a primeira tela */
 try{const f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap';document.head.appendChild(f)}catch(e){}
 
+gLoad();
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
