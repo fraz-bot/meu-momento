@@ -1124,6 +1124,12 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .rsr{margin:0;font-size:14px;line-height:1.45;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.rsr b{color:var(--ink)}
 .rsn{margin:0;font-size:11.5px;color:var(--muted);opacity:.85}
 @media(prefers-reduced-motion:reduce){.rsc,.sig b,.sig>i,.sig u,.sig.att b svg{animation:none}.sig u,.sig>i{display:none}}
+.rsk{margin:0;font-size:17px;line-height:1.35;font-weight:600;color:var(--ink,#2C1A12);text-wrap:balance;animation:fadein .5s .9s both}
+.rsk .cmpn{display:inline-flex;font-weight:800;padding:0 .12em}.rsk.att .cmpn{color:#C9763F}.rsk.ok .cmpn{color:#4F8A6B}.rsk .odo em{opacity:1!important;transform:none!important;font-size:.9em;margin:0}
+.rsb{width:100%;padding-top:12px;border-top:1px solid rgba(120,80,60,.12);display:grid;gap:8px}.rsb small{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#4F8A6B}
+.rsb>div{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.rsb span{display:inline-flex;gap:5px;align-items:center;background:#EAF3EE;color:#3E6B53;border-radius:99px;padding:6px 11px;font-size:13.5px;font-weight:600;animation:rspop .45s cubic-bezier(.2,.9,.25,1.2) both;animation-delay:calc(1.2s + var(--i)*.15s)}
+@media(max-height:700px){.rsx .rst{font-size:24px}.rsx .rsc{padding:12px 14px 12px!important;gap:5px}.rsb{padding-top:8px;gap:5px}.rsb span{padding:4px 9px;font-size:12.5px}.rsx .indm{padding-top:8px;margin-top:2px}.rsx .rsr{-webkit-line-clamp:2}.rsx .indm .ir{width:80px!important;height:80px!important}.rsx .indm .ir-n{font-size:22px}.rsx .sig{transform:scale(.85);margin:-4px 0}.rsk{font-size:15.5px}}
+@media(prefers-reduced-motion:reduce){.rsk,.rsb span{animation:none}}
 /* exemplo do scanner */
 .pxf{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:4px auto 16px;border-radius:26px;overflow:hidden;box-shadow:var(--sh,0 8px 24px rgba(75,41,25,.12))}
 .pxf img{width:100%;height:100%;object-fit:cover;display:block}
@@ -2754,7 +2760,7 @@ const DEPO=[{nome:'Marina',leg:'27 anos',t1:'Finalmente entendi minha pele!',t2:
 {nome:'Camila',leg:'32 anos',t1:'Meu cuidado ficou muito mais simples.',t2:'A Pellie reuniu tudo em um só lugar. Agora sei o que usar, quando usar e por que usar.',foto:'depo-camila.jpg'},
 {nome:'Zoe',leg:'30 anos · 45 dias de uso',t1:'Minha pele mudou quando comecei a entender o que ela realmente precisava.',t2:'Com a Pellie, encontrei uma rotina feita para mim. Hoje, minha pele conta uma nova história! ♡',foto:'foto-depois.jpg'}];   /* depoimentos reais, com autorização */
 const ANTESDEPOIS=[{nome:'Zoe',leg:'30 anos · 45 dias de uso',antes:'foto-antes.jpg',depois:'foto-depois.jpg'}]; /* só com autorização da pessoa */
-const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanprod','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'rotok','pronta'];
+const obSteps=()=>['intro','nome','convite','meta',...(ANTESDEPOIS.length?['transf']:[]),'evo','queixas','zonas','foco','idade','pele','sens','agua','foto',...(precisaConsent()&&S.ob.cons!==VERSAO_PRIV?['consent']:[]),'camera','scan','raspe','susp','analise',...(S.result&&desafio()&&desafio().forte?['susp2','analise2']:[]),'caminho','sol','acido','gest','scanprod','scanner','horario','horario2','notif',...(DEPO.length?['comunidade']:[]),'rotok','pronta'];
 const obStepAtual=()=>{const o=obSteps();return o[Math.min(S.ob.step,o.length-1)]};
 const obIr=n=>{S.ob.step=Math.max(0,obSteps().indexOf(n))};
 const METAS=[['vidro','Pele de vidro','lisa e luminosa'],['limpa','Pele limpa','sem espinhas e sem marcas'],['radiante','Pele radiante','com viço e tom uniforme'],['firme','Pele firme','com menos linhas']];
@@ -3341,23 +3347,26 @@ function viewOnboarding(){PFI=0;
     ${cta('Vamos começar!',true,'ob-next')}</div>`}
   if(st==='susp'||st==='susp2'){const a=st==='susp';return `<div class="ovl rose"><div class="ob obx"><div class="susp" role="status" aria-live="polite">
     <div class="sf"><svg viewBox="0 0 120 100" width="72" aria-hidden="true"><g fill="none" stroke="#5A2E14" stroke-width="1.5">${[0,72,144,216,288].map(k=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${k} 60 50)"/>`).join('')}</g></svg></div>
-    <h1>${a?(nome?nome+', sua':'Sua')+' análise ficou pronta.':'Mas olha só o que encontramos…'}</h1>
-    <p class="sp">${a?'Vamos te mostrar o que a sua pele precisa mais.':'Tem algo que a sua pele faz muito bem.'}</p>
+    <h1>${a?(nome?nome+', temos':'Temos')+' um ponto de atenção para te contar.':'Calma'+(nome?', '+nome:'')+'.'}</h1>
+    <p class="sp">${a?'Ele apareceu só na sua análise, e é por ele que a sua rotina começa.':'Encontramos coisas muito boas na sua pele, e elas são só suas.'}</p>
     <div class="sd" aria-hidden="true"><i></i><i></i><i></i></div></div></div></div>`}
   if(st==='analise'){const d=desafio(),dn=d||{t:'sua pele',tart:'a sua pele',pill:'',forte:null};return `<div class="ovl rose"><div class="ob obx rsx scx" style="text-align:center">
-    <div class="obk">Sua análise</div><h1 class="obh rsh">${nome?nome+', seu':'Seu'} maior desafio hoje ${/^(as|os) /.test(dn.tart||'')?'são':'é'} ${dn.tart||dn.t}.</h1>
+    <div class="obk">Só para você</div><h1 class="obh rsh">${nome?nome+', seu':'Seu'} maior desafio hoje ${/^(as|os) /.test(dn.tart||'')?'são':'é'} ${dn.tart||dn.t}.</h1>
     <div class="card rsc att"><span class="sig att" aria-hidden="true"><i></i><i></i><b>${ic('alert',26)}</b></span>
       <div class="obk" style="margin:0;color:#B4652F">Ponto de atenção</div><div class="rst">${dn.t}</div>${dn.pill?`<span class="pillo" style="margin:0">${dn.pill}</span>`:''}
       ${d?indMetric(d.k,'#C9763F'):''}</div>
+    ${d?`<p class="rsk att">Você tem mais ${dn.t} do que <b class="ind cmpn" data-k="${esc('c'+(S.result.d||'')+d.k+d.v)}">${odo(cmpPct(d.v))}</b> das mulheres.</p>`:''}
     ${S.result&&S.result.resumo?`<p class="rsr"><b>O que vimos na sua foto:</b> ${esc(S.result.resumo)}</p>`:''}
-    ${d?'<p class="rsn">Escala individual da sua foto, não é um dado clínico.</p>':''}
+    ${d?'<p class="rsn">Estimativa da Pellie a partir da sua foto, não é um dado clínico.</p>':''}
     ${cta(S.result&&d&&d.forte?'Continuar':'Ver meu caminho')}</div></div>`}
   if(st==='analise2'){const d=desafio();if(!d||!d.forte)return '';return `<div class="ovl rose"><div class="ob obx rsx scx" style="text-align:center">
-    <div class="obk">Mas temos uma boa notícia</div><h1 class="obh rsh">${nome?nome+', você':'Você'} tem um ponto forte.</h1>
+    <div class="obk">Seus pontos fortes</div><h1 class="obh rsh">${nome?nome+', olha':'Olha'} o que a sua pele faz de melhor.</h1>
     <div class="card rsc ok"><span class="sig ok" aria-hidden="true"><i></i><i></i><b>${ic('check',28)}</b>${[0,1,2,3,4,5].map(i=>`<u style="--r:${i*60}deg"></u>`).join('')}</span>
       <div class="obk ok" style="margin:0">Ponto forte</div><div class="rst">${esc(d.forte)}</div>
-      ${d.fk?indMetric(d.fk,'#4F8A6B'):''}</div>
-    ${d.fk?'<p class="rsn">Escala individual da sua foto, não é um dado clínico.</p>':''}
+      ${d.fk?indMetric(d.fk,'#4F8A6B'):''}
+      ${(()=>{const L=boas(d.fk);return L.length?`<div class="rsb"><small>Também está ótimo em você</small><div>${L.map((t,i)=>`<span style="--i:${i}">${ic('check',13)}${t}</span>`).join('')}</div></div>`:''})()}</div>
+    <p class="rsk ok">Isso é melhor do que em <b class="ind cmpn" data-k="${esc('f'+(S.result.d||'')+d.fv)}">${odo(cmpPct(d.fv))}</b> das mulheres.</p>
+    <p class="rsn">Estimativa da Pellie a partir da sua foto, não é um dado clínico.</p>
     ${cta('Ver meu caminho')}</div></div>`}
   if(st==='leva')return `<div class="ob obx">${back}
     <img src="pellie-flor.png" alt="" style="height:54px;width:auto;align-self:flex-start;margin-top:10px">
@@ -3415,6 +3424,7 @@ function odo(v){v=Math.max(0,Math.min(100,Math.round(+v||0)));const ds=String(v)
 function indRing(v,cor,k,sz){v=Math.max(0,Math.min(100,Math.round(+v||0)));return `<span class="ind ir" data-k="${esc(k)}" style="--v:${v};--c:${cor};width:${sz||128}px;height:${sz||128}px"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ir-t"/><circle cx="60" cy="60" r="52" class="ir-a" pathLength="100" transform="rotate(-90 60 60)"/></svg><span class="ir-n">${odo(v)}</span></span>`}
 function indInit(){const red=matchMedia('(prefers-reduced-motion: reduce)').matches;document.querySelectorAll('.ind:not(.go)').forEach((el,i)=>{const k=el.dataset.k;
     if(red||ODOSEEN.has(k)){el.classList.add('go','nt');return}ODOSEEN.add(k);setTimeout(()=>requestAnimationFrame(()=>el.classList.add('go')),120+i*90)})}
+function boas(fk){const r=S.result;if(!r)return [];const d=desafio();return [['resseca',r.hid,'Hidratação'],['oleo',100-r.oleo,'Oleosidade sob controle'],['poros',100-r.poros,'Poros discretos'],['manchas',100-r.manchas,'Tom uniforme'],['linhas',100-r.linhas,'Poucas linhas finas'],['verm',100-r.verm,'Pouca vermelhidão']].filter(x=>x[0]!==fk&&x[0]!==(d&&d.k)&&x[1]>=60).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[2])}
 const RAWM={oleo:['Oleosidade','oleo',0],poros:['Poros','poros',0],linhas:['Linhas finas','linhas',0],manchas:['Manchas','manchas',0],verm:['Vermelhidão','verm',0],resseca:['Hidratação','hid',1]};
 function fKey(t){t=String(t||'').toLowerCase();return /hidrat|ressec/.test(t)?'resseca':/oleos|brilho/.test(t)?'oleo':/poro|textura/.test(t)?'poros':/mancha|tom/.test(t)?'manchas':/linha|ruga/.test(t)?'linhas':/vermelh/.test(t)?'verm':null}
 function indMetric(k,cor,big){const m=RAWM[k],r=S.result;if(!m||!r||r[m[1]]==null)return '';return `<div class="indm">${indRing(r[m[1]],cor,(r.d||'')+k+r[m[1]],big)}<div class="indl"><b>${m[0]} na sua análise</b><small>Escala de 0 a 100 · quanto ${m[2]?'maior':'menor'}, melhor</small></div></div>`}
@@ -3455,7 +3465,7 @@ function render(){
   ajustaRot();
   renderChrome();
   clearTimeout(render._su);if(!S.ob.done){const a=obStepAtual();if(a==='susp'||a==='susp2')render._su=setTimeout(()=>{if(!S.ob.done&&obStepAtual()===a){S.ob.step++;render();window.scrollTo(0,0)}},3200)}
-  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='raspe')&&!S.result))obIr('foto')}
+  if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='raspe'||a==='susp'||a==='susp2'||a==='analise2')&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
   $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:{hoje:viewHoje,pele:viewPele,rotina:viewRotina,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
@@ -3500,7 +3510,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='scan-outra'){S.err=null;S.file=null;S.photo=null;obIr('camera');render()}
   else if(d.act==='ob-fim2'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='rotina';render();window.scrollTo(0,0);if(S.result)montarRotina()}
   else if(d.act==='ob-next'){S.ob.step++;render();window.scrollTo(0,0)}
-  else if(d.act==='ob-back'){S.ob.step=Math.max(0,S.ob.step-1);render();window.scrollTo(0,0)}
+  else if(d.act==='ob-back'){S.ob.step=Math.max(0,S.ob.step-1);while(S.ob.step>0&&['susp','susp2','scan'].includes(obStepAtual()))S.ob.step--;render();window.scrollTo(0,0)}
   else if(d.act==='ob-fim'){S.ob.done=true;S.tab='pele';S.peleSub='analise';gameCheck();render();window.scrollTo(0,0)}
   else if(d.act==='editar-perfil'){S.ob={step:1,done:false};render();window.scrollTo(0,0)}
   else if(d.tab){goTab(d.tab)}
