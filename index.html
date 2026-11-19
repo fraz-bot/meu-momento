@@ -1577,9 +1577,9 @@ const LINHAS={'20':12,'30':28,'40':46,'50':63};
 
 const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot:[],meta:null,zonas:[],idade:25,ob:{step:0,done:false},ans:{},pele:null,pref:[],sens:null,gest:null,tab:'hoje',age:'30',period:'m',tier:'mid',
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
-  prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
+  bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -2376,11 +2376,15 @@ function hProx(){const D=hDias();if(!D)return null;const t=new Date(),tk=ymd(t);
   for(let i=0;i<8;i++){const d=new Date(t);d.setDate(t.getDate()+i);const c=hCare(d);if(!c.length)continue;const dk=ymd(d);if(i===0&&c.every(x=>hcDone(dk,x.k)))continue;return {i,d,n:HDL[hDIdx(d)]}}return null}
 function hWeekCells(){const t=new Date(),d0=new Date(t);d0.setDate(t.getDate()-hDIdx(t));const tk=ymd(t);
   return HDN.map((n,j)=>{const d=new Date(d0);d.setDate(d0.getDate()+j);const k=ymd(d),c=hCare(d),hs=c.length>0,hd=hs&&c.every(x=>hcDone(k,x.k)),sk=counted(k);return {n,k,hs,hd,sk,hoje:k===tk,fut:k>tk}})}
-function raHead(a){const T=[['pele','Pele','face'],['cabelo','Cabelo','hair'],['geral','Visão geral','routine']];
+function raHead(a){const T=[['pele','Pele','face'],...(hairOk()?[['cabelo','Cabelo','hair']]:[]),...(bqDone()?[['corpo','Corpo','drop']]:[]),...(hairOk()?[['geral','Visão geral','routine']]:[])];
   return `<div class="ra-h"><h1>Minha rotina</h1><p>Seus cuidados organizados por área, com a frequência ideal para você.</p><div class="ra-tabs">${T.map(([k,l,i])=>`<button class="ra-tab ${a===k?'on':''}" data-ra="area|${k}">${ic(i in IC?i:'routine',18)}${l}</button>`).join('')}</div></div>`}
 function raWeek(){const cs=hWeekCells();
   return `<div class="ra-wk">${cs.map(c=>`<div class="ra-d ${c.hoje?'hoje':''}"><i class="${c.sk&&c.hs?'both':c.sk?'sk':c.hs?(c.hd?'hd':'hp'):''}">${(c.sk||c.hd)?ic('check',15):c.hs?ic('hair',16):''}</i><span>${c.n}</span></div>`).join('')}</div>
    <div class="ra-lg"><span><b class="g"></b>Pele</span><span><b class="b"></b>Cabelo</span><span><b class="m"></b>Ambos</span></div>`}
+function raCorpo(){const sh=temP().filter(i=>shCat(i)==='corpo');
+  return `<div class="ra-st"><div class="ra-c"><h3>${ic('drop',20)}Cuidados do corpo</h3><p class="small muted" style="margin:4px 0 8px">Montado com as respostas do seu quiz do corpo.</p><ul class="list small">${bqTips().map(([t,d])=>`<li><b>${esc(t)}.</b> ${esc(d)}</li>`).join('')}</ul></div>
+  <div class="ra-c"><h3>${ic('tag',20)}Produtos do corpo</h3>${sh.length?`<ul class="list small">${sh.map(i=>`<li>${esc(i.n)}</li>`).join('')}</ul>`:`<p class="small muted" style="margin-top:6px">Escaneie um produto do corpo para ele aparecer aqui.</p>`}</div>
+  <button class="ra-li" data-act="bq-redo"><span><b>Refazer o quiz do corpo</b><small>Atualize suas respostas</small></span>${ic('chev',18)}</button></div>`}
 function raOverview(){
   const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n,fe=ks.filter(k=>isDone(per,k)).length,D=hDias(),pr=hProx();
   const hs=D?`Personalizada · ${D.length}x por semana`:'Escolha seus dias de cuidado';
@@ -2389,6 +2393,7 @@ function raOverview(){
    <button class="ra-ac" data-ra="area|pele"><span class="ra-ic ph"><img src="img/rotina-pele.webp" alt="" width="104" height="104"></span><span class="ra-tx"><b>Rotina da pele</b><small>Diária · Manhã e noite</small><em>${ic(fe===ks.length&&ks.length?'checkc':'clock',15)}Hoje: ${fe} de ${ks.length} (${per==='m'?'manhã':'noite'})</em></span>${ic('chev',18)}</button>
    <button class="ra-ac" data-ra="area|cabelo"><span class="ra-ic ph"><img src="img/rotina-cabelo.webp" alt="" width="104" height="104"></span><span class="ra-tx"><b>Rotina do cabelo</b><small>${hs}</small><em>${ic('clock',15)}${hp}</em></span>${ic('chev',18)}</button>
    <div class="ra-c"><h3>${ic('clock',20)}Seu cronograma semanal</h3>${raWeek()}</div>
+   ${bqDone()?`<button class="ra-li" data-ra="area|corpo"><span><b>Cuidados do corpo</b><small>${bqTips().length} cuidados do seu quiz</small></span>${ic('chev',18)}</button>`:''}
    <button class="ra-li" data-ra="edit"><span><b>Editar rotina do cabelo</b><small>Defina os dias e cuidados</small></span>${ic('chev',18)}</button>
    <button class="ra-li" data-ra="sub|freq"><span><b>Ajustar frequência</b><small>Altere conforme sua rotina</small></span>${ic('chev',18)}</button>
    <button class="ra-li" data-ra="hist"><span><b>Histórico da rotina</b><small>Acompanhe sua consistência</small></span>${ic('chev',18)}</button></div>`}
@@ -2426,8 +2431,9 @@ function raHist(){
     for(let j=0;j<7;j++){const d=new Date(s);d.setDate(s.getDate()+j);if(ymd(d)>ymd(t))continue;const c=hCare(d);if(!c.length)continue;pl++;const k=ymd(d),f=c.filter(x=>hcDone(k,x.k)).length;care+=f;if(f===c.length)ok++}
     rows+=`<div class="ra-hr"><span>Semana de ${fmtD(ymd(s))}</span><b>${hDias()?`${ok} de ${pl||0} dias`:'—'}</b><small>${care} cuidados feitos</small></div>`}
   return `<div class="ra-st">${raBack('Histórico da rotina','geral')}<div class="ra-c"><h3>Cabelo, últimas 4 semanas</h3>${hDias()?rows:'<p class="small muted">Monte seu cronograma capilar para acompanhar a consistência.</p>'}<p class="note">Conta como concluído o dia em que todos os cuidados programados foram marcados. O histórico da pele continua no acompanhamento da pele.</p></div></div>`}
-function viewRotinaHub(){const a=S.rtArea||'geral';
+function viewRotinaHub(){let a=S.rtArea||'geral';if(!hairOk()&&(a==='geral'||a==='cabelo'||a==='hist'))a='pele';
   if(a==='cabelo')return raCabelo();if(a==='hist')return raHist();
+  if(a==='corpo'&&bqDone())return raHead('corpo')+raCorpo();
   if(a==='pele')return raHead('pele')+rotHome();
   return raHead('geral')+raOverview()}
 function raAct(v){const [a,b]=v.split('|'),y=window.scrollY;
@@ -2441,7 +2447,7 @@ function raAct(v){const [a,b]=v.split('|'),y=window.scrollY;
 function viewRotina(){
   if(S.rit)return ritView();
   if(S.rotFull)return `<div class="stack"><button class="chip" data-rit="home" style="align-self:flex-start">${ic('back',14)}Voltar ao ritual</button></div>`+viewRotinaFull();
-  if(hairOk())return viewRotinaHub();
+  if(hairOk()||bqDone())return viewRotinaHub();
   return rotHome()}
 function viewRotinaFull(){
   const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n;
@@ -2611,7 +2617,7 @@ const PF_CLS={boa:['Boa compatibilidade','Recomendado para você','pc-ok'],mod:[
 let PFIV=null;
 const pfArr=(a,n)=>(Array.isArray(a)?a:[]).map(x=>typeof x==='string'?x.trim():x).filter(Boolean).slice(0,n);
 const pfStr=(x,n)=>x==null||x==='null'?null:String(x).slice(0,n||200);
-function pfScore(c,idr){const k=c.criterios||{};const parts=Object.keys(PF_W).map(x=>{const n=Math.max(0,Math.min(2,Math.round(+k[x]||0)));return {k:x,lab:PF_W[x][1],max:PF_W[x][0],pts:Math.round(PF_W[x][0]*n/2),mot:pfStr((c.criterios_motivo||{})[x],140)}});
+function pfScore(c,idr){const k=c.criterios||{};const parts=Object.keys(PF_W).map(x=>{const n=Math.max(0,Math.min(2,Math.round(+k[x]||0)));return {k:x,lab:((PF_LAB[idr.area]||{})[x])||PF_W[x][1],max:PF_W[x][0],pts:Math.round(PF_W[x][0]*n/2),mot:pfStr((c.criterios_motivo||{})[x],140)}});
   let v=parts.reduce((a,p)=>a+p.pts,0);const pen=15*(c.evitar_encontrados||[]).length;v-=pen;const teto=!idr.lista_lida;if(teto)v=Math.min(v,80);v=Math.max(0,Math.min(100,v));
   return {v,cls:v>=70?'boa':v>=45?'mod':'baixa',parts,pen,teto}}
 function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'),a=document.getElementById('pf-arc');if(n)n.textContent=Math.round(f.p)+'%';if(a)a.setAttribute('stroke-dashoffset',(100-f.p).toFixed(1));
@@ -2619,10 +2625,10 @@ function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'
   document.querySelectorAll('#pf-steps li').forEach((li,i)=>{li.className=i<cur?'ok':i===cur?'now':''})}
 function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
 async function pfStart(){if(!S.plus){limite();return}if(!S.prodFile||(S.pf&&S.pf.busy))return;if(!podeUsar('sc'))return limite();
-  S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0};render();pfProg();
-  try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:perfilBasico(),images:S.prodFile});
+  const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area};render();pfProg();
+  try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português.`,images:S.prodFile});
     if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
-    else{S.pf.idr={produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
+    else{S.pf.idr={area,produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
       S.pf.p=100;S.pf.st='conf'}
@@ -2630,8 +2636,8 @@ async function pfStart(){if(!S.plus){limite();return}if(!S.prodFile||(S.pf&&S.pf
   if(S.pf)S.pf.busy=false;render()}
 async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;const i=f.idr,alt=f.sel>0?i.alternativas[f.sel-1]:null;
   f.nome=(alt?alt.produto:i.produto)||'Produto';f.marca=(alt?alt.marca:i.marca)||'';f.st='cmp';f.busy=true;f.p=3;f.err=null;render();pfProg();
-  const dados={produto:{nome:f.nome,marca:f.marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
-    perfil:perfilTxt(),produtos_que_ja_usa:temP().map(x=>x.n).slice(0,12)};
+  const ar=f.area||'pele',dados={area:ar,...(PF_INS[ar]?{instrucao_area:PF_INS[ar]}:{}),produto:{nome:f.nome,marca:f.marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
+    perfil:areaCtx(ar),produtos_que_ja_usa:temP().filter(x=>shCat(x)===(ar==='pele'?'rosto':ar)).map(x=>x.n).slice(0,12)};
   let ctx=JSON.stringify(dados);if(ctx.length>4900){dados.produto.texto_lido=[];dados.produto.ingredientes_lidos=i.ingredientes_lidos.slice(0,15);ctx=JSON.stringify(dados).slice(0,4900)}
   try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_cmp',ctx});if(!S.pf)return;
     if(!r||r.erro){f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
@@ -2677,7 +2683,7 @@ async function pfSetImg(it){if(!it||it.imgv===3||!S.pf||!S.pf.photo||!S.pf.idr)r
 const shTh=(i,sz)=>i.imgBusy?`<span class="sht ld" style="width:${sz}px;height:${sz}px"></span>`:i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht" style="width:${sz}px;height:${sz}px">${gShelf(i,sz-8)}</span>`;
 function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('tag',18)}Adicionar à minha prateleira</button>`}
-function pfRotBtn(){const f=S.pf,n=S.prodResult&&S.prodResult.produto;if(!f||!f.cmp||!n)return '';const ro=f.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn',lab={m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr];
+function pfRotBtn(){const f=S.pf,n=S.prodResult&&S.prodResult.produto;if(!f||!f.cmp||!n||(f.area&&f.area!=='pele'))return '';const ro=f.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn',lab={m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr];
   const it=S.shelf.find(x=>x.n===n&&stOf(x)==='tenho'),ja=it&&[...pr].every(c=>inRot(it,c));
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Na sua rotina ${lab}</span><button class="chip" data-act="pf-rot-ver">Ver rotina</button></div>`:`<button class="btn obc pf-shb" data-act="pf-rot">${ic(pr==='n'?'moon':'sun',18)}Adicionar à rotina ${lab}</button>`}
 function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img src="${f.photo}" alt="Foto do produto">`:`<span class="pf-noph">${ic('tag',34)}</span>`;
@@ -2733,8 +2739,15 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
   const sair=`<button class="pf-exit" data-act="pf-close">${ic('x',14)}Sair da avaliação</button>`;
   if((f.st==='id'||f.st==='cmp')&&!f.err)b=b.replace(/<\/div>$/,sair+'</div>');
   return `<div class="pfw" data-st="${f.st}">${hd}${stp}${b}</div>`}
+function viewBodyQuiz(){const i=Math.max(0,Math.min(BQ.length-1,S.bqi||0)),[k,l,ico,o]=BQ[i],cur=BQM[k]?bqA(k):(S.bq||{})[k],on=v=>BQM[k]?cur.includes(v):cur===v;
+  return `<div class="stack hf hf-in"><div class="hf-tp"><button class="pl-bk" data-act="bq-back" aria-label="Voltar">${ic('chev',20)}</button><span class="hf-pg"><i style="width:${Math.round((i+1)/(BQ.length+1)*100)}%"></i></span><small>${i+1} de ${BQ.length}</small></div>
+  ${i===0?`<p class="small muted" style="margin:0">Só uma vez: suas respostas ficam salvas e entram na sua rotina do corpo.</p>`:''}
+  <div class="hf-qh"><span class="pl-ri">${ic(ico,22)}</span><h2>${esc(l)}</h2></div>
+  <div class="hf-os" role="group" aria-label="${esc(l)}">${o.map(([v,t])=>`<button class="hf-o" data-bq="${k}|${v}" aria-pressed="${on(v)}"><span>${esc(t)}</span><i>${ic('check',14)}</i></button>`).join('')}</div>
+  <div class="hf-nv"><button class="btn ghost" data-act="bq-back">Voltar</button><button class="btn pl-go" data-act="bq-next" ${bqOk(k)?'':'disabled'}>${i===BQ.length-1?'Salvar e continuar':'Próximo'}${ic('chev',16)}</button></div></div>`}
 function viewEscanear(){
   if(S.pf)return pfView();
+  if(S.pfArea==='corpo'&&S.bqRun)return viewBodyQuiz();
   const r=S.prodResult;
   const img=S.prodPhoto?`<img class="prodimg" src="${S.prodPhoto}" alt="Foto do produto">`:'';
   const res=r&&Array.isArray(r.ativos)?(()=>{const v=VERD[r.veredito]||VERD.cuidado;return `<div class="card">
@@ -2748,8 +2761,9 @@ function viewEscanear(){
     :'';
   const hist=S.prods.length?`<div class="card"><h3>Já escaneados</h3>${S.prods.map((p,k)=>`<${p.snap?`button data-pfh="${k}" class="entry pf-he"`:'div class="entry"'}><div class="wk">${fmtD(p.d)}</div><div style="text-align:left;flex:1"><div class="small"><b>${esc(p.produto||'Produto')}</b>${p.marca?` <span class="muted">· ${esc(p.marca)}</span>`:''}</div><div class="small muted">${p.snap?(PF_CLS[p.snap.sc.cls]||PF_CLS.mod)[0]+' · '+p.nota+'%':(VERD[p.veredito]||VERD.cuidado)[1]+' · nota '+p.nota}</div></div>${p.snap?ic('chev',16):''}</${p.snap?'button':'div'}>`).join('')}</div>`:'';
   return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
-  ${(()=>{const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
-    return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>${S.nome?esc(S.nome)+', esse':'Esse'} produto combina com você?</h2>
+  ${(()=>{if(!S.pfArea)return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Esse produto é para...</h2><p class="small muted" style="margin:6px 0 12px">A análise muda conforme a área, então escolha antes de fotografar.</p><div class="hf-os">${Object.keys(PF_AREA).map(a=>`<button class="hf-o" data-pfarea="${a}"><span style="display:flex;align-items:center;gap:10px">${ic(PF_AREA[a][1] in IC?PF_AREA[a][1]:'drop',20)}${a==='corpo'?'Corpo':a==='cabelo'?'Cabelo':'Pele do rosto'}</span>${ic('chev',16)}</button>`).join('')}</div></div>`;
+    const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
+    return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>${S.nome?esc(S.nome)+', esse':'Esse'} produto combina com você?</h2><div class="pfg-area" style="display:flex;align-items:center;gap:8px;margin:2px 0 8px"><span class="small muted">Produto para:</span><b class="small">${PF_AREA[S.pfArea][0]}</b><button class="chip" data-pfarea="troca">Trocar</button></div>
     <ol class="pfg-s">${passo(1,'Fotografe o produto','Mostre o nome e, se der, a lista de ingredientes.',!tem,tem)}${passo(2,'Confirme qual é o produto','A Pellie identifica e você confirma.',tem,false)}${passo(3,'Veja se combina com a sua pele','Compatibilidade, como usar e alertas.',false,false)}</ol>
     ${tem?`<div class="pfg-prev"><div class="pfg-th"><img src="${S.prodPhoto||''}" alt="Foto do produto"></div><div><b>Foto pronta!</b><small>Agora toque em analisar.</small></div></div>
       <button class="btn obc pfg-go" data-act="pf-start">${ic('sparkle',18)}Analisar este produto</button>
@@ -3319,10 +3333,50 @@ function vTema(){
 }
 
 /* ---------- Cabelo ---------- */
-const HQ=[['obj','Qual é o seu maior objetivo?','sparkle',[['cresc','Crescer e fortalecer'],['hid','Hidratar'],['frizz','Controlar o frizz'],['def','Definir cachos ou ondas'],['oleo','Reduzir a oleosidade'],['rep','Reparar danos']]],['couro','Como é o seu couro cabeludo?','drop',[['normal','Normal'],['oleoso','Oleoso'],['seco','Seco'],['caspa','Caspa ou coceira']]],['queda','Queda de cabelo','alert',[['normal','Normal'],['mais','Maior que o normal']]],['quim','Química no cabelo','drops',[['nao','Nenhuma'],['tint','Tintura'],['alis','Alisamento']]],['calor','Uso de calor (secador, chapinha)','sun',[['nunca','Quase nunca'],['as','Às vezes'],['sempre','Sempre']]],['lav','Lavagens por semana','drops',[['1','1 a 2'],['3','3 a 4'],['5','5 ou mais']]],['corte','Último corte das pontas','clock',[['rec','Menos de 3 meses'],['med','3 a 6 meses'],['velho','Mais de 6 meses']]],['agua','Sol, piscina ou mar','sun',[['nao','Quase nunca'],['as','Às vezes'],['freq','Com frequência']]]];
-const hqDone=()=>HQ.every(([k])=>S.hq&&S.hq[k]);
-const HQL={obj:{cresc:'quer crescer e fortalecer o cabelo',hid:'quer hidratar o cabelo',frizz:'quer controlar o frizz',def:'quer definir cachos ou ondas',oleo:'quer reduzir a oleosidade',rep:'quer reparar danos'},couro:{normal:'couro cabeludo normal',oleoso:'couro cabeludo oleoso',seco:'couro cabeludo seco',caspa:'couro cabeludo com caspa ou coceira'},queda:{normal:'queda de cabelo normal',mais:'queda maior que o normal'},quim:{nao:'sem química',tint:'com tintura',alis:'com alisamento ou progressiva'},calor:{nunca:'quase nunca usa calor',as:'usa calor às vezes',sempre:'usa calor sempre'},lav:{'1':'lava 1 a 2 vezes por semana','3':'lava 3 a 4 vezes por semana','5':'lava 5 ou mais vezes por semana'},corte:{rec:'cortou as pontas há menos de 3 meses',med:'cortou as pontas há 3 a 6 meses',velho:'não corta as pontas há mais de 6 meses'},agua:{nao:'quase não pega sol, piscina ou mar',as:'pega sol, piscina ou mar às vezes',freq:'pega sol, piscina ou mar com frequência'}};
-const hqTxt=()=>Object.keys(S.hq).filter(k=>S.hq[k]&&HQL[k]&&HQL[k][S.hq[k]]).map(k=>HQL[k][S.hq[k]]).join('; ');
+const HQ=[['obj','Qual é o seu maior objetivo?','sparkle',[['cresc','Crescer e fortalecer'],['hid','Hidratar'],['frizz','Controlar o frizz'],['def','Definir cachos ou ondas'],['oleo','Reduzir a oleosidade'],['rep','Reparar danos']]],['couro','Como é o seu couro cabeludo?','drop',[['normal','Normal'],['oleoso','Oleoso'],['seco','Seco'],['caspa','Caspa ou coceira']]],['queda','Queda de cabelo','alert',[['normal','Normal'],['mais','Maior que o normal']]],['quim','Química no cabelo (marque todas que se aplicam)','drops',[['nao','Nenhuma'],['tint','Tintura'],['quim','Química (descoloração, permanente)'],['alis','Alisamento ou progressiva']]],['calor','Uso de calor (secador, chapinha)','sun',[['nunca','Quase nunca'],['as','Às vezes'],['sempre','Sempre']]],['lav','Lavagens por semana','drops',[['1','1 a 2'],['3','3 a 4'],['5','5 ou mais']]],['corte','Último corte das pontas','clock',[['rec','Menos de 3 meses'],['med','3 a 6 meses'],['velho','Mais de 6 meses']]],['agua','Sol, piscina ou mar','sun',[['nao','Quase nunca'],['as','Às vezes'],['freq','Com frequência']]]];
+const HQM={quim:1};
+const hqA=k=>{const v=(S.hq||{})[k];return Array.isArray(v)?v:v?[v]:[]};
+const hqHas=(k,v)=>hqA(k).includes(v);
+const hqOk=k=>HQM[k]?hqA(k).length>0:!!(S.hq&&S.hq[k]);
+const hqAns=(k,o)=>HQM[k]?hqA(k).map(v=>(o.find(x=>x[0]===v)||[])[1]).filter(Boolean).join(', '):((o.find(x=>x[0]===(S.hq||{})[k])||[])[1]||'');
+const hqDone=()=>HQ.every(([k])=>hqOk(k));
+/* ===== Quiz do corpo (uma vez, salvo em S.bq): usado na análise de produtos do corpo e na Rotina ===== */
+const BQ=[['pele','Como é a pele do seu corpo?','drop',[['seca','Seca'],['normal','Normal'],['oleosa','Oleosa'],['sens','Sensível']]],
+['queixa','O que mais incomoda? (marque todas)','alert',[['nada','Nenhum incômodo'],['resseca','Ressecamento ou coceira'],['aspera','Pele áspera ou "de galinha"'],['manchas','Manchas ou marcas'],['estrias','Estrias ou celulite'],['acne','Espinhas no corpo']]],
+['banho','Como é a temperatura do seu banho?','drops',[['morna','Fria ou morna'],['quente','Quente'],['mqnt','Muito quente']]],
+['hidr','Você hidrata o corpo depois do banho?','drop',[['sempre','Sempre'],['as','Às vezes'],['nunca','Quase nunca']]],
+['sol','Usa protetor solar no corpo?','sun',[['sempre','Sempre que me exponho'],['as','Às vezes'],['nunca','Quase nunca']]],
+['depil','Como você remove pelos?','alert',[['lamina','Lâmina'],['cera','Cera'],['laser','Laser ou luz pulsada'],['nao','Não removo']]],
+['fragr','Perfume ou fragrância costuma irritar sua pele?','alert',[['sim','Sim'],['nao','Não']]]];
+const BQM={queixa:1};
+const BQL={pele:{seca:'pele do corpo seca',normal:'pele do corpo normal',oleosa:'pele do corpo oleosa',sens:'pele do corpo sensível'},
+queixa:{nada:'sem incômodos no corpo',resseca:'incomoda com ressecamento ou coceira',aspera:'incomoda com pele áspera ou "de galinha"',manchas:'incomoda com manchas ou marcas',estrias:'incomoda com estrias ou celulite',acne:'incomoda com espinhas no corpo'},
+banho:{morna:'banho frio ou morno',quente:'banho quente',mqnt:'banho muito quente'},hidr:{sempre:'hidrata o corpo sempre depois do banho',as:'hidrata o corpo às vezes depois do banho',nunca:'quase nunca hidrata o corpo'},
+sol:{sempre:'usa protetor solar no corpo sempre que se expõe',as:'usa protetor solar no corpo às vezes',nunca:'quase nunca usa protetor solar no corpo'},depil:{lamina:'remove pelos com lâmina',cera:'remove pelos com cera',laser:'remove pelos com laser ou luz pulsada',nao:'não remove pelos'},fragr:{sim:'fragrâncias costumam irritar a pele',nao:'não tem irritação com fragrâncias'}};
+const bqA=k=>{const v=(S.bq||{})[k];return Array.isArray(v)?v:v?[v]:[]};
+const bqOk=k=>BQM[k]?bqA(k).length>0:!!(S.bq&&S.bq[k]);
+const bqDone=()=>BQ.every(([k])=>bqOk(k));
+const bqTxt=()=>BQ.filter(([k])=>bqOk(k)).map(([k])=>bqA(k).map(v=>BQL[k][v]).filter(Boolean).join(' e ')).filter(Boolean).join('; ');
+function bqTips(){const q=S.bq||{},t=[],qx=bqA('queixa');
+  if(q.hidr!=='sempre')t.push(['Hidratar depois do banho','Todos os dias, com a pele ainda levemente úmida.']);else t.push(['Hidratar depois do banho','Todos os dias, como você já faz.']);
+  if(q.sol!=='sempre')t.push(['Protetor solar no corpo','Nas áreas expostas, reaplicando a cada 2 horas ao sol.']);
+  if(q.banho==='quente'||q.banho==='mqnt')t.push(['Banho mais morno','Água muito quente resseca a pele do corpo.']);
+  if(qx.includes('aspera')||qx.includes('acne')||qx.includes('manchas'))t.push(['Esfoliação suave','1 vez por semana, sem esfregar com força.']);
+  if(qx.includes('resseca')||q.pele==='seca')t.push(['Hidratante mais denso','Prefira texturas mais ricas e use logo após o banho.']);
+  if(q.depil==='lamina'||q.depil==='cera')t.push(['Depois de depilar','Hidrate e evite fragrâncias fortes na área.']);
+  if(q.fragr==='sim'||q.pele==='sens')t.push(['Produtos sem fragrância','Teste em uma área pequena antes de usar.']);
+  return t}
+function areaCtx(a){
+  if(a==='cabelo'){const r=S.hres;return `faixa de idade ${(AGES.find(x=>x[0]===S.age)||[])[1]||'não informada'}${r?`; tipo de cabelo ${r.tipo}; notas de 0 a 100 (alto é mais problema): raiz oleosa ${r.raiz}, pontas ressecadas ${r.pontas}, porosidade ${r.poro}, danos ${r.danos}, frizz ${r.frizz}`:'; sem avaliação do cabelo feita ainda'}${hqTxt()?'; '+hqTxt():''}; sensibilidade a produtos: ${LBL[S.sens]||'não informada'}`}
+  if(a==='corpo')return `faixa de idade ${(AGES.find(x=>x[0]===S.age)||[])[1]||'não informada'}; ${bqTxt()||'quiz do corpo não respondido'}${S.gest==='sim'?'; está grávida, tentando engravidar ou amamentando':''}`;
+  return perfilTxt()}
+const PF_AREA={pele:['Pele do rosto','face'],cabelo:['Cabelo','hair'],corpo:['Corpo','body']};
+const PF_LAB={cabelo:{tipo_pele:'Tipo de cabelo',necessidades:'Seus objetivos',tolerancia:'Tolerância e segurança',rotina:'Encaixe na rotina'},corpo:{tipo_pele:'Pele do corpo',necessidades:'Suas necessidades',tolerancia:'Tolerância e segurança',rotina:'Encaixe na rotina'}};
+const PF_INS={cabelo:'ÁREA: CABELO. Avalie para o CABELO e o couro cabeludo, NÃO para a pele do rosto. Critérios: tipo_pele = adequação ao tipo de fio, porosidade e couro cabeludo da pessoa; necessidades = quanto atende aos objetivos e danos do perfil; tolerancia = risco de irritar o couro cabeludo ou agredir os fios considerando química (tintura, alisamento), calor e sensibilidade; rotina = encaixe no cronograma capilar (lavagem, hidratação, nutrição, reconstrução) sem excesso. Em rotina.etapa use shampoo, condicionador, máscara, leave-in, óleo ou finalizador. Ignore protetor solar facial.',
+corpo:'ÁREA: CORPO. Avalie para a PELE DO CORPO, NÃO para o rosto. Critérios: tipo_pele = adequação à pele do corpo informada; necessidades = quanto atende aos incômodos do perfil; tolerancia = risco de irritação (fragrâncias, ácidos, depilação, sensibilidade, gestação); rotina = encaixe no cuidado corporal (banho, hidratação, proteção solar, esfoliação). Em rotina.etapa use limpeza, hidratação, proteção, esfoliação ou tratamento.'};
+
+const HQL={obj:{cresc:'quer crescer e fortalecer o cabelo',hid:'quer hidratar o cabelo',frizz:'quer controlar o frizz',def:'quer definir cachos ou ondas',oleo:'quer reduzir a oleosidade',rep:'quer reparar danos'},couro:{normal:'couro cabeludo normal',oleoso:'couro cabeludo oleoso',seco:'couro cabeludo seco',caspa:'couro cabeludo com caspa ou coceira'},queda:{normal:'queda de cabelo normal',mais:'queda maior que o normal'},quim:{nao:'sem química',tint:'com tintura',quim:'com química (descoloração ou permanente)',alis:'com alisamento ou progressiva'},calor:{nunca:'quase nunca usa calor',as:'usa calor às vezes',sempre:'usa calor sempre'},lav:{'1':'lava 1 a 2 vezes por semana','3':'lava 3 a 4 vezes por semana','5':'lava 5 ou mais vezes por semana'},corte:{rec:'cortou as pontas há menos de 3 meses',med:'cortou as pontas há 3 a 6 meses',velho:'não corta as pontas há mais de 6 meses'},agua:{nao:'quase não pega sol, piscina ou mar',as:'pega sol, piscina ou mar às vezes',freq:'pega sol, piscina ou mar com frequência'}};
+const hqTxt=()=>Object.keys(S.hq).filter(k=>hqOk(k)&&HQL[k]).map(k=>HQM[k]?hqA(k).map(v=>HQL[k][v]).filter(Boolean).join(' e '):HQL[k][S.hq[k]]).filter(Boolean).join('; ');
 const promptHair=()=>`Você é uma especialista em cuidados capilares que avalia o cabelo em uma foto, só para cuidados cosméticos. A pessoa informou: faixa de idade ${AGES.find(a=>a[0]===S.age)[1]}${hqTxt()?'; '+hqTxt():''}.
 Responda SOMENTE com um JSON.
 Se não houver cabelo visível, ou a foto estiver escura ou borrada, responda {"erro":"frase curta em português pedindo outra foto"}.
@@ -3338,10 +3392,10 @@ function hairPlan(r){
   // a foto mostra só o dia; o questionário completa o quadro (E = nota ajustada, usada só nas decisões)
   const E={raiz:cl(r.raiz+(q.couro==='oleoso'?12:q.couro==='seco'?-10:0)+(q.obj==='oleo'?5:0)),pontas:cl(r.pontas+(q.corte==='velho'?10:q.corte==='rec'?-5:0)),poro:cl(r.poro+(q.agua==='freq'?6:0)),danos:cl(r.danos+(q.agua==='freq'?6:0)+(q.obj==='rep'?6:0)),frizz:cl(r.frizz+(q.obj==='frizz'?8:0))};
   const pr=[],push=(s,t)=>{if(s>=T||t.f)pr.push({s,t:t.t||t})};
-  const calorS=q.calor==='sempre',alis=q.quim==='alis',tint=q.quim==='tint';
+  const calorS=q.calor==='sempre',alis=hqHas('quim','alis'),tint=hqHas('quim','tint'),qm=hqHas('quim','quim');
   const h=E.pontas*.5+E.frizz*.3+(ct?15:0)+(calorS?10:0)+(q.obj==='hid'?12:0);
   const n=E.pontas*.4+E.frizz*.3+(r.tipo==='Crespo'?20:r.tipo==='Cacheado'?10:0)-(E.raiz>=70?15:0);
-  const rc=E.danos*.6+E.poro*.25+(alis?15:tint?10:0)+(calorS?10:0)+(q.obj==='rep'?10:0);
+  const rc=E.danos*.6+E.poro*.25+(alis?15:0)+(tint?10:0)+(qm?15:0)+(calorS?10:0)+(q.obj==='rep'?10:0);
   // prioridades
   const C=[];
   if(E.danos>=T)C.push([r.danos,`Reduzir a quebra (danos em ${r.danos}/100): menos calor e uma máscara de reconstrução a cada 15 dias.`]);
@@ -3470,11 +3524,11 @@ function hfProc(){return `<div class="pl-proc"><div class="pl-orb"><i></i><i></i
 const hfTop=(n,t)=>`<div class="hf-tp"><button class="pl-bk" data-hf="back" aria-label="Voltar">${ic('chev',20)}</button><span class="hf-pg"><i style="width:${Math.round(n/(HFN+1)*100)}%"></i></span><small>${t}</small></div>`;
 function hfView(){
   const f=S.hflow,q=S.hq||{};
-  if(f==='q'){const i=Math.max(0,Math.min(HFN-1,S.hqi||0)),[k,l,i_,o]=HQ[i],cur=q[k];
+  if(f==='q'){const i=Math.max(0,Math.min(HFN-1,S.hqi||0)),[k,l,i_,o]=HQ[i],cur=HQM[k]?hqA(k):q[k],isOn=v=>HQM[k]?cur.includes(v):cur===v;
     return `<div class="stack hf hf-in" data-d="${S.hdir||1}">${hfTop(i+1,`${i+1} de ${HFN}`)}
     <div class="hf-qh"><span class="pl-ri">${ic(i_==='drops'?'drops':i_,22)}</span><h2>${esc(l)}</h2></div>
-    <div class="hf-os" role="group" aria-label="${esc(l)}">${o.map(([v,t])=>`<button class="hf-o" data-hq="${k}|${v}" aria-pressed="${cur===v}"><span>${esc(t)}</span><i>${ic('check',14)}</i></button>`).join('')}</div>
-    <div class="hf-nv"><button class="btn ghost" data-hf="back">Voltar</button><button class="btn pl-go" data-hf="next" ${cur?'':'disabled'}>${i===HFN-1?'Ir para a foto':'Próximo'}${ic('chev',16)}</button></div></div>`}
+    <div class="hf-os" role="group" aria-label="${esc(l)}">${o.map(([v,t])=>`<button class="hf-o" data-hq="${k}|${v}" aria-pressed="${isOn(v)}"><span>${esc(t)}</span><i>${ic('check',14)}</i></button>`).join('')}</div>
+    <div class="hf-nv"><button class="btn ghost" data-hf="back">Voltar</button><button class="btn pl-go" data-hf="next" ${hqOk(k)?'':'disabled'}>${i===HFN-1?'Ir para a foto':'Próximo'}${ic('chev',16)}</button></div></div>`}
   const qi=S.hQ,it=(ok,t)=>`<li class="${ok?'ok':'warn'}">${ic(ok?'check':'alert',14)}${t}</li>`;
   if(f==='photo'&&!S.hPhoto){
     return `<div class="stack hf hf-in">${hfTop(HFN+1,'Foto')}
@@ -3495,7 +3549,7 @@ function hfView(){
   return `<div class="stack hf hf-in">${hfTop(HFN+1,'Resumo')}
     <div class="hf-dn"><span class="hf-ck">${ic('check',34)}</span><h2 class="hf-t">Questionário concluído!</h2><p class="small muted">Agora, vamos gerar a análise do seu cabelo com base nas suas respostas e na sua foto.</p></div>
     <div class="pl-card hf-sm"><img src="${S.hPhoto}" alt="Foto do cabelo"><div><b>${ic('check',14)} Foto selecionada</b><small>Você conferiu a imagem</small><button class="pl-lk" data-hf="back" style="justify-content:flex-start;padding:4px 0">Trocar foto</button></div></div>
-    <div class="pl-card"><b style="font-size:17px">Suas respostas</b><div class="hf-an">${HQ.map(([k,l,,o],i)=>{const a=(o.find(x=>x[0]===q[k])||[])[1];return `<button data-hf="go|${i}"><small>${esc(l)}</small><b>${a?esc(a):'Sem resposta'}</b></button>`}).join('')}</div></div>
+    <div class="pl-card"><b style="font-size:17px">Suas respostas</b><div class="hf-an">${HQ.map(([k,l,,o],i)=>{const a=hqAns(k,o);return `<button data-hf="go|${i}"><small>${esc(l)}</small><b>${a?esc(a):'Sem resposta'}</b></button>`}).join('')}</div></div>
     ${S.hErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.hErr)}</p>`:''}
     <button class="btn pl-go" data-act="analisar-cabelo" ${S.hBusy||!S.hFile||!hqDone()?'disabled':''}>${ic('sparkle',18)}${hqDone()?'Analisar meu cabelo':'Responda todas as perguntas'}</button><p class="note">Sua foto não é guardada.</p></div>`;
 }
@@ -3512,7 +3566,7 @@ function viewCabelo(){
   if(S.hflow)return hfView();
   const bar=(l,v,i_)=>`<div class="meter"><span class="ml">${ic(i_,16)}${l}</span><div class="bar"><b class="${bandC(v)}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`;
   const box=S.hPhoto?`<div class="face"><img class="photo" src="${S.hPhoto}" alt="Foto do cabelo">${S.hBusy?'<div class="scan"></div>':''}</div>`:`<div class="face" style="display:grid;place-items:center;color:var(--accent)">${ic('hair',64)}</div>`;
-  const QCARD=`<div class="card"><div class="row" style="justify-content:space-between"><h3>Questionário do cabelo</h3><span class="badge">${HQ.filter(([k])=>q[k]).length} de ${HQ.length}</span></div><p class="small muted" style="margin:4px 0 6px">A foto mostra só o dia de hoje. Suas respostas completam a análise.</p>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px;margin-top:8px">${ic(i_==='drops'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t_])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t_}</button>`).join('')}</div>`).join('')}</div>`;
+  const QCARD=`<div class="card"><div class="row" style="justify-content:space-between"><h3>Questionário do cabelo</h3><span class="badge">${HQ.filter(([k])=>hqOk(k)).length} de ${HQ.length}</span></div><p class="small muted" style="margin:4px 0 6px">A foto mostra só o dia de hoje. Suas respostas completam a análise.</p>${HQ.map(([k,l,i_,o])=>`<label style="display:flex;align-items:center;gap:6px;margin-top:8px">${ic(i_==='drops'?'drops':i_,14)}${l}</label><div class="regg">${o.map(([v,t_])=>`<button class="rg" data-hq="${k}|${v}" aria-pressed="${q[k]===v}">${t_}</button>`).join('')}</div>`).join('')}</div>`;
   const inp=`${QCARD}<div class="card">
     <div class="row" style="justify-content:space-between"><h2>${r?'Seu cabelo':'Vamos ver o seu cabelo'}</h2>${r?`<span class="badge">${fmtD(r.d)}</span>`:''}</div>
     <div class="face-wrap" style="margin-top:12px">${box}<div>
@@ -4417,7 +4471,12 @@ document.addEventListener('click',e=>{
   else if(d.act==='entrar'&&!AUTH.user){AUTH.want=true;render()}
   else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Bem-vinda de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
-  else if(d.hq){const [k,v]=d.hq.split('|');S.hq[k]=S.hq[k]===v?null:v;const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.pfarea){if(d.pfarea==='troca'){S.pfArea=null;S.bqRun=false}else{S.pfArea=d.pfarea;if(d.pfarea==='corpo'&&!bqDone()){S.bqRun=true;S.bqi=0}}render();window.scrollTo(0,0)}
+  else if(d.bq){const [k,v]=d.bq.split('|');if(BQM[k]){let a=bqA(k).slice();if(v==='nada')a=a.includes('nada')?[]:['nada'];else{a=a.filter(x=>x!=='nada');a=a.includes(v)?a.filter(x=>x!==v):[...a,v]}S.bq[k]=a}else S.bq[k]=v;const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.act==='bq-next'){const k=BQ[S.bqi][0];if(!bqOk(k))return;if(S.bqi>=BQ.length-1){S.bqRun=false;save();toast('Quiz do corpo salvo',true)}else S.bqi++;render();window.scrollTo(0,0)}
+  else if(d.act==='bq-back'){if(S.bqi>0)S.bqi--;else{S.bqRun=false;S.pfArea=null}render();window.scrollTo(0,0)}
+  else if(d.act==='bq-redo'){S.bqRun=true;S.bqi=0;S.pfArea='corpo';goTab('escanear')}
+  else if(d.hq){const [k,v]=d.hq.split('|');if(HQM[k]){let a=hqA(k).slice();if(v==='nao')a=a.includes('nao')?[]:['nao'];else{a=a.filter(x=>x!=='nao');a=a.includes(v)?a.filter(x=>x!==v):[...a,v]}S.hq[k]=a}else S.hq[k]=S.hq[k]===v?null:v;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='analisar-cabelo'){analisarCabelo()}
   else if(d.hf){hfAct(d.hf)}
   else if(d.tema){S.tema=d.tema;const y=window.scrollY;render();window.scrollTo(0,y)}
@@ -4452,11 +4511,11 @@ document.addEventListener('click',e=>{
   else if(d.act&&d.act.startsWith('unl|')){S.unl[hoje()+d.act.slice(4)]=true;render()}
   else if(d.act==='analisar'){analisar()}
   else if(d.act==='analisar-prod'||d.act==='pf-start'){pfStart()}
-  else if(d.act==='pf-close'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
+  else if(d.act==='pf-close'){S.pfArea=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
   else if(d.act==='pf-retake'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();setTimeout(()=>{const i=document.getElementById('prod-cam');if(i)i.click()},50)}
   else if(d.act==='pf-ok'){pfCmp()}
   else if(d.act==='pf-shelf'&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',it=S.shelf.find(i=>i.n===n);
-    if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
+    if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),...(S.pf&&S.pf.area&&S.pf.area!=='pele'?{cat:S.pf.area}:{}),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
     {const it2=S.shelf.find(i=>i.n===n);pfSetImg(it2)}toast('✓ Produto adicionado à sua prateleira',1);gameCheck();render()}
   else if(d.act==='pf-rot'&&S.pf&&S.prodResult){const r=S.prodResult,n=r.produto||'Produto',ro=S.pf.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn';let it=S.shelf.find(i=>i.n===n);
     if(!it){it={id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
@@ -4468,7 +4527,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='pf-det'&&S.pf){S.pf.st='det';render();window.scrollTo(0,0)}
   else if(d.act==='pf-ing'&&S.pf){S.pf.st='ing';render();window.scrollTo(0,0)}
   else if(d.act==='pf-back'&&S.pf){S.pf.st=S.pf.st==='ing'?'det':'score';render()}
-  else if(d.act==='pf-new'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();window.scrollTo(0,0)}
+  else if(d.act==='pf-new'){S.pfArea=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();window.scrollTo(0,0)}
   else if(d.act==='montar-rotina'){montarRotina()}
   else if(d.act==='login-google'){loginGoogle()}
   else if(/^cons-[01]$/.test(d.act)){const i=+d.act[5];AUTH.c=AUTH.c||[false,false];AUTH.c[i]=!AUTH.c[i];render()}
