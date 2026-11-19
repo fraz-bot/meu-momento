@@ -2761,7 +2761,9 @@ async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new
 async function pfSetImg(it){if(!it||it.imgv===3||!S.pf||!S.pf.photo||!S.pf.idr)return;const ph=S.pf.photo,bx=S.pf.idr.caixa;it.imgBusy=1;render();let t=null;try{t=await bgRemove(ph,bx)}catch(e){t=null}
   if(t){it.img=t;it.imgv=3}else{const c=await pfThumb(ph,bx);if(c){it.img=c;it.imgv=2}}delete it.imgBusy;save();render()}
 const shTh=(i,sz)=>i.imgBusy?`<span class="sht ld" style="width:${sz}px;height:${sz}px"></span>`:i.img?`<span class="sht" style="width:${sz}px;height:${sz}px"><img src="${i.img}" alt=""></span>`:`<span class="sht" style="width:${sz}px;height:${sz}px">${gShelf(i,sz-8)}</span>`;
-function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho');
+const nmK=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+const shDup=n=>n?S.shelf.find(x=>stOf(x)==='tenho'&&nmK(x.n)===nmK(n)):null;
+function pfShelf(big){const n=S.prodResult&&S.prodResult.produto;if(!n)return '';const ja=S.shelf.some(x=>x.n===n&&stOf(x)==='tenho')&&!(S.pf&&S.pf.dupSeen&&!S.pf.added);
   return ja?`<div class="pf-shok">${ic('checkc',18)}<span>Está na sua prateleira</span><button class="chip" data-act="pf-shelf-ver">Ver prateleira</button></div>`:`<button class="btn ${big?'obc':'ghost'} pf-shb" data-act="pf-shelf">${ic('tag',18)}Adicionar à minha prateleira</button>`}
 function pfRotBtn(){const f=S.pf,n=S.prodResult&&S.prodResult.produto;if(!f||!f.cmp||!n||(f.area&&f.area!=='pele'))return '';const ro=f.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn',lab={m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr];
   const it=S.shelf.find(x=>x.n===n&&stOf(x)==='tenho'),ja=it&&[...pr].every(c=>inRot(it,c));
@@ -2824,7 +2826,8 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
   const sair=`<button class="pf-exit" data-act="pf-close">${ic('x',14)}Sair da avaliação</button>`;
   if((f.st==='id'||f.st==='cmp')&&!f.err)b=b.replace(/<\/div>$/,sair+'</div>');
   const wr=S.pfWarn&&f.sc&&f.sc.cls==='baixa'&&['score','det','ing'].includes(f.st)?`<div class="pf-wr" role="alertdialog" aria-modal="true" aria-label="Produto não indicado"><div><span class="pf-wi">${ic('alert',26)}</span><h2>Produto não indicado para ${AX[f.area||'pele'].com}</h2><p>A compatibilidade com ${AX[f.area||'pele'].com} é de <b>${f.sc.v}%</b>, considerada baixa. ${esc(f.cmp.resumo||'')}</p><button class="btn obc" data-act="${S.pfWarn}" data-force="1">Adicionar mesmo assim</button><button class="btn ghost" data-act="pf-close">Sair da análise</button></div></div>`:'';
-  return `<div class="pfw" data-st="${f.st}">${hd}${stp}${b}${wr}</div>`}
+  const dn=S.prodResult&&S.prodResult.produto,dup=!S.pfWarn&&!f.dupSeen&&['score','det','ing'].includes(f.st)&&shDup(dn)?`<div class="pf-wr" role="alertdialog" aria-modal="true" aria-label="Produto já na prateleira"><div><span class="pf-wi">${ic('tag',26)}</span><h2>Você já tem este produto</h2><p><b>${esc(dn)}</b> já está na sua prateleira. Quer escanear outro produto?</p><button class="btn obc" data-act="pf-dup-new">Sim, escanear outro</button><button class="btn ghost" data-act="pf-dup-keep">Não, continuar com este</button></div></div>`:'';
+  return `<div class="pfw" data-st="${f.st}">${hd}${stp}${b}${wr}${dup}</div>`}
 
 /* ===== Pellie Assistant (beta): chat com IA que usa só os dados que já existem no app ===== */
 const AST_FL={pele:'pele do rosto',cabelo:'cabelo',rotina:'rotina de cuidados',produtos:'produtos'};
@@ -4727,10 +4730,13 @@ document.addEventListener('click',e=>{
   else if((d.act==='pf-shelf'||d.act==='pf-rot')&&!d.force&&S.pf&&S.pf.sc&&S.pf.sc.cls==='baixa'){S.pfWarn=d.act;render()}
   else if(d.act==='pf-switch'&&S.pf&&S.pf.idr&&S.pf.idr.real){const n=S.pf.idr.real;S.pf=null;S.pfArea=n;if(n==='cabelo'&&!hairOk()){goTab('cabelo');return}if(n==='corpo'&&!bqDone()){S.bqRun=true;S.bqi=0;render();window.scrollTo(0,0);return}pfStart()}
   else if(d.act==='pf-hair'){goTab('cabelo')}
-  else if(d.act==='pf-shelf'&&S.prodResult){S.pfWarn=null;const r=S.prodResult,n=r.produto||'Produto',it=S.shelf.find(i=>i.n===n);
+  else if(d.act==='pf-dup-keep'){if(S.pf){S.pf.dupSeen=true;S.pf.added=false}render()}
+  else if(d.act==='pf-dup-new'){S.pfWarn=null;S.pfArea=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
+  else if(d.act==='pf-shelf'&&S.prodResult){S.pfWarn=null;const r=S.prodResult,n=r.produto||'Produto',it=S.pf&&S.pf.dupSeen&&!S.pf.added?null:S.shelf.find(i=>i.n===n);
+    if(S.pf)S.pf.added=true;
     if(it){it.st='tenho';if(!it.aberto)it.aberto=hoje()}else{S.shelf.unshift({id:String(Date.now()),...(S.pf&&S.pf.area&&S.pf.area!=='pele'?{cat:S.pf.area}:{}),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12});xp(10,'Na prateleira','sh')}
-    {const it2=S.shelf.find(i=>i.n===n);pfSetImg(it2)}toast('✓ Produto adicionado à sua prateleira',1);gameCheck();render()}
-  else if(d.act==='pf-rot'&&S.pf&&S.prodResult){S.pfWarn=null;const r=S.prodResult,n=r.produto||'Produto',ro=S.pf.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn';let it=S.shelf.find(i=>i.n===n);
+    {const it2=it||S.shelf[0];pfSetImg(it2)}toast('✓ Produto adicionado à sua prateleira',1);gameCheck();render()}
+  else if(d.act==='pf-rot'&&S.pf&&S.prodResult){S.pfWarn=null;const r=S.prodResult,n=r.produto||'Produto',ro=S.pf.cmp.rotina.periodo,pr=ro==='manha'?'m':ro==='noite'?'n':'mn';let it=S.pf.dupSeen&&!S.pf.added?null:S.shelf.find(i=>i.n===n);S.pf.added=true;
     if(!it){it={id:String(Date.now()),n,tp:r.categoria?String(r.categoria).slice(0,30):'',nota:r.nota,v:r.veredito,aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
     it.st='tenho';if(!it.aberto)it.aberto=hoje();let rt=String(it.rot||'');for(const c of pr)if(!rt.includes(c))rt+=c;it.rot=rt;
     pfSetImg(it);toast('✓ Adicionado à sua prateleira e à rotina '+{m:'da manhã',n:'da noite',mn:'da manhã e da noite'}[pr],1);gameCheck();render()}
