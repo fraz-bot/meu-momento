@@ -344,6 +344,23 @@ nav button{font-size:9.6px!important;letter-spacing:-.02em}
 .pc-sh{width:76px;height:76px;border-radius:50%;border:3px solid #fff;outline:2px solid #E8D3C4;background:#FFFCF9;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 20px rgba(90,52,32,.2);padding:0}.pc-sh span{width:58px;height:58px;border-radius:50%;background:#4A2A1E;display:block}.pc-sh:disabled{opacity:.5}
 .btn.pc-go{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font-size:17px;font-weight:700;color:#fff;border:0;border-radius:999px;padding:16px;background:linear-gradient(100deg,#6E4029,#A56D4B 55%,#D9A988);box-shadow:0 10px 24px rgba(110,64,41,.3)}.btn.pc-go:disabled{opacity:.55;box-shadow:none}
 .pc-pv{display:flex;align-items:center;justify-content:center;gap:7px;margin:0;font-size:13.5px;color:#8A7366}
+/* ===== Login Pellie ===== */
+.lg{position:relative;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.8vh,16px);min-height:calc(100dvh - 8px);padding:6px 4px 14px;text-align:center;background:radial-gradient(120% 60% at 90% 0,#FFF3EA 0,transparent 60%),radial-gradient(110% 50% at 0 100%,#FBE6D8 0,transparent 60%)}
+.lg-top{width:100%;display:grid;grid-template-columns:44px 1fr 44px;align-items:center}.lg-logo{height:40px;width:auto;justify-self:center}
+.lg-bk{width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:#4A2A1E;display:grid;place-items:center;box-shadow:0 6px 16px rgba(170,128,86,.16);transform:scaleX(-1);cursor:pointer}
+.lg-hd h1{margin:0;font-size:clamp(25px,7.4vw,31px);line-height:1.12;letter-spacing:-.02em;color:#4A2A1E;font-weight:800}.lg-hd p{margin:8px auto 0;font-size:15px;line-height:1.45;color:#6B4A3A;max-width:320px}
+.lg-fl{width:clamp(78px,13vh,120px);height:clamp(78px,13vh,120px);border-radius:42%;background:radial-gradient(circle at 35% 30%,#FFF4EC,#F9D9C6);box-shadow:0 14px 34px rgba(217,169,136,.4),inset 0 2px 8px rgba(255,255,255,.8);display:grid;place-items:center}.lg-fl img{width:56%;height:auto;opacity:.95}
+.lg-bt{width:100%;display:flex;flex-direction:column;gap:10px;margin-top:auto}
+.lg-b{width:100%;min-height:54px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:12px;font:inherit;font-size:16.5px;font-weight:700;cursor:pointer;padding:0 18px}
+.lg-ap{border:0!important;color:#fff!important;background:linear-gradient(180deg,#7A4529,#4A2A1E)!important;box-shadow:0 10px 24px rgba(74,42,30,.3)!important}
+.lg-gg{border:1px solid rgba(160,110,80,.18)!important;color:#3B2417!important;background:linear-gradient(180deg,#FFFFFF,#FFF6EE)!important;box-shadow:0 6px 18px rgba(170,128,86,.16)!important}
+.lg-ex{border:1.5px solid #E8CDBB!important;color:#4A2A1E!important;background:rgba(255,246,238,.7)!important;box-shadow:none!important;justify-content:space-between;padding:0 14px 0 20px}.lg-ex span{flex:1;text-align:center}.lg-ex em{font-style:normal;font-size:12px;font-weight:600;color:#8A5A42;background:#F9DCCB;border-radius:999px;padding:5px 10px}
+.lg-or{display:flex;align-items:center;gap:12px;color:#8A7366;font-size:14px}.lg-or i{flex:1;height:1px;background:rgba(160,110,80,.25)}
+.lg-er{margin:0;font-size:13.5px;color:#9A4B2F;background:#FCEBE6;border-radius:14px;padding:8px 12px}
+.lg-ft{list-style:none;margin:2px 0 0;padding:0;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lg-ft li{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;line-height:1.25;color:#5E4033}
+.lg-ft li span{width:46px;height:46px;border-radius:15px;background:#FBE4D5;color:#7A4A34;display:grid;place-items:center}
+.lg-tm{margin:0;font-size:12px;line-height:1.5;color:#8A7366;max-width:300px}.lg-tm a{color:inherit;text-decoration:underline}
+.lg-have{align-self:center;min-width:230px;background:none!important;border:1.5px solid #C9A58E!important;color:#4A2A1E!important;border-radius:999px;min-height:48px;padding:0 26px;font:inherit;font-weight:700;font-size:15.5px;cursor:pointer;box-shadow:none!important}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -1658,7 +1675,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -1986,23 +2003,33 @@ async function cloudNow(){const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus
 const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie Pro.',limite_gratis:'Esse recurso é do Pellie Pro.',limite_mes:'Você chegou ao limite de análises deste mês.',limite_dia:'Você já usou o Resgate da Pele 3 vezes hoje. Tente de novo amanhã.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
+const APLOGO='<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>';
 function authView(){
   if(!S.ob.done&&!AUTH.want)return null;
   if(AUTH.user&&AUTH.ready){AUTH.want=false;return precisaConsent()&&S.ob.done?consentView():null}
-  const logo=LOGO.replace('class="logo"','class="logo" style="width:84px;height:84px;filter:drop-shadow(0 10px 18px rgba(122,99,82,.35))"');
+  if(S.guest&&!AUTH.want)return null;
   if(!AUTH.ready)return `<div class="ob" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><img src="pellie-logo.png" alt="Pellie" style="height:64px;width:auto"><p class="small muted" style="margin-top:8px">Carregando…</p></div></div>`;
-  const nm=S.nome?esc(S.nome)+', sua':'Sua';
-  return `<div class="ob obx" style="text-align:center">
-    <div style="margin-top:34px"><img src="pellie-flor.png" alt="" style="height:64px;width:auto;opacity:.9"></div>
-    <div><div class="obk">Quase lá</div><h1 class="obh" style="margin-top:10px">${nm} análise<br>está salva aqui.</h1>
-    <p class="obs" style="margin-top:12px">Crie sua conta para guardar sua rotina e acompanhar a evolução da sua pele.</p></div>
-    <div class="obf" style="flex-direction:column;align-items:stretch;gap:12px;width:100%;margin-top:auto;position:static">
-      <button class="btn obc" data-act="login-google" style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px">${GLOGO}Continuar com Google</button>
-      ${AUTH.err?`<p class="note" role="alert" style="color:var(--alert);margin:0">${esc(AUTH.err)}</p>`:''}
-      <p class="small muted" style="margin:6px 0 0;line-height:1.5">Sua foto é enviada só para gerar a análise e não fica guardada. Ao continuar, você concorda com os <a href="privacidade.html#termos" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Termos</a> e a <a href="privacidade.html#privacidade" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Política de Privacidade</a>.</p></div></div>`;
+  const explorar=S.ob.done&&!AUTH.want,lk=(h,t)=>`<a href="privacidade.html#${h}" target="_blank" rel="noopener">${t}</a>`;
+  return `<main class="lg"><div class="lg-top">${AUTH.want?`<button class="lg-bk" data-act="login-voltar" aria-label="Voltar">${ic('back',20)}</button>`:'<span></span>'}<img src="pellie-logo.png" alt="Pellie" class="lg-logo"><span></span></div>
+    <div class="lg-hd"><h1>Sua jornada de cuidados, no seu ritmo</h1><p>Avalie sua pele e cabelo, crie rotinas personalizadas e acompanhe sua evolução.</p></div>
+    <div class="lg-fl" aria-hidden="true"><img src="pellie-flor.png" alt=""></div>
+    <div class="lg-bt">
+      <button class="lg-b lg-ap" data-act="login-apple">${APLOGO}<span>Continuar com a Apple</span></button>
+      <button class="lg-b lg-gg" data-act="login-google">${GLOGO}<span>Continuar com o Google</span></button>
+      ${AUTH.err?`<p class="lg-er" role="alert">${esc(AUTH.err)}</p>`:''}
+      ${explorar?`<div class="lg-or"><i></i><span>ou</span><i></i></div><button class="lg-b lg-ex" data-act="guest-go">${ic('sparkle',20)}<span>Explorar sem login</span><em>Versão de teste</em></button>`:''}
+    </div>
+    <ul class="lg-ft"><li><span>${ic('sparkle',22)}</span>Análises personalizadas</li><li><span>${ic('routine',22)}</span>Rotinas inteligentes</li><li><span>${ic('chart',22)}</span>Acompanhamento da sua evolução</li></ul>
+    <p class="lg-tm">Ao continuar, você concorda com nossos ${lk('termos','Termos de Uso')} e ${lk('privacidade','Política de Privacidade')}.</p></main>`;
 }
+async function loginApple(){AUTH.err=null;try{const u=sb.supabaseUrl,k=sb.supabaseKey,j=await fetch(u+'/auth/v1/settings',{headers:{apikey:k}}).then(r=>r.json());
+  if(!(j&&j.external&&j.external.apple)){AUTH.err='O login com a Apple ainda não está ativado neste app. Use o Google por enquanto.';render();return}
+  const {error}=await sb.auth.signInWithOAuth({provider:'apple',options:{redirectTo:location.origin+location.pathname}});if(error)throw error}catch(e){AUTH.err='Não consegui abrir o login da Apple. Tente de novo.';render()}}
+function guestGo(){const uid=(()=>{try{return localStorage.getItem('mm_uid')}catch(e){return null}})();
+  if(uid&&!S.ob.fresh){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,DEF());S.ob.done=true;S.tab='hoje';try{localStorage.removeItem('mm_uid')}catch(e){}}
+  S.guest=true;S.ob.fresh=true;S.cloud=false;AUTH.want=false;AUTH.err=null;save();toast('Modo visitante: seus dados ficam só neste aparelho');render();window.scrollTo(0,0)}
 async function loginGoogle(){AUTH.err=null;try{const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error)throw error}catch(e){AUTH.err='Não consegui abrir o login do Google. Tente de novo.';render()}}
-async function sairConta(){try{await sb.auth.signOut()}catch(e){}AUTH.user=null;CL.ok=false;AUTH.ready=true;render()}
+async function sairConta(){try{await sb.auth.signOut()}catch(e){}S.guest=false;AUTH.user=null;CL.ok=false;AUTH.ready=true;render()}
 function aplicaPerfil(){const p=AUTH.perfil;S.plus=!!p&&p.plano==='plus'&&(!p.plus_ate||new Date(p.plus_ate)>new Date())}
 async function carregaPerfil(){try{const {data}=await sb.from('profiles').select('nome,plano,plus_ate,consentimento_versao').eq('id',AUTH.user.id).maybeSingle();AUTH.perfil=data||null}catch(e){}aplicaPerfil()}
 let _setting=null;
@@ -2012,7 +2039,7 @@ async function entrou(u){
     const prev=localStorage.getItem('mm_uid');
     if(prev&&prev!==u.id&&!S.ob.fresh){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,DEF());try{localStorage.removeItem(KEY)}catch(e){}}
     try{localStorage.setItem('mm_uid',u.id)}catch(e){}
-    AUTH.user=u;CL.ok=true;CL.uid=u.id;S.cloud=true;
+    AUTH.user=u;CL.ok=true;CL.uid=u.id;S.cloud=true;S.guest=false;
     await cloudBoot();await carregaPerfil();
     if(precisaConsent()&&S.ob&&S.ob.cons===VERSAO_PRIV){try{const {data}=await sb.from('profiles').update({consentimento_versao:VERSAO_PRIV,consentimento_em:new Date().toISOString()}).eq('id',u.id).select('*');if(data&&data.length){AUTH.perfil=data[0];aplicaPerfil()}}catch(e){}}
     if(!S.nome&&!S.ob.done){const n=(u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||'';S.nome=String(n).trim().split(/\s+/)[0]||''}
@@ -2113,6 +2140,10 @@ function vPriv(){
   :`<button class="btn ghost" data-act="conta-apagar-ask" style="color:var(--alert)">Apagar minha conta e dados</button>`}`;
 }
 function vContaH(){
+  if(!AUTH.user)return `<div class="card">${head('cloud','Conta e nuvem')}
+    <p class="small" style="margin-top:6px">Você está no <b>modo visitante</b>.</p>
+    <p class="small muted">Seus dados ficam só neste aparelho. Crie uma conta ou entre para guardar na nuvem e usar em outros aparelhos. Se a conta for nova, o que você já fez aqui vai junto.</p></div>
+  <button class="btn" data-act="entrar">Criar conta ou entrar</button>`;
   const at=S.cloudAt?new Date(S.cloudAt):null,em=AUTH.user&&AUTH.user.email;
   return `<div class="card">${head('cloud','Conta e nuvem')}
     <p class="small" style="margin-top:6px">Conectada como <b>${esc(em||'')}</b></p>
@@ -4260,7 +4291,7 @@ function viewOnboarding(){PFI=0;
     ${obPhoneDemo()}
     <h1 class="obh inh2">A rotina certa<br>para a sua pele.</h1><p class="obs" style="margin:0">Feita especialmente para você.</p>
     ${cta('Analisar minha pele')}
-    <p class="small muted">Já tem conta? <button class="back" data-act="entrar" style="display:inline;padding:0;font-weight:700;color:var(--ink)">Entrar</button></p></div>`;
+    <button class="lg-have" data-act="entrar">Já possuo conta</button></div>`;
   if(st==='nome')return `<div class="ob obx obm" style="text-align:center">
     <h1 class="obh">Como você quer ser chamada?</h1><p class="obs">Esse nome aparece na tela inicial do app.</p>
     <input id="nome" class="obin" type="text" autocomplete="given-name" placeholder="Seu nome" aria-label="Seu nome" value="${nome}">
@@ -4670,7 +4701,10 @@ document.addEventListener('click',e=>{
   else if(d.act==='qz-volta'){S.qi=Math.max(0,(S.qi||0)-1);render()}
   else if(d.act==='qz-refazer'){S.quiz={};S.qi=0;render()}
   else if(d.act==='ob-quiz'){S.maisFrom=null;S.ob.done=true;S.tab='mais';S.maisSub='quiz';S.qi=0;gameCheck();render();window.scrollTo(0,0)}
-  else if(d.act==='entrar'&&!AUTH.user){AUTH.want=true;render()}
+  else if(d.act==='entrar'&&!AUTH.user){AUTH.want=true;AUTH.err=null;render();window.scrollTo(0,0)}
+  else if(d.act==='login-voltar'){AUTH.want=false;AUTH.err=null;render();window.scrollTo(0,0)}
+  else if(d.act==='login-apple'){loginApple()}
+  else if(d.act==='guest-go'){guestGo()}
   else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Bem-vinda de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
   else if(d.astq!==undefined){const t=astSugs(S.astFoco)[+d.astq];if(t){S.astSg=false;astSend(t)}}
