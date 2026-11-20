@@ -428,6 +428,7 @@ nav button{font-size:9.6px!important;letter-spacing:-.02em}
 .r2-ey{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#A76F5C;position:relative}.r2-base{display:flex;align-items:center;gap:8px;margin:0;font-size:13.5px;color:#7C5A4B}.r2-base svg{color:#A76F5C;flex:none}.r2-base span{flex:1}.r2-base button{border:0;background:none;font:inherit;font-size:13.5px;font-weight:700;color:#6B3A27;text-decoration:underline;cursor:pointer;padding:4px 0}
 .r2-pd.min{background:none;box-shadow:none;padding:2px 0}.r2-ls.min{background:#FFFCF9;border-radius:24px;padding:4px 8px;gap:0;box-shadow:0 8px 22px rgba(170,128,86,.08)}.r2-ls.min .r2-r{background:none;box-shadow:none;border-radius:0;border-bottom:1px solid #F3E6DB}.r2-ls.min .r2-r2:last-child .r2-r{border-bottom:0}.r2-ls.min .r2-r2.open .r2-r{border-radius:0}.r2-ls.min .r2-dt{box-shadow:none;background:none;padding-top:0;border-bottom:1px solid #F3E6DB}
 .r2-add{display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-top:-4px}.r2-add small{font-size:13px;color:#7C5A4B}
+.pk-qr{display:flex;align-items:center;gap:8px;padding:0 14px 12px 14px;margin-top:-4px}.pk-qr span{font-size:12.5px;color:#8A6F62;margin-right:2px}.pk-qr button{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #E6CFC0;background:#fff;color:#6B3A27;border-radius:99px;padding:7px 13px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;min-height:34px;transition:all .2s}.pk-qr button[aria-pressed=true]{background:#6B3A27;border-color:#6B3A27;color:#fff}
 </style>
 <script>window.MM_VER="1794731395";</script>
 <script src="supabase.js"></script>
@@ -2729,9 +2730,10 @@ function viewShelf(){
   const row=i=>{const f=shelfInfo(i),tm=stOf(i)==='tenho',op=!!S.shOpen[i.id],st=stOf(i),ab=i.aberto?i.aberto.split('-').reverse().slice(0,2).join('/'):'';
     return `<div class="pk-sr${tm?'':' gone'}"><button class="pk-sh" data-pk="sh|${i.id}" aria-expanded="${op}">${FOTOS?shelfThumb(i):''}${shTh(i,52)}<span class="si"><b>${esc(i.n)}</b><em class="pk-st ${st}">${{tenho:'Em uso',quero:'Quero comprar',acabou:'Acabou'}[st]}</em>
       <small>${tm?`${ab?'Abriu em '+ab+' · ':''}<span class="exp ${f.cls}">${f.txt}</span>`:st==='quero'?'Na lista de compras':'Acabou'}</small></span>${ic('chev',16)}</button>
+    ${tm?`<div class="pk-qr"><span>Na rotina</span>${[['m','sun','Manhã'],['n','moon','Noite']].map(([k,i_,t])=>`<button data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}" aria-label="${inRot(i,k)?'Tirar da':'Adicionar à'} rotina da ${t.toLowerCase()}">${ic(inRot(i,k)?'check':i_,14)}${t}</button>`).join('')}</div>`:''}
     ${op?`<div class="pk-ct"><div class="regg">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" data-shst="${i.id}|${k}" aria-pressed="${st===k}">${t}</button>`).join('')}</div>
       ${tm?`<div class="regg"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
-      <div class="regg"><span class="small muted" style="align-self:center">Na rotina:</span>${[['m','Manhã'],['n','Noite']].map(([k,t])=>`<button class="rg" data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}">${t}</button>`).join('')}</div>`:''}
+      `:''}
       <button class="chip" data-rm="${i.id}" style="font-size:12px;align-self:flex-start">Remover</button></div>`:''}</div>`};
   return `<div class="stack pk pl-in">${pkHead('Minha prateleira',`${nT} ${nT===1?'produto':'produtos'}${nQ?` · ${nQ} para comprar`:''}${soon?` · ${soon} vencendo`:''}`)}
     <div class="pl-chips" role="group" aria-label="Categoria">${[['todos','Todos'],['rosto','Rosto'],['cabelo','Cabelo'],['corpo','Corpo']].map(([k,l])=>`<button data-pk="shf|${k}" aria-pressed="${F===k}">${l}</button>`).join('')}</div>
