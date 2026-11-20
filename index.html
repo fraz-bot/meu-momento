@@ -422,6 +422,7 @@ nav button{font-size:9.6px!important;letter-spacing:-.02em}
 .r2-sec{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:-6px}.r2-sec h3{margin:0;font-size:20px;color:#4A2A1E}
 .r2-ls{display:flex;flex-direction:column;gap:8px}.r2-r{display:flex;align-items:center;gap:10px;border-radius:20px;background:#FFFCF9;padding:8px 12px 8px 10px;box-shadow:0 4px 14px rgba(170,128,86,.07)}.r2-ck{flex:none;width:30px;height:30px;border-radius:50%;border:1.8px solid #E3C9B8;background:#fff;color:transparent;display:grid;place-items:center;cursor:pointer;padding:0;transition:all .25s}.r2-ck[aria-pressed=true]{background:#6FA383;border-color:#6FA383;color:#fff}
 .r2-rb{flex:1;min-width:0;display:flex;align-items:center;gap:10px;border:0;background:none;font:inherit;text-align:left;color:#4A2A1E;cursor:pointer;padding:0}.r2-im{flex:none;width:42px;height:46px;display:grid;place-items:center}.r2-rt{flex:1;min-width:0;display:flex;flex-direction:column}.r2-rt b{font-size:16.5px}.r2-rt small{font-size:13px;color:#7C5A4B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.r2-r.done .r2-rt b{text-decoration:line-through;opacity:.6}.r2-rb>svg{color:#A76F5C;flex:none}
+.r2-r2{display:flex;flex-direction:column;gap:0}.r2-r2.open .r2-r{border-radius:20px 20px 0 0}.r2-rb>.xpchip{flex:none}.r2-rb>svg{transition:transform .25s}.r2-r2.open .r2-rb>svg{transform:rotate(90deg)}.r2-dt{background:#FFFCF9;border-radius:0 0 20px 20px;padding:2px 14px 14px 52px;margin-top:-2px;box-shadow:0 4px 14px rgba(170,128,86,.07);animation:plIn .3s ease both}.r2-dt p{margin:4px 0;font-size:14px;line-height:1.4;color:#4A2A1E}.r2-dt .r2-mt{color:#7C5A4B;font-size:13.5px}.r2-rt small{white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}.r2-r2.open .r2-rt small{display:none}
 .r2-at2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.r2-ab{display:flex;align-items:center;gap:8px;border:0;border-radius:20px;background:#FFFCF9;padding:12px 10px;font:inherit;text-align:left;color:#4A2A1E;cursor:pointer;box-shadow:0 4px 14px rgba(170,128,86,.07)}.r2-ab>span:nth-child(1){color:#A76F5C;display:flex;flex:none}.r2-ab>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column}.r2-ab b{font-size:14.5px}.r2-ab small{font-size:12px;color:#7C5A4B}.r2-ab>svg{color:#A76F5C;flex:none}
 @media(prefers-reduced-motion:reduce){.r2-e,.r2-ck{transition:none}}
 </style>
@@ -2523,31 +2524,30 @@ function ritRec(){
   const d=S.result&&S.result.d;if(d){const dias=Math.floor((Date.now()-new Date(d+'T12:00:00'))/864e5);
     if(dias>=30)return{t:'Faz '+dias+' dias desde a sua última análise',s:'Uma nova análise ajuda a comparar e a ajustar a sua rotina.',go:'pele|analise'}}
   return null}
-function rotHome(tabs){
-  const per=S.period,R_=getR(),ks=per==='m'?R_.m:R_.n,n=ks.length,fe=ks.filter(k=>isDone(per,k)).length,okp=ritDoneAll(per),rec=ritRec();
-  const an=(S.analises||[]).slice().sort((x,y)=>x.d<y.d?-1:1).pop(),dtA=an?new Date(an.d+'T12:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'short'}):'';
-  const rp=S.rot&&S.rot.resumo?esc(S.rot.resumo):'Faça a análise do rosto para personalizar a sua rotina.';
+function rotHome(){
+  const per=S.period,h=new Date().getHours(),sd=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite',nm=S.nome?', '+esc(S.nome):'';
+  const dt=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}),dtx=dt.charAt(0).toUpperCase()+dt.slice(1).replace(', ',' · ');
+  const R_=getR(),card=p=>{const ks=p==='m'?R_.m:R_.n,fe=ks.filter(k=>isDone(p,k)).length,ok=ritDoneAll(p);
+    return `<button class="rt-pc ${p==='n'?'nt':''}" data-rper="${p}" aria-pressed="${per===p}"><span class="rt-pci">${ic(p==='m'?'sun':'moon',34)}</span><b>${p==='m'?'Manhã':'Noite'}</b><strong>${ks.length} etapas</strong>
+      <span class="rt-stt ${ok?'ok':fe?'part':''}">${ok?ic('checkc',16)+'Concluída':fe?fe+' de '+ks.length:ic('clock',16)+'Pendente'}</span></button>`};
+  const ks=per==='m'?R_.m:R_.n,okp=ritDoneAll(per);
+  const cta=S.rot?`<button class="rt-cta big" data-rit="start|${per}"><span class="rt-play">${ic('sparkle',26)}</span><span><b>${okp?'Rever meu ritual':'Começar meu ritual'}</b><small>${per==='m'?'Manhã':'Noite'} · ${ks.length} etapas${okp?' · já concluído hoje':''}</small></span></button>`
+    :`<button class="rt-cta big" data-act="montar-rotina" ${S.rotBusy?'disabled':''}><span class="rt-play">${ic('sparkle',26)}</span><span><b>${S.rotBusy?'Montando…':'Montar minha rotina'}</b><small>Personalizada com a sua análise</small></span></button>`;
   const d0=new Date();d0.setDate(d0.getDate()-((d0.getDay()+6)%7));const tdy=ymd(new Date());
   const wk=['SEG','TER','QUA','QUI','SEX','SÁB','DOM'].map((nme,j)=>{const d=new Date(d0);d.setDate(d0.getDate()+j);const k=ymd(d),on=counted(k),fut=k>tdy;return `<div class="rt-wd ${on?'on':''} ${k===tdy?'hoje':''} ${fut?'fut':''}"><i>${on?ic('check',13):''}</i><span>${nme}</span></div>`}).join('');
-  const nw=[...Array(7)].filter((_,j)=>{const d=new Date(d0);d0.setHours(12);const x=new Date(d0);x.setDate(d0.getDate()+j);return counted(ymd(x))}).length;
+  const nw=[...Array(7)].filter((_,j)=>{const d=new Date(d0);d.setDate(d0.getDate()+j);return counted(ymd(d))}).length;
   const etapas=Object.values(S.log).reduce((a,l)=>a+((l.m||[]).length+(l.n||[]).length),0);
-  const per_=p=>`<button class="r2-e${per===p?' on':''}" data-rper="${p}" aria-pressed="${per===p}" aria-label="${p==='m'?'Manhã':'Noite'}">${ic(p==='m'?'sun':'moon',p===per?30:26)}</button>`;
-  const cta=S.rot?`<button class="r2-go" data-rit="start|${per}">${ic(okp?'check':'play',16)}${okp?'Rever':'Iniciar'}</button>`:`<button class="r2-go" data-act="montar-rotina" ${S.rotBusy?'disabled':''}>${ic('sparkle',16)}${S.rotBusy?'Montando…':'Montar'}</button>`;
-  const row=k=>{const f=infoAny(k),d=isDone(per,k);return `<div class="r2-r${d?' done':''}"><button class="r2-ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${d}">${ic('check',15)}</button><button class="r2-rb" data-rit="full"><span class="r2-im">${pimg(k,38)}</span><span class="r2-rt"><b>${P[k].n}</b><small>${esc((f&&f.como)||STEPS[k]||'')}</small></span>${ic('chev',17)}</button></div>`};
-  const acc=(k,t,sub,body)=>{const o=!!(S.hjo&&S.hjo[k]);return `<section class="hj-x${o?' open':''}"><button class="hj-xh" data-act="hjx|${k}" aria-expanded="${o}"><span><b>${t}</b><small>${sub}</small></span>${ic('chev',18)}</button>${o?`<div class="hj-xb">${body}</div>`:''}</section>`};
-  return `<div class="rt-home rt2">
-    <div class="r2-h"><i class="r2-sw" aria-hidden="true"></i><div class="r2-t"><h1>Minha Rotina</h1>${S.rot?'<span class="r2-bd">Personalizada</span>':''}</div><p>${rp}</p></div>
-    ${tabs||''}
-    <div class="r2-an"><span class="r2-ai">${ic('face',26)}</span><span class="r2-at"><b>Sua análise de pele</b><small>${an?'Realizada em '+dtA:'Ainda não realizada'}</small></span><button class="r2-rf" data-go="pele|analise">${ic(an?'redo':'face',15)}${an?'Refazer análise':'Analisar'}</button></div>
-    <div class="r2-ecl" role="group" aria-label="Período da rotina">${per_('m')}<span class="r2-arc"><svg viewBox="0 0 220 70" aria-hidden="true"><path d="M8 66 Q110 -22 212 66" fill="none" stroke="#E4C9B8" stroke-width="3" stroke-linecap="round"/></svg><b>${per==='m'?'Manhã':'Noite'}</b></span>${per_('n')}</div>
-    <div class="r2-pd"><span class="hj-ring" style="--p:${n?Math.round(fe/n*100):0}"><b>${fe}/${n}</b></span><span class="r2-pt"><b>Rotina da ${per==='m'?'manhã':'noite'}</b><small>${n} ${n===1?'cuidado':'cuidados'} · ~${Math.max(2,n)} min${okp?' · concluída hoje':''}</small></span>${cta}</div>
-    <div class="r2-sec"><h3>Meus cuidados</h3><button class="cg-lk" style="padding:0" data-rit="full">Ver detalhes</button></div>
-    <div class="r2-ls">${ks.map(row).join('')}</div>
-    ${dicaCard()}
-    <div class="r2-at2"><button class="r2-ab" data-go="produtos|shelf"><span>${ic('tag',22)}</span><span><b>Meus produtos</b><small>Da sua prateleira</small></span>${ic('chev',15)}</button>${hairOk()?`<button class="r2-ab" data-ra="area|cabelo"><span>${ic('hair',22)}</span><span><b>Cabelo na rotina</b><small>Incluir cuidados</small></span>${ic('chev',15)}</button>`:`<button class="r2-ab" data-rit="full"><span>${ic('routine',22)}</span><span><b>Todas as etapas</b><small>Passo a passo</small></span>${ic('chev',15)}</button>`}</div>
+  const rec=ritRec();
+  const rp=S.rot&&S.rot.resumo?esc(S.rot.resumo):'Faça a análise do rosto para personalizar a sua rotina.';
+  return `<div class="rt-home">
+    <div class="rt-gr"><h1>${sd}${nm}.</h1><p class="rt-dt">${dtx}</p><p class="rt-rs">${rp}</p></div>
+    <div class="rt-pcs">${card('m')}${card('n')}</div>
+    ${cta}
+    <div class="rt-ac"><h3>Seu acompanhamento</h3>
+      <div class="rt-wk">${wk}</div>
+      <div class="rt-nums"><div><b>${streak()}</b><span>${streak()===1?'dia seguido':'dias seguidos'}</span></div><div><b>${nw}/7</b><span>dias nesta semana</span></div><div><b>${etapas}</b><span>etapas concluídas</span></div></div></div>
     ${rec?`<button class="rt-rec" ${rec.go?`data-go="${rec.go}"`:`data-rit="${rec.act}"`}><span class="rt-rci">${ic('sparkle',24)}</span><span><b>${rec.t}</b><small>${rec.s}</small></span>${ic('chev',18)}</button>`:''}
-    ${acc('ra','Meu acompanhamento',`${streak()} ${streak()===1?'dia seguido':'dias seguidos'} · ${nw}/7 nesta semana`,`<div class="rt-wk">${wk}</div><div class="rt-nums"><div><b>${streak()}</b><span>${streak()===1?'dia seguido':'dias seguidos'}</span></div><div><b>${nw}/7</b><span>dias nesta semana</span></div><div><b>${etapas}</b><span>etapas concluídas</span></div></div>`)}
-  </div>`}
+    <button class="rt-all" data-rit="full">${ic('routine',16)}Ver todas as etapas e meus produtos</button></div>`}
 /* ===== Rotina do cabelo (só existe com avaliação capilar concluída: S.hres) ===== */
 const hairOk=()=>!!(S.hres&&S.hres.tipo);
 const HDN=['SEG','TER','QUA','QUI','SEX','SÁB','DOM'],HDL=['Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'];
@@ -2628,10 +2628,10 @@ function raHist(){
 function viewRotinaHub(){let a=S.rtArea||'geral';if(!hairOk()&&(a==='geral'||a==='cabelo'||a==='hist'))a='pele';
   if(a==='cabelo')return raCabelo();if(a==='hist')return raHist();
   if(a==='corpo'&&bqDone())return raHead('corpo')+raCorpo();
-  if(a==='pele')return rotHome(raTabs('pele'));
+  if(a==='pele')return raHead('pele')+rotHome();
   return raHead('geral')+raOverview()}
 function raAct(v){const [a,b]=v.split('|'),y=window.scrollY;
-  if(a==='area'){S.rtArea=b;if(b==='cabelo')S.rtSub=S.rtSub||'rot';S.hEdit=null;render();window.scrollTo(0,0);return}
+  if(a==='area'){S.rotFull=false;S.rit=null;S.rtArea=b;if(b==='cabelo')S.rtSub=S.rtSub||'rot';S.hEdit=null;render();window.scrollTo(0,0);return}
   if(a==='sub'){S.rtArea='cabelo';S.rtSub=b;render();window.scrollTo(0,0);return}
   if(a==='edit'){S.rtArea='cabelo';S.rtSub='freq';render();window.scrollTo(0,0);return}
   if(a==='hist'){S.rtArea='hist';render();window.scrollTo(0,0);return}
@@ -2644,31 +2644,30 @@ function viewRotina(){
   if(hairOk()||bqDone())return viewRotinaHub();
   return rotHome()}
 function viewRotinaFull(){
-  const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n;
-  const id=k=>per+k;
-  const feitos=ks.filter(k=>isDone(per,k)).length;
-  const head=S.rot?`<div class="card"><div class="row" style="justify-content:space-between"><h2>Rotina de ${esc(S.nome)}</h2><span class="badge">Personalizada</span></div>
-      <p class="small" style="margin-top:6px">${esc(S.rot.resumo)}</p>
-      <button class="chip" data-act="montar-rotina" style="margin-top:10px;font-size:13px" ${S.rotBusy?'disabled':''}>${S.rotBusy?'Refazendo…':'Refazer com a análise mais recente'}</button></div>`
-    :`<div class="card"><h2>Sua rotina</h2>${R_.nota.map(n=>`<p class="note">${esc(n)}</p>`).join('')}
+  const R_=getR(),per=S.period,ks=per==='m'?R_.m:R_.n,n=ks.length,fe=ks.filter(k=>isDone(per,k)).length,okp=ritDoneAll(per);
+  const an=(S.analises||[]).slice().sort((x,y)=>x.d<y.d?-1:1).pop(),dtA=an?new Date(an.d+'T12:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'short'}):'';
+  const rp=S.rot&&S.rot.resumo?esc(S.rot.resumo):'Faça a análise do rosto para personalizar a sua rotina.';
+  const head=`<div class="r2-h"><i class="r2-sw" aria-hidden="true"></i><div class="r2-t"><h1>Minha Rotina</h1>${S.rot?'<span class="r2-bd">Personalizada</span>':''}</div><p>${rp}</p></div>`;
+  const norot_=S.rot?`<button class="cg-lk" style="align-self:flex-start;padding:0" data-act="montar-rotina" ${S.rotBusy?'disabled':''}>${S.rotBusy?'Atualizando…':'Atualizar rotina com a análise mais recente'}</button>`:`<div class="card"><h2>Sua rotina</h2>${R_.nota.map(n=>`<p class="note">${esc(n)}</p>`).join('')}
       ${S.rotBusy?'<p class="note">Montando a sua rotina com a análise…</p>':S.result?`<button class="btn" data-act="montar-rotina" style="margin-top:12px;width:100%">${ic('sparkle')}Montar minha rotina</button>`
         :`<button class="btn" data-go="pele|analise" style="margin-top:12px;width:100%">${ic('face')}Personalizar com a foto</button>`}
       ${S.rotErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.rotErr)}</p>`:''}</div>`;
   const nc=conflitos().length,fn=faseNota();
-  return `<div class="stack">${head}
+  const row=k=>{const f=infoAny(k),d=isDone(per,k),o=!!(S.rsx&&S.rsx[k]);return `<div class="r2-r2${o?' open':''}"><div class="r2-r${d?' done':''}"><button class="r2-ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${d}">${ic('check',15)}</button><button class="r2-rb" data-act="rsx|${k}" aria-expanded="${o}"><span class="r2-im">${pimg(k,38)}</span><span class="r2-rt"><b>${P[k].n}</b><small>${esc((f&&f.como)||STEPS[k]||'')}</small></span>${d?'':'<span class="xpchip">+10</span>'}${ic('chev',17)}</button></div>${o?`<div class="r2-dt"><p>${esc((f&&f.como)||STEPS[k]||'')}</p>${f&&f.motivo?`<p class="r2-mt">${esc(f.motivo)}</p>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(!ex)return '';if(FOTOS)return prodCard(ex,k,S.tier);const ja=S.shelf.some(i=>i.n===ex&&stOf(i)==='tenho');return `<div class="rsx-p"><span>${ic('tag',14)}<em>Sugestão:</em> ${esc(ex)}</span>${ja?`<b>${ic('check',13)}Na prateleira</b>`:`<button class="chip" data-rsh="${per}|${k}">${ic('plus',13)}Prateleira</button>`}</div>`})()}</div>`:''}</div>`};
+  return `<div class="stack rt2">${head}
+  <div class="r2-an"><span class="r2-ai">${ic('face',26)}</span><span class="r2-at"><b>Sua análise de pele</b><small>${an?'Realizada em '+dtA:'Ainda não realizada'}</small></span><button class="r2-rf" data-go="pele|analise">${ic(an?'redo':'face',15)}${an?'Refazer análise':'Analisar'}</button></div>
+  ${norot_}
   ${fn?`<button class="alertc" data-go="mais|fase" style="border-color:var(--accent)">${ic(FASES[S.fase].i,22)}<span><b>${FASES[S.fase].t}</b><span class="small muted" style="display:block">${fn}</span></span></button>`:''}
   ${nc?`<button class="alertc" data-go="mais|conflitos">${ic('alert',22)}<span><b>${nc} ${nc===1?'combinação':'combinações'} para cuidar</b><span class="small muted" style="display:block">Toque para ver</span></span></button>`:''}
   ${eclipseCtl(per)}
-  <div class="card${render._rsw?' rsw':''}">
-    <div class="row" style="justify-content:space-between"><h3>${per==='m'?'Manhã':'Noite'}</h3><span class="small muted">${feitos} de ${ks.length} hoje</span></div>
-    <div class="bar" style="margin:10px 0 4px"><b style="width:${feitos/ks.length*100}%"></b></div>${bloq(per)?lockRow(per):''}
-    ${ks.map((k,i)=>{const f=infoAny(k);return `<div class="step ${isDone(per,k)?'done':''}">
-      <button class="ck" data-done="${per}|${k}" aria-label="Marcar ${P[k].n}" aria-pressed="${isDone(per,k)}">${ic('check',16)}</button>
-      <div><div class="tt">${pimg(k,26)}${P[k].n}${isDone(per,k)?'':'<span class="xpchip" style="margin-left:auto">+10</span>'}</div><div class="small muted">${esc((f&&f.como)||STEPS[k])}</div>${f&&f.motivo?`<div class="small" style="margin-top:4px">${esc(f.motivo)}</div>`:''}${(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];if(!ex)return '';if(FOTOS)return prodCard(ex,k,S.tier);const ja=S.shelf.some(i=>i.n===ex&&stOf(i)==='tenho');return `<div class="rsx-p"><span>${ic('tag',14)}<em>Sugestão:</em> ${esc(ex)}</span>${ja?`<b>${ic('check',13)}Na prateleira</b>`:`<button class="chip" data-rsh="${per}|${k}">${ic('plus',13)}Prateleira</button>`}</div>`})()}</div></div>`}).join('')}
-  </div>
+  <div class="r2-pd"><span class="hj-ring" style="--p:${n?Math.round(fe/n*100):0}"><b>${fe}/${n}</b></span><span class="r2-pt"><b>Rotina da ${per==='m'?'manhã':'noite'}</b><small>${n} ${n===1?'cuidado':'cuidados'} · ~${Math.max(2,n)} min${okp?' · concluída hoje':''}</small></span>${S.rot?`<button class="r2-go" data-rit="start|${per}">${ic(okp?'check':'play',16)}${okp?'Rever':'Iniciar'}</button>`:''}</div>
+  ${bloq(per)?lockRow(per):''}
+  <div class="r2-sec"><h3>Meus cuidados</h3></div>
+  <div class="r2-ls${render._rsw?' rsw':''}">${ks.map(row).join('')}</div>
   ${tratRot(per)}
   ${shelfRot(per)}
   ${hairRot()}
+  ${dicaCard()}
   ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
 }
 
@@ -5032,6 +5031,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='conta-apagar'){apagarConta()}
   else if(d.act==='plus-refresh'){_lastPf=0;atualizaPlano().then(()=>toast(S.plus?'Pellie Pro ativo':'Ainda não consta assinatura'))}
   else if(d.act==='sair-conta'||d.act==='sair-app'){sairConta()}
+  else if(d.act&&d.act.startsWith('rsx|')){const k=d.act.slice(4),y=window.scrollY;S.rsx=S.rsx||{};S.rsx[k]=!S.rsx[k];render();window.scrollTo(0,y)}
   else if(d.act&&d.act.startsWith('hjx|')){const k=d.act.slice(4),y=window.scrollY;S.hjo=S.hjo||{};S.hjo[k]=!S.hjo[k];render();window.scrollTo(0,y)}
   else if(d.act&&d.act.startsWith('tipx|')){(S.tips=S.tips||{})[d.act.slice(5)]=1;save();render()}
   else if(d.act==='tour-abrir'){S.tour={on:true,i:0,seen:!!(S.tour&&S.tour.seen)};S.tab='hoje';S.maisSub=null;render();window.scrollTo(0,0)}
