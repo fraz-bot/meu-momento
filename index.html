@@ -3127,18 +3127,15 @@ function viewHoje(){
   <div class="hj-wk" role="group" aria-label="Sua semana">${days.map(d=>`<div class="hj-d ${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}"><i>${d.on?ic('check',15):d.n}</i><span>${d.w}</span></div>`).join('')}</div>
   ${rit}
   ${cgC}
-  ${cons}
   ${avisos}
-  ${doneC?`<h3 class="hj-h">Rotinas de hoje</h3><div class="hj-dns">${doneC}</div>`:''}
   <button class="hj-sos" data-go="sos"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Resgate da Pele</b><small>Espinha ou irritação? Fotografe e veja o que fazer agora.</small></span>${ic('chev',18)}</button>
   ${check}
-  ${hjx('at','Atalhos','Quiz da pele, cabelo e dicas',`<div class="hj-q">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div>`)}
-  ${hjx('fe','Ferramentas e números','Horários, gastos, relatório'+(nums?' e seus registros':''),`<div class="hj-tl">${tools.map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span>${ic(i_,22)}</span>${t}</button>`).join('')}</div>${nums?`<div class="hj-nm" style="margin-top:10px">${nums.map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}`)}
-  <article class="hj-tip"><div class="hj-tk">Dica do dia</div><h2>${tip[0]}</h2><p>${tip[1]}</p>${ben?`<div class="hj-tb">${ben}</div>`:''}${rel?`<div class="hj-tr">${rel}</div>`:''}</article>
-  ${hjx('cq','Conquistas',nb+' de '+BADGES.length+' obtidas',`<button class="hj-cq" data-go="mais|medalhas"><div class="hj-cqh"><b>Conquistas</b><span>${nb} de ${BADGES.length}</span></div>
+  ${hjx('ev','Minha evolução',`${pct}% da meta da semana · ${nb} de ${BADGES.length} conquistas`,`${cons}${doneC?`<div class="hj-dns" style="margin-top:10px">${doneC}</div>`:''}<div style="margin-top:10px">${`<button class="hj-cq" data-go="mais|medalhas"><div class="hj-cqh"><b>Conquistas</b><span>${nb} de ${BADGES.length}</span></div>
     <div class="hj-cqm">${got.slice(0,6).map(b=>`<span class="on" title="${esc(b.n)}">${ic(b.i,18)}</span>`).join('')}${nxtB?`<span class="nx" title="${esc(nxtB.n)}">${ic('lock',16)}</span>`:''}</div>
     <span class="hj-bar"><i style="width:${Math.round(nb/BADGES.length*100)}%"></i></span>
-    <small>${nxtB?`Próxima: ${esc(nxtB.n)} · ${esc(nxtB.d)}`:'Todas as conquistas obtidas'}${last?` · Última: ${esc(last.n)} (${fmtD(S.badges[last.id])})`:''}</small></button>`)}
+    <small>${nxtB?`Próxima: ${esc(nxtB.n)} · ${esc(nxtB.d)}`:'Todas as conquistas obtidas'}${last?` · Última: ${esc(last.n)} (${fmtD(S.badges[last.id])})`:''}</small></button>`}</div>`)}
+  ${hjx('at','Atalhos e ferramentas','Quiz, cabelo, horários, gastos e relatório',`<div class="hj-q">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div><div class="hj-tl" style="margin-top:10px">${tools.map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span>${ic(i_,22)}</span>${t}</button>`).join('')}</div>${nums?`<div class="hj-nm" style="margin-top:10px">${nums.map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}`)}
+  ${hjx('dc','Dica do dia',tip[0],`<article class="hj-tip" style="box-shadow:none"><div class="hj-tk">Dica do dia</div><h2>${tip[0]}</h2><p>${tip[1]}</p>${ben?`<div class="hj-tb">${ben}</div>`:''}${rel?`<div class="hj-tr">${rel}</div>`:''}</article>`)}
   </div>`;
 }
 function fotoBtns(){return `<div class="row" style="gap:8px;margin-top:10px;flex-wrap:nowrap">
@@ -3483,7 +3480,7 @@ function notifPlan(){
   if(ntOn('volta'))[3,7,14].forEach((n,i)=>out.push({id:3000+i,at:at(n,'19:00'),title:T,body:NMSG.volta[n][0]}));
   if(ntOn('val')&&S.plus){const v=temP().map(i=>shelfInfo(i).dias).filter(x=>x>7&&x<=21).sort((a,b)=>a-b)[0];if(v!=null)out.push({id:4000,at:at(v-7,'10:00'),title:T,body:NMSG.val[0]})}
   if(ntOn('foto')&&S.plus&&S.result&&S.result.d){const d0=new Date(S.result.d+'T10:00:00'),d=new Date(d0);d.setDate(d.getDate()+30);if(d>now&&(d-now)<14*864e5)out.push({id:5000,at:d,title:T,body:NMSG.foto[0]})}
-  if(S.cg&&S.cg.notif&&S.cg.notif.on&&S.plus&&typeof cgOcc==='function'&&cgOrdem()){const c=S.cg,t0=cgDia0(now),[h,mi]=String(c.notif.h||'19:00').split(':').map(Number);
+  if(S.cg&&S.cg.notif&&S.cg.notif.on&&S.plus&&typeof cgOcc==='function'&&cgReady()){const c=S.cg,t0=cgDia0(now),[h,mi]=String(c.notif.h||'19:00').split(':').map(Number);
     cgOcc(Math.max(0,Math.floor(cgDiff(t0,cgIni())/(c.freq*7))-1),Math.max(0,Math.floor(cgDiff(t0,cgIni())/(c.freq*7)))+3).forEach((o,j)=>{if(o.done)return;const d=new Date(o.d);d.setHours(h||0,mi||0,0,0);if(d>now&&(d-now)<14*864e5)out.push({id:6000+j,at:d,title:T,body:'Hoje é dia de '+CGT[o.t].n.toLowerCase()+' no cabelo.'})})}
   return out}
 /* Reagenda tudo. No site não faz nada; no app das lojas usa as notificações locais do aparelho. */
@@ -3873,7 +3870,8 @@ function cgOrdem(){const c=S.cg||{};if(Array.isArray(c.custom)&&c.custom.length=
   const n=(c.q&&c.q.nec)||[];if(n.length)return[0,1,2,3].map(i=>n[i%n.length]);return null}
 function cgOcc(a,b){const c=S.cg,O=cgOrdem();if(!c||!O)return[];const ini=cgIni(),out=[];
   for(let k=a;k<=b;k++){const d=cgAdd(ini,k*c.freq*7+c.dia),key=ymd(d);out.push({k,d,key,t:O[k%O.length],sem:Math.floor(cgDiff(d,ini)/7)+1,done:!!c.done[key]})}return out}
-function cgAtual(){const c=S.cg;if(!c||!cgOrdem())return null;const t0=cgDia0(new Date());
+const cgReady=()=>!!(S.cg&&(S.cg.ready||S.hres)&&cgOrdem());
+function cgAtual(){const c=S.cg;if(!c||!cgReady())return null;const t0=cgDia0(new Date());
   let k=Math.max(0,Math.floor(cgDiff(t0,cgIni())/(c.freq*7))-1);
   for(let i=0;i<80;i++,k++){const o=cgOcc(k,k)[0];const dias=cgDiff(o.d,t0);if(!o.done&&dias>=0)return{...o,dias}}return null}
 const cgQuando=dias=>dias<=0?'Hoje':dias===1?'Amanhã':'Em '+dias+' dias';
@@ -3905,14 +3903,18 @@ function cgHome(){const r=S.hres,pl=hairPlan(r),O=cgOrdem()||pl.slots||[],nec=CG
   <h3 class="cg-h">Ferramentas de cuidado</h3><div class="cg-tg">${tool('v|crono','calc','Cronograma capilar')}${tool('scan','flask','Análise de produtos')}${tool('v|ativos','drop','Ativos para o cabelo')}${tool('v|dicas','bulb','Dicas personalizadas')}</div>
   <h3 class="cg-h">Minha prateleira</h3><button class="cg-sh" data-cg="shelf"><span class="cg-th">${th||pimg('mascara',56,'cg-home')}</span><span class="cg-rt"><b>Produtos de cabelo</b><small>${n?n+(n===1?' produto cadastrado':' produtos cadastrados'):'Nenhum produto cadastrado'}</small></span>${ic('chev',18)}</button>
   <h3 class="cg-h">Minhas rotinas</h3><div class="cg-c">${row('rot','calc','Rotina atual','Cuidados diários e semanais')}${row('hist','clock','Histórico de rotinas','Acompanhe sua evolução')}</div></div>`}
-function cgSetup(){const c=S.cg||{},nec=(c.q&&c.q.nec)||[],lo=HQ.find(x=>x[0]==='lav'),ok=nec.length&&hqOk('lav');
+function cgSetup(){const c=S.cg||{},nec=(c.q&&c.q.nec)||[],lo=HQ.find(x=>x[0]==='lav'),st=S.cgs||0,tot=2;
   const op=[['hid','Hidratação','Fio seco, opaco ou sem maciez'],['nut','Nutrição','Frizz, falta de brilho ou pontas ressecadas'],['rec','Reconstrução','Quebra, química ou muito calor']];
-  return `<div class="stack cg">${cgBack('Cronograma Capilar','')}<div class="cg-intro"><span class="cg-fl">${ic('calc',50)}</span><h1>Seu cronograma personalizado</h1><p>Duas perguntas rápidas para montar o seu. Sem a análise do cabelo, uso só o que você me contar.</p></div>
-  <div class="cg-c cg-pd"><b>O que seu cabelo mais pede? <small>(marque quantas quiser)</small></b><div class="cg-ops">${op.map(([k,t,d])=>`<button class="cg-op" data-cg="nec|${k}" aria-pressed="${nec.includes(k)}"><span>${ic(CGT[k].i,22)}</span><span><b>${t}</b><small>${d}</small></span><i>${ic('check',14)}</i></button>`).join('')}</div></div>
-  <div class="cg-c cg-pd"><b>Quantas vezes você lava o cabelo por semana?</b><div class="regg" style="margin-top:8px">${lo[3].map(([v,t])=>`<button class="rg" data-hq="lav|${v}" aria-pressed="${(S.hq||{}).lav===v}">${t}</button>`).join('')}</div></div>
-  <button class="btn pl-go" data-cg="criar" ${ok?'':'disabled'}>${ic('sparkle',18)}Criar meu cronograma</button>
-  <button class="cg-lk" data-hf="start">Prefiro fazer a análise completa do cabelo</button></div>`}
-function cgCrono(){if(!S.cg||!cgOrdem())return cgSetup();cgInit();const at=cgAtual(),O=cgOrdem();
+  const top=`<div class="hf-tp"><button class="pl-bk" data-cg="${st?'st|0':'v|'}" aria-label="Voltar">${ic('chev',20)}</button><span class="hf-pg"><i style="width:${Math.round((st+1)/tot*100)}%"></i></span><small>${st+1} de ${tot}</small></div>`;
+  if(st===0)return `<div class="stack hf hf-in">${top}<div class="cg-intro"><h1>Seu cronograma personalizado</h1><p>Duas perguntas rápidas. Sem a análise do cabelo, uso só o que você me contar.</p></div>
+  <div class="hf-qh"><span class="pl-ri">${ic('drop',22)}</span><h2>O que seu cabelo mais pede?</h2></div><p class="small muted" style="margin:-4px 0 0">Marque quantas quiser.</p>
+  <div>${op.map(([k,t,d])=>`<button class="cg-op" data-cg="nec|${k}" aria-pressed="${nec.includes(k)}"><span>${ic(CGT[k].i,22)}</span><span><b>${t}</b><small>${d}</small></span><i>${ic('check',14)}</i></button>`).join('')}</div>
+  <div class="hf-nv"><button class="btn ghost" data-cg="v|">Cancelar</button><button class="btn pl-go" data-cg="st|1" ${nec.length?'':'disabled'}>Próximo${ic('chev',16)}</button></div>
+  <button class="cg-lk" data-hf="start">Prefiro fazer a análise completa do cabelo</button></div>`;
+  return `<div class="stack hf hf-in">${top}<div class="hf-qh"><span class="pl-ri">${ic('drops',22)}</span><h2>Quantas vezes você lava o cabelo por semana?</h2></div>
+  <div class="hf-os" role="group">${lo[3].map(([v,t])=>`<button class="hf-o" data-hq="lav|${v}" aria-pressed="${(S.hq||{}).lav===v}"><span>${esc(t)}</span><i>${ic('check',14)}</i></button>`).join('')}</div>
+  <div class="hf-nv"><button class="btn ghost" data-cg="st|0">Voltar</button><button class="btn pl-go" data-cg="criar" ${hqOk('lav')?'':'disabled'}>${ic('sparkle',18)}Criar meu cronograma</button></div></div>`}
+function cgCrono(){if(!cgReady())return cgSetup();cgInit();const at=cgAtual(),O=cgOrdem();
   if(!at)return cgSetup();
   const nx=cgOcc(at.k+1,at.k+2),T=CGT[at.t],mk=cgMask(at.t),sem=cgSemFin();
   const hh=Object.keys(S.cg.done||{}).sort().reverse().slice(0,5);
@@ -3927,7 +3929,7 @@ function cgCrono(){if(!S.cg||!cgOrdem())return cgSetup();cgInit();const at=cgAtu
   <button class="cg-r cg-card" data-cg="v|cal"><span class="cg-ri">${ic('calc',22)}</span><span class="cg-rt"><b>Visão do cronograma</b><small>Ver calendário completo</small></span>${ic('chev',18)}</button>
   <div class="cg-c"><h3>Histórico de tratamentos</h3>${hh.length?hh.map(k=>`<div class="cg-hr"><span>${ic(CGT[S.cg.done[k]]?CGT[S.cg.done[k]].i:'check',16)}${CGT[S.cg.done[k]]?CGT[S.cg.done[k]].n:'Tratamento'}</span><em>${cgDM(new Date(k+'T12:00:00'))}</em></div>`).join(''):'<p class="small muted">Nenhum tratamento registrado ainda. Ao concluir uma etapa, ela aparece aqui.</p>'}</div>
   <button class="btn cg-edit" data-cg="v|edit">${ic('edit',18)}Editar cronograma</button></div>`}
-function cgCal(){if(!S.cg||!cgOrdem())return cgSetup();const c=cgInit(),O=cgOrdem(),t0=cgDia0(new Date()),ini=cgIni(),w0=Math.max(0,Math.floor(cgDiff(t0,ini)/7)),pg=S.cgPg||0,A=Math.max(0,w0+pg*6-(pg?0:0)),rows=[];
+function cgCal(){if(!cgReady())return cgSetup();const c=cgInit(),O=cgOrdem(),t0=cgDia0(new Date()),ini=cgIni(),w0=Math.max(0,Math.floor(cgDiff(t0,ini)/7)),pg=S.cgPg||0,A=Math.max(0,w0+pg*6-(pg?0:0)),rows=[];
   for(let w=A;w<A+6;w++){const ws=cgAdd(ini,w*7),we=cgAdd(ws,6),cur=w===w0,hasT=w%c.freq===0,k=w/c.freq;let body;
     if(hasT){const o=cgOcc(k,k)[0],fut=cgDiff(o.d,t0)>0,T=CGT[o.t];body=`<div class="cg-wk"><span class="cg-ri">${ic(T.i,20)}</span><span class="cg-rt"><b>${T.n}</b><small>${CGDIA[o.d.getDay()===0?6:o.d.getDay()-1]}, ${cgDM(o.d)}</small></span><button class="cg-st ${o.done?'ok':fut?'fu':''}" ${fut?'disabled':''} data-cg="tog|${o.key}|${o.t}" aria-pressed="${o.done}">${o.done?ic('check',13)+'Concluído':fut?'Agendado':'Marcar'}</button></div>`}
     else body=`<div class="cg-wk"><span class="cg-ri off">${ic('moon',18)}</span><span class="cg-rt"><b>Semana de descanso</b><small>Sem tratamento nesta semana</small></span></div>`;
@@ -3963,6 +3965,7 @@ function viewCabeloTab(){
 function cgAct(v){const [a,b,c2]=v.split('|'),y=window.scrollY;
   const go=(x,top=true)=>{S.chv=x||null;S.cgPg=0;render();if(top)window.scrollTo(0,0)};
   if(a==='v'){if(b==='crono'||b==='cal')cgInit();return go(b)}
+  if(a==='st'){S.cgs=+b;render();window.scrollTo(0,0);return}
   if(a==='open'){goTab('cabelo');S.chv=b;render();window.scrollTo(0,0);return}
   if(a==='scan'){S.pfArea='cabelo';goTab('escanear');return}
   if(a==='shelf'){goTab('produtos','shelf');S.prodSub='shelf';S.shF='cabelo';render();return}
@@ -3970,7 +3973,7 @@ function cgAct(v){const [a,b,c2]=v.split('|'),y=window.scrollY;
   if(a==='hist'){S.rit=null;S.tab='rotina';S.rtArea='hist';render();window.scrollTo(0,0);return}
   const c=cgInit();
   if(a==='nec'){const n=c.q.nec,i=n.indexOf(b);if(i>=0)n.splice(i,1);else n.push(b);save();render();window.scrollTo(0,y);return}
-  if(a==='criar'){if(!c.q.nec.length)return;S.chv='crono';save();render();window.scrollTo(0,0);return}
+  if(a==='criar'){if(!c.q.nec.length||!hqOk('lav'))return;S.cgs=0;c.ready=true;S.chv='crono';save();render();window.scrollTo(0,0);return}
   if(a==='done'){c.done[b]=c2;if(b===hoje()){const L=S.hlog||(S.hlog={}),l=L[b]||(L[b]=[]);if(!l.includes('mascara'))l.push('mascara')}save();toast('Tratamento de '+CGT[c2].n.toLowerCase()+' concluído',true);render();window.scrollTo(0,0);return}
   if(a==='tog'){if(c.done[b])delete c.done[b];else c.done[b]=c2;save();render();window.scrollTo(0,y);return}
   if(a==='pg'){S.cgPg=Math.max(0,(S.cgPg||0)+(+b));render();window.scrollTo(0,0);return}
@@ -4810,7 +4813,7 @@ cron:['Primeiro cronograma','O cronograma alterna hidratação, nutrição e rec
 assistant:['Pellie Assistant','Pergunte em linguagem simples. Ele conhece o seu perfil, mas não substitui um dermatologista.']};
 function tipCtx(){if(S.tour&&S.tour.on)return '';let k=null;
   if(S.tab==='pele'&&!S.analyzing&&!S.result)k='pele';else if(S.tab==='escanear'&&!S.pf)k='escanear';else if(S.tab==='rotina')k='rotina';
-  else if(S.tab==='cabelo'&&S.chv==='crono'&&S.cg&&S.cg.inicio&&!S.hBusy)k='cron';else if(S.tab==='assistant'&&!(S.chat||[]).length)k='assistant';
+  else if(S.tab==='cabelo'&&S.chv==='crono'&&cgReady()&&!S.hBusy)k='cron';else if(S.tab==='assistant'&&!(S.chat||[]).length)k='assistant';
   if(!k||(S.tips&&S.tips[k]))return '';const[t,x]=TIPC[k];
   return `<div class="stack"><div class="tp-c"><span>${ic('bulb',20)}</span><div><b>${t}</b><p>${x}</p></div><button class="tp-ok" data-act="tipx|${k}">Entendi</button></div></div>`}
 function render(){
