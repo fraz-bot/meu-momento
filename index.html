@@ -430,7 +430,7 @@ nav button{font-size:9.6px!important;letter-spacing:-.02em}
 .r2-add{display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-top:-4px}.r2-add small{font-size:13px;color:#7C5A4B}
 .pk-qr{display:flex;align-items:center;gap:8px;padding:0 14px 12px 14px;margin-top:-4px}.pk-qr span{font-size:12.5px;color:#8A6F62;margin-right:2px}.pk-qr button{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #E6CFC0;background:#fff;color:#6B3A27;border-radius:99px;padding:7px 13px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;min-height:34px;transition:all .2s}.pk-qr button[aria-pressed=true]{background:#6B3A27;border-color:#6B3A27;color:#fff}
 .ast{padding-bottom:150px}.ast-bar{position:fixed;left:50%;transform:translateX(-50%);width:min(100%,520px);box-sizing:border-box;padding:10px 16px 2px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:15;margin:0}
-.ast-kb .ast{padding-bottom:0}.ast-kb .ast-bar{position:sticky;left:auto;transform:none;width:auto;padding:10px 0 2px}
+.ast-kb .ast{padding-bottom:90px}.ast-kb .ast-bar{bottom:calc(var(--kb,0px) + 8px)!important}
 nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5px!important;letter-spacing:-.01em!important}
 .hmais{border:0;cursor:pointer;padding:6px 9px;font:inherit}.hmais[aria-current=page]{background:var(--accent);color:#fff}
 .cu-sw{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#F3E8DF;border-radius:99px;padding:4px;margin-bottom:12px}.cu-sw button{display:flex;align-items:center;justify-content:center;gap:7px;border:0;background:transparent;font:inherit;font-size:15px;font-weight:700;color:#7C5A4B;border-radius:99px;padding:10px 0;cursor:pointer;transition:all .25s}.cu-sw button[aria-pressed=true]{background:#fff;color:#4A2A1E;box-shadow:0 4px 12px rgba(170,128,86,.18)}
@@ -3008,8 +3008,10 @@ async function astSend(q){q=String(q||'').trim().slice(0,500);if(!q||S.astBusy)r
   S.astBusy=false;save();render();astScroll();astRefocus()}
 function astRefocus(){if(document.body.classList.contains('ast-kb')){const i=document.getElementById('ast-in');if(i&&document.activeElement!==i)try{i.focus({preventScroll:true})}catch(e){}}}
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='ast-in')S.astDraft=e.target.value});
+function astKb(){const v=window.visualViewport;if(!v)return;const h=Math.max(0,Math.round(window.innerHeight-v.height-v.offsetTop));document.documentElement.style.setProperty('--kb',h+'px')}
+if(window.visualViewport){visualViewport.addEventListener('resize',astKb);visualViewport.addEventListener('scroll',astKb)}
 document.addEventListener('focusin',e=>{if(e.target&&e.target.id==='ast-in'){document.body.classList.add('ast-kb');setTimeout(()=>{try{e.target.scrollIntoView({block:'center'})}catch(x){}},250)}});
-document.addEventListener('focusout',e=>{if(e.target&&e.target.id==='ast-in')setTimeout(()=>{const a=document.activeElement;if(!a||a.id!=='ast-in')document.body.classList.remove('ast-kb')},200)});
+document.addEventListener('focusout',e=>{if(e.target&&e.target.id==='ast-in')setTimeout(()=>{const a=document.activeElement;if(!a||a.id!=='ast-in'){document.body.classList.remove('ast-kb');document.documentElement.style.setProperty('--kb','0px')}},200)});
 function astScroll(){setTimeout(()=>{const e=document.getElementById('ast-end');if(e)e.scrollIntoView({block:'end',behavior:'smooth'})},60)}
 const astFmt=t=>{let h=esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');const ls=h.split('\n');let o='',ul=false;for(const l of ls){const m=l.match(/^\s*[-•]\s+(.*)/);if(m){if(!ul){o+='<ul>';ul=true}o+=`<li>${m[1]}</li>`}else{if(ul){o+='</ul>';ul=false}if(l.trim())o+=`<p>${l}</p>`}}return o+(ul?'</ul>':'')};
 const AST_FLOR=`<div class="ast-flor" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><radialGradient id="astg" cx="50%" cy="48%" r="60%"><stop offset="0" stop-color="#FFF3EA"/><stop offset="1" stop-color="#F8D9C6"/></radialGradient><filter id="astb"><feGaussianBlur stdDeviation="2.2"/></filter></defs>
