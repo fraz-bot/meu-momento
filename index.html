@@ -2581,7 +2581,7 @@ function hProx(){const D=hDias();if(!D)return null;const t=new Date(),tk=ymd(t);
   for(let i=0;i<8;i++){const d=new Date(t);d.setDate(t.getDate()+i);const c=hCare(d);if(!c.length)continue;const dk=ymd(d);if(i===0&&c.every(x=>hcDone(dk,x.k)))continue;return {i,d,n:HDL[hDIdx(d)]}}return null}
 function hWeekCells(){const t=new Date(),d0=new Date(t);d0.setDate(t.getDate()-hDIdx(t));const tk=ymd(t);
   return HDN.map((n,j)=>{const d=new Date(d0);d.setDate(d0.getDate()+j);const k=ymd(d),c=hCare(d),hs=c.length>0,hd=hs&&c.every(x=>hcDone(k,x.k)),sk=counted(k);return {n,k,hs,hd,sk,hoje:k===tk,fut:k>tk}})}
-function raTabs(a){const T=[['pele','Pele','face'],...(hairOk()?[['cabelo','Cabelo','hair']]:[]),...(bqDone()?[['corpo','Corpo','drop']]:[]),...(hairOk()?[['geral','Visão geral','routine']]:[])];
+function raTabs(a){const T=[['pele','Pele','face'],...(hairOk()?[['cabelo','Cabelo','hair']]:[]),...(bqDone()?[['corpo','Corpo','drop']]:[])];
   return `<div class="ra-tabs">${T.map(([k,l,i])=>`<button class="ra-tab ${a===k?'on':''}" data-ra="area|${k}">${ic(i in IC?i:'routine',18)}${l}</button>`).join('')}</div>`}
 function raHead(a){return `<div class="ra-h"><h1>Minha rotina</h1><p>Seus cuidados organizados por área, com a frequência ideal para você.</p>${raTabs(a)}</div>`}
 function raWeek(){const cs=hWeekCells();
@@ -2603,7 +2603,7 @@ function raOverview(){
    <button class="ra-li" data-ra="edit"><span><b>Editar rotina do cabelo</b><small>Defina os dias e cuidados</small></span>${ic('chev',18)}</button>
    <button class="ra-li" data-ra="sub|freq"><span><b>Ajustar frequência</b><small>Altere conforme sua rotina</small></span>${ic('chev',18)}</button>
    <button class="ra-li" data-ra="hist"><span><b>Histórico da rotina</b><small>Acompanhe sua consistência</small></span>${ic('chev',18)}</button></div>`}
-function raBack(t,to){return `<div class="ra-bar"><button class="ra-bk" data-ra="area|${to||'geral'}" aria-label="Voltar">${ic('back',20)}</button><h2>${t}</h2></div>`}
+function raBack(t,to){return `<div class="ra-bar"><button class="ra-bk" data-ra="area|${to||'pele'}" aria-label="Voltar">${ic('back',20)}</button><h2>${t}</h2></div>`}
 function raCabelo(){
   const r=S.hres,pl=hairPlan(r),sub=S.rtSub||'rot',D=hDias(),tk=ymd(new Date());
   const tabs=[['rot','Rotina','hair'],['freq','Frequência','clock'],['prod','Produtos','tag']].map(([k,l,i])=>`<button class="ra-tab ${sub===k?'on':''}" data-ra="sub|${k}">${ic(i,16)}${l}</button>`).join('');
@@ -2630,18 +2630,18 @@ function raCabelo(){
     const tier=S.tier;
     body=hero+`<div class="ra-c"><h3>Produtos da rotina capilar</h3><div class="ra-ls">${pl.produtos.map(x=>{const t=(HAIRT[x.k]||{})[tier];return `<div class="ra-it"><span class="ra-th">${gimg(x.k,'h:'+x.k,40)}</span><span><b>${esc(x.passo)}</b><small>${esc(x.busca)}</small><small class="ra-why">Por quê: ${esc(x.por)}</small>${t?`<small>Cerca de R$ ${t[0]} · dura ~${t[1]} ${t[1]===1?'mês':'meses'}</small>`:''}</span></div>`}).join('')}</div><p class="note">Os produtos capilares ficam separados dos faciais. Preços estimados.</p></div>`;
   }
-  return `<div class="ra-st">${raBack('Rotina do cabelo','geral')}<div class="ra-tabs">${tabs}</div>${body}</div>`}
+  return `<div class="ra-st">${raBack('Rotina do cabelo','pele')}<div class="ra-tabs">${tabs}</div>${body}</div>`}
 function raHist(){
   const t=new Date(),d0=new Date(t);d0.setDate(t.getDate()-hDIdx(t));let rows='';
   for(let w=0;w<4;w++){let pl=0,ok=0,care=0;const s=new Date(d0);s.setDate(d0.getDate()-7*w);
     for(let j=0;j<7;j++){const d=new Date(s);d.setDate(s.getDate()+j);if(ymd(d)>ymd(t))continue;const c=hCare(d);if(!c.length)continue;pl++;const k=ymd(d),f=c.filter(x=>hcDone(k,x.k)).length;care+=f;if(f===c.length)ok++}
     rows+=`<div class="ra-hr"><span>Semana de ${fmtD(ymd(s))}</span><b>${hDias()?`${ok} de ${pl||0} dias`:'—'}</b><small>${care} cuidados feitos</small></div>`}
-  return `<div class="ra-st">${raBack('Histórico da rotina','geral')}<div class="ra-c"><h3>Cabelo, últimas 4 semanas</h3>${hDias()?rows:'<p class="small muted">Monte seu cronograma capilar para acompanhar a consistência.</p>'}<p class="note">Conta como concluído o dia em que todos os cuidados programados foram marcados. O histórico da pele continua no acompanhamento da pele.</p></div></div>`}
-function viewRotinaHub(){let a=S.rtArea||'geral';if(!hairOk()&&(a==='geral'||a==='cabelo'||a==='hist'))a='pele';
+  return `<div class="ra-st">${raBack('Histórico da rotina','cabelo')}<div class="ra-c"><h3>Cabelo, últimas 4 semanas</h3>${hDias()?rows:'<p class="small muted">Monte seu cronograma capilar para acompanhar a consistência.</p>'}<p class="note">Conta como concluído o dia em que todos os cuidados programados foram marcados. O histórico da pele continua no acompanhamento da pele.</p></div></div>`}
+function viewRotinaHub(){let a=S.rtArea;if(!a||a==='geral')a='pele';if(!hairOk()&&(a==='cabelo'||a==='hist'))a='pele';
   if(a==='cabelo')return raCabelo();if(a==='hist')return raHist();
   if(a==='corpo'&&bqDone())return raHead('corpo')+raCorpo();
   if(a==='pele')return raHead('pele')+rotHome();
-  return raHead('geral')+raOverview()}
+  return raHead('pele')+rotHome()}
 function raAct(v){const [a,b]=v.split('|'),y=window.scrollY;
   if(a==='area'){S.rotFull=false;S.rit=null;S.rtArea=b;if(b==='cabelo')S.rtSub=S.rtSub||'rot';S.hEdit=null;render();window.scrollTo(0,0);return}
   if(a==='sub'){S.rtArea='cabelo';S.rtSub=b;render();window.scrollTo(0,0);return}
@@ -2822,6 +2822,7 @@ const VERD={serve:['ok','Combina com sua pele','checkc'],cuidado:['cuidado','Use
 /* ===== Scanner Pro (Pellie Pro): 1 identificar pela foto → 2 confirmar → 3 comparar com o perfil → 4 compatibilidade → 5 resultado → 6 ingredientes e alertas.
    Assinatura checada no servidor (função "analisar"). Compatibilidade calculada AQUI por 4 critérios documentados (PF_W), não é um número livre da IA. */
 const PF_W={tipo_pele:[30,'Tipo de pele'],necessidades:[30,'Suas necessidades'],tolerancia:[20,'Tolerância e segurança'],rotina:[20,'Encaixe na rotina']};
+const PF_CMP=['Lendo os ingredientes do produto','Checando ativos e possíveis irritantes','Cruzando com a sua análise de pele','Vendo como entra na sua rotina e prateleira','Montando a sua nota'],PF_CMP_T=[0,4,9,14,19];
 const PF_STEPS=['Identificando o produto pela fotografia','Lendo as informações da embalagem','Verificando os ingredientes','Comparando com o seu perfil','Preparando sua análise personalizada'];
 const PF_CLS={boa:['Boa compatibilidade','Recomendado para você','pc-ok'],mod:['Compatibilidade moderada','Pode funcionar, com ajustes','pc-md'],baixa:['Baixa compatibilidade','Não é o ideal para você agora','pc-lo']};
 let PFIV=null;
@@ -2831,9 +2832,9 @@ function pfScore(c,idr){const k=c.criterios||{};const parts=Object.keys(PF_W).ma
   let v=parts.reduce((a,p)=>a+p.pts,0);const pen=15*(c.evitar_encontrados||[]).length;v-=pen;const teto=!idr.lista_lida;if(teto)v=Math.min(v,80);v=Math.max(0,Math.min(100,v));
   return {v,cls:v>=70?'boa':v>=45?'mod':'baixa',parts,pen,teto}}
 function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'),a=document.getElementById('pf-arc');if(n)n.textContent=Math.round(f.p)+'%';if(a)a.setAttribute('stroke-dashoffset',(100-f.p).toFixed(1));
-  const ofs=f.st==='cmp'?3:0,cnt=f.st==='cmp'?2:3,cur=f.busy?Math.min(cnt-1,Math.floor(f.p/(92/cnt))):cnt;
+  const cm=f.st==='cmp',cnt=cm?PF_CMP.length:3,tt=cm&&f.t0?(Date.now()-f.t0)/1000:0,cur=f.busy?(cm?PF_CMP_T.filter(x=>tt>=x).length-1:Math.min(cnt-1,Math.floor(f.p/(92/cnt)))):cnt;
   document.querySelectorAll('#pf-steps li').forEach((li,i)=>{li.className=i<cur?'ok':i===cur?'now':''})}
-function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
+function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}if(f.st==='cmp'&&f.t0){const t=(Date.now()-f.t0)/1000;f.p=Math.max(f.p,Math.min(92,92*(1-Math.exp(-t/11))))}else f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
 async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='cabelo'&&!hairOk()){render();return}if(!S.prodFile||(S.pf&&S.pf.busy))return;if(!podeUsar('sc'))return limite();
   const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area};render();pfProg();
   try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
@@ -2845,7 +2846,7 @@ async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='ca
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;render()}
 async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,alt=f.sel>0?i.alternativas[f.sel-1]:null;
-  f.nome=(alt?alt.produto:i.produto)||'Produto';f.marca=(alt?alt.marca:i.marca)||'';if(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome)){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;render();pfProg();
+  f.nome=(alt?alt.produto:i.produto)||'Produto';f.marca=(alt?alt.marca:i.marca)||'';if(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome)){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();render();pfProg();
   const ar=f.area||'pele',dados={area:ar,...(PF_INS[ar]?{instrucao_area:PF_INS[ar]}:{}),produto:{nome:f.nome,marca:f.marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
     perfil:areaCtx(ar),produtos_que_ja_usa:temP().filter(x=>shCat(x)===(ar==='pele'?'rosto':ar)).map(x=>x.n).slice(0,12)};
   let ctx=JSON.stringify(dados);if(ctx.length>4900){dados.produto.texto_lido=[];dados.produto.ingredientes_lidos=i.ingredientes_lidos.slice(0,15);ctx=JSON.stringify(dados).slice(0,4900)}
@@ -2905,13 +2906,13 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
   const hd=`<div class="pf-hd">${voltar?`<button data-act="pf-back" aria-label="Voltar">${ic('back',22)}</button>`:'<span></span>'}<img src="pellie-logo.png" alt="Pellie"><button class="pf-sair" data-act="pf-close" aria-label="Sair da avaliação">Sair</button></div>`;
   let b='';
   if(f.st==='id'||f.st==='cmp'){const cmp=f.st==='cmp',up=S.photo||(S.fotos&&S.fotos.length?S.fotos[S.fotos.length-1].img:null);
-    const steps=PF_STEPS.slice(cmp?3:0,cmp?5:3);
+    const steps=cmp?PF_CMP:PF_STEPS.slice(0,3);
     b=f.err?`<div class="pf-proc"><span class="sig att" aria-hidden="true" style="margin:20px auto 4px"><i></i><i></i><b>${ic('alert',26)}</b></span><h1 class="pf-h">${cmp?'Não consegui comparar agora':'Não consegui identificar o produto'}</h1><p class="pf-s">${esc(f.err)}</p>
         <div class="pf-ft"><button class="btn obc" data-act="${cmp?'pf-ok':'pf-retake'}">${cmp?'Tentar de novo':'Tirar outra foto'}</button><button class="back" data-act="pf-close" style="padding:10px;color:var(--muted)">Fechar</button></div></div>`
       :`<div class="pf-proc"><div class="pf-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54" class="t"/><circle id="pf-arc" cx="60" cy="60" r="54" class="a" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${(100-f.p).toFixed(1)}" transform="rotate(-90 60 60)"/></svg>
         <div class="pf-core">${cmp?(up?`<img class="pf-face" src="${up}" alt="">`:`<span class="pf-ini">${esc((S.nome||'?').charAt(0).toUpperCase())}</span>`):`<img class="pf-flor" src="pellie-flor.png" alt="">`}</div></div>
-        <h1 class="pf-h">${cmp?'Comparando com '+AX[f.area||'pele'].t+'…':'Identificando seu produto…'}</h1><p class="pf-s">${cmp?`${nome?nome+', estou':'Estou'} cruzando o produto com a sua análise, a sua rotina e o que você já usa.`:'Isso leva apenas alguns segundos.'}</p>
-        ${cmp?`<div class="pf-fac">${AX[f.area||'pele'].fac.map((t,i)=>`<span style="--i:${i}">${t}</span>`).join('')}</div>`:''}
+        <h1 class="pf-h">${cmp?'Comparando com '+AX[f.area||'pele'].t+'…':'Identificando seu produto…'}</h1><p class="pf-s">${cmp?`${nome?nome+', estou':'Estou'} cruzando o produto com a sua análise, a sua rotina e o que você já usa. Leva cerca de 20 segundos.`:'Isso leva apenas alguns segundos.'}</p>
+        
         <ul class="pf-steps" id="pf-steps">${steps.map(t=>`<li><i>${ic('check',11)}</i>${t}</li>`).join('')}</ul><span class="pf-pct" id="pf-n" aria-live="polite">${Math.round(f.p)}%</span></div>`}
   else if(f.st==='conf'&&f.idr.real&&f.idr.real!==(f.area||'pele')){const re=f.idr.real,es=f.area||'pele',need=re==='cabelo'&&!hairOk()?'Antes, faça a análise do seu cabelo.':re==='corpo'&&!bqDone()?'Antes, responda o quiz rápido do corpo.':'';
      b=`<div class="pf-body pf-in"><span class="pf-ok q">${ic('alert',18)}Produto de outra área</span><div class="pf-photo">${ph}</div>
