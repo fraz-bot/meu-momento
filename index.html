@@ -5321,6 +5321,14 @@ function scanSheetUpd(){let el=document.getElementById('scansheet');if(!el){el=d
 {const r0=render;render=function(){const x=r0.apply(this,arguments);scanSheetUpd();return x}}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.scanSheet){S.scanSheet=false;render()}});
 
+
+/* Rotina acompanha a prateleira: produto novo que ela TEM entra na rotina do período certo (uma vez, sem mexer nos produtos antigos nem no que ela já ajustou) */
+const SH_RA_TS=1795637000000;
+function shAutoPer(i){if(i.cat==='cabelo'||i.cat==='corpo'||shCat(i)!=='rosto'||i.v==='evitar')return '';const k=shelfKey(i),R=getR(),inM=R.m.includes(k),inN=R.n.includes(k);
+  if(inM||inN)return (inM?'m':'')+(inN?'n':'');
+  if(S.gest==='sim'&&(k==='retinol'||k==='bha'))return '';if(S.fase==='barreira'&&['retinol','vitc','niacina','bha'].includes(k))return '';
+  return {fps:'m',vitc:'m',limpador:'mn',retinol:'n',bha:'n',niacina:'mn',hialu:'mn',calmante:'n',hidr:'mn'}[k]||''}
+function shSyncRot(){let n=0;try{S.shelf.forEach(i=>{if(i.ra||stOf(i)!=='tenho'||i.rot!==undefined)return;const t=+i.id;if(!(t>SH_RA_TS))return;i.rot=shAutoPer(i);i.ra=1;n++})}catch(e){}return n}
 /* ---------- Prateleira: modo edição (arrastar, remover, concluir). Estado temporário, nunca vai para a nuvem ---------- */
 const shEd={active:false,dragging:false,g:[],orig:[],removed:[],undo:false,confirm:null,busy:false};
 function shVisIds(){const F=S.shF||'todos',rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(S.shelf.map(i=>[i.id,i]));return shEd.g.filter(id=>{const i=by.get(id);return i&&!rm.has(id)&&stOf(i)!=='acabou'&&(F==='todos'||shCat(i)===F)})}
@@ -5333,7 +5341,7 @@ function shCommit(){if(shEd.busy)return;shEd.busy=true;
   const by=new Map(S.shelf.map(i=>[i.id,i])),rm=new Set(shEd.removed.map(r=>r.item.id)),out=[];
   shEd.g.forEach(id=>{const i=by.get(id);if(i&&!rm.has(id)){out.push(i);by.delete(id)}});S.shelf.forEach(i=>{if(by.has(i.id)&&!rm.has(i.id))out.push(i)});
   const mudou=out.length!==S.shelf.length||out.some((i,k)=>i!==S.shelf[k]);
-  if(mudou)S.shelf=out;shReset();hapt();if(mudou)toast('Prateleira atualizada',true);render()}
+  const tocouRot=shEd.removed.some(r=>r.item.st!=='quero'&&r.item.v!=='evitar');if(mudou)S.shelf=out;shReset();hapt();if(mudou)toast(tocouRot?'Prateleira e rotina atualizadas':'Prateleira atualizada',true);render()}
 function shAct(v){const [a,id,dx]=v.split('|');
   if(a==='edit'){shReset();shEd.active=true;shEd.g=S.shelf.map(i=>i.id);shEd.orig=shEd.g.slice();hapt();shRefresh()}
   else if(a==='done')shCommit();
@@ -5383,7 +5391,7 @@ document.addEventListener('touchmove',e=>{if(shEd.dragging)e.preventDefault()},{
 document.addEventListener('contextmenu',e=>{if(shEd.active&&e.target.closest&&e.target.closest('.shedit'))e.preventDefault()});
 document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escape'){if(shEd.dragging)shEnd(false);else if(shEd.confirm){shEd.confirm=null;shRefresh()}return}
   const n=e.target.closest&&e.target.closest('.shp');if(n&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();shAct('mv|'+n.dataset.shid+'|'+(e.key==='ArrowLeft'?-1:1))}});
-{const r1=render;render=function(){if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();const x=r1.apply(this,arguments);let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
+{const r1=render;render=function(){shSyncRot();if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();const x=r1.apply(this,arguments);let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
