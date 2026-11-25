@@ -1758,7 +1758,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -2082,10 +2082,10 @@ function cdoc(){return{
   async get(){const {data,error}=await sb.from('app_state').select('dados').eq('user_id',CL.uid).maybeSingle();if(error)throw error;return{exists:!!data,data:()=>data&&data.dados}},
   async set(v){const {error}=await sb.from('app_state').upsert({user_id:CL.uid,dados:v,atualizado_em:new Date().toISOString()});if(error)throw error},
   async delete(){const {error}=await sb.from('app_state').delete().eq('user_id',CL.uid);if(error)throw error}}}
-function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus'&&o[k]!==undefined)S[k]=o[k]})}
+function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fotos'&&k!=='avatar'&&k!=='plus'&&o[k]!==undefined)S[k]=o[k]})}
 async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&(!S.ob.done||S.ob.fresh)){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}if(S.ob)S.ob.fresh=false;}catch(e){}}
 function cloudPush(now){if(!CL.ok||!S.cloud||!S.plus)return;clearTimeout(CL.t);CL.t=setTimeout(()=>cloudNow().catch(()=>{}),now?0:3000)}
-async function cloudNow(){if(!S.plus)return;const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
+async function cloudNow(){if(!S.plus)return;const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='avatar'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
 const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie Pro.',limite_gratis:'Esse recurso é do Pellie Pro.',limite_mes:'Você chegou ao limite de análises deste mês.',limite_dia:'Você já usou o Pellie SOS 3 vezes hoje. Tente de novo amanhã.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
@@ -2203,7 +2203,7 @@ async function aceitarConsent(){
 }
 async function baixarDados(){
   try{
-    const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='plus')o[k]=S[k]});
+    const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='avatar'&&k!=='plus')o[k]=S[k]});
     let an=[];try{const {data}=await sb.from('analises').select('tipo,criado_em,resultado').order('criado_em');an=data||[]}catch(e){}
     const pf=AUTH.perfil||{};
     const pacote={app:'Pellie',gerado_em:new Date().toISOString(),conta:{email:AUTH.user.email,nome:pf.nome||null,plano:pf.plano||null,consentimento_versao:pf.consentimento_versao||null},respostas_e_dados_do_app:o,historico_de_analises:an,observacao:'As fotos de antes e depois ficam apenas no seu aparelho e não estão neste arquivo.'};
@@ -2224,7 +2224,7 @@ async function apagarConta(){
 function vPriv(){
   return `<div class="card">${head('lock','Privacidade e dados')}
     <p class="small" style="margin-top:6px">Você aceitou a versão <b>${esc((AUTH.perfil&&AUTH.perfil.consentimento_versao)||'')}</b> da política.</p>
-    <p class="small muted">Suas fotos de análise não ficam guardadas no servidor, só o resultado em texto. As fotos de antes e depois ficam apenas neste aparelho.</p></div>
+    <p class="small muted">Suas fotos de análise não ficam guardadas no servidor, só o resultado em texto. As fotos de antes e depois e uma miniatura do seu rosto (usada para personalizar telas) ficam apenas neste aparelho.</p></div>
   <a class="btn ghost" href="privacidade.html" target="_blank" rel="noopener" style="text-decoration:none;text-align:center">Ler Política de Privacidade e Termos</a>
   <button class="btn ghost" data-act="baixar-dados">${ic('down',18)}Baixar meus dados</button>
   ${S.askConta?`<div class="card" style="text-align:center;display:grid;gap:10px"><b>Apagar a conta e todos os dados?</b><span class="small muted">Isso apaga seu perfil, suas respostas, análises e histórico, na nuvem e neste aparelho. Não dá para desfazer.</span>
@@ -2905,7 +2905,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
   const voltar=['det','ing'].includes(f.st);
   const hd=`<div class="pf-hd">${voltar?`<button data-act="pf-back" aria-label="Voltar">${ic('back',22)}</button>`:'<span></span>'}<img src="pellie-logo.png" alt="Pellie"><button class="pf-sair" data-act="pf-close" aria-label="Sair da avaliação">Sair</button></div>`;
   let b='';
-  if(f.st==='id'||f.st==='cmp'){const cmp=f.st==='cmp',up=S.photo||(S.fotos&&S.fotos.length?S.fotos[S.fotos.length-1].img:null);
+  if(f.st==='id'||f.st==='cmp'){const cmp=f.st==='cmp',up=S.photo||S.avatar||(S.fotos&&S.fotos.length?S.fotos[S.fotos.length-1].img:null);
     const steps=cmp?PF_CMP:PF_STEPS.slice(0,3);
     b=f.err?`<div class="pf-proc"><span class="sig att" aria-hidden="true" style="margin:20px auto 4px"><i></i><i></i><b>${ic('alert',26)}</b></span><h1 class="pf-h">${cmp?'Não consegui comparar agora':'Não consegui identificar o produto'}</h1><p class="pf-s">${esc(f.err)}</p>
         <div class="pf-ft"><button class="btn obc" data-act="${cmp?'pf-ok':'pf-retake'}">${cmp?'Tentar de novo':'Tirar outra foto'}</button><button class="back" data-act="pf-close" style="padding:10px;color:var(--muted)">Fechar</button></div></div>`
@@ -3242,7 +3242,7 @@ async function pcLoop(){const run=++PCAM.run;const cv=document.createElement('ca
     }catch(e){}busy=false},220)}
 function pcSnap(){return new Promise(ok=>{const v=document.getElementById('pc-v');if(!v||!v.videoWidth)return ok(false);
   const c=document.createElement('canvas');c.width=Math.min(1080,v.videoWidth);c.height=Math.round(c.width*v.videoHeight/v.videoWidth);c.getContext('2d').drawImage(v,0,0,c.width,c.height);
-  const url=c.toDataURL('image/jpeg',.88);fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;S.result=S.result;S.err=null;S.photoQ=null;pcStop();render();peleQ(url);ok(true)}).catch(()=>ok(false))})}
+  const url=c.toDataURL('image/jpeg',.88);fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;avSet(url);S.result=S.result;S.err=null;S.photoQ=null;pcStop();render();peleQ(url);ok(true)}).catch(()=>ok(false))})}
 function plCapture(){
   const rs=S.result,q=S.photoQ,fotoOk=!!S.file,live=!S.photo&&!PCAM.fail&&!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia),pronto=fotoOk||(live&&PCAM.ready);
   const tips=[['face','Rosto limpo e sem maquiagem'],['sun','Boa iluminação (luz natural)'],['camera','Olhe para a câmera'],['scan','Mantenha o rosto centralizado']];
@@ -4394,7 +4394,7 @@ function meshDraw(lm){const c=document.getElementById('cam-mesh'),v=document.get
   const s=Math.max(w/v.videoWidth,h/v.videoHeight),ox=(w-v.videoWidth*s)/2,oy=(h-v.videoHeight*s)/2,X=i=>lm[i].x*v.videoWidth*s+ox,Y=i=>lm[i].y*v.videoHeight*s+oy,f=OBCAM.tri;
   x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=.7;x.beginPath();
   for(let i=0;i<f.length;i+=3){const a=f[i],b=f[i+1],e=f[i+2];x.moveTo(X(a),Y(a));x.lineTo(X(b),Y(b));x.lineTo(X(e),Y(e));x.lineTo(X(a),Y(a))}x.stroke()}
-function camFinish(url){camStop();fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;S.result=null;S.err=null;obIr('scan');render();startScan()})}
+function camFinish(url){camStop();fetch(url).then(r=>r.blob()).then(b=>{S.file=new File([b],'rosto.jpg',{type:'image/jpeg'});S.photo=url;avSet(url);S.result=null;S.err=null;obIr('scan');render();startScan()})}
 function camSync(){
   const on=!S.ob.done&&obStepAtual()==='camera';
   if(!on){if(OBCAM.stream||OBCAM.iv)camStop();OBCAM.fail=false;return}
@@ -5104,12 +5104,12 @@ document.addEventListener('change',e=>{
   }
   if((e.target.id==='ob-cam'||e.target.id==='ob-gal')&&e.target.files[0]){
     const f=e.target.files[0];S.file=f;S.result=null;S.err=null;camStop();
-    const r=new FileReader();r.onload=()=>{S.photo=r.result;obIr('scan');render();startScan()};r.readAsDataURL(f);return;
+    const r=new FileReader();r.onload=()=>{S.photo=r.result;avSet(r.result);obIr('scan');render();startScan()};r.readAsDataURL(f);return;
   }
   if((e.target.id==='foto-cam'||e.target.id==='foto-gal')&&e.target.files[0]){
     const f=e.target.files[0];
     S.file=f;S.result=null;S.err=null;S.photoQ=null;
-    const r=new FileReader();r.onload=()=>{S.photo=r.result;render();peleQ(r.result)};r.readAsDataURL(f);
+    const r=new FileReader();r.onload=()=>{S.photo=r.result;avSet(r.result);render();peleQ(r.result)};r.readAsDataURL(f);
   }
 });
 
@@ -5190,6 +5190,7 @@ Não faça diagnóstico e não prometa resultado. Se houver ativos fortes (retin
 function thumb(url,cb){const im=new Image();im.onload=()=>{const k=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement('canvas');
   c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
   let u='';try{u=c.toDataURL('image/jpeg',.8)}catch(e){}cb(u)};im.onerror=()=>cb('');im.src=url}
+function avSet(url){try{const im=new Image();im.onload=()=>{try{const m=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=200;c.getContext('2d').drawImage(im,(im.width-m)/2,Math.max(0,(im.height-m)/2-m*.08),m,m,0,0,200,200);S.avatar=c.toDataURL('image/jpeg',.82);save()}catch(e){}};im.src=url}catch(e){}}
 function addFoto(url,silent){
   thumb(url,u=>{
     if(!u)return toast('Não consegui guardar a foto');
