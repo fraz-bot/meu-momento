@@ -266,6 +266,8 @@
 .mx-pro p{margin:8px 0 14px;font-size:15px;opacity:.95;position:relative;z-index:1;max-width:70%}.mx-pb{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;background:#FFFDFB;color:#4B2919;border:0;border-radius:999px;padding:11px 18px;font:700 15px var(--f-body,inherit);cursor:pointer}
 .mx-ban{display:block;width:100%;padding:0;border:0;background:none;border-radius:26px;overflow:hidden;box-shadow:0 10px 26px rgba(75,41,25,.22);cursor:pointer}.mx-ban img{display:block;width:100%;height:auto}.mx-g{font-family:var(--f-display);font-size:21px;margin:10px 2px 0;color:var(--ol,#4B2919)}
 .mx-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.mx-t{grid-column:span 2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:98px;padding:12px 6px;background:#FFFDFB;border:1px solid #EFE4D9;border-radius:20px;box-shadow:0 5px 14px rgba(75,41,25,.06);color:var(--ol,#4B2919);cursor:pointer;font:inherit}.mx-t:nth-child(n+4){grid-column:span 3}.mx-t b{font-size:14px;line-height:1.2;font-weight:600}.mx-ti{color:#8A5A3E}.mx-t em{position:absolute;top:7px;right:8px;font-style:normal;font-size:10px;font-weight:700;color:#8A4F33;background:#F6E3D6;border-radius:999px;padding:2px 7px}
+.mx-more{margin-top:4px}.mx-more summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:18px;background:rgba(255,253,251,.7);border:1px solid #EFE4D9;font-weight:700;color:#6B5645;font-size:14px;margin-bottom:10px}.mx-more summary::-webkit-details-marker{display:none}.mx-more summary svg{transition:transform .2s}.mx-more[open] summary svg{transform:rotate(90deg)}
+.mx-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.mx-empty b{font-size:15px;color:#4A2A1E}.mx-empty span{font-size:13px;color:#7B6858}.mx-empty .btn{margin-top:4px}
 .mx-card{background:#FFFDFB;border:1px solid #EFE4D9;border-radius:22px;padding:2px 14px;box-shadow:0 6px 18px rgba(75,41,25,.06)}.mx-r{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #F0E6DC;padding:13px 0;color:var(--ol,#4B2919);font:inherit;cursor:pointer}.mx-card>.mx-r:first-child{border-top:0}.mx-ri{flex:none;width:42px;height:42px;border-radius:14px;background:#F6E8DE;color:#A8745A;display:grid;place-items:center}.mx-rt{flex:1;min-width:0}.mx-rt b{display:block;font-size:16px}.mx-rt span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mx-r>svg:last-child{color:var(--muted)}.mx-del{display:grid;gap:10px;text-align:center;padding:14px 0}
 
 /* ===== Pellie Assistant ===== */
@@ -1988,7 +1990,7 @@ function nextStep(){
 function renderChrome(){
   const on=!S.ob.done;
   document.querySelector('header').hidden=on||S.tab==='assistant';document.querySelector('nav').hidden=on;$('#ages').hidden=true;
-  $('#tag').innerHTML=on||!gameOn()?'':`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span><span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`;
+  $('#tag').innerHTML=on||!gameOn()?'':`${streak()>0?`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span>`:''}${(S.xp||0)>0?`<span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`:''}`;
   if(!on)$('#tag').innerHTML+=`<button class="pill hmais" data-tab="mais" aria-label="Ajustes" ${S.tab==='mais'?'aria-current="page"':''}>${ic('gear',17)}<span>Ajustes</span></button>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
   $('#nav').innerHTML=TABS.map(([k,l])=>k==='scan'?SCAN_BTN:`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
@@ -3215,10 +3217,10 @@ function viewHoje(){
   ${rit}
   ${cgC}
   ${avisos}
-  <button class="hj-sos" data-go="sos"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Pellie SOS</b><small>Orientação para necessidades pontuais da sua pele.</small></span>${ic('chev',18)}</button>
   ${check}
   <div class="hj-q4">${[['leaf','Análise da pele','pele|analise'],['hair','Análise do cabelo','cabelo'],['bag','Meus produtos','produtos|shelf'],['medal','Minhas conquistas','mais|medalhas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,28)}</span><b>${t}</b></button>`).join('')}</div>
-  <button class="hj-pg" data-go="mais|medalhas" aria-label="Seu progresso da semana. Ver medalhas e conquistas"><span class="hj-ring" style="--p:${pct}"><b>${pct}%</b></span><span class="hj-cx"><b>Seu progresso da semana</b><small>${meta} de 5 dias${meta<5?'':' · meta batida'} · ${nb} de ${BADGES.length} conquistas</small><span class="hj-dots" role="group" aria-label="Sua semana">${days.map(d=>`<i class="${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}" title="${d.w}">${d.on?ic('check',11):''}</i>`).join('')}</span></span>${ic('chev',16)}</button>
+  <button class="hj-sos" data-go="sos"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Pellie SOS</b><small>Orientação para necessidades pontuais da sua pele.</small></span>${ic('chev',18)}</button>
+  ${(meta>0||nb>0||st>0)?`<button class="hj-pg" data-go="mais|medalhas" aria-label="Seu progresso da semana. Ver medalhas e conquistas"><span class="hj-ring" style="--p:${pct}"><b>${pct}%</b></span><span class="hj-cx"><b>Seu progresso da semana</b><small>${meta} de 5 dias${meta<5?'':' · meta batida'} · ${nb} de ${BADGES.length} conquistas</small><span class="hj-dots" role="group" aria-label="Sua semana">${days.map(d=>`<i class="${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}" title="${d.w}">${d.on?ic('check',11):''}</i>`).join('')}</span></span>${ic('chev',16)}</button>`:''}
   ${dicaCard()}
   ${hjx('at','Ferramentas e atalhos','Quiz, dicas, horários, números e conquistas',`<div class="hj-q">${[['spot','Quiz da pele','mais|quiz'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div><div class="hj-tl" style="margin-top:10px">${tools.map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span>${ic(i_,22)}</span>${t}</button>`).join('')}</div>${nums?`<div class="hj-nm" style="margin-top:10px">${nums.map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}<div style="margin-top:10px"><button class="hj-cq" data-go="mais|medalhas"><div class="hj-cqh"><b>Conquistas</b><span>${nb} de ${BADGES.length}</span></div>
     <div class="hj-cqm">${got.slice(0,6).map(b=>`<span class="on" title="${esc(b.n)}">${ic(b.i,18)}</span>`).join('')}${nxtB?`<span class="nx" title="${esc(nxtB.n)}">${ic('lock',16)}</span>`:''}</div>
@@ -3363,7 +3365,7 @@ function viewEvo(){
   return `<div class="stack pl-in"><div class="pl-card"><div class="pl-ct"><b>Evolução da pele</b></div>
     <div class="pl-fl" role="group" aria-label="Período">${[7,30,90].map(n=>`<button data-evf="${n}" aria-pressed="${f===n}">${n} dias</button>`).join('')}</div>
     <div class="pl-chips" role="group" aria-label="Indicador">${PL_IND.map(x=>`<button data-evk="${x[0]}" aria-pressed="${x[0]===k}">${x[1]}</button>`).join('')}</div>
-    ${W.length?plChart(W,k,inv):`<p class="small muted" style="margin:12px 0">${A.length?`Nenhuma análise nos últimos ${f} dias.`:'Faça a primeira análise da pele para começar o gráfico.'}</p>`}
+    ${W.length?plChart(W,k,inv):A.length?`<p class="small muted" style="margin:12px 0">Nenhuma análise nos últimos ${f} dias.</p>`:`<div class="mx-empty"><b>Sua evolução começa aqui</b><span>Faça a primeira análise e o gráfico aparece.</span><button class="btn" data-go="pele|analise">Analisar minha pele</button></div>`}
     ${W.length===1?`<p class="small muted">Só uma análise neste período. Com a próxima, a linha aparece.</p>`:''}
     <p class="note">Só aparecem análises realmente feitas. ${inv?'Hidratação: quanto maior, melhor.':'Aqui, nota menor significa menos intensidade.'}</p></div>
   ${W.length>=2?`<div class="pl-card"><div class="pl-ct"><b>Seus indicadores</b><small>${fmtD(fst.d)} → ${fmtD(lst.d)}</small></div>${PL_IND.map(([kk,l,i_,iv])=>`<button class="pl-ev" data-evk="${kk}"><span class="pl-ii">${ic(i_,18)}</span><b>${l}</b><span>${Math.round(fst[kk])} → ${Math.round(lst[kk])}</span>${plDelta(lst[kk],fst[kk],iv)}</button>`).join('')}</div>`:''}
@@ -3466,21 +3468,25 @@ function viewMais(){
     ${S.plus?`<button class="mx-ban" data-mais="plano" aria-label="Pellie Pro ativo. Gerenciar assinatura"><img src="img/banner-pro.webp" alt="" width="1000" height="333"></button>`:`<div class="mx-pro"><div class="mx-pt"><span class="mx-pi">${ic('crown',34)}</span><b>Pellie Pro</b><span class="mx-st ${S.plus?'':'off'}">${S.plus?'Ativo':'Não assinado'}</span></div>
       <p>${S.plus?'Sua experiência completa de cuidados.':'Desbloqueie a experiência completa de cuidados.'}</p>
       <button class="mx-pb" data-mais="plano">Assinar o Pellie Pro${ic('chev',16)}</button></div>`}
-    <h3 class="mx-g">Sua experiência</h3>
-    <button class="mx-r" style="margin-bottom:10px" data-act="tour-abrir"><span class="mx-ri">${ic('sparkle',20)}</span><span class="mx-rt"><b>Rever o tour do Pellie</b><span>Como usar cada área do app</span></span>${ic('chev',18)}</button>
-    <div class="mx-grid">${tl('dicas','sparkle','Dicas para a pele')}${tl('medalhas','star','Medalhas e conquistas')}${tl('tema','sparkle','Aparência')}${tl('quiz','spot','Quiz da pele')}${tl('fase','cal','Fase da pele')}</div>
-    <h3 class="mx-g">Configurações dos cuidados</h3>
+    <h3 class="mx-g">Seus cuidados</h3>
     <div class="mx-card">${xr('lembretes','bell','Horários e notificações',`Manhã ${S.rem.m} · Noite ${S.rem.n} · avisos ${S.notif&&S.notif.on?'ligados':'desligados'}`)}
       ${xr('ingredientes','leaf','Meus ingredientes',`${S.ing.evitar.length} evito · ${S.ing.fav.length} favoritos`)}
+      ${xr('fase','cal','Fase da pele','Ajusta a rotina ao seu momento')}
       ${xr('conflitos','alert','Combinações de ativos',nc?`${nc} para cuidar`:'Tudo certo')}</div>
     <h3 class="mx-g">Acompanhamento</h3>
-    <div class="mx-card">${xr('gastos','coin','Gastos do mês',brl(custoTier(S.tier))+' na rotina')}
+    <div class="mx-card">${xr('medalhas','star','Medalhas e conquistas','Seu progresso')}
+      ${xr('gastos','coin','Gastos do mês',brl(custoTier(S.tier))+' na rotina')}
       ${xr('relatorio','file','Relatório para a consulta','Resumo para o dermatologista')}</div>
     <h3 class="mx-g">Sua conta</h3>
     <div class="mx-card">${xr('conta','cloud','Conta e nuvem',S.cloud?'Sincronizando':'Só neste aparelho')}
       ${xr('privacidade','lock','Privacidade e dados','Política, baixar dados, apagar conta')}
       ${xr('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
       ${dels}</div>
+    <details class="mx-more"><summary>Mais do Pellie${ic('chev',16)}</summary>
+      <div class="mx-card">${xr('tema','sparkle','Aparência','Cores do app')}
+      ${xr('dicas','sparkle','Dicas para a pele','Para ler com calma')}
+      ${xr('quiz','spot','Quiz da pele','Descubra mais sobre a sua pele')}
+      ${xr('','sparkle','Rever o tour do Pellie','Como usar cada área do app','data-act="tour-abrir"')}</div></details>
     <div class="mx-card">${xr('','logout','Sair do aplicativo',AUTH.user?'Voltar para a tela de login':'Sair do modo visitante','data-act="sair-app"')}</div></div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
   const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Pellie Pro','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
