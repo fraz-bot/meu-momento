@@ -266,6 +266,26 @@
 .mx-pro p{margin:8px 0 14px;font-size:15px;opacity:.95;position:relative;z-index:1;max-width:70%}.mx-pb{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;background:#FFFDFB;color:#4B2919;border:0;border-radius:999px;padding:11px 18px;font:700 15px var(--f-body,inherit);cursor:pointer}
 .mx-ban{display:block;width:100%;padding:0;border:0;background:none;border-radius:26px;overflow:hidden;box-shadow:0 10px 26px rgba(75,41,25,.22);cursor:pointer}.mx-ban img{display:block;width:100%;height:auto}.mx-g{font-family:var(--f-display);font-size:21px;margin:10px 2px 0;color:var(--ol,#4B2919)}
 .mx-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.mx-t{grid-column:span 2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:98px;padding:12px 6px;background:#FFFDFB;border:1px solid #EFE4D9;border-radius:20px;box-shadow:0 5px 14px rgba(75,41,25,.06);color:var(--ol,#4B2919);cursor:pointer;font:inherit}.mx-t:nth-child(n+4){grid-column:span 3}.mx-t b{font-size:14px;line-height:1.2;font-weight:600}.mx-ti{color:#8A5A3E}.mx-t em{position:absolute;top:7px;right:8px;font-style:normal;font-size:10px;font-weight:700;color:#8A4F33;background:#F6E3D6;border-radius:999px;padding:2px 7px}
+/* Prateleira: modo edição */
+.shh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 6px;min-height:44px}.shh-t b{font-size:15px;color:#4A2A1E}
+.shh-b{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #E6D3BF;background:rgba(255,253,251,.75);color:#6B4A36;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s,color .18s,border-color .18s;-webkit-tap-highlight-color:transparent}
+.shh-b.on{background:#6A3F2B;border-color:#6A3F2B;color:#fff}
+.shh-i{display:flex;align-items:center;gap:8px;margin:0 4px 6px;font-size:13px;color:#7B6858}
+.shedit .sbot{animation:none}.shedit .shp{position:relative;width:76px;max-width:100%;min-height:84px;display:grid;place-items:end center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:grab;outline:none}
+.shedit .shp:focus-visible{outline:2px solid #6A3F2B;outline-offset:2px;border-radius:14px}
+.shedit .shp img{pointer-events:none;-webkit-user-drag:none}.shpi{transform-origin:50% 60%;animation:pellieShelfWiggle .32s ease-in-out infinite}.shedit .sl:nth-child(even) .shpi{animation-delay:-.16s}
+@keyframes pellieShelfWiggle{0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.4deg)}}
+.shp.is-dragging{border:1.5px dashed #C9917A;border-radius:16px;background:rgba(246,230,208,.55)}.shp.is-dragging .shpi,.shp.is-dragging .shx{opacity:0;animation:none}
+.shx{position:absolute;left:0;top:0;width:26px;height:26px;padding:0;border-radius:50%;border:1.5px solid #FFF8EE;background:#F3DFC4;color:#6A3F2B;display:grid;place-items:center;box-shadow:0 3px 8px rgba(74,42,30,.25);cursor:pointer;z-index:2}
+.shx::before{content:'';position:absolute;inset:-10px}.shx svg{width:13px;height:13px;stroke-width:2.4}
+.shp.shgone{transition:transform .2s ease,opacity .2s ease;transform:scale(.6);opacity:0}
+.shclone{position:fixed;left:0;top:0;z-index:80;pointer-events:none;display:grid;place-items:end center;will-change:transform;filter:drop-shadow(0 16px 14px rgba(60,30,20,.30))}.shclone .shpi{animation:none}.shclone img{pointer-events:none}
+body.sh-drag{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.shundo{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 8px;padding:8px 8px 8px 14px;border-radius:14px;background:rgba(255,253,251,.85);border:1px solid #EFE4D9;font-size:13px;color:#5B4636}.shundo button{min-height:40px;padding:0 14px;border-radius:999px;border:0;background:#F3DFC4;color:#6A3F2B;font:inherit;font-weight:700;cursor:pointer}
+.shm-bg{position:fixed;inset:0;z-index:90;background:rgba(60,35,25,.38);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.shm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:91;width:min(88vw,340px);background:#FFFDFB;border-radius:24px;padding:22px 20px 18px;box-shadow:0 24px 60px rgba(60,30,20,.35);text-align:center;display:grid;gap:8px}.shm h3{font-size:18px;color:#4A2A1E;margin:0}.shm p{margin:0;font-size:14px;color:#6B5645}.shm-w{display:flex;gap:8px;align-items:flex-start;text-align:left;background:#FBEFE3;border-radius:12px;padding:10px 12px;color:#7A4A33!important}
+.shm-b{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+@media(prefers-reduced-motion:reduce){.shpi{animation:none}.shp.shgone{transition:none}}
 .mx-more{margin-top:4px}.mx-more summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:18px;background:rgba(255,253,251,.7);border:1px solid #EFE4D9;font-weight:700;color:#6B5645;font-size:14px;margin-bottom:10px}.mx-more summary::-webkit-details-marker{display:none}.mx-more summary svg{transition:transform .2s}.mx-more[open] summary svg{transform:rotate(90deg)}
 .mx-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.mx-empty b{font-size:15px;color:#4A2A1E}.mx-empty span{font-size:13px;color:#7B6858}.mx-empty .btn{margin-top:4px}
 .mx-card{background:#FFFDFB;border:1px solid #EFE4D9;border-radius:22px;padding:2px 14px;box-shadow:0 6px 18px rgba(75,41,25,.06)}.mx-r{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #F0E6DC;padding:13px 0;color:var(--ol,#4B2919);font:inherit;cursor:pointer}.mx-card>.mx-r:first-child{border-top:0}.mx-ri{flex:none;width:42px;height:42px;border-radius:14px;background:#F6E8DE;color:#A8745A;display:grid;place-items:center}.mx-rt{flex:1;min-width:0}.mx-rt b{display:block;font-size:16px}.mx-rt span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mx-r>svg:last-child{color:var(--muted)}.mx-del{display:grid;gap:10px;text-align:center;padding:14px 0}
@@ -1648,6 +1668,7 @@ button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;widt
 <script>
 const IC={
   x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  grip:'<g fill="currentColor" stroke="none"><circle cx="7" cy="7" r="1.6"/><circle cx="12" cy="7" r="1.6"/><circle cx="17" cy="7" r="1.6"/><circle cx="7" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="17" cy="12" r="1.6"/><circle cx="7" cy="17" r="1.6"/><circle cx="12" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></g>',
   hair:'<path d="M6 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M12 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M18 3c3 3-3 6 0 9s-3 6 0 9"/>',
   face:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 10h.01M15 10h.01"/>',
   routine:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>',
@@ -2771,19 +2792,25 @@ function pkDet(k){
   <div class="pl-chips" role="group" aria-label="Seção">${[['sobre','Sobre'],['ing','Ingredientes'],['uso','Como usar']].map(([x,l])=>`<button data-pk="tab|${x}" aria-pressed="${tb===x}">${l}</button>`).join('')}</div>
   ${body}
   ${ja?`<div class="pf-shok">${ic('checkc',18)}<span>Já está na sua prateleira</span></div>`:`<button class="btn pl-go" data-pk="want|${k}">${ic('tag',18)}Quero comprar · guardar na prateleira</button>`}</div>`}
-function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');const per=4,n=it.length,rows=Math.max(2,Math.ceil((n+1)/per));let h='';
+function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');
+  const ed=shEd.active;if(ed){const rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(it.map(x=>[x.id,x])),vis=[];shEd.g.forEach(id=>{if(by.has(id)&&!rm.has(id))vis.push(by.get(id))});it=vis}
+  const per=4,n=it.length,rows=Math.max(2,Math.ceil((n+1)/per));let h='';
   for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
-    if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>`;
+    if(x&&ed){const nm=esc(x.n);c+=`<div class="sbot sl"><div class="shp${stOf(x)==='quero'?' want':''}" data-shid="${esc(x.id)}" tabindex="0" role="group" aria-label="${nm}, posição ${idx+1} de ${n}"><div class="shpi">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>
+      <button class="shx" data-shed="x|${esc(x.id)}" aria-label="Remover ${nm} da prateleira">${ic('x',13)}</button>
+      <button class="sr" data-shed="mv|${esc(x.id)}|-1" aria-label="Mover ${nm} para trás">Mover para trás</button><button class="sr" data-shed="mv|${esc(x.id)}|1" aria-label="Mover ${nm} para frente">Mover para frente</button></div></div>`}
+    else if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>`;
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
-  return `<div class="shelfv" role="img" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div>`}
+  const head=(n||ed)?`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':`<b>${n} ${n===1?'produto':'produtos'}</b>`}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<button class="shh-b" data-shed="edit">${ic('edit',15)}Editar</button>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reordenar.</p>`:''}`:'';
+  return `<div class="shelfv${ed?' shedit':''}" role="group" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${head}${ed&&shEd.undo?`<div class="shundo" role="status"><span>Produto removido da prateleira.</span><button data-shed="undo">Desfazer</button></div>`:''}${h}</div>`}
 /* "Para que serve": usa a explicação do scanner quando o produto foi escaneado; senão, só tipos que o nome deixa claros. Sem evidência, não mostra nada. */
 const SH_PU=[[/protetor|fps|solar|sunscreen/,'Protege a pele dos raios UV, ajudando a prevenir manchas e o envelhecimento.'],[/limpa|espuma de limpeza|sabonete|micelar|cleans/,'Remove sujeira, oleosidade e resíduos do dia sem agredir a pele.'],[/vitamina c|vit\.? ?c\b|ascorb/,'Antioxidante que ajuda a uniformizar o tom e dar luminosidade.'],[/niacin/,'Ajuda a controlar a oleosidade e a aparência dos poros.'],[/retinol|retinoico|retinal/,'Estimula a renovação da pele e suaviza linhas finas.'],[/hialur/,'Atrai e retém água, deixando a pele hidratada e macia.'],[/salic|glicolic|\bbha\b|\baha\b|peeling|esfoli/,'Esfolia suavemente e ajuda a desobstruir os poros.'],[/calmante|cica|centella|panthenol|pantenol/,'Ajuda a acalmar a vermelhidão e a sensibilidade da pele.'],[/hidratante|creme|locao|moistur|ceramid/,'Hidrata e ajuda a reforçar a barreira da pele.']];
 function shPurp(i){const sn=typeof cgSnap==='function'?cgSnap(i):null,f=sn&&sn.cmp&&sn.cmp.finalidade;if(f)return String(f);
   if(i.cat==='cabelo')return '';const t=cgNorm((i.n||'')+' '+(i.tp||''));const m=SH_PU.find(([r])=>r.test(t));return m?m[1]:''}
 function viewShelf(){
-  const all=S.shelf,F=S.shF||'todos',it=all.filter(i=>F==='todos'||shCat(i)===F),soon=shelfSoon().length,nT=temP().length,nQ=all.filter(i=>stOf(i)==='quero').length;S.shOpen=S.shOpen||{};
+  const rmS=new Set(shEd.active?shEd.removed.map(r=>r.item.id):[]),all=S.shelf.filter(i=>!rmS.has(i.id)),F=S.shF||'todos',it=all.filter(i=>F==='todos'||shCat(i)===F),soon=shelfSoon().length,nT=temP().length,nQ=all.filter(i=>stOf(i)==='quero').length;S.shOpen=S.shOpen||{};
   const row=i=>{const f=shelfInfo(i),tm=stOf(i)==='tenho',op=!!S.shOpen[i.id],st=stOf(i),ab=i.aberto?i.aberto.split('-').reverse().slice(0,2).join('/'):'';
     return `<div class="pk-sr${tm?'':' gone'}"><button class="pk-sh" data-pk="sh|${i.id}" aria-expanded="${op}">${FOTOS?shelfThumb(i):''}${shTh(i,52)}<span class="si"><b>${esc(i.n)}</b><em class="pk-st ${st}">${{tenho:'Em uso',quero:'Quero comprar',acabou:'Acabou'}[st]}</em>
       <small>${tm?`${ab?'Abriu em '+ab+' · ':''}<span class="exp ${f.cls}">${f.txt}</span>`:st==='quero'?'Na lista de compras':'Acabou'}</small></span>${ic('chev',16)}</button>
@@ -2798,7 +2825,7 @@ function viewShelf(){
     ${shelfViz(it)}
     ${it.length?`<div class="pk-sl">${it.map(row).join('')}</div><p class="note">Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>`
       :`<div class="pl-card" style="text-align:center"><h3>${all.length?'Nenhum produto nesta categoria':'Sua prateleira está vazia'}</h3><p class="small muted" style="margin-top:4px">${all.length?'Escolha outra categoria acima.':'Escaneie um produto e guarde aqui.'}</p></div>`}
-    ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`}
+    ${guia('Adicionar um produto','Escanear','data-go="escanear"')}${shModal()}</div>`}
 function viewProdutos(){
   if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack">${pkHead('Minha prateleira','Guarde os seus produtos.')}${paywall('Prateleira','tag','Guarde os seus produtos e acompanhe a validade.')}</div>`;
   if(S.prodSub==='shelf')return viewShelf();
@@ -2816,7 +2843,7 @@ function pkAct(v){const [a,n]=v.split('|');
   else if(a==='back'){S.pkDet=null}
   else if(a==='tab'){S.pkT=n}
   else if(a==='cf'){S.pkF=n}
-  else if(a==='shf'){S.shF=n}
+  else if(a==='shf'){if(shEd.dragging)return;S.shF=n}
   else if(a==='sh'){S.shOpen=S.shOpen||{};S.shOpen[n]=!S.shOpen[n]}
   else if(a==='want'){const t=P[n].t[(S.ptier&&S.ptier[n])||S.tier],nome=(t[3]||[])[0]||P[n].n;if(!S.shelf.some(i=>i.n===nome)){S.shelf.unshift({id:String(Date.now()),n:nome,tp:P[n].n,aberto:hoje(),meses:12,st:'quero'});toast('Na sua lista de compras')}}
   const y=(a==='cf'||a==='shf'||a==='sh'||a==='tab')?window.scrollY:0;render();window.scrollTo(0,y)}
@@ -4998,6 +5025,7 @@ document.addEventListener('click',e=>{
   else if(d.hrit){S.tab='rotina';S.rotFull=false;S.period=d.hrit;S.perMan=true;ritAct('start|'+d.hrit)}
   else if(d.rper){S.period=d.rper;S.perMan=true;render()}
   else if(d.shdone){const [per,id]=d.shdone.split('|');const l=dayLog(),a=l['x'+per]||(l['x'+per]=[]),ix=a.indexOf(id);if(ix>=0)a.splice(ix,1);else a.push(id);const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.shed){shAct(d.shed)}
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
   else if(d.reg){const [k,v]=d.reg.split('|');S.reg[k]=S.reg[k]===v?null:v;document.querySelectorAll('[data-reg^="'+k+'|"]').forEach(b=>b.setAttribute('aria-pressed',String(S.reg[k]===b.dataset.reg.split('|')[1])))}
   else if(d.regc){S.reg.ciclo=!S.reg.ciclo;document.querySelector('[data-regc]').setAttribute('aria-pressed',String(S.reg.ciclo))}
@@ -5292,6 +5320,70 @@ function scanSheetUpd(){let el=document.getElementById('scansheet');if(!el){el=d
   const on=!!(S.scanSheet&&S.ob.done);const was=el.dataset.on==='1';if(on===was)return;el.dataset.on=on?'1':'0';el.innerHTML=on?scanSheetHtml():'';if(on){const f=el.querySelector('.scs-o');if(f)try{f.focus({preventScroll:true})}catch(e){}}}
 {const r0=render;render=function(){const x=r0.apply(this,arguments);scanSheetUpd();return x}}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.scanSheet){S.scanSheet=false;render()}});
+
+/* ---------- Prateleira: modo edição (arrastar, remover, concluir). Estado temporário, nunca vai para a nuvem ---------- */
+const shEd={active:false,dragging:false,g:[],orig:[],removed:[],undo:false,confirm:null,busy:false};
+function shVisIds(){const F=S.shF||'todos',rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(S.shelf.map(i=>[i.id,i]));return shEd.g.filter(id=>{const i=by.get(id);return i&&!rm.has(id)&&stOf(i)!=='acabou'&&(F==='todos'||shCat(i)===F)})}
+function shApplyVis(vis){const set=new Set(vis);let k=0;shEd.g=shEd.g.map(id=>set.has(id)?vis[k++]:id)}
+function shReset(){shEd.active=false;shEd.dragging=false;shEd.g=[];shEd.orig=[];shEd.removed=[];shEd.undo=false;shEd.confirm=null;shEd.busy=false}
+function shRefresh(){const y=window.scrollY;render();window.scrollTo(0,y)}
+function shModal(){if(!shEd.active||!shEd.confirm)return '';const i=S.shelf.find(x=>x.id===shEd.confirm);if(!i)return '';const rot=String(i.rot||'');
+  return `<div class="shm-bg" data-shed="cancelx"></div><div class="shm" role="dialog" aria-modal="true" aria-labelledby="shm-t"><h3 id="shm-t">Remover da prateleira?</h3><p><b>${esc(i.n)}</b></p><p>Você poderá adicionar este produto novamente depois.</p>${rot?`<p class="shm-w">${ic('alert',16)}Este produto está presente na sua rotina de cuidados.</p>`:''}<div class="shm-b"><button class="btn ghost" data-shed="cancelx">Cancelar</button><button class="btn" data-shed="confirmx" id="shm-ok">Remover</button></div></div>`}
+function shCommit(){if(shEd.busy)return;shEd.busy=true;
+  const by=new Map(S.shelf.map(i=>[i.id,i])),rm=new Set(shEd.removed.map(r=>r.item.id)),out=[];
+  shEd.g.forEach(id=>{const i=by.get(id);if(i&&!rm.has(id)){out.push(i);by.delete(id)}});S.shelf.forEach(i=>{if(by.has(i.id)&&!rm.has(i.id))out.push(i)});
+  const mudou=out.length!==S.shelf.length||out.some((i,k)=>i!==S.shelf[k]);
+  if(mudou)S.shelf=out;shReset();hapt();if(mudou)toast('Prateleira atualizada',true);render()}
+function shAct(v){const [a,id,dx]=v.split('|');
+  if(a==='edit'){shReset();shEd.active=true;shEd.g=S.shelf.map(i=>i.id);shEd.orig=shEd.g.slice();hapt();shRefresh()}
+  else if(a==='done')shCommit();
+  else if(a==='x'){shEd.confirm=id;shRefresh();setTimeout(()=>{const b=document.getElementById('shm-ok');if(b)try{b.focus({preventScroll:true})}catch(e){}},30)}
+  else if(a==='cancelx'){shEd.confirm=null;shRefresh()}
+  else if(a==='confirmx'){const i=S.shelf.find(x=>x.id===shEd.confirm);if(i){const nd=document.querySelector('.shp[data-shid="'+shEd.confirm+'"]');shEd.removed.push({item:i,idx:shEd.g.indexOf(i.id)});shEd.undo=true;shEd.confirm=null;hapt();
+      if(nd){nd.classList.add('shgone');setTimeout(shRefresh,200)}else shRefresh()}else{shEd.confirm=null;shRefresh()}}
+  else if(a==='undo'){const r=shEd.removed.pop();if(r)shEd.undo=shEd.removed.length>0;shRefresh()}
+  else if(a==='mv'){const vis=shVisIds(),k=vis.indexOf(id),t=k+(+dx);if(k<0||t<0||t>=vis.length)return;vis.splice(t,0,vis.splice(k,1)[0]);shApplyVis(vis);hapt();shRefresh();setTimeout(()=>{const e=document.querySelector('.shp[data-shid="'+id+'"]');if(e)try{e.focus({preventScroll:true})}catch(_){}},30)}}
+/* arrasto com Pointer Events: o elemento arrastado vira o espaço tracejado e uma cópia flutuante segue o dedo */
+const shDr={id:null,host:null,pid:null,sx:0,sy:0,x:0,y:0,t:null,clone:null,vis:[],pre:[],last:-1,raf:0,scroll:0,off:{x:0,y:0},ok:false};
+function shRects(){const h=shDr.host;return [...h.querySelectorAll('.sbot')].map(e=>e.getBoundingClientRect())}
+function shNode(id){return shDr.host.querySelector('.shp[data-shid="'+id+'"]')}
+function shLayout(anim){const h=shDr.host,sl=[...h.querySelectorAll('.sbot.sl')],red=matchMedia('(prefers-reduced-motion: reduce)').matches,first=new Map();
+  shDr.vis.forEach(id=>{const n=shNode(id);if(n)first.set(id,n.getBoundingClientRect())});
+  shDr.vis.forEach((id,i)=>{const n=shNode(id);if(n&&sl[i]&&n.parentNode!==sl[i])sl[i].appendChild(n)});
+  if(!anim||red)return;
+  shDr.vis.forEach(id=>{const n=shNode(id),f=first.get(id);if(!n||!f||id===shDr.id)return;const l=n.getBoundingClientRect(),dx=f.left-l.left,dy=f.top-l.top;if(!dx&&!dy)return;
+    n.style.transition='none';n.style.transform=`translate(${dx}px,${dy}px)`;void n.offsetWidth;n.style.transition='transform .2s cubic-bezier(.2,.8,.2,1)';n.style.transform='';setTimeout(()=>{n.style.transition=''},230)})}
+function shTarget(){const R=shRects(),n=shDr.vis.length,cx=shDr.x,cy=shDr.y;let best=0,bd=1e9;R.forEach((r,i)=>{const d=Math.hypot(cx-(r.left+r.width/2),(cy-(r.top+r.height/2))*1.15);if(d<bd){bd=d;best=i}});return Math.min(best,n-1)}
+function shFrame(){shDr.raf=0;if(!shDr.clone)return;shDr.clone.style.transform=`translate(${shDr.x-shDr.off.x}px,${shDr.y-shDr.off.y}px) scale(1.1)`;
+  const t=shTarget(),cur=shDr.vis.indexOf(shDr.id);if(t!==cur){shDr.vis.splice(t,0,shDr.vis.splice(cur,1)[0]);shLayout(true);hapt()}}
+function shAuto(){if(!shDr.clone)return;const H=innerHeight,top=90,bot=H-130;let v=0;if(shDr.y<top)v=-Math.ceil((top-shDr.y)/6);else if(shDr.y>bot)v=Math.ceil((shDr.y-bot)/6);
+  if(v){window.scrollBy(0,Math.max(-16,Math.min(16,v)));if(!shDr.raf)shDr.raf=requestAnimationFrame(shFrame)}shDr.scroll=requestAnimationFrame(shAuto)}
+function shStart(){const n=shNode(shDr.id);if(!n)return;shEd.dragging=true;shDr.ok=true;const r=n.getBoundingClientRect(),inner=n.querySelector('.shpi');
+  shDr.pre=shDr.vis.slice();shDr.off={x:shDr.sx-r.left,y:shDr.sy-r.top};
+  const c=document.createElement('div');c.className='shclone';c.style.width=r.width+'px';c.style.height=r.height+'px';c.innerHTML=inner?inner.outerHTML:'';c.firstChild&&c.firstChild.classList.add('still');document.body.appendChild(c);shDr.clone=c;
+  n.classList.add('is-dragging');document.body.classList.add('sh-drag');try{shDr.host.setPointerCapture(shDr.pid)}catch(e){}hapt();
+  shDr.x=shDr.sx;shDr.y=shDr.sy;shFrame();shDr.scroll=requestAnimationFrame(shAuto)}
+function shEnd(commit){clearTimeout(shDr.t);cancelAnimationFrame(shDr.raf);cancelAnimationFrame(shDr.scroll);shDr.raf=0;shDr.scroll=0;
+  const was=shEd.dragging;if(!was){shDr.id=null;return}
+  if(!commit){shDr.vis=shDr.pre.slice();shLayout(false)}
+  const n=shNode(shDr.id),cl=shDr.clone,fin=()=>{if(cl&&cl.parentNode)cl.remove();if(n)n.classList.remove('is-dragging');document.body.classList.remove('sh-drag')};
+  if(commit){shApplyVis(shDr.vis.slice());hapt()}
+  if(cl&&n){const r=n.getBoundingClientRect(),red=matchMedia('(prefers-reduced-motion: reduce)').matches;if(red){fin()}else{cl.style.transition='transform .16s ease-out';cl.style.transform=`translate(${r.left}px,${r.top}px) scale(1)`;setTimeout(fin,170)}}else fin();
+  shEd.dragging=false;shDr.clone=null;shDr.id=null;try{shDr.host.releasePointerCapture(shDr.pid)}catch(e){}}
+document.addEventListener('pointerdown',e=>{if(!shEd.active||shEd.dragging||(e.pointerType==='mouse'&&e.button!==0))return;const n=e.target.closest&&e.target.closest('.shedit .shp');if(!n||e.target.closest('.shx,.sr'))return;
+  const h=n.closest('.shelfv');shDr.host=h;shDr.id=n.dataset.shid;shDr.pid=e.pointerId;shDr.sx=e.clientX;shDr.sy=e.clientY;shDr.x=e.clientX;shDr.y=e.clientY;shDr.vis=shVisIds();shDr.ok=false;
+  clearTimeout(shDr.t);shDr.t=setTimeout(()=>{if(shDr.id&&!shDr.ok)shStart()},e.pointerType==='mouse'?60:170)});
+document.addEventListener('pointermove',e=>{if(!shDr.id||e.pointerId!==shDr.pid)return;shDr.x=e.clientX;shDr.y=e.clientY;
+  if(!shEd.dragging){if(Math.hypot(e.clientX-shDr.sx,e.clientY-shDr.sy)>8){if(e.pointerType==='mouse')shStart();else{clearTimeout(shDr.t);shDr.id=null}}return}
+  e.preventDefault();if(!shDr.raf)shDr.raf=requestAnimationFrame(shFrame)},{passive:false});
+document.addEventListener('pointerup',e=>{if(!shDr.id||e.pointerId!==shDr.pid)return;if(shEd.dragging)shEnd(true);else{clearTimeout(shDr.t);shDr.id=null}});
+document.addEventListener('pointercancel',e=>{if(!shDr.id||e.pointerId!==shDr.pid)return;if(shEd.dragging)shEnd(false);else{clearTimeout(shDr.t);shDr.id=null}});
+document.addEventListener('lostpointercapture',e=>{if(shEd.dragging&&shDr.id&&e.pointerId===shDr.pid)shEnd(false)});
+document.addEventListener('touchmove',e=>{if(shEd.dragging)e.preventDefault()},{passive:false});
+document.addEventListener('contextmenu',e=>{if(shEd.active&&e.target.closest&&e.target.closest('.shedit'))e.preventDefault()});
+document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escape'){if(shEd.dragging)shEnd(false);else if(shEd.confirm){shEd.confirm=null;shRefresh()}return}
+  const n=e.target.closest&&e.target.closest('.shp');if(n&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();shAct('mv|'+n.dataset.shid+'|'+(e.key==='ArrowLeft'?-1:1))}});
+{const r1=render;render=function(){if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();return r1.apply(this,arguments)}}
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
