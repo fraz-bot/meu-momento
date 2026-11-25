@@ -1589,6 +1589,45 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .pxk{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:9px}.pxk li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--ol)}
 .pxk i{flex:none;width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--ok)}.pxk .att i{background:var(--att)}.pxk .bad i{background:#C94A3F}
 @media (prefers-reduced-motion:reduce){.pxl,.pxr,.pxa{animation:none}.pxl{display:none}}
+
+/* ===== 3S: botão Scan central, sheet, Cuidados em 4 áreas, Ajustes, Hoje ===== */
+nav button.scanb{background:transparent!important;box-shadow:none!important;overflow:visible;position:relative;padding:0!important;min-height:52px;-webkit-tap-highlight-color:transparent}
+.scanb .scb{position:absolute;left:50%;top:-27px;transform:translateX(-50%);width:62px;height:62px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#fff;background:radial-gradient(120% 120% at 28% 18%,#EFD6B8 0%,#CC9670 38%,#97593D 74%,#5E3527 100%);border:1.5px solid rgba(255,242,226,.9);box-shadow:0 0 0 4px rgba(255,249,240,.72),0 10px 22px rgba(74,42,30,.30),inset 0 1px 1px rgba(255,255,255,.55);transition:transform .18s ease,box-shadow .18s ease}
+.scanb:active .scb{transform:translateX(-50%) scale(.93);box-shadow:0 0 0 4px rgba(255,249,240,.72),0 6px 14px rgba(74,42,30,.28),inset 0 1px 1px rgba(255,255,255,.5)}
+.scanb .scb svg{display:block}.scanb .scb i{position:absolute;right:15px;top:12px;display:block;line-height:0;filter:drop-shadow(0 0 3px rgba(255,255,255,.9))}
+.scanb .scb b{font-size:10.5px!important;letter-spacing:.03em;font-weight:700;color:#fff;line-height:1}
+.scanb:focus-visible .scb{outline:2px solid #4A2A1E;outline-offset:3px}
+.scs-bg{position:fixed;inset:0;z-index:70;background:rgba(58,34,24,.38);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);animation:scsf .25s both}
+.scs{position:fixed;left:0;right:0;bottom:0;z-index:71;max-width:560px;margin:0 auto;background:linear-gradient(180deg,#FCF3E8 0%,#F7E6D3 100%);border-radius:30px 30px 0 0;padding:10px 18px calc(16px + env(safe-area-inset-bottom,0px));box-shadow:0 -14px 40px rgba(74,42,30,.2);animation:scsu .34s cubic-bezier(.2,.8,.2,1) both}
+.scs-grip{display:block;width:40px;height:4px;border-radius:4px;background:#D9BFA8;margin:2px auto 14px}
+.scs h2{margin:0;font-size:22px;color:#4A2A1E}.scs>p{margin:4px 0 14px;color:#85695A;font-size:14.5px}
+.scs-o{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;border:1px solid rgba(231,207,187,.9);border-radius:22px;background:rgba(255,252,248,.88);padding:14px;margin-bottom:10px;min-height:76px;color:#4A2A1E;cursor:pointer;box-shadow:0 6px 16px rgba(170,128,86,.1);transition:transform .15s}
+.scs-o:active{transform:scale(.985)}.scs-o>svg{flex:none;color:#B07A62}
+.scs-oi{flex:none;width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#F6DFCB,#EFCDB4);color:#8A5238}
+.scs-ot{flex:1;min-width:0}.scs-ot b{display:block;font-size:16.5px}.scs-ot span{display:block;font-size:13.5px;color:#85695A;margin-top:2px;line-height:1.3}
+.scs-x{display:block;margin:2px auto 0;border:0;background:transparent;color:#85695A;font:inherit;font-size:14px;padding:10px 18px;cursor:pointer}
+@keyframes scsf{from{opacity:0}}@keyframes scsu{from{transform:translateY(40px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.scs-bg,.scs{animation:none}.scanb .scb{transition:none}}
+.cu-sw.cu-4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.cu-sw.cu-4 button{display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 2px;font-size:13px;min-width:0;white-space:nowrap}
+@media(max-width:350px){.cu-sw.cu-4 button{font-size:12px;gap:3px}.cu-sw.cu-4 button svg{width:14px;height:14px}}
+.hmais{display:inline-flex!important;align-items:center;gap:6px;font-weight:600;font-size:13.5px;padding:7px 12px!important;white-space:nowrap}
+@media(max-width:350px){.hmais{padding:7px 9px!important;font-size:12.5px;gap:4px}}
+.hj-rh{display:flex;align-items:center;justify-content:space-between;gap:8px}.hj-rh h2{flex:1;min-width:0}
+.hj-all2{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#6B4636;cursor:pointer;padding:6px 0 6px 6px;white-space:nowrap}
+.hj2 .hj-sos small{display:block!important;font-size:13.5px;color:#7A5448;margin-top:2px;line-height:1.3}
+button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;width:100%;padding:0;border:0;border-radius:26px;overflow:hidden;background:linear-gradient(120deg,#FBEBE0,#F8E3D6);text-align:left;cursor:pointer;font:inherit;color:#4A2A1E;box-shadow:0 8px 22px rgba(170,128,86,.12);min-height:150px}
+.hj-sk img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;-webkit-mask-image:linear-gradient(90deg,#000 68%,transparent);mask-image:linear-gradient(90deg,#000 68%,transparent)}
+.hj-skt{display:grid;gap:6px;align-content:center;padding:14px 14px 14px 2px}.hj-skt b{font-size:clamp(19px,5.6vw,22px);line-height:1.15;font-weight:700}.hj-skt small{font-size:13.5px;color:#7A5A4B;line-height:1.35}
+.hj-skb{justify-self:start;display:inline-flex;gap:7px;align-items:center;border:1.5px solid #B07A62;border-radius:99px;padding:8px 14px;font-weight:600;font-size:14px;color:#4A2A1E;margin-top:4px}
+.hj-q4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.hj-q4 button{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;font:inherit;border:0;border-radius:20px;background:#FFFCF9;padding:14px 4px 12px;color:#4A2A1E;cursor:pointer;box-shadow:0 6px 16px rgba(170,128,86,.1);min-width:0}
+.hj-q4 button span{color:#A76F5C;display:grid;place-items:center}.hj-q4 button b{font-size:12.5px;line-height:1.2;font-weight:600;text-align:center}
+
+.pl-tabs3{grid-template-columns:repeat(3,1fr)!important}
+.hj-rh h2{font-size:clamp(19px,5.6vw,23px)!important;white-space:nowrap;line-height:1.15}.hj-all2{font-size:12px}
+@media(max-width:380px){.hmais{padding:7px 10px!important;font-size:13px}.hj-ch{font-size:12.5px;white-space:nowrap}.hj-all2 svg:first-child{display:none}}
+
+.hj-rh{gap:12px!important}
+@media(max-width:380px){.hj-rh h2{font-size:18.5px!important}.hj-all2{font-size:11.5px}.cu-sw.cu-4 button svg{display:none}.cu-sw.cu-4 button{font-size:13px;padding:11px 2px}}
 </style>
 
 <div class="app">
@@ -1649,6 +1688,10 @@ const IC={
   clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   heart:'<path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2.600A4 4 0 0 1 19 10c0 5.500-7 10-7 10z"/>',
   leaf:'<path d="M5 19C5 10 10 5 20 4c0 10-5 15-14 15zM5 19l8-8"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  lotus:'<path d="M12 4c2.2 2.4 3 5 3 8s-1.2 5.200-3 7c-1.800-1.800-3-4-3-7s.8-5.600 3-8z"/><path d="M9 14.500C6.500 14.500 4.500 13 3.500 10.500c2.700-.3 4.800.6 6 2.400"/><path d="M15 14.500c2.500 0 4.500-1.500 5.500-4-2.700-.3-4.800.6-6 2.400"/><path d="M5 19c2 .7 4.500 1 7 1s5-.3 7-1"/>',
+  bag:'<path d="M5 8h14l-1 12H6z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/>',
+  medal:'<circle cx="12" cy="9" r="5"/><path d="M9 13.500 7.500 21 12 18.500 16.500 21 15 13.500"/><path d="M12 7l.9 1.800 2 .3-1.450 1.400.35 2L12 11.500l-1.800.950.350-2L9.100 9.100l2-.3z"/>',
   more:'<circle cx="5" cy="12" r="1.700"/><circle cx="12" cy="12" r="1.700"/><circle cx="19" cy="12" r="1.700"/>',
   bell:'<path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
   cloud:'<path d="M7 18a4 4 0 0 1-.5-8A5.500 5.500 0 0 1 17 8.500 4.500 4.500 0 0 1 17.500 18z"/>',
@@ -1666,9 +1709,10 @@ const IC={
   citrus:'<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M6.300 6.300l11.400 11.400M17.700 6.300L6.300 17.700"/>'
 };
 const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
-const ICONS={assistant:ic('chatai',22),hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('tag',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22),cuidados:ic('heart',22)};
+const ICONS={assistant:ic('chatai',22),hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('bag',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22),cuidados:ic('lotus',22)};
 const LOGO=`<img class="logo" src="pellie-flor.png" alt="">`;
-const TABS=[['hoje','Hoje'],['cuidados','Cuidados'],['rotina','Rotina'],['produtos','Produtos'],['assistant','Assistant']];
+const TABS=[['hoje','Hoje'],['cuidados','Cuidados'],['scan','Scan'],['produtos','Produtos'],['assistant','Assistant']];
+const SCAN_BTN='<button class="scanb" data-act="scan-open" aria-label="Scan: analisar pele, cabelo ou produto" aria-haspopup="dialog"><span class="scb"><svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3"/></svg><i aria-hidden="true"><svg viewBox="0 0 12 12" width="9" height="9"><path fill="#fff" d="M6 0l1.2 3.800L11 5l-3.800 1.200L6 10 4.800 6.200 1 5l3.800-1.200z"/></svg></i><b>Scan</b></span></button>';
 const AGES=[['20','Até 29 anos'],['30','30 a 39 anos'],['40','40 a 49 anos'],['50','50 anos ou mais']];
 const TIERS=[['econ','Econômico'],['mid','Intermediário'],['prem','Premium']];
 
@@ -1923,7 +1967,7 @@ function toggleStep(per,k){
   gameCheck();render();
 }
 function goTab(t,sub){
-  if(t==='cuidados')t=(S.tab==='pele'||S.tab==='cabelo')?S.tab:(S.lastCuid||'pele');
+  if(t==='cuidados')t=(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina')?S.tab:(S.lastCuid||'pele');
   if(t==='cabelo'&&S.tab!=='cabelo')S.chv=null;
   if(t==='assistant'&&S.tab!=='assistant')S.astFrom=S.tab;if(t!=='assistant')S.astMenu=false;
   if(t!=='rotina'){S.rit=null;S.rotFull=false}
@@ -1945,9 +1989,9 @@ function renderChrome(){
   const on=!S.ob.done;
   document.querySelector('header').hidden=on||S.tab==='assistant';document.querySelector('nav').hidden=on;$('#ages').hidden=true;
   $('#tag').innerHTML=on||!gameOn()?'':`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span><span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`;
-  if(!on)$('#tag').innerHTML+=`<button class="pill hmais" data-tab="mais" aria-label="Mais" ${S.tab==='mais'?'aria-current="page"':''}>${ic('more',18)}</button>`;
+  if(!on)$('#tag').innerHTML+=`<button class="pill hmais" data-tab="mais" aria-label="Ajustes" ${S.tab==='mais'?'aria-current="page"':''}>${ic('gear',17)}<span>Ajustes</span></button>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
-  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
+  $('#nav').innerHTML=TABS.map(([k,l])=>k==='scan'?SCAN_BTN:`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
   document.documentElement.dataset.tema=S.tema||'rosa';
   const c=S.cele,el=$('#cele');
   el.hidden=!c;
@@ -3143,7 +3187,7 @@ function viewHoje(){
     return `<div class="hj-pr"><span class="hj-pi">${ic(ic_,28)}</span><div class="hj-pm"><b>${nm}</b>${chip}<small>${n} ${n===1?'etapa':'etapas'} · ~${Math.max(2,n)} min</small></div>
       ${ok?`<button class="hj-bt ghost" data-go="rotina|${per}">Ver</button>`:`<button class="hj-bt" data-hrit="${per}">${ic('chev',14)}Iniciar</button>`}</div>`};
   let rit;
-  if(temRot)rit=`<section class="hj-rit"><h2>Seu ritual de hoje</h2>${linha('m','sun','Manhã')}${linha('n','moon','Noite')}</section>`;
+  if(temRot)rit=`<section class="hj-rit"><div class="hj-rh"><h2>Seu ritual de hoje</h2><button class="hj-all2" data-go="rotina">${ic('cal',15)}Ver rotina completa${ic('chev',14)}</button></div>${linha('m','sun','Manhã')}${linha('n','moon','Noite')}</section>`;
   else rit=`<section class="hj-rit"><h2>${nx.done?'Cuide de você':'Seu próximo passo'}</h2>${nx.done?'':`<p class="hj-np">${esc(nx.t)}</p><button class="hj-bt wide" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',14)}</button>`}</section>`;
   const cons=`<button class="hj-cons" data-go="mais|medalhas"><span class="hj-ring" style="--p:${pct}"><b>${pct}%</b></span>
     <span class="hj-cx"><b>Consistência da semana</b><small>${meta} de 5 dias${meta<5?` · faltam ${5-meta}`:' · meta batida'} · ${restam} ${restam===1?'dia':'dias'} na semana</small>
@@ -3153,7 +3197,7 @@ function viewHoje(){
   const cgA=(S.cg&&typeof cgAtual==='function')?cgAtual():null;
   const cgC=cgA?`<button class="hj-ck" data-cg="open|crono"><span class="hj-cki">${ic(CGT[cgA.t].i,26)}</span><span class="hj-ckt"><b>Cuidado capilar: ${CGT[cgA.t].n}</b><small>${cgQuando(cgA.dias)} · Semana ${cgA.sem} do seu cronograma</small></span>${ic('chev',18)}</button>`:'';
   const hojeReg=S.diary.some(e=>e.d===hoje());
-  const check=temRot?`<button class="hj-ck" data-go="pele|evo"><span class="hj-cki">${ic('chart',26)}</span><span class="hj-ckt"><b>Como está a sua pele hoje?</b><small>${hojeReg?'Já registrado hoje. Veja a sua evolução.':'Um registro rápido alimenta o seu gráfico de evolução.'}</small></span><span class="hj-bt sm ${hojeReg?'ghost':''}">${hojeReg?'Ver':'Registrar'}</span></button>`:'';
+  const check=temRot?`<button class="hj-sk" data-go="pele|evo"><img src="img/hoje-pele.webp" alt="" width="320" height="330" loading="lazy"><span class="hj-skt"><b>Como está a sua pele hoje?</b><small>${hojeReg?'Já registrado hoje. Veja a sua evolução.':'Acompanhe sua evolução, resultados e prioridades.'}</small><span class="hj-skb">${ic('chart',18)}Ver evolução</span></span></button>`:'';
   const doneC=temRot?[['m','sun','Manhã'],['n','moon','Noite']].filter(([p])=>feito(p)).map(([p,i_,nm])=>{const l=S.log[hoje()]||{},f=l.tr&&l.tr[p]&&l.tr[p].f,hr=f?pad(new Date(f).getHours())+':'+pad(new Date(f).getMinutes()):'',n=(p==='m'?R_.m:R_.n).length;
     return `<button class="hj-dn" data-go="rotina|${p}"><span class="hj-pi sm">${ic(i_,22)}</span><span><b>${nm} concluída</b><small>${n} de ${n} etapas${hr?' · '+hr:''}</small></span>${ic('chev',16)}</button>`}).join(''):'';
   const avisos=`${!S.plus?paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.'):''}
@@ -3167,15 +3211,16 @@ function viewHoje(){
   const ben=(HJ_BEN[tip[0]]||[]).map(b=>`<span>${esc(b)}</span>`).join('');
   const got=BADGES.filter(b=>S.badges[b.id]),nxtB=BADGES.find(b=>!S.badges[b.id]),last=got.slice().sort((a,b)=>String(S.badges[b.id])<String(S.badges[a.id])?-1:1)[0];
   return `<div class="stack hj hj2">
-  <div class="hj-gr2"><i class="hj-pet" aria-hidden="true"></i><h1>${hi}, ${esc(S.nome)} <span>${ic('heart',22)}</span></h1><p>${st?`${st} ${st===1?'dia seguido':'dias seguidos'} cuidando de você`:'Comece o seu momento hoje'}</p></div>
+  <div class="hj-gr2"><i class="hj-pet" aria-hidden="true"></i><h1>${hi}, ${esc(S.nome)} <span>${ic('heart',22)}</span></h1><p>${st?`${st} ${st===1?'dia seguido':'dias seguidos'} cuidando de você`:'Comece o seu momento de autocuidado hoje.'}</p></div>
   ${rit}
   ${cgC}
   ${avisos}
-  <button class="hj-sos" data-go="sos"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Pellie SOS</b><small>Espinha ou irritação? Fotografe e veja o que fazer agora.</small></span>${ic('chev',18)}</button>
+  <button class="hj-sos" data-go="sos"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Pellie SOS</b><small>Orientação para necessidades pontuais da sua pele.</small></span>${ic('chev',18)}</button>
   ${check}
+  <div class="hj-q4">${[['leaf','Análise da pele','pele|analise'],['hair','Análise do cabelo','cabelo'],['bag','Meus produtos','produtos|shelf'],['medal','Minhas conquistas','mais|medalhas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,28)}</span><b>${t}</b></button>`).join('')}</div>
   <button class="hj-pg" data-go="mais|medalhas" aria-label="Seu progresso da semana. Ver medalhas e conquistas"><span class="hj-ring" style="--p:${pct}"><b>${pct}%</b></span><span class="hj-cx"><b>Seu progresso da semana</b><small>${meta} de 5 dias${meta<5?'':' · meta batida'} · ${nb} de ${BADGES.length} conquistas</small><span class="hj-dots" role="group" aria-label="Sua semana">${days.map(d=>`<i class="${d.on?'on':''} ${d.t?'today':''} ${d.f?'fut':''}" title="${d.w}">${d.on?ic('check',11):''}</i>`).join('')}</span></span>${ic('chev',16)}</button>
   ${dicaCard()}
-  ${hjx('at','Mais atalhos','Quiz, cabelo, ferramentas, números e conquistas',`<div class="hj-q">${[['spot','Quiz da pele','mais|quiz'],['hair','Cabelo','cabelo'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div><div class="hj-tl" style="margin-top:10px">${tools.map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span>${ic(i_,22)}</span>${t}</button>`).join('')}</div>${nums?`<div class="hj-nm" style="margin-top:10px">${nums.map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}<div style="margin-top:10px"><button class="hj-cq" data-go="mais|medalhas"><div class="hj-cqh"><b>Conquistas</b><span>${nb} de ${BADGES.length}</span></div>
+  ${hjx('at','Ferramentas e atalhos','Quiz, dicas, horários, números e conquistas',`<div class="hj-q">${[['spot','Quiz da pele','mais|quiz'],['sparkle','Dicas','mais|dicas']].map(([i_,t,go])=>`<button data-go="${go}"><span>${ic(i_,24)}</span><b>${t}</b></button>`).join('')}</div><div class="hj-tl" style="margin-top:10px">${tools.map(([i_,t,k])=>`<button data-go="${k.includes('|')?k:'mais|'+k}"><span>${ic(i_,22)}</span>${t}</button>`).join('')}</div>${nums?`<div class="hj-nm" style="margin-top:10px">${nums.map(([i_,l,n,go])=>`<button data-go="pele|${go}">${ic(i_,18)}<b>${n}</b><span>${l}</span></button>`).join('')}</div>`:''}<div style="margin-top:10px"><button class="hj-cq" data-go="mais|medalhas"><div class="hj-cqh"><b>Conquistas</b><span>${nb} de ${BADGES.length}</span></div>
     <div class="hj-cqm">${got.slice(0,6).map(b=>`<span class="on" title="${esc(b.n)}">${ic(b.i,18)}</span>`).join('')}${nxtB?`<span class="nx" title="${esc(nxtB.n)}">${ic('lock',16)}</span>`:''}</div>
     <span class="hj-bar"><i style="width:${Math.round(nb/BADGES.length*100)}%"></i></span>
     <small>${nxtB?`Próxima: ${esc(nxtB.n)} · ${esc(nxtB.d)}`:'Todas as conquistas obtidas'}${last?` · Última: ${esc(last.n)} (${fmtD(S.badges[last.id])})`:''}</small></button></div>`)}
@@ -3208,8 +3253,9 @@ function viewPele0(){
   const sub=S.peleSub,SUBS=[['analise','face','Análise'],['evo','chart','Evolução'],['ba','image','Antes/depois'],['reg','routine','Registros']];
   const body=!S.plus&&sub!=='analise'?paywall({evo:'Diário e evolução',ba:'Antes e depois',reg:'Registros'}[sub]||'Recurso do Pellie Pro',{evo:'chart',ba:'image',reg:'routine'}[sub]||'crown','Acompanhe a sua pele ao longo do tempo.'):sub==='evo'?viewEvo():sub==='ba'?viewAD():sub==='reg'?viewRegistros():viewAnalise();
   const sob=sub==='analise'&&(S.pv||S.pleCap||S.analyzing);
-  return `${sob?'':`<div class="pl-h"><h1>Pele</h1><p>Analise, acompanhe e evolua o cuidado da sua pele.</p></div>
-  <div class="pl-tabs" role="group" aria-label="Seção da pele">${SUBS.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}<span>${l}</span></button>`).join('')}</div>`}${body}`;
+  const evoA=sub!=='analise',SUBS2=SUBS.filter(x=>x[0]!=='analise');
+  return `${sob?'':`<div class="pl-h"><h1>${evoA?'Evolução':'Pele'}</h1><p>${evoA?'Acompanhe a sua pele ao longo do tempo.':'Analise, acompanhe e evolua o cuidado da sua pele.'}</p></div>
+  ${evoA?`<div class="pl-tabs pl-tabs3" role="group" aria-label="Seção da evolução">${SUBS2.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}<span>${l}</span></button>`).join('')}</div>`:''}`}${body}`;
 }
 const PCAM={stream:null,facing:'user',busy:false,fail:false,run:0,iv:null,ready:false,al:false};
 function pcStop(){PCAM.run++;if(PCAM.iv){clearInterval(PCAM.iv);PCAM.iv=null}if(PCAM.stream){PCAM.stream.getTracks().forEach(t=>t.stop());PCAM.stream=null}PCAM.ready=false;PCAM.al=false}
@@ -3416,7 +3462,7 @@ function viewMais(){
   const tl=(k,i_,t,d)=>`<button class="mx-t" data-mais="${k}"><span class="mx-ti">${ic(i_,26)}</span><b>${t}</b>${pro(k)?'<em>Pro</em>':''}</button>`;
   const xr=(k,i_,t,d,attr)=>`<button class="mx-r" ${attr||`data-mais="${k}"`}><span class="mx-ri">${ic(i_,20)}</span><span class="mx-rt"><b>${t}</b><span>${pro(k)?'Pellie Pro':d}</span></span>${ic('chev',18)}</button>`;
   const dels=S.askDel?`<div class="mx-del"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:xr('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"');
-  if(!sub)return `<div class="stack mx"><div class="mx-h"><h2>Mais</h2><p>Sua central de cuidados, preferências e conta.</p></div>
+  if(!sub)return `<div class="stack mx"><div class="mx-h"><h2>Ajustes</h2><p>Sua central de cuidados, preferências e conta.</p></div>
     ${S.plus?`<button class="mx-ban" data-mais="plano" aria-label="Pellie Pro ativo. Gerenciar assinatura"><img src="img/banner-pro.webp" alt="" width="1000" height="333"></button>`:`<div class="mx-pro"><div class="mx-pt"><span class="mx-pi">${ic('crown',34)}</span><b>Pellie Pro</b><span class="mx-st ${S.plus?'':'off'}">${S.plus?'Ativo':'Não assinado'}</span></div>
       <p>${S.plus?'Sua experiência completa de cuidados.':'Desbloqueie a experiência completa de cuidados.'}</p>
       <button class="mx-pb" data-mais="plano">Assinar o Pellie Pro${ic('chev',16)}</button></div>`}
@@ -3986,7 +4032,7 @@ function cgEdit(){const c=cgInit(),O=cgOrdem()||[],sem=cgSemFin(),notifOn=!!(S.n
   <div class="cg-c cg-pd"><b>Ordem das etapas</b><small class="muted" style="display:block;margin:2px 0 8px">O ciclo se repete a cada 4 tratamentos.${Array.isArray(c.custom)?' Você personalizou a ordem.':' Sugerido para o seu cabelo.'}</small>${O.map((t,i)=>`<div class="cg-ord"><span>${i+1}º</span><div class="regg">${CGK.map(k=>`<button class="rg" data-cg="ord|${i}|${k}" aria-pressed="${t===k}">${CGT[k].n}</button>`).join('')}</div></div>`).join('')}${Array.isArray(c.custom)?`<button class="cg-lk" data-cg="reset">Voltar à ordem sugerida</button>`:''}</div>
   <div class="cg-c cg-pd"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b>Lembrete do tratamento</b><button class="sw" role="switch" aria-checked="${c.notif.on}" aria-label="Lembrete do tratamento" data-cg="notif"></button></div>
     ${c.notif.on?`<label class="small" style="display:flex;gap:10px;align-items:center;margin-top:10px">Horário <input id="cg-h" class="cg-time" type="time" value="${c.notif.h}"></label>`:''}
-    <p class="note" style="margin:8px 0 0">${notifOn?'Os lembretes chegam no app instalado.':'Ative também as notificações em Mais → Horários e notificações. No app instalado, o lembrete chega no horário escolhido.'}</p></div>
+    <p class="note" style="margin:8px 0 0">${notifOn?'Os lembretes chegam no app instalado.':'Ative também as notificações em Ajustes → Horários e notificações. No app instalado, o lembrete chega no horário escolhido.'}</p></div>
   ${sem.length?`<div class="cg-c cg-pd"><b>Produtos sem finalidade identificada</b><small class="muted" style="display:block;margin:2px 0 8px">Não consegui saber pelo nome ou pelos ingredientes. Marque o que cada um faz, só se você souber.</small>${sem.map(i=>`<div class="cg-fi"><span class="cg-th">${shTh(i,40)}</span><span class="cg-rt"><b>${esc(i.n)}</b></span><div class="regg">${CGK.map(k=>`<button class="rg" data-cg="fin|${i.id}|${k}" aria-pressed="${i.cgf===k}">${CGT[k].n.slice(0,5)}.</button>`).join('')}</div></div>`).join('')}</div>`:''}
   <button class="cg-lk" data-cg="recom">Recomeçar o ciclo nesta semana</button></div>`}
 function cgNec(){const r=S.hres,bar=(l,v,i_)=>`<div class="meter"><span class="ml">${ic(i_,16)}${l}</span><div class="bar"><b class="${bandC(v)}" style="width:${v}%"></b></div><span class="num">${v}</span></div>`,O=cgOrdem()||[],u=CGK.filter(k=>O.includes(k));
@@ -4848,7 +4894,7 @@ function tourHtml(){const T=S.tour||{};if(!T.on&&(T.seen||S.tab!=='hoje'))return
   <div class="tr-dots">${TOUR.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div>
   <button class="btn tr-go" data-act="tour-prox">${ult?'Começar':'Próximo'}</button>
   <div class="tr-sec">${i?`<button class="tr-lk" data-act="tour-ant">Voltar</button>`:'<span></span>'}<button class="tr-lk" data-act="tour-ir|${go}">Ver agora</button><button class="tr-lk" data-act="tour-fim">Pular</button></div>
-  <small>Você pode rever este tour em Mais.</small></div></div>`}
+  <small>Você pode rever este tour em Ajustes.</small></div></div>`}
 const TIPC={pele:['Primeira análise facial','Use luz natural, rosto de frente e sem maquiagem. As notas são estimativas pela foto, não um diagnóstico.'],
 escanear:['Primeiro produto','Mostre o rótulo de frente, com o nome legível. Se o produto já estiver na prateleira, o Pellie avisa antes de gastar uma análise.'],
 rotina:['Sua rotina','Marque cada etapa ao fazer. A sequência e os lembretes dependem disso.'],
@@ -4859,10 +4905,13 @@ function tipCtx(){return '';let k=null;
   else if(S.tab==='cabelo'&&S.chv==='crono'&&cgReady()&&!S.hBusy)k='cron';else if(S.tab==='assistant'&&!(S.chat||[]).length)k='assistant';
   if(!k||(S.tips&&S.tips[k]))return '';const[t,x]=TIPC[k];
   return `<div class="stack"><div class="tp-c"><span>${ic('bulb',20)}</span><div><b>${t}</b><p>${x}</p></div><button class="tp-ok" data-act="tipx|${k}">Entendi</button></div></div>`}
-function cuidSw(){const t=S.tab;if(t!=='pele'&&t!=='cabelo')return '';S.lastCuid=t;
+function cuidSw(){const t=S.tab;if(t!=='pele'&&t!=='cabelo'&&t!=='rotina')return '';S.lastCuid=t;
+  if(t==='rotina'&&S.rit)return '';
   if(t==='pele'&&(S.pv||S.pleCap||S.analyzing))return '';
   if(t==='cabelo'&&(S.hBusy||S.hflow||S.chv||S.hPhoto||S.hFile))return '';
-  return `<div class="stack"><div class="cu-sw" role="group" aria-label="Pele ou cabelo"><button data-tab="pele" aria-pressed="${t==='pele'}">${ic('face',17)}Pele</button><button data-tab="cabelo" aria-pressed="${t==='cabelo'}">${ic('hair',17)}Cabelo</button></div></div>`}
+  const evo=t==='pele'&&['evo','ba','reg'].includes(S.peleSub),A=[['pele','face','Pele',t==='pele'&&!evo],['cabelo','hair','Cabelo',t==='cabelo'],['rotina','routine','Rotina',t==='rotina'],['evo','chart','Evolução',evo]];
+  return `<div class="stack"><div class="cu-sw cu-4" role="group" aria-label="Áreas dos cuidados">${A.map(([k,i_,l,on])=>`<button data-cu="${k}" aria-pressed="${on}">${ic(i_,16)}${l}</button>`).join('')}</div></div>`}
+function cuGo(k){if(k==='pele'){S.peleSub='analise';goTab('pele')}else if(k==='evo')goTab('diario');else goTab(k);window.scrollTo(0,0)}
 function render(){
   GEN.used.clear();GEN.prev=null;GEN.cur={};
   {const a=authView();if(a){document.querySelector('header').hidden=true;document.querySelector('nav').hidden=true;$('#view').innerHTML=a;return}}
@@ -4917,8 +4966,16 @@ document.addEventListener('click',e=>{
   else if(d.act==='ob-fim2'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='rotina';render();window.scrollTo(0,0);if(S.result)montarRotina()}
   else if(d.act==='ob-next'){S.ob.step++;render();window.scrollTo(0,0)}
   else if(d.act==='ob-back'){S.ob.step=Math.max(0,S.ob.step-1);while(S.ob.step>0&&['susp','susp2','scan'].includes(obStepAtual()))S.ob.step--;render();window.scrollTo(0,0)}
+  else if(d.act==='scan-open'){hapt();S.scanSheet=true;render()}
+  else if(d.act==='scan-close'){S.scanSheet=false;render()}
+  else if(d.act&&d.act.indexOf('scan-go|')===0){hapt();const k=d.act.split('|')[1];S.scanSheet=false;
+    if(k==='pele'){goTab('pele','analise');if(S.result){S.pleCap=true;S.pv=null;S.file=null;S.photo=null;S.photoQ=null;S.err=null;S.okMsg=null;render()}}
+    else if(k==='cabelo'){goTab('cabelo');hfAct('start');render()}
+    else{goTab('escanear')}
+    window.scrollTo(0,0)}
   else if(d.act==='ob-fim'){S.ob.done=true;S.tab='pele';S.peleSub='analise';gameCheck();render();window.scrollTo(0,0)}
   else if(d.act==='editar-perfil'){S.ob={step:1,done:false};render();window.scrollTo(0,0)}
+  else if(d.cu){cuGo(d.cu)}
   else if(d.tab){goTab(d.tab)}
   else if(d.go){const [t,sub]=d.go.split('|');goTab(t,sub)}
   else if(d.act==='editar-reg'){S.editReg=true;const e=S.diary.find(x=>x.d===hoje());if(e)S.reg={...regNew(),...Object.fromEntries(Object.entries(e).filter(([k])=>k in regNew()))};render()}
@@ -5228,6 +5285,13 @@ gameCheck();render();
 try{const f=document.createElement('link');f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap';document.head.appendChild(f)}catch(e){}
 
 gLoad();
+function hapt(){try{if(window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Haptics)Capacitor.Plugins.Haptics.impact({style:'LIGHT'});else if(navigator.vibrate)navigator.vibrate(8)}catch(e){}}
+function scanSheetHtml(){const O=[['pele','leaf','Analisar minha pele','Descubra as necessidades da sua pele e personalize seus cuidados.'],['cabelo','hair','Analisar meu cabelo','Conheça melhor seus fios e descubra os cuidados ideais.'],['produto','scan','Escanear produto','Descubra se um produto combina com sua pele, seu cabelo e sua rotina.']];
+  return `<div class="scs-bg" data-act="scan-close"></div><div class="scs" role="dialog" aria-modal="true" aria-labelledby="scst"><i class="scs-grip" aria-hidden="true"></i><h2 id="scst">O que vamos analisar?</h2><p>Escolha uma opção e o Pellie cuida do resto.</p>${O.map(([k,i_,t,d])=>`<button class="scs-o" data-act="scan-go|${k}"><span class="scs-oi">${ic(i_,24)}</span><span class="scs-ot"><b>${t}</b><span>${d}</span></span>${ic('chev',18)}</button>`).join('')}<button class="scs-x" data-act="scan-close">Agora não</button></div>`}
+function scanSheetUpd(){let el=document.getElementById('scansheet');if(!el){el=document.createElement('div');el.id='scansheet';document.body.appendChild(el)}
+  const on=!!(S.scanSheet&&S.ob.done);const was=el.dataset.on==='1';if(on===was)return;el.dataset.on=on?'1':'0';el.innerHTML=on?scanSheetHtml():'';if(on){const f=el.querySelector('.scs-o');if(f)try{f.focus({preventScroll:true})}catch(e){}}}
+{const r0=render;render=function(){const x=r0.apply(this,arguments);scanSheetUpd();return x}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.scanSheet){S.scanSheet=false;render()}});
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
