@@ -286,8 +286,6 @@ body.sh-drag{-webkit-user-select:none;user-select:none;-webkit-touch-callout:non
 .shm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:91;width:min(88vw,340px);background:#FFFDFB;border-radius:24px;padding:22px 20px 18px;box-shadow:0 24px 60px rgba(60,30,20,.35);text-align:center;display:grid;gap:8px}.shm h3{font-size:18px;color:#4A2A1E;margin:0}.shm p{margin:0;font-size:14px;color:#6B5645}.shm-w{display:flex;gap:8px;align-items:flex-start;text-align:left;background:#FBEFE3;border-radius:12px;padding:10px 12px;color:#7A4A33!important}
 .shm-b{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 @media(prefers-reduced-motion:reduce){.shpi{animation:none}.shp.shgone{transition:none}}
-.pid-bg{position:fixed;inset:0;z-index:95;border:0;padding:0;width:100%;background:rgba(60,35,25,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-.pid{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:96;width:min(92vw,380px);max-height:94vh;overflow:auto;background:#FFFDFB;border-radius:26px;padding:18px 16px 14px;box-shadow:0 24px 60px rgba(60,30,20,.35);display:grid;gap:10px;text-align:center}.pid h3{margin:0;font-size:18px;color:#4A2A1E}.pid img{width:100%;border-radius:18px;box-shadow:0 8px 22px rgba(75,41,25,.18)}.pid p{margin:0;font-size:12.5px;color:#7B6858}.pid-b{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pid-x{min-height:44px;border:0;background:none;color:#7B6858;font:inherit;font-weight:700;cursor:pointer}
 .mx-more{margin-top:4px}.mx-more summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:18px;background:rgba(255,253,251,.7);border:1px solid #EFE4D9;font-weight:700;color:#6B5645;font-size:14px;margin-bottom:10px}.mx-more summary::-webkit-details-marker{display:none}.mx-more summary svg{transition:transform .2s}.mx-more[open] summary svg{transform:rotate(90deg)}
 .mx-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.mx-empty b{font-size:15px;color:#4A2A1E}.mx-empty span{font-size:13px;color:#7B6858}.mx-empty .btn{margin-top:4px}
 .mx-card{background:#FFFDFB;border:1px solid #EFE4D9;border-radius:22px;padding:2px 14px;box-shadow:0 6px 18px rgba(75,41,25,.06)}.mx-r{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #F0E6DC;padding:13px 0;color:var(--ol,#4B2919);font:inherit;cursor:pointer}.mx-card>.mx-r:first-child{border-top:0}.mx-ri{flex:none;width:42px;height:42px;border-radius:14px;background:#F6E8DE;color:#A8745A;display:grid;place-items:center}.mx-rt{flex:1;min-width:0}.mx-rt b{display:block;font-size:16px}.mx-rt span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mx-r>svg:last-child{color:var(--muted)}.mx-del{display:grid;gap:10px;text-align:center;padding:14px 0}
@@ -1670,7 +1668,6 @@ button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;widt
 <script>
 const IC={
   x:'<path d="M6 6l12 12M18 6L6 18"/>',
-  share:'<path d="M12 15V4M8 8l4-4 4 4M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
   grip:'<g fill="currentColor" stroke="none"><circle cx="7" cy="7" r="1.6"/><circle cx="12" cy="7" r="1.6"/><circle cx="17" cy="7" r="1.6"/><circle cx="7" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="17" cy="12" r="1.6"/><circle cx="7" cy="17" r="1.6"/><circle cx="12" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></g>',
   hair:'<path d="M6 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M12 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M18 3c3 3-3 6 0 9s-3 6 0 9"/>',
   face:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 10h.01M15 10h.01"/>',
@@ -3366,7 +3363,6 @@ function viewAnalise(){
     <div class="pl-hb"><div class="pl-pic">${pic}</div><div class="pl-hr"><span class="pl-type">${ic('drop',14)}Pele ${esc(String(rs.tipo).toLowerCase())}</span>${top3.map(({x})=>`<div class="pl-mi"><span>${x[1]}</span><b>${Math.round(rs[x[0]])}%</b></div>`).join('')}</div></div>
     <p class="small muted" style="margin-top:10px">${esc(rs.resumo)}</p>
     <button class="btn pl-go" data-pv="cap">${ic('camera',18)}Nova análise</button>
-    <button class="btn ghost" data-act="pid" style="width:100%;margin-top:8px">${ic('share',18)}Criar meu Pellie ID</button>
     <div class="row" style="gap:8px;margin-top:8px;flex-wrap:nowrap"><button class="btn ghost" data-act="salvar-analise" style="flex:1">${ic('plus',18)}Diário</button>${S.photo?`<button class="btn ghost" data-act="guardar-foto" style="flex:1">${ic('image',18)}Guardar foto</button>`:''}</div>
     ${S.rotErr?`<p class="note" style="color:var(--alert)">${esc(S.rotErr)}</p>`:''}</div>
   <div class="pl-card"><div class="pl-ct"><b>Indicadores da sua pele</b></div>${PL_IND.map(([k,l,i_,inv])=>plBar(l,rs[k],inv,i_)).join('')}<div class="lgd"><span class="lgo">Favorável</span><span class="lgm">Cuidado</span><span class="lga">Atenção</span></div><p class="note">Notas de 0 a 100, estimadas pela foto.</p>
@@ -5029,10 +5025,6 @@ document.addEventListener('click',e=>{
   else if(d.hrit){S.tab='rotina';S.rotFull=false;S.period=d.hrit;S.perMan=true;ritAct('start|'+d.hrit)}
   else if(d.rper){S.period=d.rper;S.perMan=true;render()}
   else if(d.shdone){const [per,id]=d.shdone.split('|');const l=dayLog(),a=l['x'+per]||(l['x'+per]=[]),ix=a.indexOf(id);if(ix>=0)a.splice(ix,1);else a.push(id);const y=window.scrollY;render();window.scrollTo(0,y)}
-  else if(d.act==='pid'){pidOpen()}
-  else if(d.act==='pid-close'){pidClose()}
-  else if(d.act==='pid-share'){pidShare()}
-  else if(d.act==='pid-save'){pidSave()}
   else if(d.shed){shAct(d.shed)}
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
   else if(d.reg){const [k,v]=d.reg.split('|');S.reg[k]=S.reg[k]===v?null:v;document.querySelectorAll('[data-reg^="'+k+'|"]').forEach(b=>b.setAttribute('aria-pressed',String(S.reg[k]===b.dataset.reg.split('|')[1])))}
@@ -5330,48 +5322,6 @@ function scanSheetUpd(){let el=document.getElementById('scansheet');if(!el){el=d
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.scanSheet){S.scanSheet=false;render()}});
 
 
-
-/* ---------- Pellie ID: cartão de resultado para compartilhar. Gerado no aparelho, sem foto e sem enviar nada ---------- */
-const PID={url:null,blob:null,busy:false};
-function pidImg(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src})}
-function pidRR(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
-async function pidDraw(){
-  const rs=S.result;if(!rs)return null;const W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
-  const FD=getComputedStyle(document.documentElement).getPropertyValue('--f-display').trim()||'Georgia, serif',FS='system-ui,-apple-system,"Segoe UI",sans-serif';
-  try{await document.fonts.ready}catch(e){}
-  const flor=await pidImg('pellie-flor.png'),nome=await pidImg('pellie-nome.png');
-  let g=c.createLinearGradient(0,0,W,H);g.addColorStop(0,'#FBF3EA');g.addColorStop(.55,'#F2E0CC');g.addColorStop(1,'#E5C7A8');c.fillStyle=g;c.fillRect(0,0,W,H);
-  g=c.createRadialGradient(W*.85,H*.08,0,W*.85,H*.08,620);g.addColorStop(0,'rgba(255,255,255,.75)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
-  c.strokeStyle='rgba(151,89,61,.28)';c.lineWidth=3;pidRR(c,36,36,W-72,H-72,44);c.stroke();
-  if(nome){const h=70,w=nome.width/nome.height*h;c.drawImage(nome,(W-w)/2,92,w,h)}else if(flor){c.drawImage(flor,W/2-35,92,70,72)}
-  c.textAlign='center';c.fillStyle='#97593D';c.font='700 26px '+FS;try{c.letterSpacing='8px'}catch(e){}c.fillText('PELLIE ID',W/2,232);try{c.letterSpacing='0px'}catch(e){}
-  const nm=String(S.nome||'').trim().split(/\s+/)[0]||'Você';c.fillStyle='#4A2A1E';c.font='600 104px '+FD;
-  let fs=104;while(c.measureText(nm).width>W-200&&fs>48){fs-=4;c.font='600 '+fs+'px '+FD}c.fillText(nm,W/2,372);
-  const tipo='Pele '+String(rs.tipo||'').toLowerCase();c.font='700 40px '+FS;const tw=c.measureText(tipo).width+96;
-  g=c.createLinearGradient(W/2-tw/2,0,W/2+tw/2,0);g.addColorStop(0,'#CC9670');g.addColorStop(1,'#97593D');c.fillStyle=g;pidRR(c,W/2-tw/2,414,tw,84,42);c.fill();c.fillStyle='#fff';c.fillText(tipo,W/2,470);
-  const st=PL_IND.map(x=>({l:x[1],a:plAt(rs[x[0]],x[3])})).sort((p,q)=>p.a-q.a),forte=st.slice(0,3),foco=st[st.length-1];
-  c.fillStyle='#7B6858';c.font='700 28px '+FS;try{c.letterSpacing='4px'}catch(e){}c.fillText('PONTOS FORTES',W/2,606);try{c.letterSpacing='0px'}catch(e){}
-  forte.forEach((x,i)=>{const y=650+i*132,bx=96,bw=W-192;c.fillStyle='rgba(255,253,251,.82)';pidRR(c,bx,y,bw,108,30);c.fill();
-    c.textAlign='left';c.fillStyle='#4A2A1E';c.font='700 38px '+FS;c.fillText(x.l,bx+40,y+50);
-    const v=Math.max(8,100-x.a),tx=bx+40,tw2=bw-80;c.fillStyle='rgba(151,89,61,.16)';pidRR(c,tx,y+68,tw2,16,8);c.fill();
-    const gg=c.createLinearGradient(tx,0,tx+tw2,0);gg.addColorStop(0,'#D9A982');gg.addColorStop(1,'#97593D');c.fillStyle=gg;pidRR(c,tx,y+68,tw2*v/100,16,8);c.fill();
-    c.textAlign='right';c.fillStyle='#97593D';c.font='700 32px '+FS;c.fillText(x.a<35?'Favorável':x.a<60?'Bom':'Em evolução',bx+bw-40,y+50);c.textAlign='center'});
-  c.fillStyle='rgba(255,253,251,.82)';pidRR(c,96,1058,W-192,112,30);c.fill();c.fillStyle='#7B6858';c.font='600 28px '+FS;c.fillText('FOCO DO MOMENTO',W/2,1100);c.fillStyle='#4A2A1E';c.font='700 40px '+FS;c.fillText(foco.l,W/2,1148);
-  c.fillStyle='#7B6858';c.font='500 25px '+FS;c.fillText('Estimativa feita pela foto. Não é diagnóstico.',W/2,1236);
-  c.fillStyle='#97593D';c.font='700 26px '+FS;c.fillText('Feito no Pellie · '+fmtD(rs.d),W/2,1276);
-  return cv}
-async function pidOpen(){if(PID.busy)return;PID.busy=true;try{const cv=await pidDraw();if(!cv){toast('Faça a análise da pele primeiro');return}
-    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));if(!blob){toast('Não consegui criar o cartão');return}
-    if(PID.url)URL.revokeObjectURL(PID.url);PID.blob=blob;PID.url=URL.createObjectURL(blob);
-    let m=document.getElementById('pidm');if(!m){m=document.createElement('div');m.id='pidm';document.body.appendChild(m)}
-    m.innerHTML=`<button class="pid-bg" data-act="pid-close" aria-label="Fechar" tabindex="-1"></button><div class="pid" role="dialog" aria-modal="true" aria-labelledby="pid-t"><h3 id="pid-t">Seu Pellie ID</h3><img src="${PID.url}" alt="Cartão com o seu tipo de pele e seus pontos fortes"><p>Sem foto e sem dados pessoais além do seu primeiro nome.</p><div class="pid-b"><button class="btn" data-act="pid-share" id="pid-ok">${ic('share',18)}Compartilhar</button><button class="btn ghost" data-act="pid-save">Salvar</button></div><button class="pid-x" data-act="pid-close">Fechar</button></div>`;
-    hapt();setTimeout(()=>{const b=document.getElementById('pid-ok');if(b)try{b.focus({preventScroll:true})}catch(e){}},30)}finally{PID.busy=false}}
-function pidClose(){const m=document.getElementById('pidm');if(m)m.innerHTML='';if(PID.url){URL.revokeObjectURL(PID.url);PID.url=null}}
-async function pidShare(){if(!PID.blob)return;const f=new File([PID.blob],'pellie-id.png',{type:'image/png'});
-  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Meu Pellie ID'});return}}catch(e){if(e&&e.name==='AbortError')return}
-  pidSave();toast('Imagem salva. Compartilhe pela galeria.',true)}
-function pidSave(){if(!PID.url)return;const a=document.createElement('a');a.href=PID.url;a.download='pellie-id.png';document.body.appendChild(a);a.click();a.remove()}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('#pidm .pid'))pidClose()});
 /* Rotina acompanha a prateleira: produto novo que ela TEM entra na rotina do período certo (uma vez, sem mexer nos produtos antigos nem no que ela já ajustou) */
 const SH_RA_TS=1795637000000;
 function shAutoPer(i){if(i.cat==='cabelo'||i.cat==='corpo'||shCat(i)!=='rosto'||i.v==='evitar')return '';const k=shelfKey(i),R=getR(),inM=R.m.includes(k),inN=R.n.includes(k);
