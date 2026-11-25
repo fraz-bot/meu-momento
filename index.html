@@ -282,7 +282,7 @@
 .shclone{position:fixed;left:0;top:0;z-index:80;pointer-events:none;display:grid;place-items:end center;will-change:transform;filter:drop-shadow(0 16px 14px rgba(60,30,20,.30))}.shclone .shpi{animation:none}.shclone img{pointer-events:none}
 body.sh-drag{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .shundo{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 8px;padding:8px 8px 8px 14px;border-radius:14px;background:rgba(255,253,251,.85);border:1px solid #EFE4D9;font-size:13px;color:#5B4636}.shundo button{min-height:40px;padding:0 14px;border-radius:999px;border:0;background:#F3DFC4;color:#6A3F2B;font:inherit;font-weight:700;cursor:pointer}
-.shm-bg{position:fixed;inset:0;z-index:90;background:rgba(60,35,25,.38);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.shm-bg{position:fixed;inset:0;z-index:90;border:0;padding:0;width:100%;background:rgba(60,35,25,.38);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .shm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:91;width:min(88vw,340px);background:#FFFDFB;border-radius:24px;padding:22px 20px 18px;box-shadow:0 24px 60px rgba(60,30,20,.35);text-align:center;display:grid;gap:8px}.shm h3{font-size:18px;color:#4A2A1E;margin:0}.shm p{margin:0;font-size:14px;color:#6B5645}.shm-w{display:flex;gap:8px;align-items:flex-start;text-align:left;background:#FBEFE3;border-radius:12px;padding:10px 12px;color:#7A4A33!important}
 .shm-b{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 @media(prefers-reduced-motion:reduce){.shpi{animation:none}.shp.shgone{transition:none}}
@@ -2825,7 +2825,7 @@ function viewShelf(){
     ${shelfViz(it)}
     ${it.length?`<div class="pk-sl">${it.map(row).join('')}</div><p class="note">Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>`
       :`<div class="pl-card" style="text-align:center"><h3>${all.length?'Nenhum produto nesta categoria':'Sua prateleira está vazia'}</h3><p class="small muted" style="margin-top:4px">${all.length?'Escolha outra categoria acima.':'Escaneie um produto e guarde aqui.'}</p></div>`}
-    ${guia('Adicionar um produto','Escanear','data-go="escanear"')}${shModal()}</div>`}
+    ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`}
 function viewProdutos(){
   if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack">${pkHead('Minha prateleira','Guarde os seus produtos.')}${paywall('Prateleira','tag','Guarde os seus produtos e acompanhe a validade.')}</div>`;
   if(S.prodSub==='shelf')return viewShelf();
@@ -5328,7 +5328,7 @@ function shApplyVis(vis){const set=new Set(vis);let k=0;shEd.g=shEd.g.map(id=>se
 function shReset(){shEd.active=false;shEd.dragging=false;shEd.g=[];shEd.orig=[];shEd.removed=[];shEd.undo=false;shEd.confirm=null;shEd.busy=false}
 function shRefresh(){const y=window.scrollY;render();window.scrollTo(0,y)}
 function shModal(){if(!shEd.active||!shEd.confirm)return '';const i=S.shelf.find(x=>x.id===shEd.confirm);if(!i)return '';const rot=String(i.rot||'');
-  return `<div class="shm-bg" data-shed="cancelx"></div><div class="shm" role="dialog" aria-modal="true" aria-labelledby="shm-t"><h3 id="shm-t">Remover da prateleira?</h3><p><b>${esc(i.n)}</b></p><p>Você poderá adicionar este produto novamente depois.</p>${rot?`<p class="shm-w">${ic('alert',16)}Este produto está presente na sua rotina de cuidados.</p>`:''}<div class="shm-b"><button class="btn ghost" data-shed="cancelx">Cancelar</button><button class="btn" data-shed="confirmx" id="shm-ok">Remover</button></div></div>`}
+  return `<button class="shm-bg" data-shed="cancelx" aria-label="Cancelar" tabindex="-1"></button><div class="shm" role="dialog" aria-modal="true" aria-labelledby="shm-t"><h3 id="shm-t">Remover da prateleira?</h3><p><b>${esc(i.n)}</b></p><p>Você poderá adicionar este produto novamente depois.</p>${rot?`<p class="shm-w">${ic('alert',16)}Este produto está presente na sua rotina de cuidados.</p>`:''}<div class="shm-b"><button class="btn ghost" data-shed="cancelx">Cancelar</button><button class="btn" data-shed="confirmx" id="shm-ok">Remover</button></div></div>`}
 function shCommit(){if(shEd.busy)return;shEd.busy=true;
   const by=new Map(S.shelf.map(i=>[i.id,i])),rm=new Set(shEd.removed.map(r=>r.item.id)),out=[];
   shEd.g.forEach(id=>{const i=by.get(id);if(i&&!rm.has(id)){out.push(i);by.delete(id)}});S.shelf.forEach(i=>{if(by.has(i.id)&&!rm.has(i.id))out.push(i)});
@@ -5383,7 +5383,7 @@ document.addEventListener('touchmove',e=>{if(shEd.dragging)e.preventDefault()},{
 document.addEventListener('contextmenu',e=>{if(shEd.active&&e.target.closest&&e.target.closest('.shedit'))e.preventDefault()});
 document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escape'){if(shEd.dragging)shEnd(false);else if(shEd.confirm){shEd.confirm=null;shRefresh()}return}
   const n=e.target.closest&&e.target.closest('.shp');if(n&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();shAct('mv|'+n.dataset.shid+'|'+(e.key==='ArrowLeft'?-1:1))}});
-{const r1=render;render=function(){if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();return r1.apply(this,arguments)}}
+{const r1=render;render=function(){if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();const x=r1.apply(this,arguments);let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
