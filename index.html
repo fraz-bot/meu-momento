@@ -2695,11 +2695,10 @@ const pkHead=(t,s)=>`<div class="pl-h"><h1>${t}</h1><p>${s}</p></div><div class=
 function pkHome(){
   const nT=temP().length,soon=shelfSoon().length,tem=!!S.result;
   return `<div class="stack pk pl-in">${pkHead('Produtos','Indicações, sua prateleira e escaneamento.')}
-  <div class="pk-hero"><div><h2>Produtos<br>para você</h2><p>${tem?'Recomendações personalizadas para a sua pele e rotina.':'Faça a análise da pele para ver os produtos indicados.'}</p>
-    ${tem?`<button class="btn pl-go" data-pk="rec">Ver indicações${ic('chev',16)}</button>`:`<button class="btn pl-go" data-go="pele|analise">${ic('face',18)}Analisar a minha pele</button>`}</div>
+  <div class="pk-hero"><div><h2>Escaneie<br>um produto</h2><p>Fotografe o rótulo e veja se combina com a sua pele${nT?'. Você tem '+nT+(nT===1?' produto':' produtos')+' na prateleira.':'.'}</p>
+    <button class="btn pl-go" data-go="escanear">${ic('scan',18)}Escanear agora${ic('chev',16)}</button></div>
     <div class="pk-art" aria-hidden="true">${dimg('niacina',74)}${dimg('hidr',64)}</div></div>
-  <div class="pk-q"><button data-psub="shelf"><span>${ic('tag',24)}</span><b>Minha prateleira</b><small>${nT} ${nT===1?'produto':'produtos'}</small></button>
-    <button data-go="escanear"><span>${ic('scan',24)}</span><b>Escanear produto</b><small>Veja se combina</small></button>
+  <div class="pk-q" style="grid-template-columns:1fr 1fr">${tem?`<button data-pk="rec"><span>${ic('routine',24)}</span><b>Produtos indicados</b><small>Para a sua pele e rotina</small></button>`:`<button data-go="pele|analise"><span>${ic('face',24)}</span><b>Analisar a pele</b><small>Para ver as indicações</small></button>`}
     <button data-go="mais|gastos"><span>${ic('coin',24)}</span><b>Planejar gastos</b><small>Custo por mês</small></button></div>
   ${soon?`<button class="alertc" data-psub="shelf">${ic('alert',22)}<span><b>${soon===1?'1 produto vence':soon+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}
   </div>`}
@@ -4855,7 +4854,7 @@ escanear:['Primeiro produto','Mostre o rótulo de frente, com o nome legível. S
 rotina:['Sua rotina','Marque cada etapa ao fazer. A sequência e os lembretes dependem disso.'],
 cron:['Primeiro cronograma','O cronograma alterna hidratação, nutrição e reconstrução. Você pode mudar o dia, a frequência e a ordem em "Editar cronograma".'],
 assistant:['Pellie Assistant','Pergunte em linguagem simples. Ele conhece o seu perfil, mas não substitui um dermatologista.']};
-function tipCtx(){if(S.tour&&S.tour.on)return '';let k=null;
+function tipCtx(){return '';let k=null;
   if(S.tab==='pele'&&!S.analyzing&&!S.result)k='pele';else if(S.tab==='escanear'&&!S.pf)k='escanear';else if(S.tab==='rotina')k='rotina';
   else if(S.tab==='cabelo'&&S.chv==='crono'&&cgReady()&&!S.hBusy)k='cron';else if(S.tab==='assistant'&&!(S.chat||[]).length)k='assistant';
   if(!k||(S.tips&&S.tips[k]))return '';const[t,x]=TIPC[k];
