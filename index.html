@@ -5328,7 +5328,10 @@ function shAutoPer(i){if(i.cat==='cabelo'||i.cat==='corpo'||shCat(i)!=='rosto'||
   if(inM||inN)return (inM?'m':'')+(inN?'n':'');
   if(S.gest==='sim'&&(k==='retinol'||k==='bha'))return '';if(S.fase==='barreira'&&['retinol','vitc','niacina','bha'].includes(k))return '';
   return {fps:'m',vitc:'m',limpador:'mn',retinol:'n',bha:'n',niacina:'mn',hialu:'mn',calmante:'n',hidr:'mn'}[k]||''}
-function shSyncRot(){let n=0;try{S.shelf.forEach(i=>{if(i.ra||stOf(i)!=='tenho'||i.rot!==undefined)return;const t=+i.id;if(!(t>SH_RA_TS))return;i.rot=shAutoPer(i);i.ra=1;n++})}catch(e){}return n}
+function shSyncRot(){let n=0;const ent=[];try{S.shelf.forEach(i=>{if(i.ra||stOf(i)!=='tenho'||i.rot!==undefined)return;const t=+i.id;if(!(t>SH_RA_TS))return;i.rot=shAutoPer(i);i.ra=1;n++;if(i.rot)ent.push(i.rot)})}catch(e){}
+  if(ent.length){const m=ent.every(r=>r==='m'),nn=ent.every(r=>r==='n'),per=m?'da manhã':nn?'da noite':'da manhã e da noite';
+    toast(ent.length===1?`Entrou na sua rotina ${per}`:`${ent.length} produtos entraram na sua rotina`,1)}
+  return n}
 /* ---------- Prateleira: modo edição (arrastar, remover, concluir). Estado temporário, nunca vai para a nuvem ---------- */
 const shEd={active:false,dragging:false,g:[],orig:[],removed:[],undo:false,confirm:null,busy:false};
 function shVisIds(){const F=S.shF||'todos',rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(S.shelf.map(i=>[i.id,i]));return shEd.g.filter(id=>{const i=by.get(id);return i&&!rm.has(id)&&stOf(i)!=='acabou'&&(F==='todos'||shCat(i)===F)})}
