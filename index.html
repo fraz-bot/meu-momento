@@ -286,6 +286,14 @@ body.sh-drag{-webkit-user-select:none;user-select:none;-webkit-touch-callout:non
 .shm{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:91;width:min(88vw,340px);background:#FFFDFB;border-radius:24px;padding:22px 20px 18px;box-shadow:0 24px 60px rgba(60,30,20,.35);text-align:center;display:grid;gap:8px}.shm h3{font-size:18px;color:#4A2A1E;margin:0}.shm p{margin:0;font-size:14px;color:#6B5645}.shm-w{display:flex;gap:8px;align-items:flex-start;text-align:left;background:#FBEFE3;border-radius:12px;padding:10px 12px;color:#7A4A33!important}
 .shm-b{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 @media(prefers-reduced-motion:reduce){.shpi{animation:none}.shp.shgone{transition:none}}
+.shb{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}.shb:active{transform:scale(.95)}.shb-w{position:absolute;top:14px;right:calc(50% - 34px);width:10px;height:10px;border-radius:50%;background:#C98A3B;border:2px solid #FFF8EE;box-shadow:0 1px 4px rgba(74,42,30,.3)}.shb-w.out{background:#B9483A}
+.shtip{margin:2px 4px 0!important;text-align:center}.shacab{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:4px 2px}.shacab small{color:#8A6F62;font-weight:700}
+.shs-bg{position:fixed;inset:0;z-index:90;border:0;padding:0;width:100%;background:rgba(58,34,24,.38);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none}
+.shs{position:fixed;left:0;right:0;bottom:0;z-index:91;max-width:560px;margin:0 auto;max-height:84vh;overflow:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(180deg,#FCF3E8 0%,#F7E6D3 100%);border-radius:30px 30px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -14px 40px rgba(74,42,30,.22);animation:scsu .3s both;display:grid;gap:12px}
+.shs-h{display:flex;align-items:center;gap:12px}.shs-n{flex:1;min-width:0;display:grid;gap:4px;justify-items:start}.shs-n h3{margin:0;font-size:17px;line-height:1.2;color:#4A2A1E}.shs-x{width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,253,251,.8);color:#6B4A36;display:grid;place-items:center;cursor:pointer;flex:none}
+.shs-s{background:rgba(255,253,251,.78);border-radius:18px;padding:12px 14px}.shs-s b{font-size:13px;color:#6B4A36}.shs-s p{margin:4px 0 0;font-size:14px;color:#5B4636}.shs-s .shs-m{font-size:12.5px;color:#8A6F62}.shs-s .exp.soon{color:var(--warn);font-weight:700}.shs-s .exp.out{color:var(--alert);font-weight:700}
+.shs-del{min-height:44px;border:0;background:none;color:#9B4A3A;font:inherit;font-weight:700;cursor:pointer}.shs-rm{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}.shs-rm span{grid-column:1/-1;text-align:center;font-weight:700;color:#4A2A1E}
+@media(prefers-reduced-motion:reduce){.shs{animation:none}.shb{transition:none}}
 .mx-more{margin-top:4px}.mx-more summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:18px;background:rgba(255,253,251,.7);border:1px solid #EFE4D9;font-weight:700;color:#6B5645;font-size:14px;margin-bottom:10px}.mx-more summary::-webkit-details-marker{display:none}.mx-more summary svg{transition:transform .2s}.mx-more[open] summary svg{transform:rotate(90deg)}
 .mx-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 8px}.mx-empty b{font-size:15px;color:#4A2A1E}.mx-empty span{font-size:13px;color:#7B6858}.mx-empty .btn{margin-top:4px}
 .mx-card{background:#FFFDFB;border:1px solid #EFE4D9;border-radius:22px;padding:2px 14px;box-shadow:0 6px 18px rgba(75,41,25,.06)}.mx-r{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #F0E6DC;padding:13px 0;color:var(--ol,#4B2919);font:inherit;cursor:pointer}.mx-card>.mx-r:first-child{border-top:0}.mx-ri{flex:none;width:42px;height:42px;border-radius:14px;background:#F6E8DE;color:#A8745A;display:grid;place-items:center}.mx-rt{flex:1;min-width:0}.mx-rt b{display:block;font-size:16px}.mx-rt span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mx-r>svg:last-child{color:var(--muted)}.mx-del{display:grid;gap:10px;text-align:center;padding:14px 0}
@@ -2799,7 +2807,7 @@ function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');
     if(x&&ed){const nm=esc(x.n);c+=`<div class="sbot sl"><div class="shp${stOf(x)==='quero'?' want':''}" data-shid="${esc(x.id)}" tabindex="0" role="group" aria-label="${nm}, posição ${idx+1} de ${n}"><div class="shpi">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>
       <button class="shx" data-shed="x|${esc(x.id)}" aria-label="Remover ${nm} da prateleira">${ic('x',13)}</button>
       <button class="sr" data-shed="mv|${esc(x.id)}|-1" aria-label="Mover ${nm} para trás">Mover para trás</button><button class="sr" data-shed="mv|${esc(x.id)}|1" aria-label="Mover ${nm} para frente">Mover para frente</button></div></div>`}
-    else if(x)c+=`<div class="sbot${stOf(x)==='quero'?' want':''}" title="${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>`;
+    else if(x){const ex=stOf(x)==='tenho'?shelfInfo(x).cls:'';c+=`<button class="sbot shb${stOf(x)==='quero'?' want':''}" data-shopen="${esc(x.id)}" aria-label="Ver detalhes de ${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}${ex==='out'?', vencido':ex==='soon'?', vence em breve':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}${ex?`<i class="shb-w ${ex}" aria-hidden="true"></i>`:''}</button>`}
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow">${c}</div><div class="splank"></div>`}
@@ -2811,19 +2819,11 @@ function shPurp(i){const sn=typeof cgSnap==='function'?cgSnap(i):null,f=sn&&sn.c
   if(i.cat==='cabelo')return '';const t=cgNorm((i.n||'')+' '+(i.tp||''));const m=SH_PU.find(([r])=>r.test(t));return m?m[1]:''}
 function viewShelf(){
   const rmS=new Set(shEd.active?shEd.removed.map(r=>r.item.id):[]),all=S.shelf.filter(i=>!rmS.has(i.id)),F=S.shF||'todos',it=all.filter(i=>F==='todos'||shCat(i)===F),soon=shelfSoon().length,nT=temP().length,nQ=all.filter(i=>stOf(i)==='quero').length;S.shOpen=S.shOpen||{};
-  const row=i=>{const f=shelfInfo(i),tm=stOf(i)==='tenho',op=!!S.shOpen[i.id],st=stOf(i),ab=i.aberto?i.aberto.split('-').reverse().slice(0,2).join('/'):'';
-    return `<div class="pk-sr${tm?'':' gone'}"><button class="pk-sh" data-pk="sh|${i.id}" aria-expanded="${op}">${FOTOS?shelfThumb(i):''}${shTh(i,52)}<span class="si"><b>${esc(i.n)}</b><em class="pk-st ${st}">${{tenho:'Em uso',quero:'Quero comprar',acabou:'Acabou'}[st]}</em>
-      <small>${tm?`${ab?'Abriu em '+ab+' · ':''}<span class="exp ${f.cls}">${f.txt}</span>`:st==='quero'?'Na lista de compras':'Acabou'}</small></span>${ic('chev',16)}</button>
-    ${tm&&shPurp(i)?`<p class="pk-pu${op?' full':''}"><b>Para que serve:</b> ${esc(shPurp(i))}</p>`:''}
-    ${tm?`<div class="pk-qr"><span>Na rotina</span>${[['m','sun','Manhã'],['n','moon','Noite']].map(([k,i_,t])=>`<button data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}" aria-label="${inRot(i,k)?'Tirar da':'Adicionar à'} rotina da ${t.toLowerCase()}">${ic(inRot(i,k)?'check':i_,14)}${t}</button>`).join('')}</div>`:''}
-    ${op?`<div class="pk-ct"><div class="regg">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" data-shst="${i.id}|${k}" aria-pressed="${st===k}">${t}</button>`).join('')}</div>
-      ${tm?`<div class="regg"><span class="small muted" style="align-self:center">Validade:</span>${[6,12,24].map(m=>`<button class="rg" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div>
-      `:''}
-      <button class="chip" data-rm="${i.id}" style="font-size:12px;align-self:flex-start">Remover</button></div>`:''}</div>`};
+  const ab=it.filter(i=>stOf(i)==='acabou');
   return `<div class="stack pk pl-in">${pkHead('Minha prateleira',`${nT} ${nT===1?'produto':'produtos'}${nQ?` · ${nQ} para comprar`:''}${soon?` · ${soon} vencendo`:''}`)}
     <div class="pl-chips" role="group" aria-label="Categoria">${[['todos','Todos'],['rosto','Rosto'],['cabelo','Cabelo'],['corpo','Corpo']].map(([k,l])=>`<button data-pk="shf|${k}" aria-pressed="${F===k}">${l}</button>`).join('')}</div>
     ${shelfViz(it)}
-    ${it.length?`<div class="pk-sl">${it.map(row).join('')}</div><p class="note">Os meses são a validade depois de aberto (o símbolo do potinho no rótulo).</p>`
+    ${it.length?`${it.filter(i=>stOf(i)!=='acabou').length&&!shEd.active?`<p class="small muted shtip">Toque em um produto para ver detalhes, rotina e validade.</p>`:''}${ab.length?`<div class="shacab"><small>Acabaram</small>${ab.map(i=>`<button class="chip" data-shopen="${esc(i.id)}">${esc(i.n)}</button>`).join('')}</div>`:''}`
       :`<div class="pl-card" style="text-align:center"><h3>${all.length?'Nenhum produto nesta categoria':'Sua prateleira está vazia'}</h3><p class="small muted" style="margin-top:4px">${all.length?'Escolha outra categoria acima.':'Escaneie um produto e guarde aqui.'}</p></div>`}
     ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`}
 function viewProdutos(){
@@ -5025,6 +5025,8 @@ document.addEventListener('click',e=>{
   else if(d.hrit){S.tab='rotina';S.rotFull=false;S.period=d.hrit;S.perMan=true;ritAct('start|'+d.hrit)}
   else if(d.rper){S.period=d.rper;S.perMan=true;render()}
   else if(d.shdone){const [per,id]=d.shdone.split('|');const l=dayLog(),a=l['x'+per]||(l['x'+per]=[]),ix=a.indexOf(id);if(ix>=0)a.splice(ix,1);else a.push(id);const y=window.scrollY;render();window.scrollTo(0,y)}
+  else if(d.shopen){S.shSel=d.shopen;S.shRmAsk=null;hapt();render()}
+  else if(d.shsx){shsAct(d.shsx)}
   else if(d.shed){shAct(d.shed)}
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
   else if(d.reg){const [k,v]=d.reg.split('|');S.reg[k]=S.reg[k]===v?null:v;document.querySelectorAll('[data-reg^="'+k+'|"]').forEach(b=>b.setAttribute('aria-pressed',String(S.reg[k]===b.dataset.reg.split('|')[1])))}
@@ -5332,6 +5334,27 @@ function shSyncRot(){let n=0;const ent=[];try{S.shelf.forEach(i=>{if(i.ra||stOf(
   if(ent.length){const m=ent.every(r=>r==='m'),nn=ent.every(r=>r==='n'),per=m?'da manhã':nn?'da noite':'da manhã e da noite';
     toast(ent.length===1?`Entrou na sua rotina ${per}`:`${ent.length} produtos entraram na sua rotina`,1)}
   return n}
+
+/* ---------- Prateleira: detalhes do produto ao tocar nele (substitui a lista abaixo da prateleira) ---------- */
+function shSheet(){const i=S.shSel&&S.shelf.find(x=>x.id===S.shSel);if(!i)return '';const st=stOf(i),tm=st==='tenho',f=tm?shelfInfo(i):null,ab=i.aberto?i.aberto.split('-').reverse().slice(0,2).join('/'):'',pu=tm&&typeof shPurp==='function'?shPurp(i):'';
+  let per=[];try{['m','n'].forEach(p=>{if(ritSteps(p).some(x=>(x.it&&x.it.id===i.id)||x.id===i.id))per.push(p==='m'?'manhã':'noite')})}catch(e){}
+  const ask=S.shRmAsk===i.id;
+  return `<button class="shs-bg" data-shsx="close" aria-label="Fechar" tabindex="-1"></button><div class="shs" role="dialog" aria-modal="true" aria-labelledby="shs-t"><i class="scs-grip" aria-hidden="true"></i>
+   <div class="shs-h">${shTh(i,64)}<div class="shs-n"><h3 id="shs-t">${esc(i.n)}</h3><em class="pk-st ${st}">${{tenho:'Em uso',quero:'Quero comprar',acabou:'Acabou'}[st]}</em></div><button class="shs-x" data-shsx="close" aria-label="Fechar">${ic('x',18)}</button></div>
+   ${pu?`<div class="shs-s"><b>Para que serve</b><p>${esc(pu)}</p></div>`:''}
+   ${tm?`<div class="shs-s"><b>Na rotina</b><div class="pk-qr" style="padding:0;margin:6px 0 0">${[['m','sun','Manhã'],['n','moon','Noite']].map(([k,i_,t])=>`<button data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}" aria-label="${inRot(i,k)?'Tirar da':'Adicionar à'} rotina da ${t.toLowerCase()}">${ic(inRot(i,k)?'check':i_,14)}${t}</button>`).join('')}</div>
+     <p class="shs-m">${per.length?'Aparece hoje na sua rotina da '+per.join(' e da ')+'.':'Ainda não está na sua rotina.'}</p></div>
+   <div class="shs-s"><b>Validade</b><p>${ab?'Abriu em '+ab+' · ':''}<span class="exp ${f.cls}">${f.txt}</span></p><div class="regg">${[6,12,24].map(m=>`<button class="rg" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div><p class="shs-m">Conte os meses a partir da abertura (o potinho no rótulo).</p></div>`:''}
+   <div class="shs-s"><b>Situação</b><div class="regg">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" data-shst="${i.id}|${k}" aria-pressed="${st===k}">${t}</button>`).join('')}</div></div>
+   ${ask?`<div class="shs-rm"><span>Remover da prateleira?</span><button class="btn ghost" data-shsx="no">Cancelar</button><button class="btn" data-shsx="yes|${esc(i.id)}">Remover</button></div>`:`<button class="shs-del" data-shsx="ask|${esc(i.id)}">Remover da prateleira</button>`}</div>`}
+function shSheetUpd(){let m=document.getElementById('shsheet');if(!m){m=document.createElement('div');m.id='shsheet';document.body.appendChild(m)}
+  const h=(S.shSel&&S.ob.done&&S.tab==='produtos'&&S.prodSub==='shelf'&&!shEd.active)?shSheet():'';if(m.dataset.h===h)return;const was=!!m.dataset.h;m.dataset.h=h;m.innerHTML=h;const sh=m.querySelector('.shs');if(sh&&was)sh.style.animation='none'}
+function shsAct(v){const [a,id]=v.split('|');
+  if(a==='close'){S.shSel=null;S.shRmAsk=null}
+  else if(a==='ask')S.shRmAsk=id;else if(a==='no')S.shRmAsk=null;
+  else if(a==='yes'){S.shelf=S.shelf.filter(i=>i.id!==id);S.shSel=null;S.shRmAsk=null;hapt();toast('Produto removido da prateleira')}
+  const y=window.scrollY;render();window.scrollTo(0,y)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.shSel){S.shSel=null;S.shRmAsk=null;render()}});
 /* ---------- Prateleira: modo edição (arrastar, remover, concluir). Estado temporário, nunca vai para a nuvem ---------- */
 const shEd={active:false,dragging:false,g:[],orig:[],removed:[],undo:false,confirm:null,busy:false};
 function shVisIds(){const F=S.shF||'todos',rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(S.shelf.map(i=>[i.id,i]));return shEd.g.filter(id=>{const i=by.get(id);return i&&!rm.has(id)&&stOf(i)!=='acabou'&&(F==='todos'||shCat(i)===F)})}
@@ -5346,7 +5369,7 @@ function shCommit(){if(shEd.busy)return;shEd.busy=true;
   const mudou=out.length!==S.shelf.length||out.some((i,k)=>i!==S.shelf[k]);
   const tocouRot=shEd.removed.some(r=>r.item.st!=='quero'&&r.item.v!=='evitar');if(mudou)S.shelf=out;shReset();hapt();if(mudou)toast(tocouRot?'Prateleira e rotina atualizadas':'Prateleira atualizada',true);render()}
 function shAct(v){const [a,id,dx]=v.split('|');
-  if(a==='edit'){shReset();shEd.active=true;shEd.g=S.shelf.map(i=>i.id);shEd.orig=shEd.g.slice();hapt();shRefresh()}
+  if(a==='edit'){S.shSel=null;S.shRmAsk=null;shReset();shEd.active=true;shEd.g=S.shelf.map(i=>i.id);shEd.orig=shEd.g.slice();hapt();shRefresh()}
   else if(a==='done')shCommit();
   else if(a==='x'){shEd.confirm=id;shRefresh();setTimeout(()=>{const b=document.getElementById('shm-ok');if(b)try{b.focus({preventScroll:true})}catch(e){}},30)}
   else if(a==='cancelx'){shEd.confirm=null;shRefresh()}
@@ -5394,7 +5417,7 @@ document.addEventListener('touchmove',e=>{if(shEd.dragging)e.preventDefault()},{
 document.addEventListener('contextmenu',e=>{if(shEd.active&&e.target.closest&&e.target.closest('.shedit'))e.preventDefault()});
 document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escape'){if(shEd.dragging)shEnd(false);else if(shEd.confirm){shEd.confirm=null;shRefresh()}return}
   const n=e.target.closest&&e.target.closest('.shp');if(n&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();shAct('mv|'+n.dataset.shid+'|'+(e.key==='ArrowLeft'?-1:1))}});
-{const r1=render;render=function(){shSyncRot();if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();const x=r1.apply(this,arguments);let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
+{const r1=render;render=function(){shSyncRot();if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();if(S.shSel&&!(S.tab==='produtos'&&S.prodSub==='shelf')){S.shSel=null;S.shRmAsk=null}const x=r1.apply(this,arguments);shSheetUpd();let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
