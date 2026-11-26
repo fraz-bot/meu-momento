@@ -5704,14 +5704,14 @@ const cmpAreaOf=(c,i)=>i&&i.area?i.area:(c.item?({rosto:'pele'}[shCat(c.item)]||
 
 /* ---- candidatos: prateleira + histórico do scanner, sem duplicar ---- */
 function cmpCands(){const out=[];
-  const add=c=>{if(c.fork){if(!out.some(o=>o.key===c.key))out.push(c);return}const ex=out.find(o=>!o.fork&&nmSame(o.nome,c.nome));if(ex){if(c.snap&&!ex.snap)ex.snap=c.snap;if(ex.nota==null&&c.nota!=null)ex.nota=c.nota;if(c.item&&!ex.item)ex.item=c.item;if(c.d&&!ex.d)ex.d=c.d;c.src.forEach(s=>{if(!ex.src.includes(s))ex.src.push(s)});return}out.push(c)};
+  const add=c=>{if(c.fork){if(!out.some(o=>o.key===c.key))out.push(c);return}const ex=out.find(o=>!o.fork&&nmSame(o.nome,c.nome));if(ex){if(c.snap&&!ex.snap)ex.snap=c.snap;if(c.img&&!ex.img){ex.img=c.img;ex.imgv=c.imgv}if(ex.nota==null&&c.nota!=null)ex.nota=c.nota;if(c.item&&!ex.item)ex.item=c.item;if(c.d&&!ex.d)ex.d=c.d;c.src.forEach(s=>{if(!ex.src.includes(s))ex.src.push(s)});return}out.push(c)};
   S.shelf.filter(i=>stOf(i)!=='acabou').forEach(i=>{const sn=cgSnap(i);add({key:nmK(i.n),nome:i.n,marca:i.marca||(pSplit(i.n).marca)||'',item:i,snap:sn,nota:sn&&sn.sc?sn.sc.v:(typeof i.nota==='number'?i.nota:null),src:['s'],quero:stOf(i)==='quero'})});
-  (S.prods||[]).forEach(p=>{const nm=cmpFull(p.produto||'Produto',p.marca);add({fork:!!p.fork,key:nmK(nm),nome:nm,marca:p.marca||'',item:null,snap:p.snap||null,nota:typeof p.nota==='number'?p.nota:(p.snap&&p.snap.sc?p.snap.sc.v:null),src:['h'],d:p.d})});
+  (S.prods||[]).forEach(p=>{const nm=cmpFull(p.produto||'Produto',p.marca);add({fork:!!p.fork,img:p.img||null,imgv:p.imgv||0,key:nmK(nm),nome:nm,marca:p.marca||'',item:null,snap:p.snap||null,nota:typeof p.nota==='number'?p.nota:(p.snap&&p.snap.sc?p.snap.sc.v:null),src:['h'],d:p.d})});
   return out}
 const cmpFind=k=>{if(!k)return null;const L=cmpCands();return L.find(c=>c.key===k)||L.find(c=>nmSame(c.nome,k))||null};
 function cmpProd(c){const sn=c.snap,i=sn&&sn.idr,cm=sn&&sn.cmp,sc=sn&&sn.sc,P=(S.cmpP&&S.cmpP[c.key])||{},vol=P.vol||(i&&cmpVol(i.volume))||null;
   const nota=c.nota==null?null:c.nota;
-  return {key:c.key,nome:c.nome,marca:c.marca||(sn&&sn.marca)||'',area:cmpAreaOf(c,i),cat:(i&&i.categoria)||(c.item&&c.item.tp)||'',item:c.item||null,src:c.src,quero:!!c.quero,d:c.d||null,
+  return {img:c.img||null,imgv:c.imgv||0,key:c.key,nome:c.nome,marca:c.marca||(sn&&sn.marca)||'',area:cmpAreaOf(c,i),cat:(i&&i.categoria)||(c.item&&c.item.tp)||'',item:c.item||null,src:c.src,quero:!!c.quero,d:c.d||null,
     nota,parts:sc&&sc.parts?sc.parts.map(p=>({k:p.k,pts:p.pts,max:p.max,mot:p.mot||''})):null,pen:sc?sc.pen:0,teto:!!(sc&&sc.teto),
     fin:cm?(cm.finalidade||cm.resumo||''):'',ativos:cm&&cm.ativos?cm.ativos.map(a=>a.nome).filter(Boolean).slice(0,4):(i&&i.ativos_declarados?i.ativos_declarados.slice(0,4):[]),
     alertas:cm&&cm.alertas?cm.alertas.map(a=>a.texto).slice(0,2):[],evitar:cm&&cm.evitar_encontrados?cm.evitar_encontrados.slice(0,4):[],lista:!!(i&&i.lista_lida),
@@ -5815,7 +5815,8 @@ function cmpCommit(R){if(!R||R.A.nota==null||R.B.nota==null)return null;S.cmpH=S
 function cmpStale(rec){const A=cmpCp(rec.a.key)||rec.a,B=cmpCp(rec.b.key)||rec.b;try{return cmpCalc(A,B).key!==rec.k}catch(e){return false}}
 
 /* ---- imagens ---- */
-const cmpThumb=(cp,w)=>{const x=cp.item||{id:'cmp:'+cp.key,n:cp.nome,tp:cp.cat||'',marca:cp.marca};return x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,w||62)};
+const CMPIMG=new Set();
+const cmpThumb=(cp,w)=>{const x=cp.item||{id:'cmp:'+cp.key,n:cp.nome,tp:cp.cat||'',marca:cp.marca};if(CMPIMG.has(cp.key)&&!(x.img&&x.imgv===3))return `<span class="sht ld" style="width:${w||62}px;height:${w||62}px"></span>`;return x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:cp.img?`<img class="shcut" src="${cp.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,w||62)};
 
 /* ---- telas ---- */
 const CMP_SUB='Compare dois produtos e descubra qual faz mais sentido para seus cuidados.';
@@ -5879,7 +5880,8 @@ function viewCmp(){const C=cmpS();C.want=null;
 
 /* ---- escanear dentro do comparador: foto → identificar → compatibilidade → volta para a comparação ---- */
 function cmpDedupe(f){const C=S.cmp,o=C&&C.scn&&C[C.scn.k==='a'?'b':'a'],oc=o&&cmpCp(o);if(oc&&nmSame(cmpFull(f.nome,f.marca),oc.nome)){const base=f.nome.replace(/\s*\(\d+\)$/,'');let n=2;while(cmpCands().some(c=>c.key===nmK(cmpFull(base+' ('+n+')',f.marca))))n++;f.nome=base+' ('+n+')';f.fork=true}}
-function cmpScanDone(){const f=S.pf,C=cmpS();if(!f||!C.scn)return cmpBack();const k=C.scn.k,key=nmK(cmpFull(f.nome,f.marca)),v=f.sc.v;C[k]=key;delete C.fb[key];C.ai=null;C.tg=null;cmpBack();toast('Produto analisado: '+v+'% de compatibilidade',1)}
+function cmpScanDone(){const f=S.pf,C=cmpS();if(!f||!C.scn)return cmpBack();const k=C.scn.k,key=nmK(cmpFull(f.nome,f.marca)),v=f.sc.v,ph=f.photo,bx=f.idr&&f.idr.caixa,e=(S.prods||[])[0];C[k]=key;delete C.fb[key];C.ai=null;C.tg=null;cmpBack();toast('Produto analisado: '+v+'% de compatibilidade',1);if(e&&ph)cmpSetImg(e,key,ph,bx)}
+async function cmpSetImg(e,key,ph,bx){CMPIMG.add(key);render();let t=null,v=3;try{t=await bgRemove(ph,bx)}catch(_){t=null}if(!t){v=2;try{t=await pfThumb(ph,bx)}catch(_){t=null}}if(t){e.img=t;e.imgv=v}CMPIMG.delete(key);(S.prods||[]).forEach((x,i)=>{if(i>5&&x.img)delete x.img});save();render()}
 function cmScan(){const C=cmpS(),sc=C.scn;if(S.pf)return pfView();
   const k=sc.k,L=k==='a'?'A':'B',o=C[k==='a'?'b':'a'],oc=o&&cmpCp(o),ar=S.pfArea||'pele',tem=!!S.prodFile,nmA={pele:'Pele do rosto',cabelo:'Cabelo',corpo:'Corpo'};
   const areaUi=oc?`<p class="small muted" style="margin:0 0 10px">Comparando com <b>${esc(cmpShort(oc))}</b>${oc.nota!=null?` (${oc.nota}%)`:''}. Pode ser o mesmo produto ou outra marca: pequenas diferenças nos ingredientes podem mudar o resultado.</p>`
@@ -5916,7 +5918,7 @@ function cmUpd(){const C=S.cmp;const on=S.tab==='produtos'&&S.prodSub==='cmp'&&S
 /* ---- ações ---- */
 function cmpBack(){const C=cmpS();C.want=null;C.scn=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);S.pfWarn=null;S.tab='produtos';S.prodSub='cmp';render();window.scrollTo(0,0)}
 function cmpToShelf(cp,rot){const nm=cp.nome,C=cmpS();let it=S.shelf.find(i=>nmSame(i.n,nm)&&stOf(i)!=='acabou');
-  if(!it){it={id:String(Date.now()),n:nm,tp:cp.cat?String(cp.cat).slice(0,30):'',nota:cp.nota,v:cp.nota>=70?'serve':cp.nota>=45?'cuidado':'evitar',aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
+  if(!it){it={id:String(Date.now()),n:nm,...(cp.img?{img:cp.img,imgv:cp.imgv||2}:{}),tp:cp.cat?String(cp.cat).slice(0,30):'',nota:cp.nota,v:cp.nota>=70?'serve':cp.nota>=45?'cuidado':'evitar',aberto:hoje(),meses:12};S.shelf.unshift(it);xp(10,'Na prateleira','sh')}
   if(rot){it.st='tenho';if(!it.aberto)it.aberto=hoje();let rt=String(it.rot||'');for(const c of cmpRotInfo(cp).per)if(!rt.includes(c))rt+=c;it.rot=rt}return it}
 function cmpAct(v){const p=v.split('|'),a=p[0],C=cmpS();hapt();
   if(a==='pick'){C.pick=p[1];C.tab=cmpCands().some(c=>c.src.includes('s'))?'shelf':'hist';C.rot=null;render();return}
