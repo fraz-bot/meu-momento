@@ -1669,11 +1669,6 @@ button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;widt
 .sx .sgh{margin:0 auto 4px}
 /* Crystal: acrílico transparente sobre azulejo claro (provisório, desenhado em CSS) */
 .sx.sty-crystal{background:linear-gradient(115deg,rgba(255,255,255,.8) 0,rgba(255,255,255,0) 34%),linear-gradient(90deg,rgba(190,166,144,.34) 1.5px,transparent 1.5px) 0 0/12.5% 100%,linear-gradient(0deg,rgba(190,166,144,.3) 1.5px,transparent 1.5px) 0 0/100% 168px,linear-gradient(180deg,#FBF2E9,#F3E4D5)!important}
-.sty-crystal .srow,.sty-crystal .srow.rm{background:none!important}
-.sty-crystal .splank,.sty-crystal .splank.last{aspect-ratio:auto;height:14px!important;background:none!important;position:relative;margin:0!important}
-.sty-crystal .splank::before{content:'';position:absolute;left:4%;right:4%;top:0;height:13px;border-radius:4px 4px 7px 7px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.3) 45%,rgba(255,255,255,.65));border:1px solid rgba(255,255,255,.95);border-bottom-color:rgba(176,154,132,.55);box-shadow:0 8px 10px -5px rgba(110,80,50,.28),inset 0 -2px 3px rgba(255,255,255,.8)}
-.sty-crystal .splank.last{height:34px!important}
-.sty-crystal .sbot{margin-bottom:-1px}
 /* decorações */
 .sdec{grid-row:1;align-self:end;display:grid;place-items:end center;width:100%;pointer-events:none;position:relative;z-index:1;margin-bottom:-3px}.sdec.l{grid-column:1}.sdec.r{grid-column:4}
 .shdi{display:grid;place-items:end center;width:100%}.shdi img{display:block;max-width:100%;max-height:var(--dh,56px);width:auto;height:auto;filter:drop-shadow(0 3px 3px rgba(60,35,15,.22))}
@@ -1687,8 +1682,7 @@ button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;widt
 #sdrop{position:absolute;bottom:0;height:88%;width:calc((100% - 2*var(--px,10%))/4);border:1.5px dashed #C9917A;border-radius:16px;background:rgba(246,230,208,.42);pointer-events:none;z-index:0}#sdrop.l{left:var(--px,10%)}#sdrop.r{right:var(--px,10%)}
 @media(prefers-reduced-motion:reduce){.sdp .sdi{animation:none}}
 /* miniaturas dos estilos */
-.shmini{display:block;width:100%}.shmini.sx{overflow:hidden}.shmini .srow{min-height:0!important;padding:0!important;display:block;z-index:0}.shmini .sty-crystal{}
-.shmini.sty-crystal{background-size:auto,12.5% 100%,100% 48px,auto!important}.shmini.sty-crystal .splank,.shmini.sty-crystal .splank.last{height:5px!important}.shmini.sty-crystal .splank::before{height:5px;box-shadow:0 3px 4px -2px rgba(110,80,50,.28)}.shmini.sty-crystal .srow.r0{height:24px}.shmini.sty-crystal .srow.rm{height:22px}
+.shmini{display:block;width:100%}.shmini.sx{overflow:hidden}.shmini .srow{min-height:0!important;padding:0!important;display:block;z-index:0}.shmini.sty-crystal{background-size:auto,12.5% 100%,100% 48px,auto!important}
 .shmini.pend{display:grid;place-items:center;aspect-ratio:1/1;background:linear-gradient(180deg,#FBF1E6,#F1DFCB);border-radius:12px}.shmini.pend img{width:42%;opacity:.55}
 /* painel Personalizar */
 body.shc-open #view{padding-bottom:58vh}
@@ -5487,7 +5481,7 @@ document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escap
 const SHS=[
  {id:'natural',n:'Natural',lv:1,free:1,pad:12,ar:{top:4.2105,mid:4.472,plank:15.3191,end:4.1618},d:'Madeira clara e acabamento suave.'},
  {id:'blush',n:'Blush',lv:1,free:1,pad:10,ar:{top:2.6667,mid:5.1064,plank:21.8182,end:5.2174},d:'Tons rosados e nude, com madeira clara.'},
- {id:'crystal',n:'Crystal',lv:1,free:1,css:1,pad:7,ar:{top:4,mid:4.6,plank:16,end:4.6},d:'Acrílico transparente, moderno e leve.'},
+ {id:'crystal',n:'Crystal',lv:1,free:1,pad:9,ar:{top:3.0769,mid:4.0678,plank:14.1176,end:4.586},d:'Acrílico transparente, moderno e leve.'},
  {id:'toscana',n:'Toscana',lv:3,pad:13,ar:{top:2.5087,mid:4.6753,plank:28.8,end:4.7682},d:'Madeira natural rústica, com curvas suaves.'},
  {id:'provence',n:'Provence',lv:5,pad:14,ar:{top:2.449,mid:5.1429,plank:20,end:5.3731},d:'Madeira clássica ornamentada, de inspiração francesa.'},
  {id:'travertino',n:'Travertino',lv:7,pad:10,ar:{top:2.4828,mid:5.4962,plank:17.1429,end:4.8649},d:'Nicho de pedra natural com luz indireta.'},
