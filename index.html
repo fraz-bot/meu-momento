@@ -1658,6 +1658,65 @@ button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;widt
 
 .hj-rh{gap:12px!important}
 @media(max-width:380px){.hj-rh h2{font-size:18.5px!important}.hj-all2{font-size:11.5px}.cu-sw.cu-4 button svg{display:none}.cu-sw.cu-4 button{font-size:13px;padding:11px 2px}}
+/* Prateleira: estilos modulares, decoração, painel Personalizar e desbloqueio */
+.shwrap{display:block}.shwrap>.shh{margin:0 2px 8px}.shh-g{display:flex;gap:8px}.shh-g .shh-b{padding:0 13px}
+.shelfv.sx{padding:0!important;border:0!important;background:none!important;overflow:hidden;border-radius:26px!important;box-shadow:0 12px 28px rgba(170,128,86,.18)!important}
+.sx .srow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));box-sizing:border-box;width:100%;min-width:0;gap:4px!important;align-items:end;position:relative;z-index:1;padding:0 var(--px,10%)!important;min-height:96px!important;aspect-ratio:var(--art);background:var(--gt) center/100% 100% no-repeat}
+.sx .srow.rm{aspect-ratio:var(--arm);background-image:var(--gm)}
+.sx .splank{display:block;height:auto!important;margin:-1px 0 0!important;border-radius:0!important;box-shadow:none!important;aspect-ratio:var(--arp);background:var(--pl) center/100% 100% no-repeat!important}
+.sx .splank.last{aspect-ratio:var(--are);background-image:var(--ge)!important}
+.sx .sbot{min-height:84px!important;margin-bottom:-3px;min-width:0}
+.sx .sgh{margin:0 auto 4px}
+/* Crystal: acrílico transparente sobre azulejo claro (provisório, desenhado em CSS) */
+.sx.sty-crystal{background:linear-gradient(115deg,rgba(255,255,255,.8) 0,rgba(255,255,255,0) 34%),linear-gradient(90deg,rgba(190,166,144,.34) 1.5px,transparent 1.5px) 0 0/12.5% 100%,linear-gradient(0deg,rgba(190,166,144,.3) 1.5px,transparent 1.5px) 0 0/100% 168px,linear-gradient(180deg,#FBF2E9,#F3E4D5)!important}
+.sty-crystal .srow,.sty-crystal .srow.rm{background:none!important}
+.sty-crystal .splank,.sty-crystal .splank.last{aspect-ratio:auto;height:14px!important;background:none!important;position:relative;margin:0!important}
+.sty-crystal .splank::before{content:'';position:absolute;left:4%;right:4%;top:0;height:13px;border-radius:4px 4px 7px 7px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.3) 45%,rgba(255,255,255,.65));border:1px solid rgba(255,255,255,.95);border-bottom-color:rgba(176,154,132,.55);box-shadow:0 8px 10px -5px rgba(110,80,50,.28),inset 0 -2px 3px rgba(255,255,255,.8)}
+.sty-crystal .splank.last{height:34px!important}
+.sty-crystal .sbot{margin-bottom:-1px}
+/* decorações */
+.sdec{grid-row:1;align-self:end;display:grid;place-items:end center;width:100%;pointer-events:none;position:relative;z-index:1;margin-bottom:-3px}.sdec.l{grid-column:1}.sdec.r{grid-column:4}
+.shdi{display:grid;place-items:end center;width:100%}.shdi img{display:block;max-width:100%;max-height:var(--dh,56px);width:auto;height:auto;filter:drop-shadow(0 3px 3px rgba(60,35,15,.22))}
+.shdi.nf{width:52px;height:52px;margin:0 auto;border-radius:16px;background:url(pellie-flor.png) center/56% no-repeat,radial-gradient(circle at 35% 28%,#FFFDF8,#F1DEC6);border:1px solid rgba(214,180,140,.55);box-shadow:0 4px 8px rgba(120,80,50,.16);opacity:.94}
+.shedit .sdec{pointer-events:auto}
+.sdp{position:relative;width:100%;min-height:64px;display:grid;place-items:end center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:grab;outline:none}
+.sdp:focus-visible{outline:2px solid #6A3F2B;outline-offset:2px;border-radius:14px}
+.sdp .sdi{width:100%;transform-origin:50% 60%;animation:pellieShelfWiggle .32s ease-in-out infinite}.sdp img{pointer-events:none;-webkit-user-drag:none}
+.sdp.is-dragging{border:1.5px dashed #C9917A;border-radius:16px;background:rgba(246,230,208,.55)}.sdp.is-dragging .sdi,.sdp.is-dragging .shx{opacity:0;animation:none}
+.shclone .sdi{width:100%;animation:none}.shclone .shdi img{max-height:var(--dh,56px)}
+#sdrop{position:absolute;bottom:0;height:88%;width:calc((100% - 2*var(--px,10%))/4);border:1.5px dashed #C9917A;border-radius:16px;background:rgba(246,230,208,.42);pointer-events:none;z-index:0}#sdrop.l{left:var(--px,10%)}#sdrop.r{right:var(--px,10%)}
+@media(prefers-reduced-motion:reduce){.sdp .sdi{animation:none}}
+/* miniaturas dos estilos */
+.shmini{display:block;width:100%}.shmini.sx{overflow:hidden}.shmini .srow{min-height:0!important;padding:0!important;display:block;z-index:0}.shmini .sty-crystal{}
+.shmini.sty-crystal{background-size:auto,12.5% 100%,100% 48px,auto!important}.shmini.sty-crystal .splank,.shmini.sty-crystal .splank.last{height:5px!important}.shmini.sty-crystal .splank::before{height:5px;box-shadow:0 3px 4px -2px rgba(110,80,50,.28)}.shmini.sty-crystal .srow.r0{height:24px}.shmini.sty-crystal .srow.rm{height:22px}
+.shmini.pend{display:grid;place-items:center;aspect-ratio:1/1;background:linear-gradient(180deg,#FBF1E6,#F1DFCB);border-radius:12px}.shmini.pend img{width:42%;opacity:.55}
+/* painel Personalizar */
+body.shc-open #view{padding-bottom:58vh}
+.shc{position:fixed;left:0;right:0;bottom:0;z-index:95;max-width:560px;margin:0 auto;max-height:56vh;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;gap:10px;background:linear-gradient(180deg,#FCF3E8,#F7E6D3);border-radius:28px 28px 0 0;padding:8px 16px calc(14px + env(safe-area-inset-bottom,0px));box-shadow:0 -14px 40px rgba(74,42,30,.24);animation:scsu .3s both}
+.shc .scs-grip{margin:2px auto 4px}.shc-h h3{margin:0;font-size:18px;line-height:1.2;color:#4A2A1E}.shc-h p{margin:2px 0 0;font-size:13px;color:#7B6858}
+.shc-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(255,253,251,.7);border-radius:999px;padding:4px}.shc-tabs button{min-height:40px;border:0;border-radius:999px;background:none;font:inherit;font-weight:700;font-size:14px;color:#7B6858;cursor:pointer}.shc-tabs button[aria-selected=true]{background:#6A3F2B;color:#fff}
+.shc-bd{overflow:auto;-webkit-overflow-scrolling:touch;min-height:0;padding:2px 2px 4px}
+.shc-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.shc-gd{grid-template-columns:repeat(4,1fr);gap:8px}
+.shc-c,.shc-d{position:relative;display:grid;gap:3px;justify-items:center;align-content:start;font:inherit;color:#4A2A1E;text-align:center;cursor:pointer;background:rgba(255,253,251,.82);border:1.5px solid transparent;border-radius:18px;padding:8px 6px 9px;-webkit-tap-highlight-color:transparent}
+.shc-c[aria-pressed=true],.shc-d.on{border-color:#6A3F2B;box-shadow:0 6px 16px rgba(106,63,43,.14)}
+.shc-m{display:block;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:12px;position:relative}.shc-c.lk .shc-m,.shc-d.lk .shc-di{opacity:.5}.shc-c.pd .shc-m{opacity:.8}
+.shc-c b,.shc-d b{font-size:13px;line-height:1.15}.shc-c small,.shc-d small{font-size:11.5px;color:#8A6F62;line-height:1.15}
+.shc-d{padding:8px 4px 8px}.shc-di{position:relative;display:grid;place-items:end center;width:100%;height:58px}.shc-di .shdi{height:100%;align-content:end}.shc-di .shdi img{max-height:56px}.shc-di .shdi.nf{width:46px;height:46px}
+.shc-bdg{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:rgba(255,253,251,.94);color:#6A3F2B;box-shadow:0 2px 6px rgba(74,42,30,.2);font-style:normal}.shc-bdg svg{width:12px;height:12px}
+.shc-ct{margin:10px 2px 6px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8A6A48}.shc-ct:first-child{margin-top:2px}
+.shc-hint{margin:10px 2px 0;font-size:13px;line-height:1.4;color:#6B4A36}
+.shc-ft{display:grid;grid-template-columns:1fr 1.5fr;gap:10px}.shc-ft .btn{min-height:48px;justify-content:center}.shc-ft .btn[disabled]{opacity:.55}
+@media(prefers-reduced-motion:reduce){.shc{animation:none}}
+/* desbloqueio */
+.shun-bg{position:fixed;inset:0;z-index:1200;background:rgba(58,34,24,.42);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:scsf .3s both}
+.shun{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1201;width:min(88vw,340px);background:linear-gradient(180deg,#FFFDFB,#FAEEDF);border-radius:28px;padding:26px 20px 14px;text-align:center;display:grid;gap:8px;justify-items:center;box-shadow:0 28px 64px rgba(60,30,20,.38);animation:shunIn .5s cubic-bezier(.2,.9,.25,1) both}
+.shun .kick{margin:2px 0 0;color:#8A6A48}.shun h2{margin:0;font-size:20px;line-height:1.2;color:#4A2A1E}.shun .btn{width:100%;margin-top:8px;justify-content:center}
+.shun-no{min-height:44px;border:0;background:none;color:#7B6858;font:inherit;font-weight:700;cursor:pointer}
+.shun-im{display:flex;gap:10px;align-items:flex-end;justify-content:center;min-height:96px}.shun-im>span{display:block;width:96px;max-width:30vw}.shun-im .shdi{width:100%}.shun-im .shdi img{max-height:96px}.shun-im .shdi.nf{width:84px;height:84px;border-radius:24px}.shun-im .shmini{border-radius:16px;box-shadow:0 8px 20px rgba(120,80,50,.2)}.shun-im .shmini.pend{aspect-ratio:1/1}
+.shun-sp{position:absolute;inset:0;pointer-events:none}.shun-sp i{position:absolute;width:7px;height:7px;background:#E7C98F;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0;animation:shunTw 2.6s ease-in-out infinite}
+.shun-sp i:nth-child(1){left:18%;top:20%}.shun-sp i:nth-child(2){left:78%;top:16%;animation-delay:.5s}.shun-sp i:nth-child(3){left:10%;top:44%;animation-delay:1s;width:5px;height:5px}.shun-sp i:nth-child(4){left:88%;top:40%;animation-delay:1.4s;width:5px;height:5px}.shun-sp i:nth-child(5){left:28%;top:10%;animation-delay:1.9s;width:5px;height:5px}.shun-sp i:nth-child(6){left:66%;top:30%;animation-delay:.9s}
+@keyframes shunIn{from{opacity:0;transform:translate(-50%,-46%) scale(.94)}}@keyframes shunTw{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.95;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.shun{animation:none}.shun-bg{animation:none}.shun-sp i{animation:none;opacity:.7}}
 </style>
 
 <div class="app">
@@ -1704,6 +1763,7 @@ const IC={
   flip:'<path d="M4 8h13l-3-3.5M20 16H7l3 3.5"/>',
   chatai:'<path d="M14.8 8.2A6.3 5.6 0 1 0 17 12.3c0 1.6.6 2.8 1.3 3.6-1.9.1-3.1-.5-3.9-1.2M9 18.4 5.2 20l.9-3.2" transform="translate(-1 .3)"/><path d="M17.5 2.8l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8z"/>',
   edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  brush:'<path d="M20 4 11 13"/><path d="M9.5 12.5c-2.2 0-3.5 1.6-3.5 3.4 0 1.4-.8 2.4-2 3.1 3.6.9 8-.2 8-3.6 0-1.6-1.1-2.9-2.5-2.9z"/>',
   drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
   drops:'<path d="M8 13c0-3 3-6 3-6s3 3 3 6a3 3 0 0 1-6 0z"/><path d="M16 19c0-1.800 2-3.500 2-3.500s2 1.700 2 3.500a2 2 0 0 1-4 0z"/>',
   pores:'<circle cx="8" cy="8" r="2"/><circle cx="16" cy="9" r="2.4"/><circle cx="10" cy="16" r="2.6"/><circle cx="17" cy="17" r="1.6"/>',
@@ -1833,7 +1893,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -2802,17 +2862,19 @@ function pkDet(k){
   ${ja?`<div class="pf-shok">${ic('checkc',18)}<span>Já está na sua prateleira</span></div>`:`<button class="btn pl-go" data-pk="want|${k}">${ic('tag',18)}Quero comprar · guardar na prateleira</button>`}</div>`}
 function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');
   const ed=shEd.active;if(ed){const rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(it.map(x=>[x.id,x])),vis=[];shEd.g.forEach(id=>{if(by.has(id)&&!rm.has(id))vis.push(by.get(id))});it=vis}
-  const per=4,n=it.length,rows=Math.max(2,Math.ceil((n+1)/per));let h='';
-  for(let r=0;r<rows;r++){let c='';for(let k=0;k<per;k++){const idx=r*per+k,x=it[idx];
+  const n=it.length,cur=shCur(),st=shStyle(cur.sel),showD=(S.shF||'todos')==='todos',L=shdRows(n,showD?cur.put:[]);if(ed)shEd.vn=n;let h='',k=0;
+  for(let r=0;r<L.R;r++){let c='';const rw=L.dec[r];
+    if(rw.l)c+=shdHtml(rw.l,'l',ed);if(rw.r)c+=shdHtml(rw.r,'r',ed);
+    for(let j=0;j<L.cap[r];j++,k++){const idx=k,x=it[idx];
     if(x&&ed){const nm=esc(x.n);c+=`<div class="sbot sl"><div class="shp${stOf(x)==='quero'?' want':''}" data-shid="${esc(x.id)}" tabindex="0" role="group" aria-label="${nm}, posição ${idx+1} de ${n}"><div class="shpi">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}</div>
       <button class="shx" data-shed="x|${esc(x.id)}" aria-label="Remover ${nm} da prateleira">${ic('x',13)}</button>
       <button class="sr" data-shed="mv|${esc(x.id)}|-1" aria-label="Mover ${nm} para trás">Mover para trás</button><button class="sr" data-shed="mv|${esc(x.id)}|1" aria-label="Mover ${nm} para frente">Mover para frente</button></div></div>`}
     else if(x){const ex=stOf(x)==='tenho'?shelfInfo(x).cls:'';c+=`<button class="sbot shb${stOf(x)==='quero'?' want':''}" data-shopen="${esc(x.id)}" aria-label="Ver detalhes de ${esc(x.n)}${stOf(x)==='quero'?' (quero comprar)':''}${ex==='out'?', vencido':ex==='soon'?', vence em breve':''}">${x.img&&x.imgv===3?`<img class="shcut" src="${x.img}" alt="">`:FOTOS?shelfThumb(x):gShelf(x,62)}${ex?`<i class="shb-w ${ex}" aria-hidden="true"></i>`:''}</button>`}
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
-    h+=`<div class="srow">${c}</div><div class="splank"></div>`}
-  const head=(n||ed)?`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':`<b>${n} ${n===1?'produto':'produtos'}</b>`}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<button class="shh-b" data-shed="edit">${ic('edit',15)}Editar</button>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reordenar.</p>`:''}`:'';
-  return `<div class="shelfv${ed?' shedit':''}" role="group" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${head}${ed&&shEd.undo?`<div class="shundo" role="status"><span>Produto removido da prateleira.</span><button data-shed="undo">Desfazer</button></div>`:''}${h}</div>`}
+    h+=`<div class="srow ${r===0?'r0':'rm'}">${c}</div><div class="splank${r===L.R-1?' last':''}"></div>`}
+  const head=`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':n?`<b>${n} ${n===1?'produto':'produtos'}</b>`:'<b>Sem produtos ainda</b>'}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<div class="shh-g"><button class="shh-b" data-shc="open" aria-label="Personalizar a prateleira">${ic('brush',15)}Personalizar</button>${n?`<button class="shh-b" data-shed="edit">${ic('edit',15)}Editar</button>`:''}</div>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reorganizar${showD&&shEd.dp&&shEd.dp.length?' produtos e decoração':''}.</p>`:''}`;
+  return `<div class="shwrap">${head}${ed&&shEd.undo?`<div class="shundo" role="status"><span>Produto removido da prateleira.</span><button data-shed="undo">Desfazer</button></div>`:''}<div class="shelfv sx sty-${st.id}${ed?' shedit':''}" style="${shsVars(st)}" role="group" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div></div>`}
 /* "Para que serve": usa a explicação do scanner quando o produto foi escaneado; senão, só tipos que o nome deixa claros. Sem evidência, não mostra nada. */
 const SH_PU=[[/protetor|fps|solar|sunscreen/,'Protege a pele dos raios UV, ajudando a prevenir manchas e o envelhecimento.'],[/limpa|espuma de limpeza|sabonete|micelar|cleans/,'Remove sujeira, oleosidade e resíduos do dia sem agredir a pele.'],[/vitamina c|vit\.? ?c\b|ascorb/,'Antioxidante que ajuda a uniformizar o tom e dar luminosidade.'],[/niacin/,'Ajuda a controlar a oleosidade e a aparência dos poros.'],[/retinol|retinoico|retinal/,'Estimula a renovação da pele e suaviza linhas finas.'],[/hialur/,'Atrai e retém água, deixando a pele hidratada e macia.'],[/salic|glicolic|\bbha\b|\baha\b|peeling|esfoli/,'Esfolia suavemente e ajuda a desobstruir os poros.'],[/calmante|cica|centella|panthenol|pantenol/,'Ajuda a acalmar a vermelhidão e a sensibilidade da pele.'],[/hidratante|creme|locao|moistur|ceramid/,'Hidrata e ajuda a reforçar a barreira da pele.']];
 function shPurp(i){const sn=typeof cgSnap==='function'?cgSnap(i):null,f=sn&&sn.cmp&&sn.cmp.finalidade;if(f)return String(f);
@@ -5027,6 +5089,9 @@ document.addEventListener('click',e=>{
   else if(d.shdone){const [per,id]=d.shdone.split('|');const l=dayLog(),a=l['x'+per]||(l['x'+per]=[]),ix=a.indexOf(id);if(ix>=0)a.splice(ix,1);else a.push(id);const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.shopen){S.shSel=d.shopen;S.shRmAsk=null;hapt();render()}
   else if(d.shsx){shsAct(d.shsx)}
+  else if(d.shc){shcAct(d.shc)}
+  else if(d.shd){shdAct(d.shd)}
+  else if(d.shun){shunAct(d.shun)}
   else if(d.shed){shAct(d.shed)}
   else if(d.rm){S.shelf=S.shelf.filter(i=>i.id!==d.rm);render()}
   else if(d.reg){const [k,v]=d.reg.split('|');S.reg[k]=S.reg[k]===v?null:v;document.querySelectorAll('[data-reg^="'+k+'|"]').forEach(b=>b.setAttribute('aria-pressed',String(S.reg[k]===b.dataset.reg.split('|')[1])))}
@@ -5356,10 +5421,10 @@ function shsAct(v){const [a,id]=v.split('|');
   const y=window.scrollY;render();window.scrollTo(0,y)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.shSel){S.shSel=null;S.shRmAsk=null;render()}});
 /* ---------- Prateleira: modo edição (arrastar, remover, concluir). Estado temporário, nunca vai para a nuvem ---------- */
-const shEd={active:false,dragging:false,g:[],orig:[],removed:[],undo:false,confirm:null,busy:false};
+const shEd={active:false,dragging:false,g:[],orig:[],removed:[],undo:false,confirm:null,busy:false,dp:null,vn:0};
 function shVisIds(){const F=S.shF||'todos',rm=new Set(shEd.removed.map(r=>r.item.id)),by=new Map(S.shelf.map(i=>[i.id,i]));return shEd.g.filter(id=>{const i=by.get(id);return i&&!rm.has(id)&&stOf(i)!=='acabou'&&(F==='todos'||shCat(i)===F)})}
 function shApplyVis(vis){const set=new Set(vis);let k=0;shEd.g=shEd.g.map(id=>set.has(id)?vis[k++]:id)}
-function shReset(){shEd.active=false;shEd.dragging=false;shEd.g=[];shEd.orig=[];shEd.removed=[];shEd.undo=false;shEd.confirm=null;shEd.busy=false}
+function shReset(){shEd.active=false;shEd.dragging=false;shEd.g=[];shEd.orig=[];shEd.removed=[];shEd.undo=false;shEd.confirm=null;shEd.busy=false;shEd.dp=null}
 function shRefresh(){const y=window.scrollY;render();window.scrollTo(0,y)}
 function shModal(){if(!shEd.active||!shEd.confirm)return '';const i=S.shelf.find(x=>x.id===shEd.confirm);if(!i)return '';const rot=String(i.rot||'');
   return `<button class="shm-bg" data-shed="cancelx" aria-label="Cancelar" tabindex="-1"></button><div class="shm" role="dialog" aria-modal="true" aria-labelledby="shm-t"><h3 id="shm-t">Remover da prateleira?</h3><p><b>${esc(i.n)}</b></p><p>Você poderá adicionar este produto novamente depois.</p>${rot?`<p class="shm-w">${ic('alert',16)}Este produto está presente na sua rotina de cuidados.</p>`:''}<div class="shm-b"><button class="btn ghost" data-shed="cancelx">Cancelar</button><button class="btn" data-shed="confirmx" id="shm-ok">Remover</button></div></div>`}
@@ -5367,9 +5432,9 @@ function shCommit(){if(shEd.busy)return;shEd.busy=true;
   const by=new Map(S.shelf.map(i=>[i.id,i])),rm=new Set(shEd.removed.map(r=>r.item.id)),out=[];
   shEd.g.forEach(id=>{const i=by.get(id);if(i&&!rm.has(id)){out.push(i);by.delete(id)}});S.shelf.forEach(i=>{if(by.has(i.id)&&!rm.has(i.id))out.push(i)});
   const mudou=out.length!==S.shelf.length||out.some((i,k)=>i!==S.shelf[k]);
-  const tocouRot=shEd.removed.some(r=>r.item.st!=='quero'&&r.item.v!=='evitar');if(mudou)S.shelf=out;shReset();hapt();if(mudou)toast(tocouRot?'Prateleira e rotina atualizadas':'Prateleira atualizada',true);render()}
+  const tocouRot=shEd.removed.some(r=>r.item.st!=='quero'&&r.item.v!=='evitar');if(mudou)S.shelf=out;const dch=shdCommit();shReset();hapt();if(mudou||dch)toast(tocouRot?'Prateleira e rotina atualizadas':'Prateleira atualizada',true);render()}
 function shAct(v){const [a,id,dx]=v.split('|');
-  if(a==='edit'){S.shSel=null;S.shRmAsk=null;shReset();shEd.active=true;shEd.g=S.shelf.map(i=>i.id);shEd.orig=shEd.g.slice();hapt();shRefresh()}
+  if(a==='edit'){if(shC.open)shcReset();S.shSel=null;S.shRmAsk=null;shReset();shEd.active=true;shEd.g=S.shelf.map(i=>i.id);shEd.orig=shEd.g.slice();shdEditInit();hapt();shRefresh()}
   else if(a==='done')shCommit();
   else if(a==='x'){shEd.confirm=id;shRefresh();setTimeout(()=>{const b=document.getElementById('shm-ok');if(b)try{b.focus({preventScroll:true})}catch(e){}},30)}
   else if(a==='cancelx'){shEd.confirm=null;shRefresh()}
@@ -5418,6 +5483,142 @@ document.addEventListener('contextmenu',e=>{if(shEd.active&&e.target.closest&&e.
 document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escape'){if(shEd.dragging)shEnd(false);else if(shEd.confirm){shEd.confirm=null;shRefresh()}return}
   const n=e.target.closest&&e.target.closest('.shp');if(n&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();shAct('mv|'+n.dataset.shid+'|'+(e.key==='ArrowLeft'?-1:1))}});
 {const r1=render;render=function(){shSyncRot();if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();if(S.shSel&&!(S.tab==='produtos'&&S.prodSub==='shelf')){S.shSel=null;S.shRmAsk=null}const x=r1.apply(this,arguments);shSheetUpd();let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
+/* ---------- Prateleira: estilos, decoração e recompensas (usa o XP e o nível que já existem) ---------- */
+const SHS=[
+ {id:'natural',n:'Natural',lv:1,free:1,pad:12,ar:{top:4.2105,mid:4.472,plank:15.3191,end:4.1618},d:'Madeira clara e acabamento suave.'},
+ {id:'blush',n:'Blush',lv:1,free:1,pad:10,ar:{top:2.6667,mid:5.1064,plank:21.8182,end:5.2174},d:'Tons rosados e nude, com madeira clara.'},
+ {id:'crystal',n:'Crystal',lv:1,free:1,css:1,pad:7,ar:{top:4,mid:4.6,plank:16,end:4.6},d:'Acrílico transparente, moderno e leve.'},
+ {id:'toscana',n:'Toscana',lv:3,pad:13,ar:{top:2.5087,mid:4.6753,plank:28.8,end:4.7682},d:'Madeira natural rústica, com curvas suaves.'},
+ {id:'provence',n:'Provence',lv:5,pad:14,ar:{top:2.449,mid:5.1429,plank:20,end:5.3731},d:'Madeira clássica ornamentada, de inspiração francesa.'},
+ {id:'travertino',n:'Travertino',lv:7,pad:10,ar:{top:2.4828,mid:5.4962,plank:17.1429,end:4.8649},d:'Nicho de pedra natural com luz indireta.'},
+ {id:'royale',n:'Royale',lv:10,pad:8,ar:{top:2.9388,mid:4.7059,plank:13.5849,end:5.6693},d:'Madeira escura e dourado, como uma boutique.'}];
+const SHS_BY=Object.fromEntries(SHS.map(s=>[s.id,s]));
+const SHD=[
+ {id:'succulent',art:'uma',n:'Suculenta',s:'Suculenta',c:'planta',lv:1,h:46,d:'Uma suculenta delicada para dar vida à prateleira.'},
+ {id:'candle',art:'uma',n:'Vela aromática',s:'Vela aromática',c:'acess',lv:2,h:40,d:'Uma vela de brilho suave para o seu cantinho.'},
+ {id:'frame',art:'um',n:'Quadro botânico',s:'Quadro botânico',c:'quadro',lv:3,h:78,d:'Um quadro delicado com traços de natureza.'},
+ {id:'basket',art:'uma',n:'Cesta de fibras naturais',s:'Cesta natural',c:'acess',lv:4,h:50,d:'Uma cesta de fibras naturais para organizar com charme.'},
+ {id:'hanging',art:'uma',n:'Planta pendente',s:'Planta pendente',c:'planta',lv:5,h:84,d:'Folhas que caem com leveza sobre a prateleira.'},
+ {id:'diffuser',art:'um',n:'Difusor de aromas',s:'Difusor',c:'spa',lv:6,h:68,d:'Um difusor com varetas para perfumar o ambiente.'},
+ {id:'towels',art:'',n:'Toalhas de spa',s:'Toalhas de spa',c:'spa',lv:7,h:40,d:'Toalhas macias enroladas, como em um spa.'},
+ {id:'flowers',art:'um',n:'Vaso de flores',s:'Vaso de flores',c:'planta',lv:8,h:66,d:'Flores delicadas em um vaso elegante.'},
+ {id:'mirror',art:'um',n:'Espelho dourado',s:'Espelho dourado',c:'quadro',lv:9,h:84,d:'Um espelho com moldura dourada.'},
+ {id:'sculpture',art:'uma',n:'Escultura floral exclusiva do Pellie',s:'Escultura floral',c:'acess',lv:10,h:72,d:'Uma peça exclusiva do Pellie, só para quem chega longe.'}];
+const SHD_BY=Object.fromEntries(SHD.map(s=>[s.id,s]));
+const SHD_CAT=[['planta','Plantas'],['quadro','Quadros'],['acess','Acessórios'],['spa','Objetos de spa']];
+const SHD_MAX=2;
+const shClone=o=>JSON.parse(JSON.stringify(o));
+function shdGet(){let D=S.shd;if(!D||typeof D!=='object')D=S.shd={};if(D.v!==1)D.v=1;if(typeof D.sel!=='string')D.sel='natural';if(!D.got||typeof D.got!=='object')D.got={};if(!Array.isArray(D.put))D.put=[];if(!Array.isArray(D.pend))D.pend=[];
+  D.put=D.put.filter(x=>x&&SHD_BY[x.a]);return D}
+const shN=()=>S.shelf.filter(x=>stOf(x)!=='acabou').length;
+const shStOk=st=>!!st&&!st.pend&&(!!st.free||!!shdGet().got['s:'+st.id]);
+const shDOk=id=>!!shdGet().got['d:'+id];
+function shStyle(id){const st=SHS_BY[id];return st&&!st.pend&&(shStOk(st)||shC.open)?st:SHS_BY.natural}
+function shCur(){const D=shdGet();if(shC.open)return{sel:shC.sty||D.sel,put:shC.put||[]};if(shEd.active&&shEd.dp)return{sel:D.sel,put:shEd.dp};return{sel:D.sel,put:D.put}}
+function shsVars(st){const a=st.ar,u=x=>`url(img/shelf/${st.id}-${x}.webp)`,b=`--art:${a.top};--arm:${a.mid};--arp:${a.plank};--are:${a.end};--px:${st.pad}%`;return st.css?b:`--gt:${u('top')};--gm:${u('mid')};--pl:${u('plank')};--ge:${u('end')};${b}`}
+function shMini(st){if(st.pend)return `<span class="shmini pend"><img src="pellie-flor.png" alt=""></span>`;
+  return `<span class="shmini sx sty-${st.id}" style="${shsVars(st)}"><i class="srow r0"></i><i class="splank"></i><i class="srow rm"></i><i class="splank"></i><i class="srow rm"></i><i class="splank last"></i></span>`}
+/* a imagem de cada objeto fica em img/deco/<id>.webp (WebP/PNG com fundo transparente). Enquanto o arquivo não existe, aparece um quadrinho discreto do Pellie */
+const shdImg=m=>`<span class="shdi"><img src="img/deco/${m.id}.webp" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.parentNode.classList.add('nf');this.remove()"></span>`;
+/* distribui as decorações nos níveis: até 2 por prateleira (uma em cada ponta), os produtos ocupam o resto; ganha novos níveis quando falta lugar */
+function shdRows(n,put){const ds=(put||[]).filter(d=>d&&SHD_BY[d.a]);let R=Math.max(2,Math.ceil((n+1)/4),Math.ceil(ds.length/SHD_MAX));
+  for(;R<=30;R++){const rows=Array.from({length:R},()=>({l:null,r:null}));
+    ds.forEach(d=>{const r0=Math.min(Math.max(0,d.r|0),R-1),ord=[r0];for(let i=1;i<R;i++){if(r0-i>=0)ord.push(r0-i);if(r0+i<R)ord.push(r0+i)}
+      const q=ord.find(x=>!rows[x].l||!rows[x].r);if(q===undefined)return;const row=rows[q],p=d.s==='r'?'r':'l',o=p==='l'?'r':'l';if(!row[p])row[p]=d;else row[o]=d});
+    const cap=rows.map(x=>4-(x.l?1:0)-(x.r?1:0));if(cap.reduce((a,b)=>a+b,0)>=n+1)return{R,dec:rows,cap}}
+  return{R:2,dec:[{l:null,r:null},{l:null,r:null}],cap:[4,4]}}
+function shdNorm(put,n){const L=shdRows(n,put),o=[];L.dec.forEach((r,i)=>{if(r.l)o.push({a:r.l.a,r:i,s:'l'});if(r.r)o.push({a:r.r.a,r:i,s:'r'})});return o}
+function shdSlot(put,n){const L=shdRows(n,put);for(let r=0;r<L.R;r++){if(!L.dec[r].l)return{r,s:'l'};if(!L.dec[r].r)return{r,s:'r'}}return{r:L.R,s:'l'}}
+function shdHtml(d,side,ed){const m=SHD_BY[d.a];if(!m)return '';const im=shdImg(m);
+  if(!ed)return `<div class="sdec ${side}" style="--dh:${m.h}px" aria-hidden="true">${im}</div>`;
+  return `<div class="sdec ${side}" style="--dh:${m.h}px"><div class="sdp" data-did="${m.id}" tabindex="0" role="group" aria-label="${esc(m.n)}, decoração da prateleira"><div class="sdi">${im}</div><button class="shx" data-shd="x|${m.id}" aria-label="Devolver ${esc(m.n)} ao inventário">${ic('x',13)}</button></div></div>`}
+/* recompensas: o nível vem do XP que já existe; o que foi conquistado fica guardado e nunca é perdido (mesmo se o XP cair) */
+function shdSync(){if(!gameOn())return;const D=shdGet(),L=lvl();
+  SHD.forEach(m=>{const k='d:'+m.id;if(m.lv<=L&&!D.got[k]){D.got[k]=hoje();D.pend.push(k)}});
+  SHS.forEach(s=>{if(s.free||s.pend)return;const k='s:'+s.id;if(s.lv<=L&&!D.got[k]){D.got[k]=hoje();D.pend.push(k)}})}
+/* ---- painel Personalizar (Seu cantinho Pellie) ---- */
+const shC={open:false,tab:'est',sty:null,put:null,hint:''};
+function shcReset(){shC.open=false;shC.sty=null;shC.put=null;shC.hint='';shC.tab='est'}
+function shcOpen(tab){if(shEd.active)return;const D=shdGet();shC.open=true;shC.tab=tab||'est';shC.sty=shStOk(SHS_BY[D.sel])?D.sel:'natural';S.shF='todos';shC.put=shdNorm(D.put,shN());shC.hint='';shRefresh();
+  setTimeout(()=>{const e=document.querySelector('.shwrap .shelfv');if(e){const y=e.getBoundingClientRect().top+window.scrollY-86;window.scrollTo({top:Math.max(0,y),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}},80)}
+const shLvTxt=lv=>`Libera no nível ${lv}. Você sobe de nível cuidando da pele no dia a dia.`;
+function shcHtml(){const D=shdGet(),L=lvl(),est=shC.tab==='est',stc=SHS_BY[shC.sty]||SHS_BY.natural,ok=shStOk(stc);let bd='';
+  if(est){bd=`<div class="shc-g" role="group" aria-label="Estilos de prateleira">${SHS.map(s=>{const o=shStOk(s),on=shC.sty===s.id&&!s.pend,sub=s.pend?'Em breve':on&&o?'Selecionado':o?'Disponível':'Nível '+s.lv;
+      return `<button class="shc-c${o?'':' lk'}${s.pend?' pd':''}" data-shc="sty|${s.id}" aria-pressed="${on}" aria-label="${esc(s.n)}, ${sub}"><span class="shc-m">${shMini(s)}</span>${on&&o?`<i class="shc-bdg">${ic('check',13)}</i>`:!o&&!s.pend?`<i class="shc-bdg">${ic('lock',12)}</i>`:''}<b>${esc(s.n)}</b><small>${sub}</small></button>`}).join('')}</div>
+      <p class="shc-hint" role="status">${shC.hint||esc(stc.d)}</p>`}
+  else{const pl=new Set((shC.put||[]).map(x=>x.a));
+    bd=SHD_CAT.map(([c,t])=>`<div class="shc-ct">${t}</div><div class="shc-g shc-gd">${SHD.filter(m=>m.c===c).map(m=>{const o=shDOk(m.id),on=pl.has(m.id),sub=!o?'Nível '+m.lv:on?'Na prateleira':'Colocar';
+      return `<button class="shc-d${o?'':' lk'}${on?' on':''}" data-shc="dec|${m.id}" aria-pressed="${on}" aria-label="${esc(m.n)}, ${sub}"><span class="shc-di">${shdImg(m)}${!o?`<i class="shc-bdg">${ic('lock',12)}</i>`:on?`<i class="shc-bdg">${ic('check',13)}</i>`:''}</span><b>${esc(m.s)}</b><small>${sub}</small></button>`}).join('')}</div>`).join('')
+      +`<p class="shc-hint" role="status">${shC.hint||`Você está no nível ${L}. Toque em um objeto para colocar ou tirar da prateleira (até ${SHD_MAX} por nível). Para mover, use Editar.`}</p>`}
+  return `<div class="shc" role="dialog" aria-labelledby="shc-t"><i class="scs-grip" aria-hidden="true"></i>
+   <div class="shc-h"><h3 id="shc-t">Seu cantinho Pellie</h3><p>Crie um espaço que combina com você.</p></div>
+   <div class="shc-tabs" role="tablist"><button role="tab" aria-selected="${est}" data-shc="tab|est">Estilos</button><button role="tab" aria-selected="${!est}" data-shc="tab|dec">Decoração</button></div>
+   <div class="shc-bd">${bd}</div>
+   <div class="shc-ft"><button class="btn ghost" data-shc="cancel">Cancelar</button><button class="btn" data-shc="apply"${ok?'':' disabled'}>${ok?'Aplicar':'Libera no nível '+stc.lv}</button></div></div>`}
+function shcUpd(){let m=document.getElementById('shcust');if(!m){m=document.createElement('div');m.id='shcust';document.body.appendChild(m)}
+  const on=shC.open&&S.plus&&S.ob.done&&S.tab==='produtos'&&S.prodSub==='shelf'&&!shEd.active;if(shC.open&&!on)shcReset();
+  document.body.classList.toggle('shc-open',on);const h=on?shcHtml():'';if(m.dataset.h===h)return;
+  const was=!!m.dataset.h,same=m.dataset.t===shC.tab,bd=m.querySelector('.shc-bd'),y=bd?bd.scrollTop:0;m.dataset.h=h;m.dataset.t=shC.tab;m.innerHTML=h;
+  const sh=m.querySelector('.shc');if(sh&&was)sh.style.animation='none';const nb=m.querySelector('.shc-bd');if(nb&&was&&same)nb.scrollTop=y}
+function shcAct(v){const [a,id]=v.split('|');
+  if(a==='open'){if(shEd.active)return;shcOpen('est');return}
+  if(!shC.open)return;
+  if(a==='tab'){shC.tab=id==='dec'?'dec':'est';shC.hint=''}
+  else if(a==='sty'){const st=SHS_BY[id];if(!st)return;if(st.pend)shC.hint='O modelo '+st.n+' está em produção e chega em breve.';else{shC.sty=id;shC.hint=shStOk(st)?'':'Prévia do '+st.n+'. '+shLvTxt(st.lv)};hapt()}
+  else if(a==='dec'){const m=SHD_BY[id];if(!m)return;
+    if(!shDOk(id))shC.hint=shLvTxt(m.lv);
+    else{const i=shC.put.findIndex(x=>x.a===id);if(i>=0)shC.put.splice(i,1);else{const p=shdSlot(shC.put,shN());shC.put.push({a:id,r:p.r,s:p.s})}shC.hint='';hapt()}}
+  else if(a==='cancel'){shcReset();hapt()}
+  else if(a==='apply'){const st=SHS_BY[shC.sty];if(!shStOk(st)){toast('Esse estilo ainda está bloqueado');return}const D=shdGet();D.sel=st.id;D.put=shdNorm(shC.put,shN());shcReset();hapt();toast('Prateleira personalizada',true)}
+  shRefresh()}
+/* ---- desbloqueio: um cartão sofisticado, sem confete, que respeita "reduzir movimento" ---- */
+function shunHtml(){const D=shdGet(),p=D.pend.filter(k=>k[0]==='d'?SHD_BY[k.slice(2)]:SHS_BY[k.slice(2)]);if(!p.length)return '';
+  const lc=s=>s.charAt(0).toLowerCase()+s.slice(1),it=p.map(k=>{const id=k.slice(2);if(k[0]==='d'){const m=SHD_BY[id];return{st:0,t:`${m.art?m.art+' ':''}${lc(m.n)}`,im:shdImg(m),d:m.d}}const s=SHS_BY[id];return{st:1,t:'o modelo '+s.n,im:shMini(s),d:s.d}}),f=it[it.length-1],allS=it.every(x=>x.st);
+  const tit=it.length===1?(f.st?`Você liberou ${f.t}.`:`Você conquistou ${f.t}.`):`Você conquistou ${it.length} novidades para a sua prateleira.`;
+  return `<div class="shun-bg"></div><div class="shun" role="dialog" aria-modal="true" aria-labelledby="shun-t"><div class="shun-sp" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+   <div class="shun-im">${it.length>1?it.slice(-3).map(x=>`<span>${x.im}</span>`).join(''):`<span>${f.im}</span>`}</div>
+   <p class="kick">${allS?'Um novo estilo para o seu cantinho.':'Um novo detalhe para o seu cantinho.'}</p><h2 id="shun-t">${esc(tit)}</h2><p class="small muted">${it.length===1?esc(f.d):'Estão no seu inventário, prontas para decorar.'}</p>
+   <button class="btn" data-shun="go" id="shun-go">${allS?'Ver estilos':'Decorar minha prateleira'}</button><button class="shun-no" data-shun="no">Agora não</button></div>`}
+function shunUpd(){let m=document.getElementById('shun');if(!m){m=document.createElement('div');m.id='shun';document.body.appendChild(m)}
+  const D=shdGet(),on=S.plus&&S.ob.done&&!S.cele&&D.pend.length&&!document.querySelector('.lg');const h=on?shunHtml():'';if(m.dataset.h===h)return;m.dataset.h=h;m.innerHTML=h;
+  if(h)setTimeout(()=>{const b=document.getElementById('shun-go');if(b)try{b.focus({preventScroll:true})}catch(e){}},60)}
+function shunAct(v){const D=shdGet(),hasD=D.pend.some(k=>k[0]==='d');D.pend=[];hapt();
+  if(v==='go'){S.tab='produtos';S.prodSub='shelf';S.pkDet=null;S.pkList=false;S.shSel=null;S.shF='todos';render();window.scrollTo(0,0);shcOpen(hasD?'dec':'est')}else render()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const D=S.shd;if(D&&D.pend&&D.pend.length&&document.getElementById('shun')&&document.getElementById('shun').dataset.h){shunAct('no');return}if(shC.open){shcReset();shRefresh()}}});
+/* ---- decorações no modo Editar: arrastar entre os níveis, remover (volta ao inventário) e teclado ---- */
+function shdEditInit(){const D=shdGet();shEd.dp=(S.shF||'todos')==='todos'?shdNorm(D.put,shN()):shClone(D.put)}
+function shdCommit(){if(!shEd.dp)return false;const D=shdGet(),a=JSON.stringify(D.put),b=JSON.stringify(shEd.dp);if(a===b)return false;D.put=shEd.dp;return true}
+function shdApply(id,r,s){const dp=shEd.dp,d=dp&&dp.find(x=>x.a===id);if(!d)return false;const L=shdRows(shEd.vn||0,dp);r=Math.max(0,Math.min(L.R-1,r));
+  const row=L.dec[r],oth=[row.l,row.r].filter(x=>x&&x.a!==id);if(oth.length>=SHD_MAX){toast('Cada nível comporta até '+SHD_MAX+' objetos');return false}
+  if(oth[0]){const os=row.l&&row.l.a===oth[0].a?'l':'r';if(os===s)s=s==='l'?'r':'l'}d.r=r;d.s=s;return true}
+function shdAct(v){const [a,id]=v.split('|');if(a==='x'&&shEd.dp){const i=shEd.dp.findIndex(x=>x.a===id);if(i>=0){shEd.dp.splice(i,1);hapt();toast('Devolvido ao seu inventário');shRefresh()}}}
+const dd={id:null,host:null,pid:null,sx:0,sy:0,x:0,y:0,t:null,clone:null,ok:false,off:{x:0,y:0},raf:0,scroll:0,tr:0,ts:'l'};
+function ddRows(){return [...dd.host.querySelectorAll('.srow')]}
+function ddTarget(){const rows=ddRows();let best=0,bd=1e9;rows.forEach((r,i)=>{const b=r.getBoundingClientRect(),d=Math.abs(dd.y-(b.top+b.height*.6));if(d<bd){bd=d;best=i}});const b=rows[best].getBoundingClientRect();dd.tr=best;dd.ts=dd.x<b.left+b.width/2?'l':'r'}
+function ddMark(){const r=ddRows()[dd.tr];if(!r)return;let z=document.getElementById('sdrop');if(!z){z=document.createElement('i');z.id='sdrop';z.setAttribute('aria-hidden','true')}if(z.parentNode!==r)r.appendChild(z);z.className=dd.ts}
+function ddFrame(){dd.raf=0;if(!dd.clone)return;dd.clone.style.transform=`translate(${dd.x-dd.off.x}px,${dd.y-dd.off.y}px) scale(1.1)`;ddTarget();ddMark()}
+function ddAuto(){if(!dd.clone)return;const H=innerHeight,top=90,bot=H-130;let v=0;if(dd.y<top)v=-Math.ceil((top-dd.y)/6);else if(dd.y>bot)v=Math.ceil((dd.y-bot)/6);
+  if(v){window.scrollBy(0,Math.max(-16,Math.min(16,v)));if(!dd.raf)dd.raf=requestAnimationFrame(ddFrame)}dd.scroll=requestAnimationFrame(ddAuto)}
+function ddStart(){const n=dd.host.querySelector('.sdp[data-did="'+dd.id+'"]');if(!n)return;shEd.dragging=true;dd.ok=true;const r=n.getBoundingClientRect(),inner=n.querySelector('.sdi');dd.off={x:dd.sx-r.left,y:dd.sy-r.top};
+  const c=document.createElement('div');c.className='shclone';c.style.width=r.width+'px';c.style.height=r.height+'px';c.style.setProperty('--dh',n.parentNode.style.getPropertyValue('--dh'));c.innerHTML=inner?inner.outerHTML:'';c.firstChild&&c.firstChild.classList.add('still');document.body.appendChild(c);dd.clone=c;
+  n.classList.add('is-dragging');document.body.classList.add('sh-drag');try{dd.host.setPointerCapture(dd.pid)}catch(e){}hapt();dd.x=dd.sx;dd.y=dd.sy;ddFrame();dd.scroll=requestAnimationFrame(ddAuto)}
+function ddEnd(commit){clearTimeout(dd.t);cancelAnimationFrame(dd.raf);cancelAnimationFrame(dd.scroll);dd.raf=0;dd.scroll=0;const was=shEd.dragging&&dd.ok;if(!was){dd.id=null;return}
+  const z=document.getElementById('sdrop');if(z)z.remove();if(dd.clone)dd.clone.remove();document.body.classList.remove('sh-drag');shEd.dragging=false;try{dd.host.releasePointerCapture(dd.pid)}catch(e){}
+  const id=dd.id,ok=commit?shdApply(id,dd.tr,dd.ts):false;dd.clone=null;dd.id=null;dd.ok=false;if(ok)hapt();shRefresh()}
+document.addEventListener('pointerdown',e=>{if(!shEd.active||shEd.dragging||(e.pointerType==='mouse'&&e.button!==0))return;const n=e.target.closest&&e.target.closest('.shedit .sdp');if(!n||e.target.closest('.shx'))return;
+  dd.host=n.closest('.shelfv');dd.id=n.dataset.did;dd.pid=e.pointerId;dd.sx=dd.x=e.clientX;dd.sy=dd.y=e.clientY;dd.ok=false;clearTimeout(dd.t);dd.t=setTimeout(()=>{if(dd.id&&!dd.ok)ddStart()},e.pointerType==='mouse'?60:170)});
+document.addEventListener('pointermove',e=>{if(!dd.id||e.pointerId!==dd.pid)return;dd.x=e.clientX;dd.y=e.clientY;
+  if(!dd.ok){if(Math.hypot(e.clientX-dd.sx,e.clientY-dd.sy)>8){if(e.pointerType==='mouse')ddStart();else{clearTimeout(dd.t);dd.id=null}}return}
+  e.preventDefault();if(!dd.raf)dd.raf=requestAnimationFrame(ddFrame)},{passive:false});
+document.addEventListener('pointerup',e=>{if(!dd.id||e.pointerId!==dd.pid)return;if(dd.ok)ddEnd(true);else{clearTimeout(dd.t);dd.id=null}});
+document.addEventListener('pointercancel',e=>{if(!dd.id||e.pointerId!==dd.pid)return;if(dd.ok)ddEnd(false);else{clearTimeout(dd.t);dd.id=null}});
+document.addEventListener('lostpointercapture',e=>{if(dd.ok&&dd.id&&e.pointerId===dd.pid)ddEnd(false)});
+document.addEventListener('keydown',e=>{if(!shEd.active)return;const n=e.target.closest&&e.target.closest('.sdp');if(!n)return;
+  if(e.key==='Escape'&&dd.ok){ddEnd(false);return}
+  const k={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(!k)return;e.preventDefault();
+  const id=n.dataset.did,L=shdRows(shEd.vn||0,shEd.dp),pos=(()=>{for(let r=0;r<L.R;r++){if(L.dec[r].l&&L.dec[r].l.a===id)return{r,s:'l'};if(L.dec[r].r&&L.dec[r].r.a===id)return{r,s:'r'}}return{r:0,s:'l'}})();
+  if(shdApply(id,pos.r+k[0],k[1]?(k[1]<0?'l':'r'):pos.s)){hapt();shRefresh();setTimeout(()=>{const e2=document.querySelector('.sdp[data-did="'+id+'"]');if(e2)try{e2.focus({preventScroll:true})}catch(_){}},30)}});
+{const r2=render;render=function(){shdSync();const x=r2.apply(this,arguments);shcUpd();shunUpd();return x}}
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
 (function(){try{
