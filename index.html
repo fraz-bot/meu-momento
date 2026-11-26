@@ -5850,7 +5850,7 @@ function cmAi(R,rec){const C=cmpS(),a=C.ai,ok=R.dec!=='insufficient_data'&&R.A.p
   const lim=a&&a.code==='limite_ia';
   return `<section class="cm-ai cm-rv" aria-label="Explicação complementar"><div class="cm-esc-h"><span class="cm-crown ai">${ic('sparkle',18)}</span><h3>Quer entender a diferença?</h3></div>
     <p class="small muted">${lim?esc(a.err):a&&a.err?esc(a.err):'Uma explicação curta por IA, usando só os dados desta comparação. A comparação acima já vale sozinha.'}</p>
-    ${lim?'':`<button class="btn ghost cm-gh" data-cmp="ai">${ic('sparkle',18)}${a&&a.err?'Tentar de novo':'Explicar a diferença com IA'}</button><small class="cm-fine">${txt}</small>`}</section>`}
+    ${lim?'':`<button class="btn ghost cm-gh" data-cmp="ai">${ic('sparkle',18)}${a&&a.err?'Tentar de novo':'Explicar com o Pellie Assistant'}</button><small class="cm-fine">${txt}</small>`}</section>`}
 function cmPrice(R){const C=cmpS(),any=R.A.preco||R.B.preco||R.A.vol||R.B.vol;
   const f=(k,cp,L)=>{const P=(S.cmpP&&S.cmpP[cp.key])||{},v=cp.vol||{};return `<div class="cm-pf"><b>Produto ${L}</b><span class="cm-sn">${esc(cmpShort(cp))}</span>
     <label>Preço (R$)<input class="cm-in" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" data-cmpin="p|${k}" value="${P.preco?String(P.preco).replace('.',','):''}" placeholder="0,00"></label>
