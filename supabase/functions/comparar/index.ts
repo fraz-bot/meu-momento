@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { MERCADOS, chaveProduto, expirou } from "./preco.ts";
 
 // Comparador de produtos do Pellie: explicação COMPLEMENTAR por IA.
 // A comparação em si é calculada no aplicativo (sem tokens). Esta função só interpreta, em poucas linhas,
@@ -91,6 +92,29 @@ Deno.serve(async (req: Request) => {
   let body: any;
   try { body = await req.json(); } catch { return json({ erro: "Pedido inválido" }, 400); }
   const admin = createClient(url, serviceKey);
+
+  // Consulta de preços de referência para produtos JÁ analisados (só leitura no banco compartilhado, SEM IA).
+  // Só recebe dados comerciais do produto (marca, nome, volume): nenhuma foto, perfil ou rotina.
+  if (body?.acao === "precos") {
+    const pais = String(body?.pais ?? "").toUpperCase().slice(0, 2);
+    const mk = MERCADOS[pais];
+    const itens = Array.isArray(body?.itens) ? body.itens.slice(0, 12) : [];
+    const saida: Record<string, unknown> = {};
+    if (mk) {
+      for (const it of itens) {
+        const id = String(it?.id ?? "").slice(0, 80);
+        const r = it?.ref && typeof it.ref === "object" ? it.ref : null;
+        if (!id || !r) continue;
+        const ch = chaveProduto({ codigo: r.codigo, marca: r.marca, nome: r.nome, variante: r.variante, qtd: r.qtd, un: r.un, volume: r.volume });
+        if (!ch.stable || !ch.key) continue;
+        const { data: row, error } = await admin.from("product_price_cache").select("price_min, price_max, source, expires_at, updated_at")
+          .eq("product_key", ch.key).eq("country_code", pais).eq("currency", mk.cur).maybeSingle();
+        if (error || !row) continue;
+        saida[id] = { status: "available", min: Number(row.price_min), max: Number(row.price_max), cur: mk.cur, pais, fonte: row.source, at: row.updated_at, shared: true, ...(expirou(row.expires_at) ? { stale: true } : {}) };
+      }
+    }
+    return json({ ok: true, precos: saida });
+  }
 
   // 2) Assinatura e consentimento verificados no servidor (nada vem do cliente).
   const { data: perfil } = await admin.from("profiles").select("plano, plus_ate, consentimento_versao").eq("id", user.id).maybeSingle();

@@ -1751,10 +1751,8 @@ body.shc-open #view{padding-bottom:58vh}
 .cm-ai{display:grid;gap:8px;padding:16px;border-radius:24px;background:rgba(255,252,247,.9);box-shadow:0 6px 18px rgba(170,128,86,.12);color:var(--cm-br);animation:cmIn .3s ease both}
 .cm-ai h4{margin:6px 0 0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#A76F5C}.cm-ai ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px;line-height:1.35}.cm-ai ul.mut{color:#8A6F62}
 .cm-fine{font-size:12px;color:#8A6F62;line-height:1.35}
-.cm-pd{border-radius:22px;background:rgba(255,252,247,.85);box-shadow:0 6px 16px rgba(170,128,86,.1);padding:4px 14px 14px}.cm-pd>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;min-height:48px;font-weight:800;color:var(--cm-br)}.cm-pd>summary::-webkit-details-marker{display:none}.cm-pd>summary em{font-style:normal;font-weight:600;font-size:12px;color:#8A6F62}
-.cm-pf{display:grid;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #F0E1D2}.cm-pf>b{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#A76F5C}.cm-sn{font-size:13px;color:#6B4A3C;margin-top:-4px}
-.cm-pf label{display:grid;gap:4px;font-size:12.5px;font-weight:700;color:#6B4A3C}.cm-vr{display:grid;grid-template-columns:1.4fr 1fr;gap:8px}
-.cm-in,input.cm-in,select.cm-in{width:100%;box-sizing:border-box;font:inherit;font-size:16px;font-weight:600;padding:11px 12px;border:1px solid #EBD9C6;border-radius:14px;background:#FFFDFB;color:var(--cm-br);min-height:46px}
+.cm-tier{display:inline-block;margin-top:3px;padding:2px 8px;border-radius:99px;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.02em;line-height:1.25;background:#E4EAD8;color:#3E4C33}.cm-tier.t1{background:#F3E6CC;color:#6B5420}.cm-tier.t2{background:#E7C9A8;color:#6A3F1E}.cm-tier.t3{background:#4A2A1E;color:#F2D9A0;box-shadow:inset 0 0 0 1px #C9A24B}
+.cm-vl{font-style:normal;font-weight:600;font-size:.82em;color:#8A6F62;white-space:nowrap}
 .cm-new{justify-self:center;display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;font:inherit;font-weight:800;color:#7C4A38;padding:10px 14px;min-height:44px;cursor:pointer}
 .cm-hl{display:flex;align-items:center;gap:8px;justify-content:center;border:0;border-radius:99px;min-height:46px;background:rgba(255,252,247,.7);font:inherit;font-weight:700;color:#7C4A38;cursor:pointer}.cm-hl b{background:#F3E2D0;border-radius:99px;padding:2px 9px;font-size:12px}
 .cm-st{display:grid;justify-items:center;gap:6px;text-align:center;padding:22px 16px;border-radius:24px;background:rgba(255,252,247,.8);color:var(--cm-br);animation:cmIn .3s ease both}.cm-st b{font-size:17px}.cm-st p{margin:0}.cm-sti{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:#F3E2D0;color:#A76F5C}
@@ -2359,7 +2357,7 @@ const sampleP=Promise.resolve({
   async json(prompt,o){
     o=o||{};const corpo={tipo:o.tipo};
     if(o.tipo==='texto')corpo.prompt=prompt;
-    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}}
+    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}else if(o.ref&&o.pais){corpo.ref=o.ref;corpo.pais=o.pais}}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
       const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',cod,msg:(cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
@@ -3033,7 +3031,7 @@ async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='ca
   const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn)};render();pfProg();
   try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
     if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
-    else{S.pf.idr={area,real:pfReal(r),produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
+    else{S.pf.idr={area,real:pfReal(r),produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),variante:pfStr(r.variante,60),qtd:(+r.quantidade>0&&+r.quantidade<100000)?Math.round(+r.quantidade*10)/10:null,un:['ml','g','un'].includes(String(r.unidade||'').toLowerCase())?String(r.unidade).toLowerCase():null,codigo:/^\d{8,14}$/.test(String(r.codigo_barras||'').replace(/\D/g,''))?String(r.codigo_barras).replace(/\D/g,''):null,confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
       S.pf.p=100;S.pf.st='conf'}
@@ -3044,7 +3042,7 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
   const ar=f.area||'pele',dados={area:ar,...(PF_INS[ar]?{instrucao_area:PF_INS[ar]}:{}),produto:{nome:f.nome,marca:f.marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
     perfil:areaCtx(ar),produtos_que_ja_usa:temP().filter(x=>shCat(x)===(ar==='pele'?'rosto':ar)).map(x=>x.n).slice(0,12)};
   let ctx=JSON.stringify(dados);if(ctx.length>4900){dados.produto.texto_lido=[];dados.produto.ingredientes_lidos=i.ingredientes_lidos.slice(0,15);ctx=JSON.stringify(dados).slice(0,4900)}
-  try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_cmp',ctx});if(!S.pf)return;
+  try{const sf=await sampleP;const pais=cmpPais(),ref=pais?(alt?{marca:f.marca,nome:f.nome,cat:i.categoria}:{marca:f.marca,nome:f.nome,variante:i.variante,qtd:i.qtd,un:i.un,volume:i.volume,codigo:i.codigo,cat:i.categoria}):null;const r=await sf.json('',{tipo:'produto_cmp',ctx,ref,pais});if(!S.pf)return;
     if(!r||r.erro){f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
     else{const ro=r.rotina||{};const c={resumo:pfStr(r.resumo,220)||'',finalidade:pfStr(r.finalidade,400)||'',por_que:pfStr(r.por_que,500)||'',
         rotina:{periodo:['manha','noite','ambos'].includes(ro.periodo)?ro.periodo:'ambos',etapa:pfStr(ro.etapa,30)||'',como:pfStr(ro.como,220)||'',combinar:pfStr(ro.combinar,240)},
@@ -3054,7 +3052,8 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
         evitar_encontrados:pfArr(r.evitar_encontrados,5).map(x=>String(x).slice(0,50)),nao_confirmado:pfArr(r.nao_confirmado,5).map(x=>String(x).slice(0,140))};
       f.cmp=c;f.sc=pfScore(c,i);f.p=100;f.st='score';if(f.cmpMode)cmpDedupe(f);
       S.prodResult={produto:f.marca?f.marca+' '+f.nome:f.nome,categoria:i.categoria,nota:f.sc.v,veredito:{boa:'serve',mod:'cuidado',baixa:'evitar'}[f.sc.cls]};
-      S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:S.prodResult.veredito,...(f.fork?{fork:1}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
+      const pc=r.preco?(r.preco.status==='available'?(cmpPr(r.preco)||{status:'insufficient_data'}):{status:'insufficient_data'}):undefined;
+      S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:S.prodResult.veredito,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;gameCheck();if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
@@ -5684,16 +5683,28 @@ document.addEventListener('keydown',e=>{if(!shEd.active)return;const n=e.target.
 /* ===== Comparador inteligente de produtos =====
    A comparação roda INTEIRA no aparelho (sem tokens): reaproveita as análises do scanner (S.prods[].snap), a prateleira (S.shelf), o perfil e a rotina.
    Só a "Explicação complementar" chama a IA (função "comparar"), com cache e cota de 20/mês no servidor.
-   Preço e volume: somente o que a pessoa informa (S.cmpP). Nada é inventado: sem dado, aparece "Não avaliado". */
+   Preço: faixa ESTIMADA vinda da própria análise do produto (referência compartilhada no servidor). Sem digitação. Sem dado: "Sem estimativa disponível" e o custo-benefício não é avaliado.
+   Legado: preço/volume que a pessoa já tinha informado (S.cmpP) continua guardado e só é usado se não houver estimativa. */
 const CMP_V=1,CMP_AI_V='cmp-ia-2',CMP_GAP=5,CMP_MAX=20,CMP_LIM=20;
 const h53=(s,seed)=>{seed=seed||0;let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,c;i<s.length;i++){c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (4294967296*(2097151&h2)+(h1>>>0)).toString(36)};
-const cmpS=()=>S.cmp||(S.cmp={a:null,b:null,want:null,pick:null,tab:'shelf',tg:null,rot:null,ai:null,hist:false,pOpen:false,fb:{}});
+const cmpS=()=>S.cmp||(S.cmp={a:null,b:null,want:null,pick:null,tab:'shelf',tg:null,rot:null,ai:null,hist:false,fb:{}});
+const CMP_MK={BR:'BRL',US:'USD',PT:'EUR',IT:'EUR',ES:'EUR',FR:'EUR',DE:'EUR',GB:'GBP',CA:'CAD'},CMP_REG={pt:'BR',en:'US',it:'IT',es:'ES',fr:'FR',de:'DE'};
+const CMP_TIER={BR:{def:[50,100,200]}},CMP_TN=['Econômico','Intermediário','Premium','Luxo'];   /* limites superiores de Econômico, Intermediário e Premium; por mercado (e por categoria, se houver) */
+const CMP_PXB=new Set(),CMP_PXT=new Set();
+function cmpPais(){try{const p=String(navigator.language||'pt-BR').split(/[-_]/),r=(p[1]||'').toUpperCase()||CMP_REG[String(p[0]).toLowerCase()]||'';return CMP_MK[r]?r:''}catch(e){return ''}}
+const cmpLoc=()=>{try{return navigator.language||'pt-BR'}catch(e){return 'pt-BR'}};
 const cmpR2=v=>Math.round(v*100)/100;
-const cmpMoney=v=>'R$ '+cmpR2(v).toLocaleString('pt-BR',{minimumFractionDigits:cmpR2(v)%1?2:0,maximumFractionDigits:2});
-const cmpMoney2=v=>'R$ '+cmpR2(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-function cmpNum(s){s=String(s==null?'':s).trim().replace(/[^\d.,]/g,'');if(!s)return null;if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');const v=parseFloat(s);return isFinite(v)&&v>0?v:null}
+function cmpFmt(v,cur,so,d){v=cmpR2(v);const fr=d!=null?d:(v%1?2:0);try{return new Intl.NumberFormat(cmpLoc(),so?{minimumFractionDigits:fr,maximumFractionDigits:fr}:{style:'currency',currency:cur,minimumFractionDigits:fr,maximumFractionDigits:fr}).format(v)}catch(e){return (so?'':cur+' ')+v}}
+function cmpRng(lo,hi,cur,d){const a=cmpFmt(lo,cur,0,d),b=cmpFmt(hi,cur,1,d);return a===cmpFmt(hi,cur,0,d)?a:a+'–'+b}
+function cmpPr(x){if(!x||x.status==='insufficient_data')return null;const a=+x.min,b=+x.max;if(!(a>0)||!(b>=a)||!x.cur)return null;return {min:a,max:b,cur:String(x.cur),pais:x.pais||'',fonte:x.fonte||'ai_estimate',at:x.at||'',stale:!!x.stale}}
+function cmpTierIdx(v,mk,cat){const t=CMP_TIER[mk];if(!t)return -1;const L=t[nmK(cat||'')]||t.def;return v<=L[0]?0:v<=L[1]?1:v<=L[2]?2:3}
+function cmpTier(p,cat){if(!p)return null;const mk=p.pais||(p.cur==='BRL'?'BR':''),m=cmpTierIdx((p.min+p.max)/2,mk,cat);if(m<0)return null;const lo=cmpTierIdx(p.min,mk,cat),hi=cmpTierIdx(p.max,mk,cat);return {i:m,t:lo===hi?CMP_TN[m]:CMP_TN[lo]+' a '+CMP_TN[hi]}}
 function cmpVol(t){const m=String(t||'').toLowerCase().replace(',','.').match(/(\d+(?:\.\d+)?)\s*(ml|l|g|kg)\b/);if(!m)return null;let n=+m[1],u=m[2];if(u==='l'){n*=1000;u='ml'}else if(u==='kg'){n*=1000;u='g'}return n>0?{n:Math.round(n*10)/10,u}:null}
-const cmpVolTxt=v=>v?String(v.n).replace('.',',')+' '+v.u:'';
+function cmpQtd(i){if(!i)return null;const n=+i.qtd,u=String(i.un||'').toLowerCase();if(n>0&&['ml','g','un'].includes(u))return {n:Math.round(n*10)/10,u};return cmpVol(i.volume)}
+const cmpUn=u=>u==='ml'?'mL':u==='un'?'un':u;
+const cmpVolTxt=v=>v?String(v.n).replace('.',',')+' '+cmpUn(v.u):'';
+const cmpRefOf=c=>{const sn=c&&c.snap,i=sn&&sn.idr;if(!i)return null;return {marca:sn.marca||i.marca||'',nome:String(sn.nome||i.produto||'').replace(/\s*\(\d+\)$/,''),variante:i.variante,qtd:i.qtd,un:i.un,volume:i.volume,codigo:i.codigo,cat:i.categoria}};
+const cmpEnt=sn=>sn?(S.prods||[]).find(x=>x.snap===sn):null;
 const CMP_ATV=[['retinol',/retin|tretino/],['aha',/glicol|latic|mandel|\baha\b/],['bha',/salicil|\bbha\b/],['vitc',/vitamina c|ascorb|\bvit\.? ?c\b/],['bpo',/benzoila/]];
 const CMP_FORTE=/retin|tretino|glicol|salicil|latic|mandel|\baha\b|\bbha\b|peeling|benzoila/;
 const cmpIds=cp=>{const t=nmK((cp.ativos||[]).join(' ')+' '+cp.nome+' '+(cp.cat||''));const s=new Set();CMP_ATV.forEach(([id,r])=>{if(r.test(t))s.add(id)});return s};
@@ -5704,21 +5715,21 @@ const cmpAreaOf=(c,i)=>i&&i.area?i.area:(c.item?({rosto:'pele'}[shCat(c.item)]||
 
 /* ---- candidatos: prateleira + histórico do scanner, sem duplicar ---- */
 function cmpCands(){const out=[];
-  const add=c=>{if(c.fork){if(!out.some(o=>o.key===c.key))out.push(c);return}const ex=out.find(o=>!o.fork&&nmSame(o.nome,c.nome));if(ex){if(c.snap&&!ex.snap)ex.snap=c.snap;if(c.img&&!ex.img){ex.img=c.img;ex.imgv=c.imgv}if(ex.nota==null&&c.nota!=null)ex.nota=c.nota;if(c.item&&!ex.item)ex.item=c.item;if(c.d&&!ex.d)ex.d=c.d;c.src.forEach(s=>{if(!ex.src.includes(s))ex.src.push(s)});return}out.push(c)};
-  S.shelf.filter(i=>stOf(i)!=='acabou').forEach(i=>{const sn=cgSnap(i);add({key:nmK(i.n),nome:i.n,marca:i.marca||(pSplit(i.n).marca)||'',item:i,snap:sn,nota:sn&&sn.sc?sn.sc.v:(typeof i.nota==='number'?i.nota:null),src:['s'],quero:stOf(i)==='quero'})});
-  (S.prods||[]).forEach(p=>{const nm=cmpFull(p.produto||'Produto',p.marca);add({fork:!!p.fork,img:p.img||null,imgv:p.imgv||0,key:nmK(nm),nome:nm,marca:p.marca||'',item:null,snap:p.snap||null,nota:typeof p.nota==='number'?p.nota:(p.snap&&p.snap.sc?p.snap.sc.v:null),src:['h'],d:p.d})});
+  const add=c=>{if(c.fork){if(!out.some(o=>o.key===c.key))out.push(c);return}const ex=out.find(o=>!o.fork&&nmSame(o.nome,c.nome));if(ex){if(c.snap&&!ex.snap)ex.snap=c.snap;if(c.img&&!ex.img){ex.img=c.img;ex.imgv=c.imgv}if(ex.nota==null&&c.nota!=null)ex.nota=c.nota;if(c.item&&!ex.item)ex.item=c.item;if(c.d&&!ex.d)ex.d=c.d;if(c.preco!==undefined&&ex.preco===undefined)ex.preco=c.preco;c.src.forEach(s=>{if(!ex.src.includes(s))ex.src.push(s)});return}out.push(c)};
+  S.shelf.filter(i=>stOf(i)!=='acabou').forEach(i=>{const sn=cgSnap(i);add({key:nmK(i.n),nome:i.n,marca:i.marca||(pSplit(i.n).marca)||'',item:i,snap:sn,preco:(cmpEnt(sn)||{}).preco,nota:sn&&sn.sc?sn.sc.v:(typeof i.nota==='number'?i.nota:null),src:['s'],quero:stOf(i)==='quero'})});
+  (S.prods||[]).forEach(p=>{const nm=cmpFull(p.produto||'Produto',p.marca);add({fork:!!p.fork,img:p.img||null,imgv:p.imgv||0,key:nmK(nm),nome:nm,marca:p.marca||'',item:null,snap:p.snap||null,preco:p.preco,nota:typeof p.nota==='number'?p.nota:(p.snap&&p.snap.sc?p.snap.sc.v:null),src:['h'],d:p.d})});
   return out}
 const cmpFind=k=>{if(!k)return null;const L=cmpCands();return L.find(c=>c.key===k)||L.find(c=>nmSame(c.nome,k))||null};
-function cmpProd(c){const sn=c.snap,i=sn&&sn.idr,cm=sn&&sn.cmp,sc=sn&&sn.sc,P=(S.cmpP&&S.cmpP[c.key])||{},vol=P.vol||(i&&cmpVol(i.volume))||null;
+function cmpProd(c){const sn=c.snap,i=sn&&sn.idr,cm=sn&&sn.cmp,sc=sn&&sn.sc,P=(S.cmpP&&S.cmpP[c.key])||{},vol=cmpQtd(i)||P.vol||null,pr=cmpPr(c.preco)||(P.preco>0?{min:P.preco,max:P.preco,cur:'BRL',pais:'BR',fonte:'user'}:null);
   const nota=c.nota==null?null:c.nota;
   return {img:c.img||null,imgv:c.imgv||0,key:c.key,nome:c.nome,marca:c.marca||(sn&&sn.marca)||'',area:cmpAreaOf(c,i),cat:(i&&i.categoria)||(c.item&&c.item.tp)||'',item:c.item||null,src:c.src,quero:!!c.quero,d:c.d||null,
     nota,parts:sc&&sc.parts?sc.parts.map(p=>({k:p.k,pts:p.pts,max:p.max,mot:p.mot||''})):null,pen:sc?sc.pen:0,teto:!!(sc&&sc.teto),
     fin:cm?(cm.finalidade||cm.resumo||''):'',ativos:cm&&cm.ativos?cm.ativos.map(a=>a.nome).filter(Boolean).slice(0,4):(i&&i.ativos_declarados?i.ativos_declarados.slice(0,4):[]),
     alertas:cm&&cm.alertas?cm.alertas.map(a=>a.texto).slice(0,2):[],evitar:cm&&cm.evitar_encontrados?cm.evitar_encontrados.slice(0,4):[],lista:!!(i&&i.lista_lida),
     etapa:cm&&cm.rotina?cm.rotina.etapa:'',per:cm&&cm.rotina?cm.rotina.periodo:'',como:cm&&cm.rotina?cm.rotina.como:'',
-    preco:P.preco>0?P.preco:null,vol,snap:!!sn,
+    pr,vol,pend:CMP_PXB.has(c.key),ref:cmpRefOf(c),snap:!!sn,
     sv:sn&&sc?h53([nota,sc.parts.map(x=>x.pts).join(','),sc.pen||0,(cm&&cm.evitar_encontrados||[]).join(',')].join('|')):'n'+(nota==null?'x':nota)}}
-const cmpCp=k=>{const c=cmpFind(k);if(c)return cmpProd(c);const f=cmpS().fb[k];return f||null};
+const cmpCp=k=>{const c=cmpFind(k);if(c)return cmpProd(c);const f=cmpS().fb[k];if(f&&!f.pr&&f.preco>0)f.pr={min:f.preco,max:f.preco,cur:'BRL',pais:'BR',fonte:'user'};return f||null};
 const cmpSame=(a,b)=>!!a&&!!b&&(a===b||nmSame(a,b));
 
 /* ---- cálculo determinístico ---- */
@@ -5729,16 +5740,36 @@ const cmpCut=(s,n)=>{s=String(s||'');return s.length>n?s.slice(0,n-1).replace(/[
 const cmpPerTxt=p=>({manha:'Manhã',noite:'Noite',ambos:'Manhã e noite'}[p]||'');
 const cmpNA=()=>({t:'Não avaliado',s:'',tone:'na'});
 function cmpUnit(a,b){return a.vol&&b.vol&&a.vol.u===b.vol.u}
-function cmpCB(A,B){const na=(t,s)=>({t,s:s||'',tone:'na'});
-  if(!A.preco||!B.preco)return [na('Informe o preço'),na('Informe o preço')];
+/* comparação de preço por FAIXAS: por mL/g/un quando os dois têm o mesmo tipo de volume; senão, pelo valor total. Moedas diferentes nunca são comparadas. */
+function cmpPC(A,B){const a=A.pr,b=B.pr;if(!a||!b)return {ok:0,why:'sem'};if(a.cur!==b.cur)return {ok:0,why:'moeda'};
+  const un=cmpUnit(A,B),f=(p,c)=>un?{lo:p.min/c.vol.n,hi:p.max/c.vol.n}:{lo:p.min,hi:p.max},ra=f(a,A),rb=f(b,B),ma=(ra.lo+ra.hi)/2,mb=(rb.lo+rb.hi)/2,overlap=ra.lo<=rb.hi&&rb.lo<=ra.hi,rel=Math.abs(ma-mb)/Math.max(ma,mb);
+  return {ok:1,un,ra,rb,overlap,rel,cur:a.cur,cheap:(!overlap&&rel>=.05)?(ma<mb?'a':'b'):null}}
+function cmpCB(A,B){const na=(s)=>({t:'Não avaliado',s:s||'',tone:'na'}),PC=cmpPC(A,B);
+  if(!PC.ok){const m=PC.why==='moeda'?'moedas diferentes':'sem estimativa de preço';return [na(m),na(m)]}
   if(A.nota==null||B.nota==null)return [cmpNA(),cmpNA()];
-  const un=cmpUnit(A,B),ua=un?A.preco/A.vol.n:A.preco,ub=un?B.preco/B.vol.n:B.preco,cheapA=ua<ub,near=Math.abs(ua-ub)/Math.max(ua,ub)<.05,dn=A.nota-B.nota;
-  if(near)return [{t:'Equivalente',s:'preços próximos',tone:'neu'},{t:'Equivalente',s:'preços próximos',tone:'neu'}];
-  const [C,O]=cheapA?[A,B]:[B,A],clearlyWorse=C.nota<O.nota-(CMP_GAP-1),res={};
-  if(!un&&clearlyWorse){res.a=res.b={t:'Depende da prioridade',s:'volumes não informados',tone:'neu'};return [res.a,res.b]}
-  const cT=clearlyWorse?{t:'Mais econômico',s:(un?'':'preço total menor; ')+'encaixe menor',tone:'neu'}:{t:'Melhor custo-benefício',s:un?'menor preço por '+C.vol.u:'menor preço e bom encaixe',tone:'fav'};
-  const oT=clearlyWorse?{t:'Vale pelo encaixe',s:'custa mais, combina mais',tone:'neu'}:{t:'Custa mais',s:'sem ganho de encaixe',tone:'neu'};
-  return cheapA?[cT,oT]:[oT,cT]}
+  const cA=cmpCatClass(A),cB=cmpCatClass(B);
+  if(A.area!==B.area||(cA&&cB&&cA!==cB)){const x={t:'Funções diferentes',s:'sem vencedor por preço',tone:'neu'};return [x,x]}
+  const rc=cp=>cp.evitar.length>0||cmpConfR(cp).length>0,dn=A.nota-B.nota,un=PC.un?(cmpUn(A.vol.u)==='un'?'unidade':cmpUn(A.vol.u)):'';
+  if(!PC.cheap){const t={t:'Preços equivalentes',s:PC.overlap?'faixas se sobrepõem':'preços próximos',tone:'neu'},r=[t,t];
+    if(Math.abs(dn)>=CMP_GAP){const w=dn>0?A:B;if(!rc(w))r[dn>0?0:1]={t:'Melhor encaixe',s:'preço semelhante',tone:'fav'}}return r}
+  const ci=PC.cheap==='a'?0:1,C=ci?B:A,O=ci?A:B,dC=C.nota-O.nota,bs=PC.un?'menor preço por '+un:'menor preço total';let c,o;
+  if(rc(C)&&!rc(O)){c={t:'Mais econômico',s:'com pontos de atenção',tone:'neu'};o={t:'Custa mais',s:'sem pontos de atenção',tone:'neu'}}
+  else if(dC<=-CMP_GAP){c={t:'Mais econômico',s:'encaixe menor',tone:'neu'};o={t:'Vale pelo encaixe',s:'custa mais, combina mais',tone:'neu'}}
+  else if(dC>=CMP_GAP){c={t:'Melhor custo-benefício',s:bs+' e melhor encaixe',tone:'fav'};o={t:'Custa mais',s:'sem ganho de encaixe',tone:'neu'}}
+  else{c={t:'Melhor custo-benefício',s:'encaixe parecido, '+bs,tone:'fav'};o={t:'Custa mais',s:'encaixe parecido',tone:'neu'}}
+  return ci?[o,c]:[c,o]}
+/* economia potencial (faixa) entre as estimativas: nunca é garantida nem "economia realizada" */
+function cmpEco(R,PC){if(!R.win||!PC.ok)return null;const W=R.win,L=R.lose,wa=W===R.A||W.key===R.A.key,Pw=wa?PC.ra:PC.rb,Pl=wa?PC.rb:PC.ra,tw=W.pr,tl=L.pr,cur=PC.cur,sh=cmpShort,mid=p=>(p.min+p.max)/2;let lo,hi,suf;
+  if(PC.un){const n=W.vol.n;lo=Pl.lo*n-tw.max;hi=Pl.hi*n-tw.min;suf='na mesma quantidade';
+    if(W.vol.n!==L.vol.n){const tot=mid(tw)<mid(tl)?W:L,uni=Pw.hi+Pw.lo<Pl.hi+Pl.lo?W:L;if(tot.key!==uni.key)return {t:'Menor gasto agora: '+sh(tot)+'. Menor preço por '+cmpUn(W.vol.u)+': '+sh(uni)+'.',ok:0}}}
+  else{lo=tl.min-tw.max;hi=tl.max-tw.min;suf='(valor total)'}
+  if(lo>=.5)return {t:'Economia potencial estimada: '+cmpRng(lo,hi,cur)+' '+suf,ok:1};
+  if(hi<=-.5)return {t:'Custa '+cmpRng(-hi,-lo,cur)+' a mais '+suf,ok:0};
+  return {t:'Faixas de preço parecidas: economia não garantida',ok:0}}
+function cmpPxTxt(R,PC){if(!PC.ok)return '';const sh=cmpShort;
+  if(R.tag==='win'){if(!PC.cheap)return 'Faixas de preço parecidas: o encaixe decide.';const c=PC.cheap==='a'?R.A:R.B;return c===R.win||c.key===R.win.key?sh(R.win)+' também tem a faixa de preço menor.':sh(R.win)+' tende a custar mais, mas combina melhor com você.'}
+  if(R.tag==='ambos'||R.tag==='prio'){if(!PC.cheap)return 'Faixas de preço parecidas.';const c=PC.cheap==='a'?R.A:R.B;return sh(c)+' tem a faixa de preço menor.'}
+  return ''}
 function cmpRows(A,B,X){const ar=A.area===B.area?A.area:null,rows=[];
   const lab=v=>v>=85?'Excelente':v>=70?'Boa':v>=45?'Moderada':'Baixa';
   const mk=(f)=>{const r=[A,B].map(cp=>cp.nota==null&&!cp.parts?cmpNA():f(cp));return r};
@@ -5756,8 +5787,9 @@ function cmpRows(A,B,X){const ar=A.area===B.area?A.area:null,rows=[];
   rows.push({k:'rot',ic:'routine',lab:'Rotina',a:r[0],b:r[1]});
   const ing=cp=>cp.ativos.length?{t:cp.ativos.slice(0,3).join(', '),s:'',tone:'neu'}:{t:cp.snap?'Não identificados':'Não avaliado',s:'',tone:'na'};
   rows.push({k:'ing',ic:'sparkle',lab:'Ingredientes',a:ing(A),b:ing(B)});
-  const pr=cp=>cp.preco?{t:cmpMoney(cp.preco),s:cp.vol?cmpVolTxt(cp.vol)+(' · '+cmpMoney2(cp.preco/cp.vol.n)+'/'+cp.vol.u):'',tone:'neu'}:{t:'Não informado',s:'',tone:'na'};
-  let p=[pr(A),pr(B)];if(A.preco&&B.preco){const un=cmpUnit(A,B),ua=un?A.preco/A.vol.n:A.preco,ub=un?B.preco/B.vol.n:B.preco;if(Math.abs(ua-ub)/Math.max(ua,ub)>=.02){(ua<ub?p[0]:p[1]).tone='fav'}}
+  const pr=cp=>{const p=cp.pr,u=cp.vol&&cp.vol.n>0?cp.vol:null;if(!p)return cp.pend?{t:'Buscando…',s:u?cmpVolTxt(u):'',tone:'na'}:{t:'Sem estimativa disponível',s:u?cmpVolTxt(u):'',tone:'na'};
+    const tr=cmpTier(p,cp.cat),k=u?1/u.n:0,ud=u&&p.max*k<.1?3:2;return {t:cmpRng(p.min,p.max,p.cur),s:[u?cmpVolTxt(u)+' · '+cmpRng(p.min*k,p.max*k,p.cur,ud)+'/'+cmpUn(u.u):'',p.stale?'referência antiga':''].filter(Boolean).join(' · '),tag:tr,tone:'neu'}};
+  let p=[pr(A),pr(B)];
   rows.push({k:'preco',ic:'coin',lab:'Preço',a:p[0],b:p[1]});
   const cb=cmpCB(A,B);rows.push({k:'cb',ic:'star',lab:'Custo-benefício',a:cb[0],b:cb[1]});
   return rows}
@@ -5769,13 +5801,13 @@ function cmpCalc(A,B){const X={};const iA=cmpIds(A),iB=cmpIds(B);
   const R={A,B,X,ar:A.area===B.area?A.area:null};R.rows=cmpRows(A,B,X);
   const com=AX[R.ar||A.area].com,sh=cmpShort,d=(A.nota!=null&&B.nota!=null)?A.nota-B.nota:null,rowT=k=>{const r=R.rows.find(x=>x.k===k);return r};
   const tolA=cmpPt(A,'tolerancia'),tolB=cmpPt(B,'tolerancia'),cbr=rowT('cb'),cbWin=cbr&&cbr.a.tone==='fav'?'a':cbr&&cbr.b.tone==='fav'?'b':null;
-  const priceGap=A.preco&&B.preco&&Math.abs((cmpUnit(A,B)?A.preco/A.vol.n:A.preco)-(cmpUnit(A,B)?B.preco/B.vol.n:B.preco))/Math.max(A.preco,B.preco)>.08;
+  const PC=cmpPC(A,B),priceGap=!!(PC.ok&&PC.cheap&&PC.rel>.08);
   if(A.nota==null||B.nota==null){R.dec='insufficient_data';R.tag='insuf'}
   else if(!R.ar||(cmpCatClass(A)&&cmpCatClass(B)&&cmpCatClass(A)!==cmpCatClass(B))){R.dec='complementary';R.tag='comp'}
   else if(Math.abs(d)<CMP_GAP){R.dec='equivalent';R.tag=Math.max(A.nota,B.nota)<45?'nenhum':(priceGap||(tolA!=null&&tolB!=null&&Math.abs(tolA-tolB)>=8))?'prio':'ambos'}
   else if(Math.max(A.nota,B.nota)<45){R.dec='equivalent';R.tag='nenhum'}
   else{const w=d>0?'a':'b',tw=w==='a'?tolA:tolB,tl=w==='a'?tolB:tolA;if(Math.abs(d)<10&&tw!=null&&tl!=null&&tl-tw>=8){R.dec='equivalent';R.tag='prio'}else{R.dec=w==='a'?'product_a':'product_b';R.tag='win'}}
-  R.win=R.dec==='product_a'?A:R.dec==='product_b'?B:null;R.lose=R.win?(R.win===A?B:A):null;
+  R.win=R.dec==='product_a'?A:R.dec==='product_b'?B:null;R.lose=R.win?(R.win===A?B:A):null;R.PC=PC;
   /* explicação por template (sem IA) */
   const why=[],cau=[],lim=[],list=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' e '+a[a.length-1];
   if(R.tag==='win'){const W=R.win,L=R.lose,pts=['maior compatibilidade com '+com],dn=(cmpPt(W,'necessidades')||0)-(cmpPt(L,'necessidades')||0),dr=(cmpPt(W,'rotina')||0)-(cmpPt(L,'rotina')||0),dt=(cmpPt(W,'tolerancia')||0)-(cmpPt(L,'tolerancia')||0);
@@ -5794,11 +5826,10 @@ function cmpCalc(A,B){const X={};const iA=cmpIds(A),iB=cmpIds(B);
   if(X.xconf&&R.tag!=='comp')cau.push('Entre eles: '+X.xconf);if(X.common.length)cau.push('Os dois têm '+list(X.common.map(x=>x.toLowerCase()))+': usar juntos seria redundante.');
   R.why=why.slice(0,3);R.cau=cau.slice(0,3);
   [A,B].forEach(cp=>{if(cp.nota!=null&&cp.snap&&!cp.lista)lim.push(sh(cp)+': a lista de ingredientes não foi lida, então a nota fica limitada a 80%.');if(cp.nota!=null&&!cp.parts)lim.push(sh(cp)+': análise antiga, sem os detalhes de cada critério.');if(cp.d&&(Date.now()-new Date(cp.d+'T12:00:00').getTime())/864e5>90)lim.push(sh(cp)+': análise de '+fmtD(cp.d)+'. Escaneie de novo se o seu perfil mudou.')});
-  if(!A.preco||!B.preco)lim.push('Sem o preço dos dois, não dá para comparar o custo-benefício.');else if(!cmpUnit(A,B))lim.push('Sem o volume dos dois, o preço é comparado pelo valor total.');
+  if(!PC.ok)lim.push(PC.why==='moeda'?'Preços em moedas diferentes não são comparados.':'Sem estimativa de preço para os dois, o custo-benefício não foi avaliado.');else if(!PC.un)lim.push('Sem volumes comparáveis, o preço é comparado pelo valor total.');
   R.lim=lim.slice(0,4);
   /* economia / diferença de preço */
-  R.eco=null;if(R.win&&R.win.preco&&R.lose.preco){const W=R.win,L=R.lose;if(cmpUnit(W,L)){const eq=(L.preco/L.vol.n)*W.vol.n-W.preco;if(eq>=.5)R.eco={t:'Economia potencial: '+cmpMoney(eq)+' na mesma quantidade',ok:1};else if(eq<=-.5)R.eco={t:'Custa '+cmpMoney(-eq)+' a mais na mesma quantidade',ok:0}}
-    else{const df=L.preco-W.preco;if(df>=.5)R.eco={t:'Economia potencial: '+cmpMoney(df)+' (preço total)',ok:1};else if(df<=-.5)R.eco={t:'Diferença de preço: '+cmpMoney(-df)+' a mais',ok:0}}}
+  R.eco=cmpEco(R,PC);R.px=cmpPxTxt(R,PC);
   /* chave do cache: ordem dos produtos normalizada; sem preços (ver explicação) */
   const ks=[A,B].slice().sort((x,y)=>x.key<y.key?-1:1);R.canon=ks;R.pk=ks[0].key+'|'+ks[1].key;R.prof=h53(cmpCtx(A.area));R.rt=cmpRotSig();
   R.key='c'+CMP_V+'.'+h53([CMP_V,CMP_AI_V,ks[0].key,ks[0].sv,ks[1].key,ks[1].sv,R.prof,R.rt].join('|'));
@@ -5807,8 +5838,8 @@ const cmpCtx=ar=>areaCtx(ar==='corpo'||ar==='cabelo'?ar:'pele');
 const cmpRotSig=()=>h53(JSON.stringify([S.shelf.filter(i=>stOf(i)==='tenho'&&i.rot).map(i=>i.n+':'+i.rot).sort(),(S.ativos||[]).slice().sort(),routineKeys()]));
 
 /* ---- histórico (S.cmpH): um registro por par; mostra "desatualizada" quando algo mudou ---- */
-const cmpSnap=cp=>({key:cp.key,nome:cp.nome,marca:cp.marca,area:cp.area,cat:cp.cat,nota:cp.nota,parts:cp.parts,pen:cp.pen,teto:cp.teto,fin:cp.fin,ativos:cp.ativos,alertas:cp.alertas,evitar:cp.evitar,lista:cp.lista,etapa:cp.etapa,per:cp.per,como:cp.como,preco:cp.preco,vol:cp.vol,snap:cp.snap,sv:cp.sv,d:cp.d});
-function cmpCommit(R){if(!R||R.A.nota==null||R.B.nota==null)return null;S.cmpH=S.cmpH||[];let i=S.cmpH.findIndex(r=>r.pk===R.pk),old=i>=0?S.cmpH[i]:null;const sig=h53(JSON.stringify([R.key,R.A.preco,R.A.vol,R.B.preco,R.B.vol,R.dec,R.tag,R.sum]));if(old&&old.sig===sig)return old;
+const cmpSnap=cp=>({key:cp.key,nome:cp.nome,marca:cp.marca,area:cp.area,cat:cp.cat,nota:cp.nota,parts:cp.parts,pen:cp.pen,teto:cp.teto,fin:cp.fin,ativos:cp.ativos,alertas:cp.alertas,evitar:cp.evitar,lista:cp.lista,etapa:cp.etapa,per:cp.per,como:cp.como,pr:cp.pr,vol:cp.vol,snap:cp.snap,sv:cp.sv,d:cp.d});
+function cmpCommit(R){if(!R||R.A.nota==null||R.B.nota==null)return null;S.cmpH=S.cmpH||[];let i=S.cmpH.findIndex(r=>r.pk===R.pk),old=i>=0?S.cmpH[i]:null;const sig=h53(JSON.stringify([R.key,R.A.pr,R.A.vol,R.B.pr,R.B.vol,R.dec,R.tag,R.sum]));if(old&&old.sig===sig)return old;
   const rec={id:old?old.id:String(Date.now()),sig,pk:R.pk,k:R.key,ts:Date.now(),a:cmpSnap(R.A),b:cmpSnap(R.B),dec:R.dec,tag:R.tag,sum:R.sum,rows:R.rows.map(r=>({k:r.k,lab:r.lab,a:{t:r.a.t,s:r.a.s,tone:r.a.tone},b:{t:r.b.t,s:r.b.s,tone:r.b.tone}})),
     v:{lg:CMP_V,ia:CMP_AI_V,sa:R.A.sv,sb:R.B.sv,pf:R.prof,rt:R.rt},ai:old&&old.k===R.key?old.ai||null:null};
   if(i>=0)S.cmpH.splice(i,1);S.cmpH.unshift(rec);S.cmpH=S.cmpH.slice(0,CMP_MAX);return rec}
@@ -5824,14 +5855,14 @@ function cmSlot(k,cp,L,R){
   if(!cp)return `<button class="cm-slot empty" data-cmp="pick|${k}" aria-label="Escolher o produto ${L}"><span class="cm-plus">${ic('plus',22)}</span><b>Produto ${L}</b><small>Escolher</small></button>`;
   const win=R&&R.win===cp||R&&R.win&&R.win.key===cp.key,sem=cp.nota==null;
   return `<div class="cm-slot on${win?' win':''}"><button class="cm-x" data-cmp="clr|${k}" aria-label="Remover o produto ${L}">${ic('x',13)}</button>
-    <button class="cm-sb" data-cmp="pick|${k}" aria-label="Trocar o produto ${L}: ${esc(cmpShort(cp))}"><span class="cm-pic">${cmpThumb(cp,64)}</span><span class="cm-nm">${esc(cmpShort(cp))}</span>${cp.marca?`<small>${esc(cp.marca)}</small>`:''}${cp.cat?`<span class="cm-cat">${esc(cp.cat)}</span>`:''}
+    <button class="cm-sb" data-cmp="pick|${k}" aria-label="Trocar o produto ${L}: ${esc(cmpShort(cp))}"><span class="cm-pic">${cmpThumb(cp,64)}</span><span class="cm-nm">${esc(cmpShort(cp))}${cp.vol?`<i class="cm-vl"> · ${esc(cmpVolTxt(cp.vol))}</i>`:''}</span>${cp.marca?`<small>${esc(cp.marca)}</small>`:''}${cp.cat?`<span class="cm-cat">${esc(cp.cat)}</span>`:''}
     <span class="cm-sc${sem?' na':''}">${sem?'<b>—</b><small>Sem análise</small>':`<b>${cp.nota}%</b><small>Compatibilidade</small>`}</span></button>${win?`<span class="cm-cr" aria-label="Escolha Pellie">${ic('crown',15)}</span>`:''}</div>`}
-const cmCell=c=>`<div class="cm-c t-${c.tone}" role="cell">${c.tone==='fav'?`<i class="cm-ck" aria-hidden="true">${ic('check',13)}</i>`:c.tone==='att'?`<i class="cm-ck w" aria-hidden="true">${ic('alert',12)}</i>`:''}<span><b>${esc(c.t)}</b>${c.s?`<small>${esc(c.s)}</small>`:''}</span></div>`;
+const cmCell=c=>`<div class="cm-c t-${c.tone}" role="cell">${c.tone==='fav'?`<i class="cm-ck" aria-hidden="true">${ic('check',13)}</i>`:c.tone==='att'?`<i class="cm-ck w" aria-hidden="true">${ic('alert',12)}</i>`:''}<span><b>${esc(c.t)}</b>${c.s?`<small>${esc(c.s)}</small>`:''}${c.tag?`<em class="cm-tier t${c.tag.i}">${esc(c.tag.t)}</em>`:''}</span></div>`;
 function cmTable(R){return `<div class="cm-tb" role="table" aria-label="Comparação por critério"><div class="cm-r cm-th" role="row"><span></span><b role="columnheader">A</b><b role="columnheader">B</b></div>${R.rows.map((r,i)=>`<div class="cm-r" role="row" style="--i:${i}"><div class="cm-l" role="rowheader">${ic(r.ic,17)}<span>${r.lab}</span></div>${cmCell(r.a)}${cmCell(r.b)}</div>`).join('')}</div>`}
 function cmTg(R){const C=cmpS();if(R.win)return R.win===R.A||R.win.key===R.A.key?'a':'b';return C.tg==='b'?'b':'a'}
 function cmEsc(R,rec){const C=cmpS(),tg=cmTg(R),T=tg==='a'?R.A:R.B,cbS=cp=>{const it=S.shelf.find(i=>nmSame(i.n,cp.nome));return it};
   const tit={win:'Escolha Pellie',ambos:'Escolha Pellie',prio:'Escolha Pellie',nenhum:'Escolha Pellie',comp:'Escolha Pellie',insuf:'Escolha Pellie'}[R.tag];
-  const rows=[];if(R.tag==='win'&&R.why[0])rows.push(['Principal motivo',R.why[0]]);if(R.goal)rows.push(['Em relação ao seu objetivo',R.goal]);if(R.cau.length)rows.push(['Pontos de atenção',R.cau[0]]);
+  const rows=[];if(R.tag==='win'&&R.why[0])rows.push(['Principal motivo',R.why[0]]);if(R.goal)rows.push(['Em relação ao seu objetivo',R.goal]);if(R.px)rows.push(['Preço',R.px]);if(R.cau.length)rows.push(['Pontos de atenção',R.cau[0]]);
   const pickT=!R.win&&R.dec!=='insufficient_data'?`<div class="cm-tg" role="group" aria-label="Escolher o produto para as ações"><small>Para qual produto?</small>${[['a',R.A],['b',R.B]].map(([k,cp])=>`<button data-cmp="tg|${k}" aria-pressed="${tg===k}">${esc(cmpShort(cp))}</button>`).join('')}</div>`:'';
   const noteIt=cbS(T),ja=!!noteIt,jaR=noteIt&&stOf(noteIt)==='tenho'&&T.per&&[...(T.per==='manha'?'m':T.per==='noite'?'n':'mn')].every(c=>inRot(noteIt,c));
   const canRot=R.dec!=='insufficient_data'&&T.area==='pele'&&T.snap&&T.nota!=null&&T.per;
@@ -5851,12 +5882,7 @@ function cmAi(R,rec){const C=cmpS(),a=C.ai,ok=R.dec!=='insufficient_data'&&R.A.p
   return `<section class="cm-ai cm-rv" aria-label="Explicação complementar"><div class="cm-esc-h"><span class="cm-crown ai">${ic('sparkle',18)}</span><h3>Quer entender a diferença?</h3></div>
     <p class="small muted">${lim?esc(a.err):a&&a.err?esc(a.err):'Uma explicação curta por IA, usando só os dados desta comparação. A comparação acima já vale sozinha.'}</p>
     ${lim?'':`<button class="btn ghost cm-gh" data-cmp="ai">${ic('sparkle',18)}${a&&a.err?'Tentar de novo':'Explicar com o Pellie Assistant'}</button><small class="cm-fine">${txt}</small>`}</section>`}
-function cmPrice(R){const C=cmpS(),any=R.A.preco||R.B.preco||R.A.vol||R.B.vol;
-  const f=(k,cp,L)=>{const P=(S.cmpP&&S.cmpP[cp.key])||{},v=cp.vol||{};return `<div class="cm-pf"><b>Produto ${L}</b><span class="cm-sn">${esc(cmpShort(cp))}</span>
-    <label>Preço (R$)<input class="cm-in" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" data-cmpin="p|${k}" value="${P.preco?String(P.preco).replace('.',','):''}" placeholder="0,00"></label>
-    <div class="cm-vr"><label>Volume<input class="cm-in" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" data-cmpin="v|${k}" value="${v.n?String(v.n).replace('.',','):''}" placeholder="30"></label>
-    <label>Unidade<select class="cm-in" data-cmpin="u|${k}" aria-label="Unidade do volume ${L}"><option value="ml"${v.u!=='g'?' selected':''}>mL</option><option value="g"${v.u==='g'?' selected':''}>g</option></select></label></div></div>`};
-  return `<details class="cm-pd" data-cmpd="1"${any||C.pOpen?' open':''}><summary>${ic('coin',17)}Informar preço e volume <em>opcional</em></summary><p class="small muted">Só o que você informar entra na conta. Com o volume dos dois, comparamos o preço por mL ou grama.</p>${f('a',R.A,'A')}${f('b',R.B,'B')}</details>`}
+const cmDisc=R=>[R.A,R.B].some(c=>c.pr&&c.pr.fonte==='ai_estimate')?'<p class="cm-disc">Faixas estimadas por IA. Os valores podem variar conforme a loja e a região.</p>':'';
 function cmHist(){const L=(S.cmpH||[]);return `<div class="stack pk pl-in cm">${pkHead('Comparações anteriores','Consulte, atualize ou remova.')}
   <button class="cm-back" data-cmp="histx">${ic('chev',16)}Voltar ao comparador</button>
   ${L.length?L.map(r=>{const st=cmpStale(r),dc={product_a:'Escolha: '+cmpShort(r.a),product_b:'Escolha: '+cmpShort(r.b),equivalent:'Resultados próximos',complementary:'Complementares',insufficient_data:'Dados insuficientes'}[r.dec];return `<div class="cm-hi"><button class="cm-hb" data-cmp="open|${esc(r.id)}"><span class="cm-hp"><i>${cmpThumb(r.a,40)}</i><i>${cmpThumb(r.b,40)}</i></span><span class="cm-ht"><b>${esc(cmpShort(r.a))} × ${esc(cmpShort(r.b))}</b><small>${fmtD(new Date(r.ts).toISOString().slice(0,10))} · ${esc(dc)}</small>${st?`<em class="cm-old">Desatualizada: toque para atualizar</em>`:''}</span></button><button class="cm-hx" data-cmp="del|${esc(r.id)}" aria-label="Remover esta comparação do histórico">${ic('x',15)}</button></div>`}).join(''):`<div class="pl-card" style="text-align:center"><h3>Nenhuma comparação ainda</h3><p class="small muted" style="margin-top:4px">Compare dois produtos e ela aparece aqui.</p></div>`}</div>`}
@@ -5866,13 +5892,13 @@ function viewCmp(){const C=cmpS();C.want=null;
   if(C.scn)return cmScan();
   if(C.hist)return cmHist();
   const A=C.a&&cmpCp(C.a),B=C.b&&cmpCp(C.b);if(C.a&&!A)C.a=null;if(C.b&&!B)C.b=null;
-  const R=A&&B?cmpCalc(A,B):null,rec=R?cmpCommit(R):null;if(R)cmpSaldoLazy();
+  const R=A&&B?cmpCalc(A,B):null,rec=R?cmpCommit(R):null;if(R){cmpSaldoLazy();cmpPxLazy(R)}
   const n=cmpCands().length,nH=(S.cmpH||[]).length;
   let body='';
   if(!A&&!B)body=`<div class="cm-st"><span class="cm-sti">${ic('cmp',26)}</span><b>Escolha dois produtos</b><p class="small muted">${n>=2?'Pegue da sua prateleira ou do histórico, ou escaneie um novo.':n===1?'Você tem 1 produto. Escaneie outro para comparar.':'Escaneie dois produtos para começar a comparar.'}</p>${n<2?`<button class="btn pl-go" data-cmp="scan|${A?'b':'a'}">${ic('scan',18)}Escanear um produto</button>`:''}</div>`;
   else if(!A||!B)body=`<div class="cm-st"><b>Falta mais um</b><p class="small muted">Escolha o ${A?'produto B':'produto A'} para ver a comparação.</p></div>`;
   else if(R.dec==='insufficient_data'){const sem=[['a',A],['b',B]].filter(([k,c])=>c.nota==null);body=`<div class="cm-st"><span class="cm-sti">${ic('alert',24)}</span><b>Informações insuficientes</b><p class="small muted">${esc(R.sum)}</p>${sem.map(([k,c])=>`<button class="btn ghost" data-cmp="scan|${k}" style="margin-top:8px">${ic('scan',18)}Analisar ${esc(cmpShort(c))}</button>`).join('')}</div>`}
-  else body=`<p class="cm-disc">Pontuação = indicador estimado de compatibilidade cosmética, não probabilidade clínica de eficácia.</p>${cmTable(R)}${cmEsc(R,rec)}${cmAi(R,rec)}${cmPrice(R)}<button class="cm-new" data-cmp="new">${ic('cmp',16)}Comparar outros produtos</button>`;
+  else body=`<p class="cm-disc">Pontuação = indicador estimado de compatibilidade cosmética, não probabilidade clínica de eficácia.</p>${cmTable(R)}${cmDisc(R)}${cmEsc(R,rec)}${cmAi(R,rec)}<button class="cm-new" data-cmp="new">${ic('cmp',16)}Comparar outros produtos</button>`;
   return `<div class="stack pk pl-in cm">${head}<div class="cm-slots">${cmSlot('a',A,'A',R)}${cmSlot('b',B,'B',R)}</div>${body}
     ${nH?`<button class="cm-hl" data-cmp="hist">${ic('clock',16)}Comparações anteriores <b>${nH}</b></button>`:''}</div>`}
 
@@ -5970,11 +5996,12 @@ async function cmpAI(){const C=cmpS(),A=C.a&&cmpCp(C.a),B=C.b&&cmpCp(C.b);if(!A|
     else C.ai={err:(e&&e.msg)||(navigator.onLine?'Não consegui preparar a explicação agora. A comparação continua disponível.':'Sem conexão agora. A comparação acima continua funcionando offline.'),code:'err'};
     render()}}
 const AIM='cmp-ia-1';
-document.addEventListener('change',e=>{const t=e.target,d=t&&t.dataset&&t.dataset.cmpin;if(!d)return;const [f,k]=d.split('|'),C=cmpS(),key=C[k];if(!key)return;const P=(S.cmpP=S.cmpP||{}),o=P[key]=P[key]||{};
-  if(f==='p'){const v=cmpNum(t.value);if(v&&v<100000)o.preco=cmpR2(v);else delete o.preco}
-  else{const cp=cmpCp(key),cur=o.vol||(cp&&cp.vol)||{n:null,u:'ml'};if(f==='v'){const v=cmpNum(t.value);cur.n=v&&v<100000?v:null}else cur.u=t.value==='g'?'g':'ml';if(cur.n)o.vol={n:cur.n,u:cur.u};else delete o.vol}
-  if(!o.preco&&!o.vol)delete P[key];const y=window.scrollY;C.pOpen=true;render();window.scrollTo(0,y)});
-document.addEventListener('toggle',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.cmpd)cmpS().pOpen=t.open},true);
+/* produtos analisados ANTES desta função: consulta só a referência compartilhada (leitura no banco, sem IA). Sem referência: "Sem estimativa disponível". */
+function cmpPxLazy(R){const pais=cmpPais();if(!pais||!navigator.onLine||typeof sb==='undefined'||!sb||!sb.functions)return;const it=[];
+  [R.A,R.B].forEach(cp=>{if(cp.pr||!cp.snap||!cp.ref||CMP_PXT.has(cp.key))return;const c=cmpFind(cp.key),e=c&&cmpEnt(c.snap);if(!e||e.preco!==undefined)return;CMP_PXT.add(cp.key);CMP_PXB.add(cp.key);it.push({id:cp.key,ref:cp.ref})});
+  if(!it.length)return;setTimeout(async()=>{render();try{const {data}=await sb.functions.invoke('comparar',{body:{acao:'precos',pais,itens:it}});const m=data&&data.ok&&data.precos||{};
+      it.forEach(x=>{const pr=cmpPr(m[x.id]),c=cmpFind(x.id),e=c&&cmpEnt(c.snap);if(pr&&e)e.preco=pr})}catch(e){}
+    it.forEach(x=>CMP_PXB.delete(x.id));save();render()},50)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.cmp&&(S.cmp.pick||S.cmp.rot)&&document.getElementById('cmk')&&document.getElementById('cmk').dataset.h){S.cmp.pick=null;S.cmp.rot=null;render()}});
 function pfCmpBtn(){const f=S.pf;if(!f||!f.sc||f.fromCmp)return '';const C=cmpS();return C.want?`<button class="btn obc pf-shb" data-cmp="use">${ic('check',18)}Usar na comparação</button>`:`<button class="btn ghost pf-shb" data-cmp="go">${ic('cmp',18)}Comparar com outro produto</button>`}
 {const r3=render;render=function(){const C=S.cmp;if(C&&C.want&&S.tab!=='escanear'&&S.tab!=='produtos')C.want=null;if(C&&C.scn&&(S.tab!=='produtos'||S.prodSub!=='cmp')){C.scn=null;if(S.pf&&S.pf.cmpMode){S.pf=null;S.prodFile=null;S.prodPhoto=null}}const x=r3.apply(this,arguments);cmUpd();return x}}

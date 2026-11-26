@@ -1,15 +1,26 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { MERCADOS, VALIDADE_DIAS_PADRAO, chaveProduto, validarPreco, expirou } from "./preco.ts";
 
-// Limite mensal do Pellie Pro (controla o custo da IA). Sem assinatura, só a PRIMEIRA análise de pele é gratuita (cadastro, ainda sem login).
-const LIMITE_PLUS_MES = 200;
+// Limite mensal do Pellie Pro (controla o custo da IA): 100 análises por mês. Conta pele, cabelo, SOS Espinha e produtos escaneados (a identificação e a comparação do mesmo produto contam como UMA). Textos do assistente e da rotina não entram na conta. Sem assinatura, só a PRIMEIRA análise de pele é gratuita (cadastro, ainda sem login).
+const LIMITE_PLUS_MES = 100;
 const LIMITE_ESPINHA_DIA = 3;     // SOS Espinha: fotos por dia (controla custo)
 const LIMITE_ANON_IP_DIA = 10;     // análises grátis por rede em 24h (sem conta)
 const LIMITE_ANON_GLOBAL_DIA = 400; // teto diário de análises sem conta (controla custo)
-const MODELO = "claude-sonnet-5-5";
+// Haiku em todas as etapas (20/11/2026, para baixar o custo). TESTE: a COMPARAÇÃO DE PRODUTO (produto_cmp) roda no Haiku COM pensamento (o padrão dele); as outras etapas rodam no Haiku SEM pensamento.
+// TESTE (20/11/2026): a reserva no Sonnet está DESLIGADA, para ver como o Haiku se sai sozinho. Se o Haiku falhar, a pessoa recebe a mensagem de erro e a análise não conta no limite. Para ligar de novo: USAR_RESERVA = true.
+// O Haiku 5.5 pensa por padrão e o pensamento conta nos tokens de saída (e no tempo).
+const MODELO_PADRAO = "claude-haiku-5-5";
+const MODELO_RESERVA = "claude-sonnet-5-5";
+const USAR_RESERVA = false;
+const MODELO_POR_TIPO: Record<string, string> = {};
+const COM_PENSAMENTO = new Set(["produto_cmp"]);
+const MAX_SAIDA_POR_TIPO: Record<string, number> = { produto_cmp: 8000 };
 const MAX_IMG_B64 = 6_000_000;
 const MAX_CTX = 2000;
 const MAX_PROMPT = 5000;
+// Preço de referência (compartilhado): validade configurável por segredo PRECO_VALIDADE_DIAS (padrão 90 dias).
+const PRECO_DIAS = Math.max(1, Math.min(365, Number(Deno.env.get("PRECO_VALIDADE_DIAS") ?? VALIDADE_DIAS_PADRAO) || VALIDADE_DIAS_PADRAO));
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -63,12 +74,13 @@ O rótulo pode estar em português, inglês, coreano, japonês ou outro idioma: 
 Responda SOMENTE com um JSON.
 Se a imagem não mostrar um produto cosmético de pele ou cabelo, ou não der para ler nada útil, responda {"erro":"frase curta em português pedindo outra foto, mostrando o nome do produto e, se possível, a lista de ingredientes"}.
 Caso contrário, use este formato:
-{"produto":"nome comercial exatamente como aparece, ou null","marca":"marca como aparece, ou null","categoria":"limpador|sérum|hidratante|protetor solar|esfoliante|máscara|tônico|maquiagem|cabelo|outro","volume":"como está escrito (ex.: 30 ml), ou null","confianca":0-100,"alternativas":[{"produto":"nome","marca":"marca"}],"texto_lido":["até 8 termos ou frases lidos literalmente na embalagem"],"ingredientes_lidos":["ingredientes da lista INCI lidos no rótulo, na ordem, até 30, ou []"],"lista_lida":true ou false,"ativos_declarados":["ativos que a embalagem anuncia, como 'niacinamida 10%', ou []"],"caixa":[x0,y0,x1,y1],"na_mao":true ou false}
+{"produto":"nome comercial exatamente como aparece, ou null","marca":"marca como aparece, ou null","variante":"variante ou tipo de pele indicado no nome, ou null","categoria":"limpador|sérum|hidratante|protetor solar|esfoliante|máscara|tônico|maquiagem|cabelo|outro","volume":"como está escrito (ex.: 30 ml), ou null","quantidade":número do volume ou peso, ou null,"unidade":"ml|g|un, ou null","codigo_barras":"dígitos do código de barras, só se estiver legível, ou null","confianca":0-100,"alternativas":[{"produto":"nome","marca":"marca"}],"texto_lido":["até 8 termos ou frases lidos literalmente na embalagem"],"ingredientes_lidos":["ingredientes da lista INCI lidos no rótulo, na ordem, até 30, ou []"],"lista_lida":true ou false,"ativos_declarados":["ativos que a embalagem anuncia, como 'niacinamida 10%', ou []"],"caixa":[x0,y0,x1,y1],"na_mao":true ou false}
 confianca = quão seguro você está de que identificou o produto certo pelo que está legível (nome e marca legíveis = alta; só a cor ou o formato = baixa).
 alternativas: só se houver dúvida real entre produtos parecidos (até 3); se não houver dúvida, [].
 lista_lida = true só se a lista de ingredientes aparece legível na foto.
 na_mao = true somente se uma mão ou dedos aparecem segurando o produto ou tocando nele na foto; se o produto está apoiado numa superfície ou não há mão visível, false.
 caixa = retângulo justo em volta da embalagem do produto na imagem, em frações de 0 a 1 (x0,y0 = canto superior esquerdo; x1,y1 = canto inferior direito), sem incluir mão, fundo ou barras de tela; se não der para saber, use null.
+quantidade, unidade e codigo_barras: só se estiverem escritos e legíveis na embalagem; se não, null.
 Nunca invente nome, marca, volume ou ingredientes que não estejam legíveis. Se o nome não estiver legível, use null e confianca baixa.`,
   },
   // Scanner Pro, etapa 2: cruzar o produto confirmado com o perfil (sem foto).
@@ -114,6 +126,9 @@ async function hashIp(ip: string, salt: string) {
   const h = await crypto.subtle.digest("SHA-256", d);
   return Array.from(new Uint8Array(h)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
+
+// Texto curto e seguro para entrar no prompt de preço (sem aspas, chaves nem quebras de linha).
+const limpo = (s: unknown, n = 80) => String(s ?? "").replace(/["{}\\\n\r\t]+/g, " ").replace(/\s+/g, " ").trim().slice(0, n);
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
@@ -166,8 +181,12 @@ Deno.serve(async (req: Request) => {
     }
     if (!gratis) {
       const ini = new Date(); ini.setDate(1); ini.setHours(0, 0, 0, 0);
-      const { count } = await admin.from("analises").select("id", { count: "exact", head: true }).eq("user_id", user.id).gte("criado_em", ini.toISOString());
-      if ((count ?? 0) >= LIMITE_PLUS_MES) return json({ codigo: "limite_mes", erro: "Você chegou ao limite de análises deste mês." }, 429);
+      // Conta análises (pele, cabelo, espinha, produto). A comparação do produto (produto_cmp) e os textos não contam, para cada produto valer 1.
+      // A comparação e os textos não são barrados aqui: só a etapa de entrada (foto) é limitada; quem já identificou o produto pode terminar a comparação.
+      if (tipo !== "produto_cmp" && tipo !== "texto") {
+        const { count } = await admin.from("analises").select("id", { count: "exact", head: true }).eq("user_id", user.id).gte("criado_em", ini.toISOString()).in("tipo", ["pele", "cabelo", "espinha", "produto"]).or("resultado->>etapa.is.null,resultado->>etapa.neq.produto_cmp");
+        if ((count ?? 0) >= LIMITE_PLUS_MES) return json({ codigo: "limite_mes", erro: "Você chegou ao limite de 100 análises deste mês." }, 429);
+      }
       if (tipo === "espinha") {
         const desde24 = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
         const { count: nEsp } = await admin.from("analises").select("id", { count: "exact", head: true }).eq("user_id", user.id).eq("tipo", "espinha").gte("criado_em", desde24);
@@ -204,22 +223,143 @@ Deno.serve(async (req: Request) => {
   };
 
   try {
+    // ---- Preço de referência (só na comparação do scanner, SEM chamada extra de IA) ----
+    // 1) Procura no banco compartilhado. 2) Se existir e estiver vigente, reutiliza e NÃO pede preço à IA.
+    // 3) Se não existir (ou venceu), pede a estimativa NA MESMA chamada que já faz a comparação, e valida no servidor.
+    let precoEv: string | null = null;
+    let pedirPreco = false;
+    let precoCtx: { pais: string; moeda: string; chave: any; ref: any } | null = null;
+    let precoCache: any = null;
+    let precoVelha: any = null;
+    if (tipo === "produto_cmp") {
+      const pais = String(body?.pais ?? "").toUpperCase().slice(0, 2);
+      const ref = body?.ref && typeof body.ref === "object" ? body.ref : null;
+      const mk = MERCADOS[pais];
+      if (!mk) precoEv = "sem_mercado";
+      else if (!ref) precoEv = "sem_ref";
+      else {
+        const ch = chaveProduto({ codigo: ref.codigo, marca: ref.marca, nome: ref.nome, variante: ref.variante, qtd: ref.qtd, un: ref.un, volume: ref.volume });
+        if (!ch.stable || !ch.key) precoEv = "ambiguo_" + ch.motivo;   // sem volume/marca/nome: não inventa e não guarda como referência global
+        else {
+          precoCtx = { pais, moeda: mk.cur, chave: ch, ref };
+          const { data: row, error: eRow } = await admin.from("product_price_cache")
+            .select("price_min, price_max, source, expires_at, updated_at")
+            .eq("product_key", ch.key).eq("country_code", pais).eq("currency", mk.cur).maybeSingle();
+          if (!eRow && row && !expirou(row.expires_at)) { precoCache = row; precoEv = "hit"; }
+          else { precoVelha = !eRow && row ? row : null; pedirPreco = true; precoEv = eRow ? "erro_cache_pediu" : precoVelha ? "vencida_pediu" : "miss_pediu"; }
+        }
+      }
+    }
     const content: any[] = [];
     if (P.img) content.push({ type: "image", source: { type: "base64", media_type: mediaType, data: imagem } });
-    content.push({ type: "text", text: P.texto(contexto || "sem informações") });
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: MODELO, max_tokens: 2500, messages: [{ role: "user", content }] }),
-    });
-    if (!r.ok) { await devolver(); return json({ codigo: "ia", erro: "A análise não funcionou agora. Tente de novo." }, 502); }
-    const out = await r.json();
-    const txt: string = (out?.content ?? []).filter((b: any) => b.type === "text").map((b: any) => b.text).join("");
-    const m = txt.match(/\{[\s\S]*\}/);
-    let resultado: any = null;
-    try { resultado = m ? JSON.parse(m[0]) : null; } catch { resultado = null; }
-    if (!resultado) { await devolver(); return json({ codigo: "formato", erro: "Não consegui ler o resultado. Tente outra foto." }, 502); }
+    let textoPrompt = P.texto(contexto || "sem informações");
+    if (pedirPreco && precoCtx) {
+      const r = precoCtx.ref, q = precoCtx.chave.qtd;
+      textoPrompt += `\nInclua também, no mesmo JSON, o campo "market_price":{"status":"available|insufficient_data","country":"${precoCtx.pais}","currency":"${precoCtx.moeda}","estimated_min":número ou null,"estimated_max":número ou null}.\nEstime a faixa de preço de varejo, em ${precoCtx.moeda}, de "${limpo(r.marca)} ${limpo(r.nome)}${r.variante ? " " + limpo(r.variante) : ""}" na embalagem de ${q.n} ${q.u}, no mercado ${precoCtx.pais}. É uma estimativa aproximada, feita de memória, e não uma cotação de lojas. Não pesquise. Se não conhecer este produto neste tamanho com segurança, use status "insufficient_data" com min e max null. Nunca invente números.`;
+    }
+    content.push({ type: "text", text: textoPrompt });
+
+    // Chama a IA e devolve o texto + o uso de tokens (para medir o custo real).
+    const chamar = async (modelo: string) => {
+      const corpoIA: Record<string, unknown> = { model: modelo, max_tokens: MAX_SAIDA_POR_TIPO[tipo] ?? 2500, messages: [{ role: "user", content }] };
+      if (modelo === MODELO_PADRAO && !COM_PENSAMENTO.has(tipo)) corpoIA.thinking = { type: "disabled" };
+      let r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+        body: JSON.stringify(corpoIA),
+      });
+      // Se a API recusar o parâmetro de pensamento, repete sem ele (não derruba a análise).
+      if (r.status === 400 && corpoIA.thinking) {
+        delete corpoIA.thinking;
+        r = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+          body: JSON.stringify(corpoIA),
+        });
+      }
+      if (!r.ok) return { ok: false, txt: "", usage: null as any };
+      const out = await r.json();
+      const txt: string = (out?.content ?? []).filter((b: any) => b.type === "text").map((b: any) => b.text).join("");
+      return { ok: true, txt, usage: out?.usage ?? null };
+    };
+    const ler = (txt: string) => {
+      const m = txt.match(/\{[\s\S]*\}/);
+      try { return m ? JSON.parse(m[0]) : null; } catch { return null; }
+    };
+    let usoId: number | null = null;
+    const logUso = async (modelo: string, usage: any, ok: boolean) => {
+      try {
+        const { data } = await admin.from("uso_ia").insert({
+          user_id: userId, tipo, modelo,
+          tokens_in: usage?.input_tokens ?? 0, tokens_out: usage?.output_tokens ?? 0,
+          tokens_cache: usage?.cache_read_input_tokens ?? 0, ok,
+          preco_evento: tipo === "produto_cmp" ? precoEv : null,
+        }).select("id").single();
+        usoId = data?.id ?? null;
+      } catch (_e) { /* o registro de uso nunca derruba a análise */ }
+    };
+
+    let modelo = MODELO_POR_TIPO[tipo] ?? MODELO_PADRAO;
+    let a = await chamar(modelo);
+    let resultado: any = a.ok ? ler(a.txt) : null;
+    await logUso(modelo, a.usage, !!resultado);
+    // Reserva no Sonnet: desligada durante o teste do Haiku (USAR_RESERVA = false).
+    if (!resultado && USAR_RESERVA && modelo !== MODELO_RESERVA) {
+      modelo = MODELO_RESERVA;
+      a = await chamar(modelo);
+      resultado = a.ok ? ler(a.txt) : null;
+      await logUso(modelo, a.usage, !!resultado);
+    }
+    if (!resultado) {
+      await devolver();
+      return a.ok
+        ? json({ codigo: "formato", erro: "Não consegui ler o resultado. Tente outra foto." }, 502)
+        : json({ codigo: "ia", erro: "A análise não funcionou agora. Tente de novo." }, 502);
+    }
     if (resultado.erro) { await devolver(); return json({ ok: true, resultado }); }
+
+    // ---- Preço: valida a estimativa no servidor e guarda como referência compartilhada ----
+    if (tipo === "produto_cmp") {
+      const mp = resultado.market_price;
+      delete resultado.market_price;   // o app recebe só o campo normalizado "preco"
+      const deLinha = (row: any, extra: Record<string, unknown> = {}) => ({
+        status: "available", min: Number(row.price_min), max: Number(row.price_max), cur: precoCtx!.moeda, pais: precoCtx!.pais,
+        fonte: row.source, at: row.updated_at, shared: true, ...extra,
+      });
+      if (precoCache) {
+        resultado.preco = deLinha(precoCache, { hit: true });
+      } else if (pedirPreco && precoCtx) {
+        const v = validarPreco(mp, { pais: precoCtx.pais, moeda: precoCtx.moeda });
+        if (v.ok && v.min !== null && v.max !== null) {
+          const q = precoCtx.chave.qtd, r = precoCtx.ref;
+          const { data: reg } = await admin.rpc("registrar_preco_ref", {
+            p_key: precoCtx.chave.key, p_brand: limpo(r.marca), p_name: limpo(r.nome, 160), p_variant: r.variante ? limpo(r.variante) : null,
+            p_category: r.cat ? limpo(r.cat, 40) : null, p_barcode: String(precoCtx.chave.key).startsWith("gtin:") ? String(precoCtx.chave.key).slice(5) : null,
+            p_qty: q.n, p_unit: q.u, p_country: precoCtx.pais, p_currency: precoCtx.moeda, p_min: v.min, p_max: v.max, p_model: modelo, p_dias: PRECO_DIAS,
+          });
+          if (reg === "mantido") {
+            // Outro pedido gravou primeiro (ou a referência ainda vale): usa a que está no banco, para todos verem o mesmo número.
+            const { data: atual } = await admin.from("product_price_cache").select("price_min, price_max, source, expires_at, updated_at")
+              .eq("product_key", precoCtx.chave.key).eq("country_code", precoCtx.pais).eq("currency", precoCtx.moeda).maybeSingle();
+            resultado.preco = atual ? deLinha(atual) : { status: "available", min: v.min, max: v.max, cur: precoCtx.moeda, pais: precoCtx.pais, fonte: "ai_estimate", at: new Date().toISOString(), shared: false };
+            precoEv = "gerado_ja_existia";
+          } else if (reg === "inserido" || reg === "atualizado") {
+            resultado.preco = { status: "available", min: v.min, max: v.max, cur: precoCtx.moeda, pais: precoCtx.pais, fonte: "ai_estimate", at: new Date().toISOString(), shared: true };
+            precoEv = reg === "atualizado" ? "gerado_atualizou" : "gerado";
+          } else {
+            resultado.preco = { status: "insufficient_data", cur: precoCtx.moeda, pais: precoCtx.pais };
+            precoEv = "rejeitado_banco";
+          }
+        } else {
+          precoEv = v.motivo === "sem_dados" ? "sem_dados" : "rejeitado_" + v.motivo;
+          resultado.preco = precoVelha ? deLinha(precoVelha, { stale: true }) : { status: "insufficient_data", cur: precoCtx.moeda, pais: precoCtx.pais };
+        }
+      } else {
+        resultado.preco = { status: "insufficient_data" };
+      }
+      if (usoId !== null && precoEv) { try { await admin.from("uso_ia").update({ preco_evento: precoEv }).eq("id", usoId); } catch (_e) { /* métrica */ } }
+    }
+
     // Histórico por usuário: cada etapa do scanner fica guardada em "analises" (resultado em JSON, sem a foto).
     if (regId !== null) await admin.from("analises").update({ resultado: tipo === "texto" ? null : { etapa: tipo, ...resultado } }).eq("id", regId);
     if (anonId !== null && tipo === "pele") { const n = soNotas(resultado); if (n) await admin.from("analises_anon").update({ notas: n }).eq("id", anonId); }
