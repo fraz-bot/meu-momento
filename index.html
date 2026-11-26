@@ -5745,18 +5745,18 @@ function cmpPC(A,B){const a=A.pr,b=B.pr;if(!a||!b)return {ok:0,why:'sem'};if(a.c
   const un=cmpUnit(A,B),f=(p,c)=>un?{lo:p.min/c.vol.n,hi:p.max/c.vol.n}:{lo:p.min,hi:p.max},ra=f(a,A),rb=f(b,B),ma=(ra.lo+ra.hi)/2,mb=(rb.lo+rb.hi)/2,overlap=ra.lo<=rb.hi&&rb.lo<=ra.hi,rel=Math.abs(ma-mb)/Math.max(ma,mb);
   return {ok:1,un,ra,rb,overlap,rel,cur:a.cur,cheap:(!overlap&&rel>=.05)?(ma<mb?'a':'b'):null}}
 function cmpCB(A,B){const na=(s)=>({t:'Não avaliado',s:s||'',tone:'na'}),PC=cmpPC(A,B);
-  if(!PC.ok){const m=PC.why==='moeda'?'moedas diferentes':'sem estimativa de preço';return [na(m),na(m)]}
+  if(!PC.ok){const m=PC.why==='moeda'?'moedas diferentes':'';return [na(m),na(m)]}
   if(A.nota==null||B.nota==null)return [cmpNA(),cmpNA()];
   const cA=cmpCatClass(A),cB=cmpCatClass(B);
-  if(A.area!==B.area||(cA&&cB&&cA!==cB)){const x={t:'Funções diferentes',s:'sem vencedor por preço',tone:'neu'};return [x,x]}
+  if(A.area!==B.area||(cA&&cB&&cA!==cB)){const x={t:'Funções diferentes',s:'',tone:'neu'};return [x,x]}
   const rc=cp=>cp.evitar.length>0||cmpConfR(cp).length>0,dn=A.nota-B.nota,un=PC.un?(cmpUn(A.vol.u)==='un'?'unidade':cmpUn(A.vol.u)):'';
-  if(!PC.cheap){const t={t:'Preços equivalentes',s:PC.overlap?'faixas se sobrepõem':'preços próximos',tone:'neu'},r=[t,t];
-    if(Math.abs(dn)>=CMP_GAP){const w=dn>0?A:B;if(!rc(w))r[dn>0?0:1]={t:'Melhor encaixe',s:'preço semelhante',tone:'fav'}}return r}
+  if(!PC.cheap){const t={t:'Preços parecidos',s:'',tone:'neu'},r=[t,t];
+    if(Math.abs(dn)>=CMP_GAP){const w=dn>0?A:B;if(!rc(w))r[dn>0?0:1]={t:'Melhor encaixe',s:'',tone:'fav'}}return r}
   const ci=PC.cheap==='a'?0:1,C=ci?B:A,O=ci?A:B,dC=C.nota-O.nota,bs=PC.un?'menor preço por '+un:'menor preço total';let c,o;
-  if(rc(C)&&!rc(O)){c={t:'Mais econômico',s:'com pontos de atenção',tone:'neu'};o={t:'Custa mais',s:'sem pontos de atenção',tone:'neu'}}
-  else if(dC<=-CMP_GAP){c={t:'Mais econômico',s:'encaixe menor',tone:'neu'};o={t:'Vale pelo encaixe',s:'custa mais, combina mais',tone:'neu'}}
-  else if(dC>=CMP_GAP){c={t:'Melhor custo-benefício',s:bs+' e melhor encaixe',tone:'fav'};o={t:'Custa mais',s:'sem ganho de encaixe',tone:'neu'}}
-  else{c={t:'Melhor custo-benefício',s:'encaixe parecido, '+bs,tone:'fav'};o={t:'Custa mais',s:'encaixe parecido',tone:'neu'}}
+  if(rc(C)&&!rc(O)){c={t:'Mais econômico',s:'com atenção',tone:'neu'};o={t:'Custa mais',s:'',tone:'neu'}}
+  else if(dC<=-CMP_GAP){c={t:'Mais econômico',s:'',tone:'neu'};o={t:'Vale pelo encaixe',s:'',tone:'neu'}}
+  else if(dC>=CMP_GAP){c={t:'Melhor custo-benefício',s:'',tone:'fav'};o={t:'Custa mais',s:'',tone:'neu'}}
+  else{c={t:'Melhor custo-benefício',s:'',tone:'fav'};o={t:'Custa mais',s:'',tone:'neu'}}
   return ci?[o,c]:[c,o]}
 /* economia potencial (faixa) entre as estimativas: nunca é garantida nem "economia realizada" */
 function cmpEco(R,PC){if(!R.win||!PC.ok)return null;const W=R.win,L=R.lose,wa=W===R.A||W.key===R.A.key,Pw=wa?PC.ra:PC.rb,Pl=wa?PC.rb:PC.ra,tw=W.pr,tl=L.pr,cur=PC.cur,sh=cmpShort,mid=p=>(p.min+p.max)/2;let lo,hi,suf;
@@ -5787,8 +5787,9 @@ function cmpRows(A,B,X){const ar=A.area===B.area?A.area:null,rows=[];
   rows.push({k:'rot',ic:'routine',lab:'Rotina',a:r[0],b:r[1]});
   const ing=cp=>cp.ativos.length?{t:cp.ativos.slice(0,3).join(', '),s:'',tone:'neu'}:{t:cp.snap?'Não identificados':'Não avaliado',s:'',tone:'na'};
   rows.push({k:'ing',ic:'sparkle',lab:'Ingredientes',a:ing(A),b:ing(B)});
-  const pr=cp=>{const p=cp.pr,u=cp.vol&&cp.vol.n>0?cp.vol:null;if(!p)return cp.pend?{t:'Buscando…',s:u?cmpVolTxt(u):'',tone:'na'}:{t:'Sem estimativa disponível',s:u?cmpVolTxt(u):'',tone:'na'};
-    const tr=cmpTier(p,cp.cat),k=u?1/u.n:0,ud=u&&p.max*k<.1?3:2;return {t:cmpRng(p.min,p.max,p.cur),s:[u?cmpVolTxt(u)+' · '+cmpRng(p.min*k,p.max*k,p.cur,ud)+'/'+cmpUn(u.u):'',p.stale?'referência antiga':''].filter(Boolean).join(' · '),tag:tr,tone:'neu'}};
+  const dif=cmpUnit(A,B)&&A.vol.n!==B.vol.n;
+  const pr=cp=>{const p=cp.pr,u=cp.vol&&cp.vol.n>0?cp.vol:null;if(!p)return {t:cp.pend?'Buscando…':'Sem estimativa',s:'',tone:'na'};
+    const tr=cmpTier(p,cp.cat),k=u?1/u.n:0,ud=u&&p.max*k<.1?3:2;return {t:cmpRng(p.min,p.max,p.cur),s:[dif&&u?cmpRng(p.min*k,p.max*k,p.cur,ud)+'/'+cmpUn(u.u):'',p.stale?'antiga':''].filter(Boolean).join(' · '),tag:tr,tone:'neu'}};
   let p=[pr(A),pr(B)];
   rows.push({k:'preco',ic:'coin',lab:'Preço',a:p[0],b:p[1]});
   const cb=cmpCB(A,B);rows.push({k:'cb',ic:'star',lab:'Custo-benefício',a:cb[0],b:cb[1]});
