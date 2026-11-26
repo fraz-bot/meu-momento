@@ -5998,7 +5998,7 @@ async function cmpAI(){const C=cmpS(),A=C.a&&cmpCp(C.a),B=C.b&&cmpCp(C.b);if(!A|
 const AIM='cmp-ia-1';
 /* produtos analisados ANTES desta função: consulta só a referência compartilhada (leitura no banco, sem IA). Sem referência: "Sem estimativa disponível". */
 function cmpPxLazy(R){const pais=cmpPais();if(!pais||!navigator.onLine||typeof sb==='undefined'||!sb||!sb.functions)return;const it=[];
-  [R.A,R.B].forEach(cp=>{if(cp.pr||!cp.snap||!cp.ref||CMP_PXT.has(cp.key))return;const c=cmpFind(cp.key),e=c&&cmpEnt(c.snap);if(!e||e.preco!==undefined)return;CMP_PXT.add(cp.key);CMP_PXB.add(cp.key);it.push({id:cp.key,ref:cp.ref})});
+  [R.A,R.B].forEach(cp=>{if(cp.pr||!cp.snap||!cp.ref||CMP_PXT.has(cp.key))return;const c=cmpFind(cp.key),e=c&&cmpEnt(c.snap);if(!e||(e.preco!==undefined&&!(e.preco&&e.preco.status==='insufficient_data')))return;CMP_PXT.add(cp.key);CMP_PXB.add(cp.key);it.push({id:cp.key,ref:cp.ref})});
   if(!it.length)return;setTimeout(async()=>{render();try{const {data}=await sb.functions.invoke('comparar',{body:{acao:'precos',pais,itens:it}});const m=data&&data.ok&&data.precos||{};
       it.forEach(x=>{const pr=cmpPr(m[x.id]),c=cmpFind(x.id),e=c&&cmpEnt(c.snap);if(pr&&e)e.preco=pr})}catch(e){}
     it.forEach(x=>CMP_PXB.delete(x.id));save();render()},50)}

@@ -255,7 +255,7 @@ Deno.serve(async (req: Request) => {
     let textoPrompt = P.texto(contexto || "sem informações");
     if (pedirPreco && precoCtx) {
       const r = precoCtx.ref, q = precoCtx.chave.qtd;
-      textoPrompt += `\nInclua também, no mesmo JSON, o campo "market_price":{"status":"available|insufficient_data","country":"${precoCtx.pais}","currency":"${precoCtx.moeda}","estimated_min":número ou null,"estimated_max":número ou null}.\nEstime a faixa de preço de varejo, em ${precoCtx.moeda}, de "${limpo(r.marca)} ${limpo(r.nome)}${r.variante ? " " + limpo(r.variante) : ""}" na embalagem de ${q.n} ${q.u}, no mercado ${precoCtx.pais}. É uma estimativa aproximada, feita de memória, e não uma cotação de lojas. Não pesquise. Se não conhecer este produto neste tamanho com segurança, use status "insufficient_data" com min e max null. Nunca invente números.`;
+      textoPrompt += `\nInclua também, no mesmo JSON, o campo "market_price":{"status":"available|insufficient_data","country":"${precoCtx.pais}","currency":"${precoCtx.moeda}","estimated_min":número ou null,"estimated_max":número ou null}.\nEstime a faixa de preço de varejo, em ${precoCtx.moeda}, de "${limpo(r.marca)} ${limpo(r.nome)}${r.variante ? " " + limpo(r.variante) : ""}" na embalagem de ${q.n} ${q.u}, no mercado ${precoCtx.pais}. É uma estimativa aproximada, feita de memória, e não uma cotação de lojas. Não pesquise. Se não conhecer este produto exato, estime pela marca, pela categoria e pelo tamanho, com uma faixa mais ampla. Use "insufficient_data" (min e max null) só se não der nem para saber que tipo de produto é.`;
     }
     content.push({ type: "text", text: textoPrompt });
 
