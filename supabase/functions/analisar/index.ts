@@ -16,6 +16,11 @@ const USAR_RESERVA = false;
 const MODELO_POR_TIPO: Record<string, string> = {};
 const COM_PENSAMENTO = new Set(["produto_cmp"]);
 const MAX_SAIDA_POR_TIPO: Record<string, number> = { produto_cmp: 8000 };
+// TESTE DE ESFORÇO (27/11/2026): quanto a IA "pensa" na comparação do produto (produto_cmp), o que mais pesa no custo e no tempo.
+// Controlado pelo segredo CMP_ESFORCO no Supabase, sem publicar a função de novo:
+//   "padrao" (ou ausente) = como antes (esforço médio, o padrão do Haiku 5.5) · "low" = esforço baixo · "off" = sem pensamento.
+// O modo usado fica gravado em uso_ia.modelo (ex.: "claude-haiku-5-5@low"), para comparar custo e resultados.
+const CMP_ESFORCO = String(Deno.env.get("CMP_ESFORCO") ?? "padrao").trim().toLowerCase();
 const MAX_IMG_B64 = 6_000_000;
 const MAX_CTX = 2000;
 const MAX_PROMPT = 5000;
@@ -263,24 +268,29 @@ Deno.serve(async (req: Request) => {
     const chamar = async (modelo: string) => {
       const corpoIA: Record<string, unknown> = { model: modelo, max_tokens: MAX_SAIDA_POR_TIPO[tipo] ?? 2500, messages: [{ role: "user", content }] };
       if (modelo === MODELO_PADRAO && !COM_PENSAMENTO.has(tipo)) corpoIA.thinking = { type: "disabled" };
+      let modo = "";
+      if (modelo === MODELO_PADRAO && tipo === "produto_cmp") {
+        if (CMP_ESFORCO === "low") { corpoIA.output_config = { effort: "low" }; modo = "@low"; }
+        else if (CMP_ESFORCO === "off") { corpoIA.thinking = { type: "disabled" }; modo = "@off"; }
+      }
       let r = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
         body: JSON.stringify(corpoIA),
       });
       // Se a API recusar o parâmetro de pensamento, repete sem ele (não derruba a análise).
-      if (r.status === 400 && corpoIA.thinking) {
-        delete corpoIA.thinking;
+      if (r.status === 400 && (corpoIA.thinking || corpoIA.output_config)) {
+        delete corpoIA.thinking; delete corpoIA.output_config; modo = "";
         r = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
           headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
           body: JSON.stringify(corpoIA),
         });
       }
-      if (!r.ok) return { ok: false, txt: "", usage: null as any };
+      if (!r.ok) return { ok: false, txt: "", usage: null as any, modo };
       const out = await r.json();
       const txt: string = (out?.content ?? []).filter((b: any) => b.type === "text").map((b: any) => b.text).join("");
-      return { ok: true, txt, usage: out?.usage ?? null };
+      return { ok: true, txt, usage: out?.usage ?? null, modo };
     };
     const ler = (txt: string) => {
       const m = txt.match(/\{[\s\S]*\}/);
@@ -302,7 +312,7 @@ Deno.serve(async (req: Request) => {
     let modelo = MODELO_POR_TIPO[tipo] ?? MODELO_PADRAO;
     let a = await chamar(modelo);
     let resultado: any = a.ok ? ler(a.txt) : null;
-    await logUso(modelo, a.usage, !!resultado);
+    await logUso(modelo + (a.modo ?? ""), a.usage, !!resultado);
     // Reserva no Sonnet: desligada durante o teste do Haiku (USAR_RESERVA = false).
     if (!resultado && USAR_RESERVA && modelo !== MODELO_RESERVA) {
       modelo = MODELO_RESERVA;
