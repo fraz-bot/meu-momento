@@ -465,8 +465,17 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .hmais{border:0;cursor:pointer;padding:6px 9px;font:inherit}.hmais[aria-current=page]{background:var(--accent);color:#fff}
 .cu-sw{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#F3E8DF;border-radius:99px;padding:4px;margin-bottom:12px}.cu-sw button{display:flex;align-items:center;justify-content:center;gap:7px;border:0;background:transparent;font:inherit;font-size:15px;font-weight:700;color:#7C5A4B;border-radius:99px;padding:10px 0;cursor:pointer;transition:all .25s}.cu-sw button[aria-pressed=true]{background:#fff;color:#4A2A1E;box-shadow:0 4px 12px rgba(170,128,86,.18)}
 .pk-pu{margin:-2px 14px 10px;font-size:13.5px;line-height:1.4;color:#6B4A3C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pk-pu b{color:#4A2A1E}.pk-pu.full{display:block}
+.pf-atv{margin:14px auto 0;max-width:340px;width:100%;box-sizing:border-box;background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:18px;padding:12px 16px 14px;text-align:left;box-shadow:0 6px 18px rgba(170,128,86,.10)}
+.pf-atv small{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.pf-atv p{display:none;margin:0}.pf-atv p.on{display:block;animation:pfAtv .5s ease both}
+.pf-atv b{display:block;font-size:15px;color:var(--ink)}.pf-atv span{display:block;font-size:13.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+@keyframes pfAtv{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.pf-atv p.on{animation:none}}
+.pill.lvb{border:0;font:inherit;font-size:14px;font-weight:800;gap:6px;padding:4px 12px 4px 5px;cursor:pointer}
+.lvr{position:relative;display:inline-grid;place-items:center;width:24px;height:24px}.lvr>svg:first-child{position:absolute;inset:0;transform:rotate(-90deg)}.lvr>svg+svg{position:relative;display:block}
+.lvr circle{fill:none;stroke-width:2.2}.lvr .t{stroke:rgba(138,106,72,.18)}.lvr .a{stroke:currentColor;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
 </style>
-<script>window.MM_VER="1795775161";</script>
+<script>window.MM_VER="1795776390";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2136,7 +2145,7 @@ function nextStep(){
 function renderChrome(){
   const on=!S.ob.done;
   document.querySelector('header').hidden=on||S.tab==='assistant';document.querySelector('nav').hidden=on;$('#ages').hidden=true;
-  $('#tag').innerHTML=on||!gameOn()?'':`${streak()>0?`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span>`:''}${(S.xp||0)>0?`<span class="pill" title="Nível">${ic('star',15)}Nv ${lvl()}</span>`:''}`;
+  $('#tag').innerHTML=on||!gameOn()?'':`${streak()>0?`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span>`:''}${(S.xp||0)>0?(()=>{const pc=Math.round((S.xp%XPN)/XPN*100);return `<button class="pill lvb" data-go="mais|medalhas" aria-label="Nível ${lvl()}, ${pc}% para o próximo. Ver conquistas"><span class="lvr" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10.5" class="t"/><circle cx="12" cy="12" r="10.5" class="a" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100-pc}"/></svg>${ic('lotus',12)}</span>${lvl()}</button>`})():''}`;
   if(!on)$('#tag').innerHTML+=`<button class="pill hmais" data-tab="mais" aria-label="Ajustes" ${S.tab==='mais'?'aria-current="page"':''}>${ic('gear',17)}<span>Ajustes</span></button>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
   $('#nav').innerHTML=TABS.map(([k,l])=>k==='scan'?SCAN_BTN:`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
@@ -3018,6 +3027,41 @@ const PF_CMP=['Lendo os ingredientes do produto','Checando ativos e possíveis i
 const PF_STEPS=['Identificando o produto pela fotografia','Lendo as informações da embalagem','Verificando os ingredientes','Comparando com o seu perfil','Preparando sua análise personalizada'];
 const PF_CLS={boa:['Boa compatibilidade','Recomendado para você','pc-ok'],mod:['Compatibilidade moderada','Pode funcionar, com ajustes','pc-md'],baixa:['Baixa compatibilidade','Não é o ideal para você agora','pc-lo']};
 let PFIV=null;
+/* Ativos conhecidos: explicação curta mostrada durante a espera da comparação. Local, sem IA. */
+const PF_ATV=[
+ [/niacinam/i,'Niacinamida','Equilibra a oleosidade e ajuda a uniformizar o tom.'],
+ [/hialur|hyaluron/i,'Ácido hialurônico','Atrai água e deixa a pele mais hidratada.'],
+ [/glicerin|glycerin/i,'Glicerina','Puxa água para a pele e mantém a hidratação.'],
+ [/ceramid/i,'Ceramidas','Reforçam a barreira natural da pele.'],
+ [/pantenol|panthenol|vitamina b5/i,'Pantenol','Acalma e ajuda a pele a se recuperar.'],
+ [/karit|shea|butyrospermum/i,'Manteiga de karité','Nutre e forma uma camada que segura a água.'],
+ [/vitamina c|asc[oó]rbic|ascorbyl/i,'Vitamina C','Antioxidante: dá viço e uniformiza o tom.'],
+ [/retin/i,'Retinoide','Estimula a renovação da pele. Use à noite.'],
+ [/salic[ií]l|\bbha\b/i,'Ácido salicílico','Limpa os poros por dentro e ajuda nas espinhas.'],
+ [/glic[oó]lic|glycolic/i,'Ácido glicólico','Esfolia a superfície e melhora a textura.'],
+ [/l[aá]tic|lactic/i,'Ácido lático','Esfolia de leve e hidrata.'],
+ [/azelaic|azelaico/i,'Ácido azelaico','Ajuda em manchas e vermelhidão.'],
+ [/tranex/i,'Ácido tranexâmico','Ajuda a clarear manchas.'],
+ [/arbut/i,'Alfa-arbutin','Ajuda a clarear manchas.'],
+ [/zinc|zinco/i,'Zinco','Ajuda a controlar o brilho.'],
+ [/centel|cica|madecass/i,'Centella asiatica','Acalma a pele sensibilizada.'],
+ [/alanto|allanto/i,'Alantoína','Suaviza e acalma.'],
+ [/esqual|squalan/i,'Esqualano','Óleo leve que hidrata sem pesar.'],
+ [/pept/i,'Peptídeos','Ajudam na firmeza da pele.'],
+ [/ureia|urea\b/i,'Ureia','Hidrata e amacia a pele áspera.'],
+ [/tocoferol|tocopher|vitamina e/i,'Vitamina E','Antioxidante que protege a pele.'],
+ [/bakuchi/i,'Bakuchiol','Alternativa suave ao retinol.'],
+ [/cafe[ií]n|caffein/i,'Cafeína','Ajuda a reduzir o inchaço.'],
+ [/aloe|babosa/i,'Aloe vera','Refresca e hidrata.'],
+ [/argan/i,'Óleo de argan','Nutre e dá brilho e maciez.'],
+ [/jojoba|simmondsia/i,'Óleo de jojoba','Nutre sem deixar oleoso.'],
+ [/querat|kerat/i,'Queratina','Repõe proteína e fortalece o fio.'],
+ [/coco\b|cocos nucifera/i,'Óleo de coco','Nutre e reduz o frizz.'],
+ [/protetor|fps|spf|filtro solar/i,'Filtro solar','Protege contra manchas e envelhecimento.']];
+function pfAtivos(i){if(!i)return [];const out=[],vis=new Set(),src=[...(i.ativos_declarados||[]),...(i.ingredientes_lidos||[])];
+  for(const t of src){const x=PF_ATV.find(a=>a[0].test(t));if(!x||vis.has(x[1]))continue;vis.add(x[1]);
+    const dec=(i.ativos_declarados||[]).includes(t)&&t.length<=40;out.push([dec?t.charAt(0).toUpperCase()+t.slice(1):x[1],x[2]]);if(out.length>=4)break}
+  return out}
 const pfArr=(a,n)=>(Array.isArray(a)?a:[]).map(x=>typeof x==='string'?x.trim():x).filter(Boolean).slice(0,n);
 const pfStr=(x,n)=>x==null||x==='null'?null:String(x).slice(0,n||200);
 function pfScore(c,idr){const k=c.criterios||{};const parts=Object.keys(PF_W).map(x=>{const n=Math.max(0,Math.min(2,Math.round(+k[x]||0)));return {k:x,lab:((PF_LAB[idr.area]||{})[x])||PF_W[x][1],max:PF_W[x][0],pts:Math.round(PF_W[x][0]*n/2),mot:pfStr((c.criterios_motivo||{})[x],140)}});
@@ -3025,7 +3069,8 @@ function pfScore(c,idr){const k=c.criterios||{};const parts=Object.keys(PF_W).ma
   return {v,cls:v>=70?'boa':v>=45?'mod':'baixa',parts,pen,teto}}
 function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'),a=document.getElementById('pf-arc');if(n)n.textContent=Math.round(f.p)+'%';if(a)a.setAttribute('stroke-dashoffset',(100-f.p).toFixed(1));
   const cm=f.st==='cmp',cnt=cm?PF_CMP.length:3,tt=cm&&f.t0?(Date.now()-f.t0)/1000:0,cur=f.busy?(cm?PF_CMP_T.filter(x=>tt>=x).length-1:Math.min(cnt-1,Math.floor(f.p/(92/cnt)))):cnt;
-  document.querySelectorAll('#pf-steps li').forEach((li,i)=>{li.className=i<cur?'ok':i===cur?'now':''})}
+  document.querySelectorAll('#pf-steps li').forEach((li,i)=>{li.className=i<cur?'ok':i===cur?'now':''});
+  const av=document.querySelectorAll('#pf-atv p');if(av.length>1){const k=Math.floor(tt/5)%av.length;av.forEach((p,i)=>p.classList.toggle('on',i===k))}}
 function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}if(f.st==='cmp'&&f.t0){const t=(Date.now()-f.t0)/1000;f.p=Math.max(f.p,Math.min(92,92*(1-Math.exp(-t/11))))}else f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
 async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='cabelo'&&!hairOk()){render();return}if(!S.prodFile||(S.pf&&S.pf.busy))return;if(!podeUsar('sc'))return limite();
   const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn)};render();pfProg();
@@ -3034,15 +3079,27 @@ async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='ca
     else{S.pf.idr={area,real:pfReal(r),produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),variante:pfStr(r.variante,60),qtd:(+r.quantidade>0&&+r.quantidade<100000)?Math.round(+r.quantidade*10)/10:null,un:['ml','g','un'].includes(String(r.unidade||'').toLowerCase())?String(r.unidade).toLowerCase():null,codigo:/^\d{8,14}$/.test(String(r.codigo_barras||'').replace(/\D/g,''))?String(r.codigo_barras).replace(/\D/g,''):null,confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
-      S.pf.p=100;S.pf.st='conf'}
+      S.pf.p=100;S.pf.st='conf';pfPre(S.pf)}
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf)S.pf.busy=false;render()}
-async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,alt=f.sel>0?i.alternativas[f.sel-1]:null;
-  f.nome=(alt?alt.produto:i.produto)||'Produto';f.marca=(alt?alt.marca:i.marca)||'';if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();render();pfProg();
-  const ar=f.area||'pele',dados={area:ar,...(PF_INS[ar]?{instrucao_area:PF_INS[ar]}:{}),produto:{nome:f.nome,marca:f.marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
+/* Monta o pedido de comparação (o mesmo para a antecipação e para o toque em "Confirmar") */
+function pfReq(f,sel){const i=f.idr,alt=sel>0?i.alternativas[sel-1]:null,nome=(alt?alt.produto:i.produto)||'Produto',marca=(alt?alt.marca:i.marca)||'';
+  const ar=f.area||'pele',dados={area:ar,...(PF_INS[ar]?{instrucao_area:PF_INS[ar]}:{}),produto:{nome,marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
     perfil:areaCtx(ar),produtos_que_ja_usa:temP().filter(x=>shCat(x)===(ar==='pele'?'rosto':ar)).map(x=>x.n).slice(0,12)};
   let ctx=JSON.stringify(dados);if(ctx.length>4900){dados.produto.texto_lido=[];dados.produto.ingredientes_lidos=i.ingredientes_lidos.slice(0,15);ctx=JSON.stringify(dados).slice(0,4900)}
-  try{const sf=await sampleP;const pais=cmpPais(),ref=pais?(alt?{marca:f.marca,nome:f.nome,cat:i.categoria}:{marca:f.marca,nome:f.nome,variante:i.variante,qtd:i.qtd,un:i.un,volume:i.volume,codigo:i.codigo,cat:i.categoria}):null;const r=await sf.json('',{tipo:'produto_cmp',ctx,ref,pais});if(!S.pf)return;
+  const pais=cmpPais(),ref=pais?(alt?{marca,nome,cat:i.categoria}:{marca,nome,variante:i.variante,qtd:i.qtd,un:i.un,volume:i.volume,codigo:i.codigo,cat:i.categoria}):null;
+  return {sel,nome,marca,alt,ctx,ref,pais}}
+/* Antecipação: assim que o produto é identificado, a comparação já começa em segundo plano.
+   Só roda quando é provável que a pessoa confirme (boa confiança, área certa, produto que ainda não está na prateleira).
+   A comparação não conta no limite mensal (o servidor só conta a identificação); se a pessoa trocar a foto ou escolher outra opção, o resultado é descartado. */
+function pfPre(f){try{const i=f&&f.idr;if(!i||f.pre||f.sel!==0)return;if(i.real&&i.real!==(f.area||'pele'))return;if((i.confianca||0)<70)return;
+  const q=pfReq(f,0);if(!f.cmpMode&&(shDup((q.marca&&!nmK(q.nome).includes(nmK(q.marca))?q.marca+' ':'')+q.nome)||shDup(q.nome)))return;
+  f.pre={sel:0,ctx:q.ctx,p:sampleP.then(sf=>sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})).then(r=>({r}),e=>({e}))}}catch(e){f.pre=null}}
+async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,q=pfReq(f,f.sel),alt=q.alt;
+  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();render();pfProg();
+  const pre=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre.p:null;f.pre=null;
+  try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0)await new Promise(ok=>setTimeout(ok,w))}}
+    if(!r){const sf=await sampleP;r=await sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})}if(!S.pf)return;
     if(!r||r.erro){f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
     else{const ro=r.rotina||{};const c={resumo:pfStr(r.resumo,220)||'',finalidade:pfStr(r.finalidade,400)||'',por_que:pfStr(r.por_que,500)||'',
         rotina:{periodo:['manha','noite','ambos'].includes(ro.periodo)?ro.periodo:'ambos',etapa:pfStr(ro.etapa,30)||'',como:pfStr(ro.como,220)||'',combinar:pfStr(ro.combinar,240)},
@@ -3106,7 +3163,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
         <div class="pf-core">${cmp?(up?`<img class="pf-face" src="${up}" alt="">`:`<span class="pf-ini">${esc((S.nome||'?').charAt(0).toUpperCase())}</span>`):`<img class="pf-flor" src="pellie-flor.png" alt="">`}</div></div>
         <h1 class="pf-h">${cmp?'Comparando com '+AX[f.area||'pele'].t+'…':'Identificando seu produto…'}</h1><p class="pf-s">${cmp?`${nome?nome+', estou':'Estou'} cruzando o produto com a sua análise, a sua rotina e o que você já usa. Leva cerca de 20 segundos.`:'Isso leva apenas alguns segundos.'}</p>
         
-        <ul class="pf-steps" id="pf-steps">${steps.map(t=>`<li><i>${ic('check',11)}</i>${t}</li>`).join('')}</ul><span class="pf-pct" id="pf-n" aria-live="polite">${Math.round(f.p)}%</span></div>`}
+        <ul class="pf-steps" id="pf-steps">${steps.map(t=>`<li><i>${ic('check',11)}</i>${t}</li>`).join('')}</ul><span class="pf-pct" id="pf-n" aria-live="polite">${Math.round(f.p)}%</span>${(()=>{const L=cmp?pfAtivos(f.idr):[];return L.length?`<div class="pf-atv" id="pf-atv"><small>${ic('sparkle',13)}No rótulo do seu produto</small>${L.map((x,k)=>`<p class="${k===0?'on':''}"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></p>`).join('')}</div>`:''})()}</div>`}
   else if(f.st==='conf'&&f.idr.real&&f.idr.real!==(f.area||'pele')){const re=f.idr.real,es=f.area||'pele',need=re==='cabelo'&&!hairOk()?'Antes, faça a análise do seu cabelo.':re==='corpo'&&!bqDone()?'Antes, responda o quiz rápido do corpo.':'';
      b=`<div class="pf-body pf-in"><span class="pf-ok q">${ic('alert',18)}Produto de outra área</span><div class="pf-photo">${ph}</div>
        <h1 class="pf-name">${esc(f.idr.produto||'Esse produto')}</h1>
@@ -3606,31 +3663,31 @@ function viewMais(){
   const pro=(k)=>(!S.plus&&k&&!LIVRES.includes(k));
   const tl=(k,i_,t,d)=>`<button class="mx-t" data-mais="${k}"><span class="mx-ti">${ic(i_,26)}</span><b>${t}</b>${pro(k)?'<em>Pro</em>':''}</button>`;
   const xr=(k,i_,t,d,attr)=>`<button class="mx-r" ${attr||`data-mais="${k}"`}><span class="mx-ri">${ic(i_,20)}</span><span class="mx-rt"><b>${t}</b><span>${pro(k)?'Pellie Pro':d}</span></span>${ic('chev',18)}</button>`;
-  const dels=S.askDel?`<div class="mx-del"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:xr('','cal','Recomeçar do zero','Apagar meus dados de teste','data-act="apagar-ask"');
+  const dels=S.askDel?`<div class="mx-del"><b>Apagar tudo e recomeçar?</b><span class="small muted">Respostas, análises, diário e pontos deste aparelho serão apagados.</span><button class="btn" data-act="apagar">Sim, apagar e recomeçar</button><button class="btn ghost" data-act="apagar-nao">Cancelar</button></div>`:xr('','cal','Recomeçar do zero','Apaga os dados deste aparelho','data-act="apagar-ask"');
   if(!sub)return `<div class="stack mx"><div class="mx-h"><h2>Ajustes</h2><p>Sua central de cuidados, preferências e conta.</p></div>
     ${S.plus?`<button class="mx-ban" data-mais="plano" aria-label="Pellie Pro ativo. Gerenciar assinatura"><img src="img/banner-pro.webp" alt="" width="1000" height="333"></button>`:`<div class="mx-pro"><div class="mx-pt"><span class="mx-pi">${ic('crown',34)}</span><b>Pellie Pro</b><span class="mx-st ${S.plus?'':'off'}">${S.plus?'Ativo':'Não assinado'}</span></div>
       <p>${S.plus?'Sua experiência completa de cuidados.':'Desbloqueie a experiência completa de cuidados.'}</p>
       <button class="mx-pb" data-mais="plano">Assinar o Pellie Pro${ic('chev',16)}</button></div>`}
-    <h3 class="mx-g">Seus cuidados</h3>
+    <h3 class="mx-g">Meus cuidados</h3>
     <div class="mx-card">${xr('lembretes','bell','Horários e notificações',`Manhã ${S.rem.m} · Noite ${S.rem.n} · avisos ${S.notif&&S.notif.on?'ligados':'desligados'}`)}
       ${xr('ingredientes','leaf','Meus ingredientes',`${S.ing.evitar.length} evito · ${S.ing.fav.length} favoritos`)}
       ${xr('fase','cal','Fase da pele','Ajusta a rotina ao seu momento')}
       ${xr('conflitos','alert','Combinações de ativos',nc?`${nc} para cuidar`:'Tudo certo')}</div>
-    <h3 class="mx-g">Acompanhamento</h3>
+    <h3 class="mx-g">Meu progresso</h3>
     <div class="mx-card">${xr('medalhas','star','Medalhas e conquistas','Seu progresso')}
       ${xr('gastos','coin','Gastos do mês',brl(custoTier(S.tier))+' na rotina')}
       ${xr('relatorio','file','Relatório para a consulta','Resumo para o dermatologista')}</div>
-    <h3 class="mx-g">Sua conta</h3>
+    <h3 class="mx-g">Minha conta</h3>
     <div class="mx-card">${xr('conta','cloud','Conta e nuvem',S.cloud?'Sincronizando':'Só neste aparelho')}
       ${xr('privacidade','lock','Privacidade e dados','Política, baixar dados, apagar conta')}
       ${xr('','edit','Editar meu perfil','Respostas iniciais','data-act="editar-perfil"')}
-      ${dels}</div>
-    <details class="mx-more"><summary>Mais do Pellie${ic('chev',16)}</summary>
+      ${xr('','logout','Sair do aplicativo',AUTH.user?'Voltar para a tela de login':'Sair do modo visitante','data-act="sair-app"')}</div>
+    <details class="mx-more"${S.askDel?' open':''}><summary>Mais do Pellie${ic('chev',16)}</summary>
       <div class="mx-card">${xr('tema','sparkle','Aparência','Cores do app')}
       ${xr('dicas','sparkle','Dicas para a pele','Para ler com calma')}
       ${xr('quiz','spot','Quiz da pele','Descubra mais sobre a sua pele')}
-      ${xr('','sparkle','Rever o tour do Pellie','Como usar cada área do app','data-act="tour-abrir"')}</div></details>
-    <div class="mx-card">${xr('','logout','Sair do aplicativo',AUTH.user?'Voltar para a tela de login':'Sair do modo visitante','data-act="sair-app"')}</div></div>`;
+      ${xr('','sparkle','Rever o tour do Pellie','Como usar cada área do app','data-act="tour-abrir"')}
+      ${dels}</div></details></div>`;
   const V0={dicas:vDicas,medalhas:vMedalhas,tema:vTema,quiz:vQuiz,lembretes:vLembretes,fase:vFase,ingredientes:vIng,conflitos:vConf,gastos:vGastos,relatorio:vRel,comunidade:vCom,plano:vPlano,conta:vContaH,privacidade:vPriv}[sub]||(()=>'');
   const V=(!S.plus&&!LIVRES.includes(sub))?()=>paywall('Recurso do Pellie Pro','crown','Disponível para quem assina.'):(S.plus&&!S.result&&['gastos','conflitos'].includes(sub))?()=>precisaAnalise('Os gastos e as combinações de ativos são calculados a partir da rotina, que é montada com a foto analisada.'):V0;
   return `<div class="stack"><div class="row" style="flex-wrap:nowrap"><button class="bk2" data-act="mais-back">${ic('back',18)}Voltar</button></div>${V()}</div>`;
@@ -5642,7 +5699,7 @@ function shunHtml(){const D=shdGet(),p=D.pend.filter(k=>k[0]==='d'?SHD_BY[k.slic
    <p class="kick">${allS?'Um novo estilo para o seu cantinho.':'Um novo detalhe para o seu cantinho.'}</p><h2 id="shun-t">${esc(tit)}</h2><p class="small muted">${it.length===1?esc(f.d):'Estão no seu inventário, prontas para decorar.'}</p>
    <button class="btn" data-shun="go" id="shun-go">${allS?'Ver estilos':'Decorar minha prateleira'}</button><button class="shun-no" data-shun="no">Agora não</button></div>`}
 function shunUpd(){let m=document.getElementById('shun');if(!m){m=document.createElement('div');m.id='shun';document.body.appendChild(m)}
-  const D=shdGet(),on=S.plus&&S.ob.done&&!S.cele&&!tourHtml()&&D.pend.length&&!document.querySelector('.lg');const h=on?shunHtml():'';if(m.dataset.h===h)return;m.dataset.h=h;m.innerHTML=h;
+  const D=shdGet(),on=S.plus&&S.ob.done&&!S.cele&&!tourHtml()&&!S.pf&&D.pend.length&&!document.querySelector('.lg');const h=on?shunHtml():'';if(m.dataset.h===h)return;m.dataset.h=h;m.innerHTML=h;
   if(h)setTimeout(()=>{const b=document.getElementById('shun-go');if(b)try{b.focus({preventScroll:true})}catch(e){}},60)}
 function shunAct(v){const D=shdGet(),hasD=D.pend.some(k=>k[0]==='d');D.pend=[];hapt();
   if(v==='go'){S.tab='produtos';S.prodSub='shelf';S.pkDet=null;S.pkList=false;S.shSel=null;S.shF='todos';render();window.scrollTo(0,0);shcOpen(hasD?'dec':'est')}else render()}
