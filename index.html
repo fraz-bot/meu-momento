@@ -499,7 +499,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795791000";</script>
+<script>window.MM_VER="1795792000";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1539,7 +1539,8 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .rst{font-size:clamp(28px,8vw,36px);letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
 @keyframes rspop{from{opacity:0;transform:translateY(14px) scale(.97)}}
 .sig{position:relative;width:64px;height:64px;display:grid;place-items:center;margin-bottom:2px}.sig b{position:relative;z-index:2;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;animation:sigin .55s .2s cubic-bezier(.2,.9,.3,1.4) both}
-.sig.att b{background:linear-gradient(145deg,#E3A061,#C9763F);box-shadow:0 8px 18px rgba(201,118,63,.35)}.sig.ok b{background:linear-gradient(145deg,#6FAE8A,#4F8A6B);box-shadow:0 8px 18px rgba(79,138,107,.35)}
+.sig.att b{background:linear-gradient(145deg,#E3A061,#C9763F);box-shadow:0 8px 18px rgba(201,118,63,.35)}.sig.calm b{background:linear-gradient(145deg,#B98B73,#8A5A44);box-shadow:0 8px 18px rgba(138,90,68,.3)}.sig.calm>i{border:2px solid #B98B73}
+.pf-lim{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:13px;color:#8A5A44;background:rgba(185,139,115,.12);border-radius:12px;padding:7px 10px}.sig.ok b{background:linear-gradient(145deg,#6FAE8A,#4F8A6B);box-shadow:0 8px 18px rgba(79,138,107,.35)}
 .sig>i{position:absolute;inset:3px;border-radius:50%;animation:sigw 2.4s ease-out .7s infinite}.sig>i+i{animation-delay:1.9s}.sig.att>i{border:2px solid #E3A061}.sig.ok>i{border:2px solid #6FAE8A}
 .sig.att b svg{animation:sigsh 2.4s ease-in-out 1s infinite}
 .sig u{position:absolute;left:50%;top:50%;width:4px;height:12px;margin:-6px -2px;border-radius:3px;background:#8CC3A2;transform:rotate(var(--r)) translateY(-40px) scaleY(0);opacity:0;animation:sigb .7s .55s ease-out both}
@@ -2370,6 +2371,25 @@ function cloudApply(json){const o=JSON.parse(json);SAVED.forEach(k=>{if(k!=='fot
 async function cloudBoot(){try{const sn=await cdoc().get();if(sn.exists&&(!S.ob.done||S.ob.fresh)){const j=sn.data();if(j&&j.json){cloudApply(j.json);toast('Dados recuperados da nuvem')}}if(S.ob)S.ob.fresh=false;}catch(e){}}
 function cloudPush(now){if(!CL.ok||!S.cloud||!S.plus)return;clearTimeout(CL.t);CL.t=setTimeout(()=>cloudNow().catch(()=>{}),now?0:3000)}
 async function cloudNow(){if(!S.plus)return;const o={};SAVED.forEach(k=>{if(k!=='fotos'&&k!=='avatar'&&k!=='plus')o[k]=S[k]});await cdoc().set({json:JSON.stringify(o),at:Date.now()});S.cloudAt=Date.now()}
+/* ===== Limite do mês e erros honestos (27/11/2026) ===== */
+const LIM_MES=100,PF_MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+function limMes(){const d=new Date(),m=d.getUTCMonth();return {nome:PF_MESES[m],volta:'1º de '+PF_MESES[(m+1)%12],chave:d.getUTCFullYear()+'-'+m}}
+function errMsg(cod,j){const L=limMes();
+  if(cod==='limite_mes')return `Você usou as ${LIM_MES} análises de ${L.nome}. Elas voltam em ${L.volta}. Tudo o que você já analisou continua salvo.`;
+  if(cod==='ia')return 'A IA não respondeu desta vez. Nada foi descontado das suas análises. Tente de novo em alguns segundos.';
+  if(cod==='formato')return 'A resposta veio incompleta. Nada foi descontado das suas análises. Tente de novo.';
+  if(cod==='off')return 'Conecte-se ao Wi-Fi ou aos dados móveis e toque em tentar de novo.';
+  if(cod==='rede')return 'A conexão caiu no meio do caminho. Tente de novo.';
+  return (cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}
+function usoSet(n){const L=limMes(),ant=S.uso&&S.uso.m===L.chave?S.uso.n:0;S.uso={n,m:L.chave};
+  if(n<LIM_MES)for(const k of [99,95,90])if(n>=k&&ant<k){const r=LIM_MES-n;toast(`${r===1?'Resta 1 análise':'Restam '+r+' análises'} em ${L.nome}. Elas voltam em ${L.volta}.`);break}}
+let _usoT=0;
+async function usoAtualiza(forca){try{if(!S.plus||typeof sb==='undefined'||!sb||!CL.uid)return;if(!forca&&Date.now()-_usoT<60000)return;_usoT=Date.now();
+  const d=new Date(),ini=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1)).toISOString();
+  const {count,error}=await sb.from('analises').select('id',{count:'exact',head:true}).eq('user_id',CL.uid).gte('criado_em',ini).in('tipo',['pele','cabelo','espinha','produto']).or('resultado->>etapa.is.null,resultado->>etapa.neq.produto_cmp');
+  if(error||count==null)return;const antes=S.uso&&S.uso.n;usoSet(count);if(antes!==count&&count>=90)render()}catch(e){}}
+function usoAviso(){const u=S.uso,L=limMes();if(!S.plus||!u||u.m!==L.chave||u.n<90)return '';const r=Math.max(0,LIM_MES-u.n);
+  return `<p class="pf-lim">${ic('cal',14)}${r?`${r===1?'Resta 1 análise':'Restam '+r+' análises'} em ${L.nome}. Elas voltam em ${L.volta}.`:`Suas análises de ${L.nome} acabaram. Elas voltam em ${L.volta}.`}</p>`}
 const NOMES_ERRO={login:'Entre na sua conta para continuar.',plus:'Esse recurso é do Pellie Pro.',limite_gratis:'Esse recurso é do Pellie Pro.',limite_mes:'Você chegou ao limite de análises deste mês.',limite_dia:'Você já usou o Pellie SOS 3 vezes hoje. Tente de novo amanhã.',ia:'A análise não funcionou agora. Tente de novo.',formato:'Não consegui ler o resultado. Tente outra foto.',sem_chave:'A análise ainda não foi ativada.',consentimento:'Aceite a Política de Privacidade para continuar.'};
 /* login */
 const GLOGO='<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
@@ -2407,7 +2427,7 @@ async function loginApple(){AUTH.err=null;try{const u=sb.supabaseUrl,k=sb.supaba
 async function loginGoogle(){AUTH.err=null;try{const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error)throw error}catch(e){AUTH.err='Não consegui abrir o login do Google. Tente de novo.';render()}}
 function zeraLocal(){Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,DEF());try{localStorage.removeItem(KEY);localStorage.removeItem('mm_uid')}catch(e){}}
 async function sairConta(){if(AUTH.user&&S.plus&&!S.cloud&&!confirm('Seus dados não estão guardados na nuvem e serão apagados deste aparelho ao sair. Sair mesmo assim?'))return;if(AUTH.user&&S.plus&&S.cloud&&CL.ok){try{await cloudNow()}catch(e){}}try{await sb.auth.signOut()}catch(e){}_setting=null;AUTH.user=null;AUTH.perfil=null;AUTH.want=false;CL.ok=false;zeraLocal();AUTH.ready=true;render();window.scrollTo(0,0)}
-function aplicaPerfil(){const p=AUTH.perfil;S.plus=!!p&&p.plano==='plus'&&(!p.plus_ate||new Date(p.plus_ate)>new Date())}
+function aplicaPerfil(){const p=AUTH.perfil;S.plus=!!p&&p.plano==='plus'&&(!p.plus_ate||new Date(p.plus_ate)>new Date());setTimeout(()=>usoAtualiza(),0)}
 async function carregaPerfil(){try{const {data}=await sb.from('profiles').select('nome,plano,plus_ate,consentimento_versao').eq('id',AUTH.user.id).maybeSingle();AUTH.perfil=data||null}catch(e){}aplicaPerfil()}
 let _setting=null;
 async function entrou(u){
@@ -2452,8 +2472,9 @@ const sampleP=Promise.resolve({
     else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg';}else if(o.ref&&o.pais){corpo.ref=o.ref;corpo.pais=o.pais}}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
-      const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',cod,msg:(cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
+      let cod=j&&j.codigo;if(!cod&&!j)cod=navigator.onLine?'rede':'off';if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}if(cod==='limite_mes')usoSet(LIM_MES);throw {code:'srv',cod,msg:errMsg(cod,j)}}
     if(!data||data.ok!==true)throw {code:'srv',msg:'Algo deu errado. Tente de novo.'};
+    if(o.tipo!=='produto_cmp'&&o.tipo!=='texto'&&!(data.resultado&&data.resultado.erro))usoAtualiza(true);
     return data.resultado;
   }
 });
@@ -3159,12 +3180,12 @@ async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='ca
   const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn),t_ini:Date.now()};render();pfProg();
   try{
     const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
-    if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
+    if(!S.pf)return;if(!r||r.erro){S.pf.errCod='foto';S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
     else{S.pf.idr={area,real:pfReal(r),produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),variante:pfStr(r.variante,60),qtd:(+r.quantidade>0&&+r.quantidade<100000)?Math.round(+r.quantidade*10)/10:null,un:['ml','g','un'].includes(String(r.unidade||'').toLowerCase())?String(r.unidade).toLowerCase():null,codigo:/^\d{8,14}$/.test(String(r.codigo_barras||'').replace(/\D/g,''))?String(r.codigo_barras).replace(/\D/g,''):null,confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
       S.pf.p=100;S.pf.st='conf';S.pf.t_id=Date.now();pfPre(S.pf)}
-  }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
+  }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.errCod=c==='srv'?e.cod:null;S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf){S.pf.busy=false;if(S.pf.st==='conf'&&pfAutoOk(S.pf)){S.pf.auto=true;pfCmp();return}}render()}
 /* Leitura muito confiável (≥ 90%), área certa e opção principal: segue direto para a comparação ("Não é esse produto?" no resultado permite voltar). */
 /* Medição do scanner: grava o tempo de cada etapa (tabela scanner_tempos; só insere, ninguém lê pelo app). Nunca atrapalha o fluxo. */
@@ -3172,7 +3193,7 @@ function pfTempo(f,ok){try{if(!AUTH.user||typeof sb==='undefined'||!f||!f.t_ini)
   const t_id=f.t_id||f.t0,row={modo:f.cmpMode?'comparador':'scanner',area:['pele','cabelo','corpo'].includes(f.area)?f.area:'pele',auto_conf:!!f.autoUsed,antecipado:!!f.preUsed,atalho:!!f.atalho,
     ms_id:c(t_id-f.t_ini,600000),ms_conf:c(f.t0-t_id,600000),ms_cmp:c(now-f.t0,600000),ms_total:c(now-f.t_ini,900000),ok:!!ok};
   sb.from('scanner_tempos').insert(row).then(()=>{},()=>{})}catch(e){}}
-function pfAutoOk(f){const i=f&&f.idr;return !!i&&f.sel===0&&(i.confianca||0)>=90&&!(i.real&&i.real!==(f.area||'pele'))}
+function pfAutoOk(f){const i=f&&f.idr;return !!i&&f.sel===0&&(i.confianca||0)>=75&&!(i.real&&i.real!==(f.area||'pele'))}
 
 /* Monta o pedido de comparação (o mesmo para a antecipação e para o toque em "Confirmar") */
 function pfReq(f,sel){const i=f.idr,alt=sel>0?i.alternativas[sel-1]:null,nome=(alt?alt.produto:i.produto)||'Produto',marca=(alt?alt.marca:i.marca)||'';
@@ -3188,13 +3209,13 @@ function pfPre(f){try{const i=f&&f.idr;if(!i||f.pre||f.sel!==0)return;if(i.real&
   const q=pfReq(f,0);if(!f.cmpMode&&(shDup((q.marca&&!nmK(q.nome).includes(nmK(q.marca))?q.marca+' ':'')+q.nome)||shDup(q.nome)))return;
   f.pre={sel:0,ctx:q.ctx,p:sampleP.then(sf=>sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})).then(r=>({r}),e=>({e}))}}catch(e){f.pre=null}}
 async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,q=pfReq(f,f.sel),alt=q.alt;
-  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();
+  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.errCod=null;f.t0=Date.now();
   if(f.cmpMode&&S.cmp&&S.cmp.scn&&!f.bg){const C=cmpS(),k=C.scn.k,tk={nome:f.nome,marca:f.marca,photo:f.photo,box:f.idr&&f.idr.caixa};C.pend=C.pend||{};C.pend[k]=tk;f.bg={k,tk};clearInterval(PFIV);cmpBack();toast('Analisando '+cmpShort({nome:f.nome,marca:f.marca})+'…');}
   else{render();pfProg()}
   const pre=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre.p:null;f.pre=null;f.preUsed=!!pre;f.autoUsed=!!f.auto;
   try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0&&!f.bg)await new Promise(ok=>setTimeout(ok,w))}}
     if(!r){const sf=await sampleP;r=await sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})}if(!f.bg&&!S.pf)return;
-    if(!r||r.erro){f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
+    if(!r||r.erro){f.errCod='foto';f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
     else{const ro=r.rotina||{};const c={resumo:pfStr(r.resumo,220)||'',finalidade:pfStr(r.finalidade,400)||'',por_que:pfStr(r.por_que,500)||'',
         rotina:{periodo:['manha','noite','ambos'].includes(ro.periodo)?ro.periodo:'ambos',etapa:pfStr(ro.etapa,30)||'',como:pfStr(ro.como,220)||'',combinar:pfStr(ro.combinar,240)},
         criterios:r.criterios||{},criterios_motivo:r.criterios_motivo||{},
@@ -3206,7 +3227,7 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
       const pc=r.preco?(r.preco.status==='available'?(cmpPr(r.preco)||{status:'insufficient_data'}):{status:'insufficient_data'}):undefined;
       S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:ver,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
       uso().sc++;xp(15,'Produto escaneado','sc')}
-  }catch(e){if(!f.bg&&!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'&&!f.bg){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
+  }catch(e){if(!f.bg&&!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'&&!f.bg){S.pf=null;limite();return}f.errCod=cc==='srv'?e.cod:null;f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   pfTempo(f,!f.err&&!!f.sc);f.busy=false;gameCheck();if(f.bg){pfBgDone(f);return}if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
 /* Comparador: a análise que correu em segundo plano termina e entra no espaço A ou B (se a pessoa não trocou ou limpou o espaço nesse meio tempo). */
 function pfBgDone(f){const C=cmpS(),k=f.bg.k;if(!C.pend||C.pend[k]!==f.bg.tk){render();return}delete C.pend[k];
@@ -3258,8 +3279,11 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
   let b='';
   if(f.st==='id'||f.st==='cmp'){const cmp=f.st==='cmp',up=S.photo||S.avatar||(S.fotos&&S.fotos.length?S.fotos[S.fotos.length-1].img:null);
     const steps=cmp?PF_CMP:PF_STEPS.slice(0,3);
-    b=f.err?`<div class="pf-proc"><span class="sig att" aria-hidden="true" style="margin:20px auto 4px"><i></i><i></i><b>${ic('alert',26)}</b></span><h1 class="pf-h">${cmp?'Não consegui comparar agora':'Não consegui identificar o produto'}</h1><p class="pf-s">${esc(f.err)}</p>
-        <div class="pf-ft"><button class="btn obc" data-act="${cmp?'pf-ok':'pf-retake'}">${cmp?'Tentar de novo':'Tirar outra foto'}</button><button class="back" data-act="pf-close" style="padding:10px;color:var(--muted)">Fechar</button></div></div>`
+    b=f.err?(()=>{const ec=f.errCod,lim=ec==='limite_mes',off=ec==='off'||ec==='rede',foto=ec==='foto';
+        const tit=lim?`As análises de ${limMes().nome} acabaram`:ec==='off'?'Você está sem internet':ec==='rede'?'A conexão caiu':cmp?'Não consegui comparar agora':foto?'Não consegui ler essa foto':'Não consegui identificar agora';
+        const [act,lab]=lim?['pf-lim','Ver meus produtos']:cmp?['pf-ok','Tentar de novo']:foto?['pf-retake','Tirar outra foto']:['pf-again','Tentar de novo'];
+        return `<div class="pf-proc"><span class="sig ${lim?'calm':'att'}" aria-hidden="true" style="margin:20px auto 4px"><i></i><i></i><b>${ic(lim?'cal':off?'cloud':'alert',26)}</b></span><h1 class="pf-h">${tit}</h1><p class="pf-s">${esc(f.err)}</p>
+        <div class="pf-ft"><button class="btn obc" data-act="${act}">${lab}</button>${!lim&&!cmp&&!foto?`<button class="back" data-act="pf-retake" style="padding:10px;color:var(--muted)">Usar outra foto</button>`:''}<button class="back" data-act="pf-close" style="padding:10px;color:var(--muted)">Fechar</button></div></div>`})()
       :`<div class="pf-proc"><div class="pf-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54" class="t"/><circle id="pf-arc" cx="60" cy="60" r="54" class="a" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${(100-f.p).toFixed(1)}" transform="rotate(-90 60 60)"/></svg>
         <div class="pf-core">${cmp?(up?`<img class="pf-face" src="${up}" alt="">`:`<span class="pf-ini">${esc((S.nome||'?').charAt(0).toUpperCase())}</span>`):`<img class="pf-flor" src="pellie-flor.png" alt="">`}</div></div>
         <h1 class="pf-h">${cmp?'Comparando com '+AX[f.area||'pele'].t+'…':'Identificando seu produto…'}</h1><p class="pf-s">${cmp?`${nome?nome+', estou':'Estou'} cruzando o produto com a sua análise, a sua rotina e o que você já usa. Leva cerca de 20 segundos.`:'Isso leva apenas alguns segundos.'}</p>
@@ -3403,7 +3427,7 @@ function viewEscanear(){
     <p class="note">${r.lista_lida===false?'Não consegui ler a lista de ingredientes; a avaliação usa só o tipo do produto. ':''}Não é diagnóstico. Teste em uma área pequena antes.</p></div>`})()
     :'';
   const hist=S.prods.length?`<div class="card"><h3>Já escaneados</h3>${S.prods.map((p,k)=>`<${p.snap?`button data-pfh="${k}" class="entry pf-he"`:'div class="entry"'}><div class="wk">${fmtD(p.d)}</div><div style="text-align:left;flex:1"><div class="small"><b>${esc(p.produto||'Produto')}</b>${p.marca?` <span class="muted">· ${esc(p.marca)}</span>`:''}</div><div class="small muted">${p.snap?(PF_CLS[p.snap.sc.cls]||PF_CLS.mod)[0]+' · '+p.nota+'%':(VERD[p.veredito]||VERD.cuidado)[1]+' · nota '+p.nota}</div></div>${p.snap?ic('chev',16):''}</${p.snap?'button':'div'}>`).join('')}</div>`:'';
-  return `<div class="stack"><div class="pl-h"><h1>Escanear produto</h1><p>Fotografe o rótulo e veja se combina com você.</p></div>
+  return `<div class="stack"><div class="pl-h"><h1>Escanear produto</h1><p>Fotografe o rótulo e veja se combina com você.</p>${usoAviso()}</div>
   ${(()=>{if(S.pfArea==='cabelo'&&!hairOk())return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Antes, faça a análise do seu cabelo</h2><p class="small muted" style="margin:6px 0 14px">Para saber se um produto combina com o seu cabelo, a Pellie precisa conhecer o seu tipo de fio, porosidade e danos. Leva poucos minutos.</p><button class="btn obc pfg-go" data-act="pf-hair">${ic('hair',18)}Fazer análise do cabelo</button><button class="back" data-pfarea="troca" style="display:block;margin:10px auto 0;padding:8px;color:var(--muted)">Escolher outra área</button></div>`;
     if(!S.pfArea)return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Esse produto é para...</h2><p class="small muted" style="margin:6px 0 12px">A análise muda conforme a área, então escolha antes de fotografar.</p><div class="hf-os">${Object.keys(PF_AREA).map(a=>`<button class="hf-o" data-pfarea="${a}"><span style="display:flex;align-items:center;gap:10px">${ic(PF_AREA[a][1] in IC?PF_AREA[a][1]:'drop',20)}${a==='corpo'?'Corpo':a==='cabelo'?'Cabelo':'Pele do rosto'}</span>${ic('chev',16)}</button>`).join('')}</div></div>`;
     const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
@@ -5403,6 +5427,8 @@ document.addEventListener('click',e=>{
   else if(d.act==='pf-close'){S.pfWarn=null;S.pfArea=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
   else if(d.act==='pf-retake'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();setTimeout(()=>{const i=document.getElementById('prod-cam');if(i)i.click()},50)}
   else if(d.act==='pf-ok'){pfCmp()}
+  else if(d.act==='pf-again'){if(S.pf&&!S.pf.busy){S.pf=null;pfStart()}}
+  else if(d.act==='pf-lim'){if(S.pf&&(S.pf.fromCmp||S.pf.cmpMode)){cmpBack();return}S.pfWarn=null;S.pfArea=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);S.tab='produtos';render();window.scrollTo(0,0)}
   else if(d.act==='pf-naoe'&&S.pf){const f=S.pf;if(S.prods&&S.prods[0]&&S.prods[0].snap&&S.prods[0].snap.nome===f.nome)S.prods.shift();f.auto=false;f.sc=null;f.cmp=null;f.pre=null;f.odoK=null;f.scVisto=false;f.st='conf';S.prodResult=null;save();render();window.scrollTo(0,0)}
   else if((d.act==='pf-shelf'||d.act==='pf-rot')&&!d.force&&S.pf&&S.pf.sc&&S.pf.sc.cls==='baixa'){S.pfWarn=d.act;render()}
   else if(d.act==='pf-switch'&&S.pf&&S.pf.idr&&S.pf.idr.real){const n=S.pf.idr.real;S.pf=null;S.pfArea=n;if(n==='cabelo'&&!hairOk()){goTab('cabelo');return}if(n==='corpo'&&!bqDone()){S.bqRun=true;S.bqi=0;render();window.scrollTo(0,0);return}pfStart()}
