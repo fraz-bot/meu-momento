@@ -20,10 +20,10 @@ const COM_PENSAMENTO = new Set(["produto_cmp"]);
 const MAX_SAIDA_POR_TIPO: Record<string, number> = { produto_cmp: 8000, assistente: 900 };
 // TESTE DE ESFORÇO (27/11/2026): quanto a IA "pensa" na comparação do produto (produto_cmp), o que mais pesa no custo e no tempo.
 // Controlado pelo segredo CMP_ESFORCO no Supabase, sem publicar a função de novo:
-//   "padrao" (ou ausente) = como antes (esforço médio, o padrão do Haiku 5.5) · "low" = esforço baixo · "off" = sem pensamento.
+//   "padrao" = esforço médio (o padrão do Haiku 5.5) · "low" = esforço baixo · "off" = sem pensamento · "ab" = sorteia low ou off a cada comparação (teste lado a lado).
 // O modo usado fica gravado em uso_ia.modelo (ex.: "claude-haiku-5-5@low"), para comparar custo e resultados.
-// 27/11/2026: Lucas aprovou "low" como padrão (comparação de ~15 s caindo para perto de 5 s). Para voltar ao antigo, criar o segredo CMP_ESFORCO=padrao.
-const CMP_ESFORCO = String(Deno.env.get("CMP_ESFORCO") ?? "low").trim().toLowerCase();
+// 27/11/2026 (Lucas aprovou): teste lado a lado "low" × "off" (sem pensamento). O modo de cada comparação fica em uso_ia.modelo e em analises.resultado._modo.
+const CMP_ESFORCO = String(Deno.env.get("CMP_ESFORCO") ?? "ab").trim().toLowerCase();
 const MAX_IMG_B64 = 6_000_000;
 const MAX_CTX = 2000;
 const MAX_PROMPT = 5000;
@@ -109,13 +109,14 @@ Nunca invente nome, marca, volume ou ingredientes que não estejam legíveis. Se
     texto: (c) => `Você é uma esteticista. Avalie se um produto combina com uma pessoa, só para cuidados cosméticos. Abaixo, em JSON, o que foi lido na embalagem do produto (confirmado pela pessoa) e o perfil dela:
 ${c}
 Responda SOMENTE com um JSON neste formato, NESTA ORDEM de campos (o app mostra a nota assim que resumo, criterios e evitar_encontrados chegam):
-{"resumo":"1 frase curta e personalizada sobre a compatibilidade","criterios":{"tipo_pele":0,"necessidades":0,"tolerancia":0,"rotina":0},"evitar_encontrados":["ingredientes da lista de evitar da pessoa presentes no produto, ou []"],"criterios_motivo":{"tipo_pele":"frase curta","necessidades":"frase curta","tolerancia":"frase curta","rotina":"frase curta"},"finalidade":"2 frases simples: para que o produto serve e o que pode oferecer","por_que":"2 a 3 frases ligando os ativos às necessidades DESTA pessoa, citando pontos do perfil","rotina":{"periodo":"manha|noite|ambos","etapa":"limpeza|tratamento|hidratação|proteção|outro","como":"1 frase sobre como usar","combinar":"1 frase sobre a combinação com a rotina atual, ou null"},"ativos":[{"nome":"nome em português","origem":"rotulo|conhecimento","o_que":"o que é","para_que":"para que serve","beneficios":"benefícios conhecidos","cuidados":"cuidados relevantes"}],"alertas":[{"texto":"alerta curto e personalizado","fundamento":"por que esse alerta existe"}],"nao_confirmado":["o que não deu para confirmar, ou []"]}
+{"resumo":"1 frase curta e personalizada sobre a compatibilidade","criterios":{"tipo_pele":0,"necessidades":0,"tolerancia":0,"rotina":0},"evitar_encontrados":["ingredientes da lista de evitar da pessoa presentes no produto, ou []"],"criterios_motivo":{"tipo_pele":"até 10 palavras","necessidades":"até 10 palavras","tolerancia":"até 10 palavras","rotina":"até 10 palavras"},"finalidade":"1 a 2 frases curtas: para que o produto serve","por_que":"até 2 frases ligando os ativos às necessidades DESTA pessoa","rotina":{"periodo":"manha|noite|ambos","etapa":"limpeza|tratamento|hidratação|proteção|outro","como":"1 frase curta sobre como usar","combinar":"1 frase curta sobre a combinação com a rotina atual, ou null"},"ativos":[{"nome":"nome em português","origem":"rotulo|conhecimento","o_que":"até 10 palavras","para_que":"até 10 palavras","beneficios":"até 12 palavras","cuidados":"até 12 palavras"}],"alertas":[{"texto":"alerta curto e personalizado","fundamento":"até 15 palavras"}],"nao_confirmado":["o que não deu para confirmar, ou []"]}
 Critérios, cada um com nota 0, 1 ou 2:
 - tipo_pele: textura e formulação adequadas ao tipo de pele, à oleosidade e à hidratação dela (2 adequado, 1 neutro, 0 inadequado).
 - necessidades: quanto os ativos atendem aos desafios do perfil (2 atende bem, 1 em parte, 0 não atende).
 - tolerancia: risco de irritação considerando sensibilidade, gestação e ingredientes que ela evita (2 baixo risco, 1 moderado, 0 alto).
 - rotina: encaixe na rotina atual sem sobreposição ou excesso de ativos (2 encaixa bem, 1 exige ajuste, 0 conflita).
-Regras: em "ativos" (até 6), use origem "rotulo" só para ingredientes presentes em ingredientes_lidos ou ativos_declarados. Use "conhecimento" apenas para ativos amplamente conhecidos DESTE produto quando a lista não foi lida, e liste em nao_confirmado o que não foi confirmado no rótulo. Nunca invente ingredientes nem informações do fabricante.
+Seja direto: frases curtas, sem repetir a mesma informação em campos diferentes.
+Regras: em "ativos" (até 4, os mais importantes), use origem "rotulo" só para ingredientes presentes em ingredientes_lidos ou ativos_declarados. Use "conhecimento" apenas para ativos amplamente conhecidos DESTE produto quando a lista não foi lida, e liste em nao_confirmado o que não foi confirmado no rótulo. Nunca invente ingredientes nem informações do fabricante.
 Alertas só com fundamento real (até 3). Não diga que dois ingredientes são incompatíveis só por aparecerem juntos: considere concentração, formulação, frequência e contexto. Se houver gestação, avise sobre retinoides e ácidos fortes. Se houver ativos fortes, lembre de introduzir aos poucos e usar protetor solar.
 ${FIM}`,
   },
@@ -326,8 +327,9 @@ Deno.serve(async (req: Request) => {
         if (modelo === MODELO_PADRAO && !COM_PENSAMENTO.has(tipo)) corpoIA.thinking = { type: "disabled" };
         let modo = "";
         if (modelo === MODELO_PADRAO && tipo === "produto_cmp") {
-          if (CMP_ESFORCO === "low") { corpoIA.output_config = { effort: "low" }; modo = "@low"; }
-          else if (CMP_ESFORCO === "off") { corpoIA.thinking = { type: "disabled" }; modo = "@off"; }
+          const esf = CMP_ESFORCO === "ab" ? (Math.random() < 0.5 ? "low" : "off") : CMP_ESFORCO;
+          if (esf === "low") { corpoIA.output_config = { effort: "low" }; modo = "@low"; }
+          else if (esf === "off") { corpoIA.thinking = { type: "disabled" }; modo = "@off"; }
         }
         let r = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
@@ -461,7 +463,7 @@ Deno.serve(async (req: Request) => {
       }
 
       // Histórico por usuário: cada etapa do scanner fica guardada em "analises" (resultado em JSON, sem a foto).
-      if (regId !== null) await admin.from("analises").update({ resultado: ehTexto ? null : { etapa: tipo, ...resultado } }).eq("id", regId);
+      if (regId !== null) await admin.from("analises").update({ resultado: ehTexto ? null : { etapa: tipo, ...resultado, ...(tipo === "produto_cmp" && a.modo ? { _modo: a.modo } : {}) } }).eq("id", regId);
       if (anonId !== null && tipo === "pele") { const n = soNotas(resultado); if (n) await admin.from("analises_anon").update({ notas: n }).eq("id", anonId); }
       if (tipo === "assistente") resultado.restantes = Math.max(0, LIMITE_AST_DIA - astUsadas - 1);
       return R({ ok: true, resultado });
