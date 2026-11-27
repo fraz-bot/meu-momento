@@ -499,7 +499,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795792000";</script>
+<script>window.MM_VER="1795795000";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -6201,6 +6201,36 @@ function cmpPxLazy(R){const pais=cmpPais();if(!pais||!navigator.onLine||typeof s
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.cmp&&(S.cmp.pick||S.cmp.rot)&&document.getElementById('cmk')&&document.getElementById('cmk').dataset.h){S.cmp.pick=null;S.cmp.rot=null;render()}});
 function pfCmpBtn(){const f=S.pf;if(!f||!f.sc||f.fromCmp)return '';const C=cmpS();return C.want?`<button class="btn obc pf-shb" data-cmp="use">${ic('check',18)}Usar na comparação</button>`:`<button class="btn ghost pf-shb" data-cmp="go">${ic('cmp',18)}Comparar com outro produto</button>`}
 {const r3=render;render=function(){const C=S.cmp;if(C&&C.want&&S.tab!=='escanear'&&S.tab!=='produtos')C.want=null;if(C&&C.scn&&(S.tab!=='produtos'||S.prodSub!=='cmp')){C.scn=null;if(S.pf&&S.pf.cmpMode){S.pf=null;S.prodFile=null;S.prodPhoto=null}}const x=r3.apply(this,arguments);cmUpd();return x}}
+
+/* ===== Entradas de fora do app (27/11/2026): widget da prateleira, "Escanear com o Pellie" no menu Compartilhar e atalhos.
+   No app nativo (Capacitor), o widget e a extensão de compartilhar só chamam estes caminhos:
+   - endereço com ?abrir=prateleira ou ?abrir=escanear (ou pellie://prateleira, pellie://escanear);
+   - window.pellieAbrir('prateleira'|'escanear') e window.pellieReceberFoto(foto) — foto: File/Blob, data URL ou base64 (JPEG).
+   Se a pessoa ainda não terminou o cadastro, a entrada espera; se não é Pro, o escanear mostra o plano (como o botão normal). ===== */
+const ENT={pend:null};
+function entNorm(x){x=String(x||'').toLowerCase().replace(/^.*:\/\//,'').replace(/^[^?]*\?abrir=/,'').replace(/[^a-z].*$/,'');return x==='prateleira'||x==='escanear'?x:null}
+function entPronta(){return AUTH.ready&&S.ob&&S.ob.done}
+function entPedir(e){ENT.pend=e;if(entPronta())setTimeout(entAplicar,0)}
+function entAplicar(){const e=ENT.pend;if(!e||!entPronta())return;ENT.pend=null;
+  if(S.pf&&S.pf.busy){toast('Termine a análise atual e tente de novo');return}
+  S.pf=null;S.pfWarn=null;clearInterval(PFIV);S.shSel=null;S.pkDet=null;
+  if(e.t==='prateleira'){S.prodFile=null;S.prodPhoto=null;S.prodResult=null;S.tab='produtos';S.prodSub='shelf';S.pkList=false;render();window.scrollTo(0,0);return}
+  if(!S.plus){limite();return}
+  S.tab='escanear';if(!S.pfArea)S.pfArea='pele';S.prodResult=null;S.prodErr=null;
+  if(!e.foto){S.prodFile=null;S.prodPhoto=null;render();window.scrollTo(0,0);return}
+  const f=e.foto;S.prodFile=f;const r=new FileReader();r.onload=()=>{S.prodPhoto=r.result;render();window.scrollTo(0,0);pfStart()};r.onerror=()=>{S.prodFile=null;toast('Não consegui abrir essa foto');render()};r.readAsDataURL(f)}
+function entFoto(x,tipo){try{if(x instanceof Blob)return x.type&&x.type.startsWith('image/')?x:null;let s=String(x||''),m=s.match(/^data:(image\/[a-z]+);base64,(.*)$/);const mt=m?m[1]:(tipo||'image/jpeg'),b=atob(m?m[2]:s),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u.length?new File([u],'foto.'+(mt.split('/')[1]||'jpg'),{type:mt}):null}catch(e){return null}}
+window.pellieAbrir=t=>{const x=entNorm(t);if(x)entPedir({t:x});return !!x};
+window.pellieReceberFoto=(foto,tipo)=>{const f=entFoto(foto,tipo);if(!f){toast('Não consegui abrir essa foto');return false}entPedir({t:'escanear',foto:f});return true};
+(function(){try{
+  const q=new URLSearchParams(location.search),a=entNorm(q.get('abrir')||location.hash.replace('#',''));
+  if(a){try{sessionStorage.setItem('mm_ent',a)}catch(e){}q.delete('abrir');const h=entNorm(location.hash.replace('#',''))?'':location.hash;history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+h)}
+  let g=null;try{g=sessionStorage.getItem('mm_ent');sessionStorage.removeItem('mm_ent')}catch(e){}
+  if(g)ENT.pend={t:g};
+  const C=window.Capacitor,App=C&&C.Plugins&&C.Plugins.App;
+  if(App&&App.addListener)App.addListener('appUrlOpen',ev=>{const x=entNorm(ev&&ev.url);if(x)entPedir({t:x})});
+}catch(e){}})();
+{const r5=render;render=function(){const x=r5.apply(this,arguments);if(ENT.pend&&entPronta())setTimeout(entAplicar,0);return x}}
 
 authInit();
 /* atualização automática: se há versão nova publicada, abre ela (sem usar cache) */
