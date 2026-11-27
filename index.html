@@ -270,6 +270,14 @@
 .shh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 6px;min-height:44px}.shh-t b{font-size:15px;color:#4A2A1E}
 .shh-b{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #E6D3BF;background:rgba(255,253,251,.75);color:#6B4A36;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s,color .18s,border-color .18s;-webkit-tap-highlight-color:transparent}
 .shh-b.on{background:#6A3F2B;border-color:#6A3F2B;color:#fff}
+.ast-sl3{margin-top:18px}.ast-sl3 button{gap:10px}.ast-sl3 button>span{flex:1;text-align:left}.ast-sl3 button>svg:first-child{flex:none;color:#B07A55}.ast-sl3 button>svg:last-child{flex:none;color:#9A7B69}
+.hj-mini{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;margin-top:6px;padding:4px 6px;border:0;border-top:1px solid rgba(214,180,150,.35);background:none;font:inherit;font-size:14px;color:#6B4A36;text-align:left;cursor:pointer}.hj-mini>span{flex:1}.hj-mini b{color:#4A2A1E}.hj-mini svg{flex:none;color:#9A7B69}
+.pfg-1d{display:flex;gap:8px;align-items:center;margin:6px 0 14px;font-size:14px;color:#6B4A36}.pfg-1d svg{flex:none;color:#B07A55}
+.pl-hb1{align-items:center}.pl-hb1 .pl-hr{gap:8px}
+.pl-bars{margin-top:12px;padding-top:10px;border-top:1px solid rgba(214,180,150,.35)}.pl-lgn{margin:8px 0 0;font-size:12px;color:#8A6F62;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.pl-det{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;margin:10px 0 2px;padding:8px 14px;border:1px solid rgba(214,180,150,.5);border-radius:16px;background:rgba(255,253,251,.7);font:inherit;text-align:left;color:#4A2A1E;cursor:pointer}.pl-det>span{flex:1;display:grid;gap:1px}.pl-det b{font-size:15px}.pl-det small{font-size:12.5px;color:#8A6F62}
+.pl-sos{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:6px 14px;border:0;border-radius:14px;background:rgba(246,226,214,.55);font:inherit;font-size:14px;color:#6B4A36;text-align:left;cursor:pointer}.pl-sos>span{flex:1}.pl-sos b{color:#8C4A33}
+
 .shf-s{position:relative;display:inline-flex;align-items:center;min-height:44px;border-radius:999px;border:1px solid #E6D3BF;background:rgba(255,253,251,.75);color:#6B4A36}.shf-s select{appearance:none;-webkit-appearance:none;border:0;background:none;font:inherit;font-weight:700;font-size:14px;color:inherit;min-height:44px;padding:0 34px 0 16px;border-radius:999px;cursor:pointer}.shf-s svg{position:absolute;right:13px;pointer-events:none}.shf-s .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .shsh-b{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;margin:12px 0 2px;border:0;border-radius:999px;background:#6A3F2B;color:#fff;font:inherit;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 18px rgba(106,63,43,.22);-webkit-tap-highlight-color:transparent}.shsh-b:active{transform:scale(.98)}
 .shs-nt{display:flex;gap:12px;align-items:center;border-radius:18px;padding:12px 14px;background:var(--ok-soft,#E7F0EA)}.shs-nt.mod{background:var(--att-soft,#F9E8DE)}.shs-nt.baixa{background:#F6E1DA}
@@ -515,7 +523,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795803000";</script>
+<script>window.MM_VER="1795804000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2174,7 +2182,7 @@ function goTab(t,sub){
   if(t!=='pele'&&t!=='analise'&&t!=='diario')S.okMsg=null;
   if(t==='analise'){S.tab='pele';S.peleSub='analise'}
   else if(t==='diario'){S.tab='pele';S.peleSub='evo'}
-  else{if(t==='mais')S.maisFrom=(sub&&S.tab!=='mais')?S.tab:(sub?S.maisFrom:null);S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos'){S.prodSub=sub==='shelf'?'shelf':'rec';S.pkList=false;S.pkDet=null}}
+  else{if(t==='mais')S.maisFrom=(sub&&S.tab!=='mais')?S.tab:(sub?S.maisFrom:null);S.tab=t;if(t==='mais'){S.maisSub=sub||null;if(sub==='comunidade')commStart()}if(t==='pele'&&sub){if(sub==='cabelo')S.tab='cabelo';else{S.area='pele';S.peleSub=sub}}if(t==='rotina'&&sub)S.period=sub;if(t==='produtos'){S.prodSub=sub==='rec'||sub==='cmp'?sub:sub==='shelf'||S.plus?'shelf':'rec';S.pkList=S.prodSub==='rec';S.pkDet=null}}
   render();window.scrollTo(0,0);
 }
 function nextStep(){
@@ -3025,11 +3033,11 @@ function viewRotinaFull(){
   <div class="r2-ls min${render._rsw?' rsw':''}">${ks.map(row).join('')}${meus.map(prow).join('')}</div>
   ${fora.length?`<div class="r2-add"><small>Adicionar da prateleira à rotina da ${nmP}</small><div class="regg" style="gap:6px">${fora.map(i=>`<button class="rg" style="font-size:13px" data-shrot="${i.id}|${per}">+ ${esc(i.n)}</button>`).join('')}</div></div>`:!temP().length?`<div class="r2-add"><small>Guarde um produto na prateleira para usar aqui na sua rotina.</small><button class="rg" data-go="escanear">${ic('scan',14)}Escanear um produto</button></div>`:''}
   ${(()=>{const o=!!(S.hjo&&S.hjo.rf);return `<section class="hj-x${o?' open':''}"><button class="hj-xh" data-act="hjx|rf" aria-expanded="${o}"><span><b>Mais da sua rotina</b><small>Tratamentos, cabelo na rotina e dica do dia</small></span>${ic('chev',18)}</button>${o?`<div class="hj-xb" style="display:flex;flex-direction:column;gap:12px">${tratRot(per)}${hairRot()}${dicaCard()}</div>`:''}</section>`})()}
-  ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos"')}</div>`;
+  ${per==='m'?guia('Depois, a rotina da noite','Ver noite','data-go="rotina|n"'):guia('Quanto custa tudo isso?','Ver produtos','data-go="produtos|rec"')}</div>`;
 }
 
 const exList=(a,k)=>a&&a.length?(FOTOS?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('tag',16)}${esc(n)}</li>`).join('')}</ul>`):'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
-const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'&&S.prodSub!=='cmp'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('tag',18)}Prateleira</button><button data-psub="cmp" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='cmp'}">${ic('cmp',18)}Comparar</button>`;
+const subSeg=()=>`<button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('tag',18)}Prateleira</button><button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'&&S.prodSub!=='cmp'}">${ic('routine',18)}Indicados</button><button data-psub="cmp" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='cmp'}">${ic('cmp',18)}Comparar</button>`;
 function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.n||'').toLowerCase();
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
   for(const [r,k] of T)if(r.test(t))return k;return 'hidr'}
@@ -3053,7 +3061,7 @@ function pkList(){
   const lista=ks.filter(k=>F==='todos'||PK_CAT[k]===F);
   return `<div class="stack pk pl-in">${pkHead('Produtos indicados',`Baseado na análise da sua pele${S.result?' ('+esc(String(S.result.tipo).toLowerCase())+')':''} e na sua rotina.`)}
   <div class="seg" role="group" aria-label="Faixa de preço">${TIERS.map(([k,l])=>`<button data-tier="${k}" aria-pressed="${S.tier===k}">${ic({econ:'coin',mid:'sparkle',prem:'star'}[k],18)}${l}<small>${brl(Math.round(ks.reduce((s,x)=>{const [p,m]=P[x].t[k];return s+p/m},0)))}/mês</small></button>`).join('')}</div>
-  <div class="total"><div class="small">${ic('tag',16)} Custo da rotina completa (estimativa)</div><div class="price">${brl(Math.round(mensal))} por mês</div><div class="small">${ks.length} produtos</div></div>
+  <div class="total"><div class="small">${ic('tag',16)} Custo da rotina completa (estimativa)</div><div class="price">${brl(Math.round(mensal))} por mês</div><div class="small">${ks.length} produtos</div><button class="pl-lk" data-go="mais|gastos" style="margin-top:6px">${ic('coin',14)}Planejar meus gastos${ic('chev',14)}</button></div>
   <div class="pl-chips" role="group" aria-label="Categoria">${['todos',...cats].map(c=>`<button data-pk="cf|${c}" aria-pressed="${F===c}">${c==='todos'?'Todos':c}</button>`).join('')}</div>
   ${lista.map(k=>{const t=P[k].t,sel=(S.ptier&&S.ptier[k])||S.tier,cur=t[sel],f=infoAny(k);return `<button class="pk-c" data-pk="det|${k}"><span class="pk-im">${pimg(k,58)}</span><span class="pk-tx"><em>${PK_CAT[k]||'Cuidado'}</em><b>${P[k].n}</b><strong>${brl(cur[0])}<small> · dura ~${String(cur[1]).replace('.',',')} meses</small></strong>
     <span class="pk-w">${R_k.m.includes(k)?`<i>${ic('sun',12)}Manhã</i>`:''}${R_k.n.includes(k)?`<i>${ic('moon',12)}Noite</i>`:''}</span><small>${esc((f&&f.motivo)||P[k].a)}</small></span>${ic('chev',16)}</button>`}).join('')}
@@ -3103,7 +3111,6 @@ function viewProdutos(){
   if(S.prodSub==='cmp')return viewCmp();
   if(S.prodSub==='shelf'&&!S.plus)return `<div class="stack">${pkHead('Minha prateleira','Guarde os seus produtos.')}${paywall('Prateleira','tag','Guarde os seus produtos e acompanhe a validade.')}</div>`;
   if(S.prodSub==='shelf')return viewShelf();
-  if(!S.pkList&&!S.pkDet)return pkHome();
   if(!S.result)return `<div class="stack">${pkHead('Produtos indicados','')}
   <div class="card" style="text-align:center;display:grid;justify-items:center;gap:10px;padding:26px 18px"><span class="tile" style="width:56px;height:56px;border-radius:18px">${ic('face',28)}</span><h2>Primeiro, a análise da pele</h2>
   <p class="small muted">Os produtos e o custo do tratamento são escolhidos de acordo com a sua pele. Faça a análise para ver.</p>
@@ -3528,8 +3535,7 @@ function viewAssistant(){const ch=S.chat||[],vazio=!ch.length&&!S.astBusy,f=S.as
   return `<div class="ast">
   <div class="ast-hd"><button class="ast-bk" data-act="ast-back" aria-label="Voltar">${ic('chev',20)}</button><h1>Assistente</h1>${ch.length?`<button class="ast-clr" data-act="ast-clear">Limpar</button>`:''}</div>
   ${vazio?`<div class="ast-in0">${AST_FLOR}<h2>${S.nome?'Oi, '+esc(String(S.nome).trim().split(/\s+/)[0])+'!':'Oi!'}<br>Como posso ajudar?</h2><p>Tire dúvidas sobre sua pele, cabelo, rotina, produtos e ativos, com respostas personalizadas para o seu perfil.</p>
-   <div class="ast-sh" role="group" aria-label="Tema da conversa">${AST_SH.map(([k,l,i])=>`<button data-astf="${k}" aria-pressed="${f===k}">${ic(i,26)}<span>${l}</span></button>`).join('')}</div>
-   <button class="ast-sgb" data-act="ast-sg" aria-expanded="${!!S.astSg}"><span class="ast-sgi">${ic('sparkle',18)}</span><b>Sugestões para você</b><i class="${S.astSg?'op':''}">${ic('chev',16)}</i></button>${sgBox}</div>`
+   <div class="ast-sl ast-sl3" role="list" aria-label="Perguntas sugeridas">${(()=>{const a=astSugs(null),pr=a.filter(t=>/^Posso usar|combina comigo|Vale a pena/.test(t)),o=[...pr,...a.filter(t=>!pr.includes(t))];const L=(o.length?o:['Qual a ordem certa da rotina de skincare?','Preciso usar protetor solar em dia nublado?','Como saber se um produto combina com a minha pele?']).slice(0,3);return L.map(t=>`<button role="listitem" data-astt="${esc(t)}">${ic('sparkle',15)}<span>${esc(t)}</span>${ic('send',15)}</button>`).join('')})()}</div></div>`
    :`<div class="ast-ch">${msgs}${S.astBusy&&!ch.some(m=>m.live)?`<div class="ast-m a"><span class="ast-av"><img src="pellie-flor.png" alt="" width="20" height="20"></span><div class="ast-b ast-ty"><i></i><i></i><i></i></div></div>`:''}${limBox}${S.astErr?`<div class="ast-er" role="alert">${esc(S.astErr)}${S.astLast?` <button class="chip" data-act="ast-retry">Tentar de novo</button>`:''}</div>`:''}<div id="ast-end"></div></div>`}
   <div class="ast-bar">${f&&!vazio?`<div class="ast-fc"><span>Tema: <b>${AST_FL[f]}</b></span><button data-act="ast-foco-off" aria-label="Remover tema">${ic('x',12)}</button></div>`:''}${S.astMenu?`<div class="ast-mn"><button data-go="escanear">${ic('scan',18)}Escanear um produto</button><button data-go="pele|analise">${ic('face',18)}Foto da pele</button></div>`:''}
    ${!acab&&cota!=null&&cota<=3?`<p class="ast-q">${ic('sparkle',13)}Hoje ainda dá para mais ${cota===1?'1 pergunta':cota+' perguntas'}.</p>`:''}<div class="ast-f"><button class="ast-pl" data-act="ast-menu" aria-label="Adicionar anexo" aria-expanded="${!!S.astMenu}">${ic('plus',22)}</button><input id="ast-in" type="text" maxlength="500" placeholder="${acab?'Amanhã a gente continua':f?'Pergunte sobre '+AST_FL[f]+'…':'Pergunte o que quiser…'}" ${acab?'disabled':''} value="${esc(S.astDraft||'')}" autocomplete="off" enterkeyhint="send" aria-label="Pergunta"><button class="ast-sd" data-act="ast-send" aria-label="Enviar" ${S.astBusy||acab?'disabled':''}>${ic('send',20)}</button></div>
@@ -3556,22 +3562,20 @@ function viewEscanear(){
     <p class="note">${r.lista_lida===false?'Não consegui ler a lista de ingredientes; a avaliação usa só o tipo do produto. ':''}Não é diagnóstico. Teste em uma área pequena antes.</p></div>`})()
     :'';
   const hist=S.prods.length?`<div class="card"><h3>Já escaneados</h3>${S.prods.map((p,k)=>`<${p.snap?`button data-pfh="${k}" class="entry pf-he"`:'div class="entry"'}><div class="wk">${fmtD(p.d)}</div><div style="text-align:left;flex:1"><div class="small"><b>${esc(p.produto||'Produto')}</b>${p.marca?` <span class="muted">· ${esc(p.marca)}</span>`:''}</div><div class="small muted">${p.snap?(PF_CLS[p.snap.sc.cls]||PF_CLS.mod)[0]+' · '+p.nota+'%':(VERD[p.veredito]||VERD.cuidado)[1]+' · nota '+p.nota}</div></div>${p.snap?ic('chev',16):''}</${p.snap?'button':'div'}>`).join('')}</div>`:'';
-  return `<div class="stack"><div class="pl-h"><h1>Escanear produto</h1><p>Fotografe o rótulo e veja se combina com você.</p>${usoAviso()}</div>
+  return `<div class="stack"><div class="pl-h"><h1>Escanear produto</h1>${usoAviso()}</div>
   ${(()=>{if(S.pfArea==='cabelo'&&!hairOk())return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Antes, faça a análise do seu cabelo</h2><p class="small muted" style="margin:6px 0 14px">Para saber se um produto combina com o seu cabelo, a Pellie precisa conhecer o seu tipo de fio, porosidade e danos. Leva poucos minutos.</p><button class="btn obc pfg-go" data-act="pf-hair">${ic('hair',18)}Fazer análise do cabelo</button><button class="back" data-pfarea="troca" style="display:block;margin:10px auto 0;padding:8px;color:var(--muted)">Escolher outra área</button></div>`;
     if(!S.pfArea)return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Esse produto é para...</h2><p class="small muted" style="margin:6px 0 12px">A análise muda conforme a área, então escolha antes de fotografar.</p><div class="hf-os">${Object.keys(PF_AREA).map(a=>`<button class="hf-o" data-pfarea="${a}"><span style="display:flex;align-items:center;gap:10px">${ic(PF_AREA[a][1] in IC?PF_AREA[a][1]:'drop',20)}${a==='corpo'?'Corpo':a==='cabelo'?'Cabelo':'Pele do rosto'}</span>${ic('chev',16)}</button>`).join('')}</div></div>`;
     const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
     return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>${S.nome?esc(S.nome)+', esse':'Esse'} produto combina com ${AX[S.pfArea].com}?</h2><div class="pfg-area" style="display:flex;align-items:center;gap:8px;margin:2px 0 8px"><span class="small muted">Produto para:</span><b class="small">${PF_AREA[S.pfArea][0]}</b><button class="chip" data-pfarea="troca">Trocar</button></div>
-    <ol class="pfg-s">${passo(1,'Fotografe o produto','Mostre o nome e, se der, a lista de ingredientes.',!tem,tem)}${passo(2,'Confirme qual é o produto','A Pellie identifica e você confirma.',tem,false)}${passo(3,'Veja se combina com '+AX[S.pfArea].com,'Compatibilidade, como usar e alertas.',false,false)}</ol>
     ${tem?`<div class="pfg-prev"><div class="pfg-th"><img src="${S.prodPhoto||''}" alt="Foto do produto"></div><div><b>Foto pronta!</b><small>Agora toque em analisar.</small></div></div>
       <button class="btn obc pfg-go" data-act="pf-start">${ic('sparkle',18)}Analisar este produto</button>
       <div class="pfg-alt"><input class="sr" id="prod-cam" type="file" accept="image/*" capture="environment"><label for="prod-cam">${ic('camera',16)}Trocar foto</label><input class="sr" id="prod-gal" type="file" accept="image/*"><label for="prod-gal">${ic('image',16)}Galeria</label></div>`
-    :`<div class="pfg-tips"><span>${ic('sun',14)}Boa luz</span><span>${ic('tag',14)}Nome legível</span><span>${ic('file',14)}Ingredientes, se der</span></div><div class="pfg-dica">${ic('sparkle',16)}<span><b>Dica:</b> apoie o produto em pé, numa superfície vertical (parede ou porta), sem aparecer as mãos. O scanner funciona melhor assim.</span></div>
+    :`<p class="pfg-1d">${ic('sun',16)}<span>Produto em pé, com o nome visível e boa luz.</span></p>
       <input class="sr" id="prod-cam" type="file" accept="image/*" capture="environment"><label for="prod-cam" class="btn obc pfg-go" style="cursor:pointer">${ic('camera',18)}Fotografar produto</label>
       <div class="pfg-alt"><input class="sr" id="prod-gal" type="file" accept="image/*"><label for="prod-gal">${ic('image',16)}Escolher da galeria</label></div>`}
     ${S.prodErr?`<p class="note" role="alert" style="color:var(--alert)">${esc(S.prodErr)}</p>`:''}`})()}
   </div>${res}${hist}
-  ${r&&Array.isArray(r.ativos)?guia('Quer testar outro produto?','Escanear outro','data-act="novo-prod"'):''}
-  ${guia('Tudo certo por aqui','Voltar ao início','data-go="hoje"')}</div>`;
+  ${r&&Array.isArray(r.ativos)?guia('Quer testar outro produto?','Escanear outro','data-act="novo-prod"'):''}</div>`;
 }
 
 /* ---------- Pellie SOS: foto + o que fazer agora com os produtos que a pessoa tem ---------- */
@@ -3644,12 +3648,15 @@ function viewHoje(){
   const nb=Object.keys(S.badges).length,wc=weekCount(),NMd=nextMedal(),falta=NMd?NMd.d-st:0;
   const meta=Math.min(wc,5),pct=Math.round(meta/5*100),restam=7-new Date().getDay();
   /* Seu ritual de hoje: os botões levam ao Pellie Ritual / à rotina que já existem */
-  const linha=(per,ic_,nm)=>{const ks=per==='m'?R_.m:R_.n,ok=feito(per),bl=bloq(per),n=ks.length;
-    const chip=ok?`<span class="hj-ch ok">${ic('checkc',14)}Concluída</span>`:bl?`<span class="hj-ch">${ic('clock',14)}Libera às ${libHora(per)}</span>`:`<span class="hj-ch">Pendente</span>`;
-    return `<div class="hj-pr"><span class="hj-pi">${ic(ic_,28)}</span><div class="hj-pm"><b>${nm}</b>${chip}<small>${n} ${n===1?'etapa':'etapas'} · ~${Math.max(2,n)} min</small></div>
-      ${ok?`<button class="hj-bt ghost" data-go="rotina|${per}">Ver</button>`:`<button class="hj-bt" data-hrit="${per}">${ic('chev',14)}Iniciar</button>`}</div>`};
   let rit;
-  if(temRot)rit=`<section class="hj-rit"><div class="hj-rh"><h2>Seu ritual de hoje</h2><button class="hj-all2" data-go="rotina">${ic('cal',15)}Ver rotina completa${ic('chev',14)}</button></div>${linha('m','sun','Manhã')}${linha('n','moon','Noite')}</section>`;
+  /* só o próximo ritual em destaque; o outro fica numa linha discreta */
+  const foco=(()=>{const P=['m','n'].filter(p=>!feito(p));if(!P.length)return null;const liv=P.find(p=>!bloq(p));return liv||P.sort((a,b)=>bloq(a)-bloq(b))[0]})();
+  const nmP={m:['sun','Manhã'],n:['moon','Noite']},outro=foco?(foco==='m'?'n':'m'):null;
+  const mini=per=>{const ok=feito(per),bl=bloq(per);return `<button class="hj-mini" data-go="rotina|${per}">${ic(nmP[per][0],16)}<span><b>${nmP[per][1]}</b> · ${ok?'concluída':bl?'libera às '+libHora(per):'pendente'}</span>${ok?ic('checkc',16):ic('chev',14)}</button>`};
+  const hero=per=>{const ks=per==='m'?R_.m:R_.n,bl=bloq(per),n=ks.length;
+    return `<div class="hj-pr hj-pr1"><span class="hj-pi">${ic(nmP[per][0],28)}</span><div class="hj-pm"><b>${nmP[per][1]}</b>${bl?`<span class="hj-ch">${ic('clock',14)}Libera às ${libHora(per)}</span>`:''}<small>${n} ${n===1?'etapa':'etapas'} · ~${Math.max(2,n)} min</small></div>
+      ${bl?`<button class="hj-bt ghost" data-go="rotina|${per}">Ver etapas</button>`:`<button class="hj-bt" data-hrit="${per}">${ic('chev',14)}Iniciar</button>`}</div>`};
+  if(temRot)rit=`<section class="hj-rit"><div class="hj-rh"><h2>${foco?'Seu ritual de hoje':'Rituais de hoje concluídos'}</h2><button class="hj-all2" data-go="rotina">${ic('cal',15)}Rotina${ic('chev',14)}</button></div>${foco?hero(foco)+mini(outro):`<p class="hj-np" style="margin:4px 0 8px">Pele cuidada hoje. Amanhã tem mais.</p>${mini('m')}${mini('n')}`}</section>`;
   else rit=`<section class="hj-rit"><h2>${nx.done?'Cuide de você':'Seu próximo passo'}</h2>${nx.done?'':`<p class="hj-np">${esc(nx.t)}</p><button class="hj-bt wide" ${nx.act?`data-act="${nx.act}"`:`data-go="${nx.go}"`}>${nx.b}${ic('chev',14)}</button>`}</section>`;
   const cons=`<button class="hj-cons" data-go="mais|medalhas"><span class="hj-ring" style="--p:${pct}"><b>${pct}%</b></span>
     <span class="hj-cx"><b>Consistência da semana</b><small>${meta} de 5 dias${meta<5?` · faltam ${5-meta}`:' · meta batida'} · ${restam} ${restam===1?'dia':'dias'} na semana</small>
@@ -3711,7 +3718,6 @@ function viewPele0(){
   const sob=sub==='analise'&&(S.pv||S.pleCap||S.analyzing);
   const evoA=sub!=='analise',SUBS2=SUBS.filter(x=>x[0]!=='analise');
   return `${sob?'':`<div class="pl-h"><h1>${evoA?'Evolução':'Pele'}</h1><p>${evoA?'Acompanhe a sua pele ao longo do tempo.':'Analise, acompanhe e evolua o cuidado da sua pele.'}</p></div>
-  ${evoA?'':`<button class="hj-sos" data-go="sos" style="margin:0 0 4px"><span class="hj-sosi">${ic('spot',26)}</span><span><b>Pellie SOS</b><small>Orientação para necessidades pontuais da sua pele.</small></span>${ic('chev',18)}</button>`}
   ${evoA?`<div class="pl-tabs pl-tabs3" role="group" aria-label="Seção da evolução">${SUBS2.map(([k,i_,l])=>`<button data-sub="${k}" aria-pressed="${sub===k}">${ic(i_,20)}<span>${l}</span></button>`).join('')}</div>`:''}`}${body}`;
 }
 const PCAM={stream:null,facing:'user',busy:false,fail:false,run:0,iv:null,ready:false,al:false};
@@ -3781,6 +3787,14 @@ function viewAnalise(){
       <span class="pl-ib"><b class="${plCls(plAt(v,inv))}" style="width:${Math.max(3,v)}%"></b></span><p class="small muted">${ex}</p>
       ${pr!=null?`<p class="pl-cp">Desde ${fmtD(prev.d)}: ${plDelta(v,pr,inv)}</p>`:''}</div>`}).join('')}
     <p class="note">Notas de 0 a 100, estimadas pela foto. Não são diagnóstico.</p></div>`}
+  if(pv==='det'){const m=zonasAnalise(rs),L=plPri(rs);return `<div class="stack pl-in">${plBack('Detalhes da análise')}
+    <div class="pl-card" style="text-align:center"><div class="row" style="justify-content:space-between"><b>Onde pede mais atenção</b><span class="pl-chip">3D</span></div>${face3d('view',m.z,'')}
+    ${m.leg.length?`<div class="mleg">${m.leg.map(x=>`<span><i></i>${esc(x)}</span>`).join('')}</div>`:'<p class="small muted">Nenhuma região com nota alta nesta análise.</p>'}<p class="small muted" style="margin-top:6px">Modelo ilustrativo, não é o seu rosto.</p></div>
+    <h3 class="hj-h" style="margin:4px 0 -2px">Prioridades para você</h3>
+    ${L.map(t=>`<div class="pl-card pl-pr"><div class="pl-ph"><b>${esc(t.ttl)}</b>${t.lvl?`<span class="pl-lv ${t.lvl==='Alta'?'a':t.lvl==='Média'?'m':'b'}">${t.lvl} prioridade</span>`:''}</div>${t.alvo?`<p class="small muted">${esc(t.alvo)}${t.prazo?' · resultado em '+esc(t.prazo):''}</p>`:''}${t.prod.length?`<div class="pl-tg ok"><small>Na sua prateleira</small>${t.prod.map(i=>`<span>${ic('tag',13)}${esc(i.n)}</span>`).join('')}</div>`:''}</div>`).join('')}
+    <button class="pl-lk" data-pv="pri" style="justify-self:start">Ver passos de cada cuidado${ic('chev',14)}</button>
+    <button class="pl-lk" data-pv="ind" style="justify-self:start">Entender cada nota${ic('chev',14)}</button>
+    <p class="note">Orientações gerais, que não substituem a avaliação de um dermatologista.</p></div>`}
   if(pv==='pri'){const L=plPri(rs);S.plOpen=S.plOpen||{};return `<div class="stack pl-in">${plBack('Prioridades para você')}
     ${L.map(t=>{const op=!!S.plOpen[t.id];return `<div class="pl-card pl-pr"><div class="pl-ph"><b>${esc(t.ttl)}</b>${t.lvl?`<span class="pl-lv ${t.lvl==='Alta'?'a':t.lvl==='Média'?'m':'b'}">${t.lvl} prioridade</span>`:''}</div>
       ${t.alvo?`<p class="small muted">${esc(t.alvo)}${t.prazo?' · resultado em '+esc(t.prazo):''}</p>`:''}
@@ -3790,20 +3804,16 @@ function viewAnalise(){
     <button class="btn pl-go" data-go="rotina">${ic('routine',18)}Ver rotina personalizada</button>
     <p class="note">Orientações gerais, que não substituem a avaliação de um dermatologista.</p></div>`}
   const shown=S.photo||(S.fotos.length?S.fotos[S.fotos.length-1].img:null),pic=shown?`<img src="${shown}" alt="Sua foto">`:`<div class="pl-ph0">${rs?faceSvg(rs):faceEmpty()}</div>`;
-  const top3=PL_IND.map(x=>({x,a:plAt(rs[x[0]],x[3])})).sort((p,q)=>q.a-p.a).slice(0,3);
-  const pri=plPri(rs);
   return `<div class="stack pl-in">${S.okMsg==='pele'?`<div class="pl-ok" role="status">${ic('check',18)}<span><b>Avaliação concluída, ${nome}!</b> Veja o resultado abaixo. Sua rotina é montada com base nele.</span></div>`:''}
   <div class="pl-hero"><div class="pl-hk">Última análise · ${fmtD(rs.d)}</div><h2>Sua pele, ${nome}</h2>
-    <div class="pl-hb"><div class="pl-pic">${pic}</div><div class="pl-hr"><span class="pl-type">${ic('drop',14)}Pele ${esc(String(rs.tipo).toLowerCase())}</span>${top3.map(({x})=>`<div class="pl-mi"><span>${x[1]}</span><b>${Math.round(rs[x[0]])}%</b></div>`).join('')}</div></div>
-    <p class="small muted" style="margin-top:10px">${esc(rs.resumo)}</p>
+    <div class="pl-hb pl-hb1"><div class="pl-pic">${pic}</div><div class="pl-hr"><span class="pl-type">${ic('drop',14)}Pele ${esc(String(rs.tipo).toLowerCase())}</span><p class="small muted" style="margin:0">${esc(rs.resumo)}</p></div></div>
+    <div class="pl-bars">${PL_IND.map(([k,l,i_,inv])=>plBar(l,rs[k],inv,i_)).join('')}<div class="lgd pl-lgn"><span class="lgo">Favorável</span><span class="lgm">Cuidado</span><span class="lga">Atenção</span></div><p class="note" style="margin-top:6px">Notas de 0 a 100, estimadas pela foto.</p></div>
+    <button class="pl-det" data-pv="det"><span><b>Ver detalhes</b><small>Onde pede atenção e as suas prioridades</small></span>${ic('chev',16)}</button>
     <button class="btn pl-go" data-pv="cap">${ic('camera',18)}Nova análise</button>
-    <div class="row" style="gap:8px;margin-top:8px;flex-wrap:nowrap"><button class="btn ghost" data-act="salvar-analise" style="flex:1">${ic('plus',18)}Diário</button>${S.photo?`<button class="btn ghost" data-act="guardar-foto" style="flex:1">${ic('image',18)}Guardar foto</button>`:''}</div>
+    <div class="row" style="gap:8px;margin-top:8px;flex-wrap:nowrap"><button class="btn ghost" data-act="salvar-analise" style="flex:1">${ic('chart',18)}Salvar na evolução</button>${S.photo?`<button class="btn ghost" data-act="guardar-foto" style="flex:1">${ic('image',18)}Guardar foto</button>`:''}</div>
     ${S.rotErr?`<p class="note" style="color:var(--alert)">${esc(S.rotErr)}</p>`:''}</div>
-  <div class="pl-card"><div class="pl-ct"><b>Indicadores da sua pele</b></div>${PL_IND.map(([k,l,i_,inv])=>plBar(l,rs[k],inv,i_)).join('')}<div class="lgd"><span class="lgo">Favorável</span><span class="lgm">Cuidado</span><span class="lga">Atenção</span></div><p class="note">Notas de 0 a 100, estimadas pela foto.</p>
-    <button class="pl-lk" data-pv="ind">Ver detalhes de cada indicador${ic('chev',14)}</button></div>
-  <button class="pl-row" data-pv="map"><span class="pl-ri">${ic('face',22)}</span><span><b>Mapa da sua pele</b><small>Regiões que pedem mais atenção</small></span>${ic('chev',16)}</button>
-  <button class="pl-row" data-pv="pri"><span class="pl-ri">${ic('sparkle',22)}</span><span><b>Prioridades para você</b><small>${pri.length} ${pri.length===1?'cuidado':'cuidados'} pelas suas notas</small></span>${ic('chev',16)}</button>
-  ${S.rot?`<button class="pl-row" data-go="rotina"><span class="pl-ri">${ic('routine',22)}</span><span><b>Sua rotina está pronta</b><small>Cuidados baseados na sua análise</small></span>${ic('chev',16)}</button>`:S.rotBusy?`<div class="pl-row"><span class="pl-ri">${ic('routine',22)}</span><span><b>Montando a sua rotina…</b><small>Aguarde</small></span></div>`:`<button class="pl-row" data-act="montar-rotina"><span class="pl-ri">${ic('routine',22)}</span><span><b>Agora, a sua rotina</b><small>Montar com base na análise</small></span>${ic('chev',16)}</button>`}
+  ${S.rot?'':S.rotBusy?`<div class="pl-row"><span class="pl-ri">${ic('routine',22)}</span><span><b>Montando a sua rotina…</b><small>Aguarde</small></span></div>`:`<button class="pl-row" data-act="montar-rotina"><span class="pl-ri">${ic('routine',22)}</span><span><b>Agora, a sua rotina</b><small>Montar com base na análise</small></span>${ic('chev',16)}</button>`}
+  <button class="pl-sos" data-go="sos">${ic('spot',18)}<span>Apareceu uma espinha ou irritação? <b>Pellie SOS</b></span>${ic('chev',14)}</button>
   ${rs.atencao?`<p class="note" style="color:var(--warn)">${esc(rs.atencao)}</p>`:''}
   <p class="note">Não é diagnóstico. Pinta que muda ou ferida que não cicatriza: procure um dermatologista.</p></div>`;
 }
@@ -5493,6 +5503,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='plano-atualizar'){_lastPf=0;atualizaPlano().then(()=>{if(!S.plus)toast('Ainda sem plano ativo neste e-mail')})}
   else if(d.act==='entrar'){cdoc().get().then(sn=>{const j=sn.exists&&sn.data();if(j&&j.json){cloudApply(j.json);toast('Bem-vinda de volta!');render()}else toast('Nenhum dado salvo na nuvem')}).catch(()=>toast('Não consegui entrar'))}
   else if(d.area){S.area=d.area;render();window.scrollTo(0,0)}
+  else if(d.astt){S.astSg=false;S.astFoco=null;astSend(d.astt)}
   else if(d.astq!==undefined){const t=astSugs(S.astFoco)[+d.astq];if(t){S.astSg=false;astSend(t)}}
   else if(d.astf){S.astFoco=S.astFoco===d.astf?null:d.astf;S.astSg=!!S.astFoco;render()}
   else if(d.act&&d.act.startsWith('ast-nx|')){const ch=S.chat||[],m=ch[ch.length-1],t=m&&m.sg&&m.sg[+d.act.split('|')[1]];if(t)astSend(t)}
