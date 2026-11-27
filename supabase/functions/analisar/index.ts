@@ -20,7 +20,8 @@ const MAX_SAIDA_POR_TIPO: Record<string, number> = { produto_cmp: 8000 };
 // Controlado pelo segredo CMP_ESFORCO no Supabase, sem publicar a função de novo:
 //   "padrao" (ou ausente) = como antes (esforço médio, o padrão do Haiku 5.5) · "low" = esforço baixo · "off" = sem pensamento.
 // O modo usado fica gravado em uso_ia.modelo (ex.: "claude-haiku-5-5@low"), para comparar custo e resultados.
-const CMP_ESFORCO = String(Deno.env.get("CMP_ESFORCO") ?? "padrao").trim().toLowerCase();
+// 27/11/2026: Lucas aprovou "low" como padrão (comparação de ~15 s caindo para perto de 5 s). Para voltar ao antigo, criar o segredo CMP_ESFORCO=padrao.
+const CMP_ESFORCO = String(Deno.env.get("CMP_ESFORCO") ?? "low").trim().toLowerCase();
 const MAX_IMG_B64 = 6_000_000;
 const MAX_CTX = 2000;
 const MAX_PROMPT = 5000;
