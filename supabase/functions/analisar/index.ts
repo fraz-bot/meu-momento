@@ -7,6 +7,8 @@ const LIMITE_PLUS_MES = 100;
 const LIMITE_ESPINHA_DIA = 3;     // SOS Espinha: fotos por dia (controla custo)
 const LIMITE_ANON_IP_DIA = 10;     // análises grátis por rede em 24h (sem conta)
 const LIMITE_ANON_GLOBAL_DIA = 400; // teto diário de análises sem conta (controla custo)
+// Assistente (27/11/2026): mensagens por dia, contadas pelo dia de São Paulo. Controla o custo máximo por assinante.
+const LIMITE_AST_DIA = Math.max(1, Number(Deno.env.get("LIMITE_AST_DIA") ?? 15) || 15);
 // Haiku em todas as etapas (20/11/2026, para baixar o custo). TESTE: a COMPARAÇÃO DE PRODUTO (produto_cmp) roda no Haiku COM pensamento (o padrão dele); as outras etapas rodam no Haiku SEM pensamento.
 // TESTE (20/11/2026): a reserva no Sonnet está DESLIGADA, para ver como o Haiku se sai sozinho. Se o Haiku falhar, a pessoa recebe a mensagem de erro e a análise não conta no limite. Para ligar de novo: USAR_RESERVA = true.
 // O Haiku 5.5 pensa por padrão e o pensamento conta nos tokens de saída (e no tempo).
@@ -15,7 +17,7 @@ const MODELO_RESERVA = "claude-sonnet-5-5";
 const USAR_RESERVA = false;
 const MODELO_POR_TIPO: Record<string, string> = {};
 const COM_PENSAMENTO = new Set(["produto_cmp"]);
-const MAX_SAIDA_POR_TIPO: Record<string, number> = { produto_cmp: 8000 };
+const MAX_SAIDA_POR_TIPO: Record<string, number> = { produto_cmp: 8000, assistente: 900 };
 // TESTE DE ESFORÇO (27/11/2026): quanto a IA "pensa" na comparação do produto (produto_cmp), o que mais pesa no custo e no tempo.
 // Controlado pelo segredo CMP_ESFORCO no Supabase, sem publicar a função de novo:
 //   "padrao" (ou ausente) = como antes (esforço médio, o padrão do Haiku 5.5) · "low" = esforço baixo · "off" = sem pensamento.
@@ -25,6 +27,8 @@ const CMP_ESFORCO = String(Deno.env.get("CMP_ESFORCO") ?? "low").trim().toLowerC
 const MAX_IMG_B64 = 6_000_000;
 const MAX_CTX = 2000;
 const MAX_PROMPT = 5000;
+const MAX_PROMPT_AST = 9000;   // o Assistente leva o perfil e as últimas mensagens da conversa
+const LIMITE_TEXTO_DIA = 40;   // textos da rotina e marcas por dia (teto de segurança)
 // Preço de referência (compartilhado): validade configurável por segredo PRECO_VALIDADE_DIAS (padrão 90 dias).
 const PRECO_DIAS = Math.max(1, Math.min(365, Number(Deno.env.get("PRECO_VALIDADE_DIAS") ?? VALIDADE_DIAS_PADRAO) || VALIDADE_DIAS_PADRAO));
 
@@ -127,6 +131,8 @@ ${FIM}`,
   },
   // Textos da rotina e marcas de produtos: o app envia o pedido pronto (só para quem é Pellie Pro).
   texto: { img: false, db: "rotina", texto: (c) => c },
+  // Assistente (conversa): o app envia o pedido pronto; a resposta é TEXTO (não JSON), para aparecer enquanto é escrita.
+  assistente: { img: false, db: "assistente", texto: (c) => c },
 };
 
 // Só as 6 notas numéricas (sem foto, sem texto): base para comparar com outras análises da Pellie.
@@ -166,8 +172,9 @@ Deno.serve(async (req: Request) => {
   const tipo = String(body?.tipo ?? "");
   const P = PROMPTS[tipo];
   if (!P) return json({ erro: "Tipo de análise inválido" }, 400);
-  const longo = tipo === "texto" || tipo === "produto_cmp";
-  const contexto = String(tipo === "texto" ? (body?.prompt ?? "") : (body?.contexto ?? "")).slice(0, longo ? MAX_PROMPT : MAX_CTX);
+  const ehTexto = tipo === "texto" || tipo === "assistente";
+  const longo = ehTexto || tipo === "produto_cmp";
+  const contexto = String(ehTexto ? (body?.prompt ?? "") : (body?.contexto ?? "")).slice(0, tipo === "assistente" ? MAX_PROMPT_AST : longo ? MAX_PROMPT : MAX_CTX);
   if (longo && contexto.length < 10) return json({ erro: "Pedido inválido" }, 400);
   const imagem = String(body?.imagem ?? "");
   const mediaType = String(body?.media_type ?? "image/jpeg");
@@ -181,6 +188,7 @@ Deno.serve(async (req: Request) => {
   let userId: string | null = null;
   let anonId: number | null = null;
   let gratis = false;
+  let astUsadas = 0;
 
   if (user) {
     userId = user.id;
@@ -199,9 +207,23 @@ Deno.serve(async (req: Request) => {
       const ini = new Date(); ini.setDate(1); ini.setHours(0, 0, 0, 0);
       // Conta análises (pele, cabelo, espinha, produto). A comparação do produto (produto_cmp) e os textos não contam, para cada produto valer 1.
       // A comparação e os textos não são barrados aqui: só a etapa de entrada (foto) é limitada; quem já identificou o produto pode terminar a comparação.
-      if (tipo !== "produto_cmp" && tipo !== "texto") {
+      if (tipo !== "produto_cmp" && !ehTexto) {
         const { count } = await admin.from("analises").select("id", { count: "exact", head: true }).eq("user_id", user.id).gte("criado_em", ini.toISOString()).in("tipo", ["pele", "cabelo", "espinha", "produto"]).or("resultado->>etapa.is.null,resultado->>etapa.neq.produto_cmp");
         if ((count ?? 0) >= LIMITE_PLUS_MES) return json({ codigo: "limite_mes", erro: "Você chegou ao limite de 100 análises deste mês." }, 429);
+      }
+      if (tipo === "texto") {
+        // Textos da rotina e marcas: o app pede poucos por dia; o teto só impede que alguém use esse caminho como um Assistente sem limite.
+        const sp0 = new Date(Date.now() - 3 * 3600 * 1000); sp0.setUTCHours(0, 0, 0, 0);
+        const { count: nTx } = await admin.from("analises").select("id", { count: "exact", head: true }).eq("user_id", user.id).eq("tipo", "rotina").gte("criado_em", new Date(sp0.getTime() + 3 * 3600 * 1000).toISOString());
+        if ((nTx ?? 0) >= LIMITE_TEXTO_DIA) return json({ codigo: "limite_texto", erro: "Você chegou ao limite de hoje. Tente de novo amanhã." }, 429);
+      }
+      if (tipo === "assistente") {
+        // Dia de São Paulo (UTC-3, sem horário de verão): zera à meia-noite.
+        const sp = new Date(Date.now() - 3 * 3600 * 1000); sp.setUTCHours(0, 0, 0, 0);
+        const iniDia = new Date(sp.getTime() + 3 * 3600 * 1000).toISOString();
+        const { count: nAst } = await admin.from("analises").select("id", { count: "exact", head: true }).eq("user_id", user.id).eq("tipo", "assistente").gte("criado_em", iniDia);
+        astUsadas = nAst ?? 0;
+        if (astUsadas >= LIMITE_AST_DIA) return json({ codigo: "limite_ast", erro: "Por hoje é isso! Amanhã a gente continua a conversa.", limite: LIMITE_AST_DIA, restantes: 0 }, 429);
       }
       if (tipo === "espinha") {
         const desde24 = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
@@ -365,7 +387,7 @@ Deno.serve(async (req: Request) => {
 
       let modelo = MODELO_POR_TIPO[tipo] ?? MODELO_PADRAO;
       let a = await chamar(modelo, onDelta);
-      let resultado: any = a.ok ? ler(a.txt) : null;
+      let resultado: any = tipo === "assistente" ? (a.ok && a.txt.trim() ? { resposta: a.txt.trim() } : null) : (a.ok ? ler(a.txt) : null);
       await logUso(modelo + (a.modo ?? ""), a.usage, !!resultado, a.ms ?? null);
       // Reserva no Sonnet: desligada durante o teste do Haiku (USAR_RESERVA = false).
       if (!resultado && USAR_RESERVA && modelo !== MODELO_RESERVA) {
@@ -439,8 +461,9 @@ Deno.serve(async (req: Request) => {
       }
 
       // Histórico por usuário: cada etapa do scanner fica guardada em "analises" (resultado em JSON, sem a foto).
-      if (regId !== null) await admin.from("analises").update({ resultado: tipo === "texto" ? null : { etapa: tipo, ...resultado } }).eq("id", regId);
+      if (regId !== null) await admin.from("analises").update({ resultado: ehTexto ? null : { etapa: tipo, ...resultado } }).eq("id", regId);
       if (anonId !== null && tipo === "pele") { const n = soNotas(resultado); if (n) await admin.from("analises_anon").update({ notas: n }).eq("id", anonId); }
+      if (tipo === "assistente") resultado.restantes = Math.max(0, LIMITE_AST_DIA - astUsadas - 1);
       return R({ ok: true, resultado });
     } catch (_e) {
       await devolver();
@@ -449,7 +472,7 @@ Deno.serve(async (req: Request) => {
   };
 
   // Resultado em partes (27/11/2026): a comparação pode responder em linhas NDJSON — {"d":"texto"} enquanto a IA escreve e, no fim, {"fim":{...},"status":200}.
-  if (tipo === "produto_cmp" && body?.stream === true) {
+  if ((tipo === "produto_cmp" || tipo === "assistente") && body?.stream === true) {
     const enc = new TextEncoder();
     const corpo = new ReadableStream({
       async start(ctrl) {
