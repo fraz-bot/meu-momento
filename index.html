@@ -507,7 +507,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795801000";</script>
+<script>window.MM_VER="1795802000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -3310,15 +3310,24 @@ async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new
    if(st>=0){const q=[st];keep[st]=1;while(q.length){const i=q.pop(),x=i%S_,y=(i/S_)|0;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const X=x+dx,Y=y+dy;if(X<0||Y<0||X>=S_||Y>=S_)continue;const j=Y*S_+X;if(!keep[j]&&nv[j]>.5){keep[j]=1;q.push(j)}}}
      const R=2,k2=new Uint8Array(S_*S_);for(let y=0;y<S_;y++)for(let x=0;x<S_;x++)if(keep[y*S_+x])for(let dy=-R;dy<=R;dy++){const Y=y+dy;if(Y<0||Y>=S_)continue;for(let dx=-R;dx<=R;dx++){const X=x+dx;if(X>=0&&X<S_)k2[Y*S_+X]=1}}
      for(let i=0;i<S_*S_;i++)if(!k2[i])nv[i]=0}}
-    {/* fundo claro: devolve tampa, conta-gotas e bico claros que a rede perde; e corta o que sai da caixa da IA e da largura do corpo (discos, objetos em volta) */
+    {/* recorte fino: corta o que passa das laterais e do topo da embalagem (discos, objetos atrás) e devolve tampa, conta-gotas e bico claros que a rede perde */
    const b=bx&&bx.length===4?bx:null,N4=[[1,0],[-1,0],[0,1],[0,-1]],fx=v=>Math.round((v-x0)/(x1-x0)*S_),fy=v=>Math.round((v-y0)/(y1-y0)*S_);
    const ax0=b?Math.max(0,fx(b[0]-.015)):0,ax1=b?Math.min(S_-1,fx(b[2]+.015)):S_-1,ay0=b?Math.max(0,fy(b[1]-.015)):0,ay1=b?Math.min(S_-1,fy(b[3]+.02)):S_-1;
    if(b)for(let y=0;y<S_;y++)for(let x=0;x<S_;x++)if(x<ax0||x>ax1||y<ay0||y>ay1)nv[y*S_+x]=0;
    const ext=y=>{let l=-1,r=-1;for(let x=0;x<S_;x++)if(nv[y*S_+x]>.5){if(l<0)l=x;r=x}return [l,r]};
+   const Yl=new Float32Array(S_*S_);for(let i=0;i<S_*S_;i++)Yl[i]=(px[i*4]+px[i*4+1]+px[i*4+2])/3;
+   const gx=(x,y)=>x<1||x>=S_-1?0:Math.abs(Yl[y*S_+x+1]-Yl[y*S_+x-1]),gy=(x,y)=>y<1||y>=S_-1?0:Math.abs(Yl[(y+1)*S_+x]-Yl[(y-1)*S_+x]);
    let ty=-1,by=-1;for(let y=0;y<S_;y++){if(ext(y)[1]>=0){if(ty<0)ty=y;by=y}}
    if(ty>=0&&by-ty>S_*.15){
-    let L=S_,Rr=-1;for(let y=Math.round(by-(by-ty)*.4);y<=by;y++){const [l,r]=ext(y);if(r>=0&&r-l>2){if(l<L)L=l;if(r>Rr)Rr=r}}
-    if(Rr>L){const mg=Math.round(S_*.04),c0=Math.max(0,L-mg),c1=Math.min(S_-1,Rr+mg);
+    /* laterais: bordas verticais longas e fortes dentro da máscara (o corpo da embalagem tem lados retos; um disco ou objeto atrás, não) */
+    const H_=by-ty,ws=[];for(let y=ty;y<=by;y++){const [l,r]=ext(y);if(r>=0)ws.push(r-l)}ws.sort((p,q)=>p-q);const wMed=ws[ws.length>>1]||0;
+    let mx0=S_,mx1=-1;for(let y=ty;y<=by;y++){const [l,r]=ext(y);if(r>=0){if(l<mx0)mx0=l;if(r>mx1)mx1=r}}const mid=(mx0+mx1)/2;
+    const cand=[];for(let x=1;x<S_-1;x++){let run=0,best=0,gap=0;for(let y=ty;y<=by;y++){const e=Math.max(gx(x-1,y),gx(x,y),gx(x+1,y))>20&&(nv[y*S_+x]>.5||nv[y*S_+Math.max(0,x-2)]>.5||nv[y*S_+Math.min(S_-1,x+2)]>.5);
+      if(e){run+=1+gap;gap=0;if(run>best)best=run}else if(run>0&&gap<2)gap++;else{run=0;gap=0}}if(best>=.3*H_)cand.push(x)}
+    let L=-1,Rr=-1;const cl=cand.filter(x=>x<mid),cr=cand.filter(x=>x>mid);
+    if(cl.length&&cr.length&&cr[cr.length-1]-cl[0]>=.6*wMed){L=cl[0];Rr=cr[cr.length-1]}
+    else{L=S_;Rr=-1;for(let y=Math.round(by-H_*.4);y<=by;y++){const [l,r]=ext(y);if(r>=0&&r-l>2){if(l<L)L=l;if(r>Rr)Rr=r}}}
+    if(Rr>L){const mg=L>=0&&cand.length&&cand.includes(L)?2:Math.round(S_*.04),c0=Math.max(0,L-mg),c1=Math.min(S_-1,Rr+mg),BW=Rr-L;
      for(let y=0;y<S_;y++)for(let x=0;x<S_;x++)if(x<c0||x>c1)nv[y*S_+x]=0;
      const bd=[];for(let t=0;t<S_;t+=2)bd.push(t,(S_-1)*S_+t,t*S_,t*S_+S_-1);
      const med=ch=>{const a=bd.map(i=>px[i*4+ch]).sort((p,q)=>p-q);return a[a.length>>1]},bg=[med(0),med(1),med(2)];
@@ -3326,11 +3335,18 @@ async function bgRemove(src,bx){const im=await new Promise((ok,no)=>{const i=new
      const neu=i=>Math.max(px[i*4],px[i*4+1],px[i*4+2])-Math.min(px[i*4],px[i*4+1],px[i*4+2])<=12;
      let uni=0;for(const i of bd)if(dif(i)<16)uni++;const nz=bd.map(dif).sort((p,q)=>p-q)[Math.floor(bd.length*.9)],th=Math.max(3,Math.min(10,nz+2));
      if(uni>bd.length*.55&&Math.min(...bg)>215){
-      let yb=ty;for(let y=ty;y<=by;y++){const [l,r]=ext(y);if(r>=0&&r-l>=.8*(Rr-L)){yb=y;break}}
-      const on=new Uint8Array(S_*S_),q=[];for(let y=ty;y<=yb;y++)for(let x=c0;x<=c1;x++){const i=y*S_+x;if(nv[i]>.5){on[i]=1;q.push(i)}}
-      while(q.length){const i=q.pop(),x=i%S_,y=(i/S_)|0;for(const [dx,dy] of N4){const X=x+dx,Y=y+dy;if(X<c0||X>c1||Y<ay0||Y>=yb)continue;const j=Y*S_+X;if(!on[j]&&neu(j)&&dif(j)>=th){on[j]=1;q.push(j)}}}
-      for(let y=ay0;y<yb;y++){const rw=y*S_;let l=-1,r=-1;for(let x=c0;x<=c1;x++)if(on[rw+x]){if(l<0)l=x;r=x}
-       for(let x=c0;x<=c1;x++){const j=rw+x;if(l>=0&&x>=l&&x<=r)nv[j]=Math.max(nv[j],on[j]?.15+.85*Math.min(1,Math.max(0,(dif(j)-2)/8)):1);else if(!(nv[j]>.5))nv[j]=0}}}}}}
+      /* topo do corpo: primeira linha com borda horizontal forte ocupando metade da largura (tampa, ombro do frasco) */
+      let yt=-1;for(let y=ty;y<=by&&yt<0;y++){let n=0;for(let x=c0;x<=c1;x++)if(Math.max(gy(x,y-1),gy(x,y),gy(x,y+1))>20)n++;if(n>=.5*BW)yt=y}
+      if(yt>ty)for(let y=0;y<yt;y++)for(let x=0;x<S_;x++)nv[y*S_+x]=0;
+      ty=-1;for(let y=0;y<S_&&ty<0;y++)if(ext(y)[1]>=0)ty=y;
+      if(ty>=0){if(yt<0)yt=ty;
+       let yb=ty;for(let y=ty;y<=by;y++){const [l,r]=ext(y);if(r>=0&&r-l>=.8*BW){yb=y;break}}
+       const on=new Uint8Array(S_*S_),q=[];for(let y=ty;y<=yb;y++)for(let x=c0;x<=c1;x++){const i=y*S_+x;if(nv[i]>.5){on[i]=1;q.push(i)}}
+       while(q.length){const i=q.pop(),x=i%S_,y=(i/S_)|0;for(const [dx,dy] of N4){const X=x+dx,Y=y+dy;if(X<c0||X>c1||Y<ay0||Y>=yb)continue;const j=Y*S_+X;if(!on[j]&&neu(j)&&dif(j)>=th){on[j]=1;q.push(j)}}}
+       let miss=0;
+       for(let y=yb-1;y>=ay0;y--){const rw=y*S_;let l=-1,r=-1;for(let x=c0;x<=c1;x++)if(on[rw+x]){if(l<0)l=x;r=x}
+        if(y<yt){if(l<0){if(++miss>=3)break;continue}miss=0;const ed=x=>{let m=0;for(let k=-2;k<=2;k++)m=Math.max(m,gx(Math.min(S_-2,Math.max(1,x+k)),y));return m>20};if(r-l>.7*BW&&!(ed(l)&&ed(r)))break}
+        for(let x=c0;x<=c1;x++){const j=rw+x;if(l>=0&&x>=l&&x<=r)nv[j]=Math.max(nv[j],on[j]?.15+.85*Math.min(1,Math.max(0,(dif(j)-2)/8)):1);else if(!(nv[j]>.5))nv[j]=0}}}}}}}
 const mc=document.createElement('canvas');mc.width=mc.height=S_;const mg=mc.getContext('2d');const md=mg.createImageData(S_,S_);for(let i=0;i<S_*S_;i++){const v=nv[i];md.data[i*4+3]=Math.round(255*Math.min(1,Math.max(0,(v-.15)/.7)))}mg.putImageData(md,0,0);
   const OW=Math.min(sw,480),OH=Math.round(OW*sh/sw),oc=document.createElement('canvas');oc.width=OW;oc.height=OH;const og=oc.getContext('2d');og.drawImage(im,sx,sy,sw,sh,0,0,OW,OH);og.globalCompositeOperation='destination-in';og.imageSmoothingQuality='high';og.drawImage(mc,0,0,OW,OH);
   const a=og.getImageData(0,0,OW,OH).data;let X0=OW,Y0=OH,X1=-1,Y1=-1,n=0;const rc=new Array(OH).fill(0),cc=new Array(OW).fill(0);for(let y=0;y<OH;y++)for(let x=0;x<OW;x++)if(a[(y*OW+x)*4+3]>128){n++;rc[y]++;cc[x]++}
