@@ -466,7 +466,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .cu-sw{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#F3E8DF;border-radius:99px;padding:4px;margin-bottom:12px}.cu-sw button{display:flex;align-items:center;justify-content:center;gap:7px;border:0;background:transparent;font:inherit;font-size:15px;font-weight:700;color:#7C5A4B;border-radius:99px;padding:10px 0;cursor:pointer;transition:all .25s}.cu-sw button[aria-pressed=true]{background:#fff;color:#4A2A1E;box-shadow:0 4px 12px rgba(170,128,86,.18)}
 .pk-pu{margin:-2px 14px 10px;font-size:13.5px;line-height:1.4;color:#6B4A3C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pk-pu b{color:#4A2A1E}.pk-pu.full{display:block}
 </style>
-<script>window.MM_VER="1794731395";</script>
+<script>window.MM_VER="1795775161";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1712,7 +1712,7 @@ body.shc-open #view{padding-bottom:58vh}
 @keyframes shunIn{from{opacity:0;transform:translate(-50%,-46%) scale(.94)}}@keyframes shunTw{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.95;transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.shun{animation:none}.shun-bg{animation:none}.shun-sp i{animation:none;opacity:.7}}
 /* ===== Comparador de produtos ===== */
-.seg.psg{grid-template-columns:repeat(4,1fr);gap:6px}.seg.psg button{flex-direction:column;gap:4px;font-size:12px;min-height:58px;padding:8px 2px;line-height:1.1}.seg.psg button svg{width:18px;height:18px}
+.seg.psg{grid-template-columns:repeat(3,1fr);gap:8px}.seg.psg button{flex-direction:column;gap:4px;font-size:12px;min-height:58px;padding:8px 2px;line-height:1.1}.seg.psg button svg{width:18px;height:18px}
 .cm{--cm-sage:#E4EAD8;--cm-sage-i:#3E4C33;--cm-neu:#F6EBDC;--cm-att:#F6DDD0;--cm-att-i:#8A3F27;--cm-br:#4A2A1E}
 .cm .pl-h h1{font-size:clamp(26px,7.4vw,32px)}
 .cm-slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
@@ -1859,7 +1859,7 @@ const IC={
 const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
 const ICONS={assistant:ic('chatai',22),hoje:ic('home',22),pele:ic('face',22),rotina:ic('routine',22),produtos:ic('bag',22),escanear:ic('scan',22),cabelo:ic('hair',22),mais:ic('more',22),cuidados:ic('lotus',22)};
 const LOGO=`<img class="logo" src="pellie-flor.png" alt="">`;
-const TABS=[['hoje','Hoje'],['cuidados','Cuidados'],['scan','Scan'],['produtos','Produtos'],['assistant','Assistant']];
+const TABS=[['hoje','Hoje'],['cuidados','Cuidados'],['scan','Scan'],['produtos','Produtos'],['assistant','Assistente']];
 const SCAN_BTN='<button class="scanb" data-act="scan-open" aria-label="Scan: analisar pele, cabelo ou produto" aria-haspopup="dialog"><span class="scb"><svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3"/></svg><i aria-hidden="true"><svg viewBox="0 0 12 12" width="9" height="9"><path fill="#fff" d="M6 0l1.2 3.800L11 5l-3.800 1.200L6 10 4.800 6.200 1 5l3.800-1.200z"/></svg></i><b>Scan</b></span></button>';
 const AGES=[['20','Até 29 anos'],['30','30 a 39 anos'],['40','40 a 49 anos'],['50','50 anos ou mais']];
 const TIERS=[['econ','Econômico'],['mid','Intermediário'],['prem','Premium']];
@@ -2141,7 +2141,7 @@ function renderChrome(){
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
   $('#nav').innerHTML=TABS.map(([k,l])=>k==='scan'?SCAN_BTN:`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
   document.documentElement.dataset.tema=S.tema||'rosa';
-  const c=S.cele,el=$('#cele');
+  const c=(S.ob.done&&tourHtml())?null:S.cele,el=$('#cele');
   el.hidden=!c;
   if(c&&el.dataset.k!==c.id){
     el.dataset.k=c.id;
@@ -2875,7 +2875,7 @@ function viewRotinaFull(){
 }
 
 const exList=(a,k)=>a&&a.length?(FOTOS?`<div class="exh">Exemplos</div>${a.map(n=>prodCard(n,k)).join('')}<span class="pimgc">Fotos: Open Beauty Facts (CC BY-SA), quando disponíveis.</span>`:`<div class="exh">Exemplos</div><ul class="exl">${a.map(n=>`<li>${ic('tag',16)}${esc(n)}</li>`).join('')}</ul>`):'<p class="small muted" style="margin-top:10px">Qualquer marca com esta fórmula serve. Confira a lista de ingredientes.</p>';
-const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'&&S.prodSub!=='cmp'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('tag',18)}Prateleira</button><button data-go="escanear" aria-pressed="${S.tab==='escanear'}">${ic('scan',18)}Escanear</button><button data-psub="cmp" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='cmp'}">${ic('cmp',18)}Comparar</button>`;
+const subSeg=()=>`<button data-psub="rec" aria-pressed="${S.tab!=='escanear'&&S.prodSub!=='shelf'&&S.prodSub!=='cmp'}">${ic('routine',18)}Indicados</button><button data-psub="shelf" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='shelf'}">${ic('tag',18)}Prateleira</button><button data-psub="cmp" aria-pressed="${S.tab!=='escanear'&&S.prodSub==='cmp'}">${ic('cmp',18)}Comparar</button>`;
 function shelfKey(i){if(i.cat==='cabelo')return 'cabelo';const t=String(i.tp||i.n||'').toLowerCase();
   const T=[[/protetor|fps|solar|sunscreen|sun /,'fps'],[/limp[ae]|espuma|sabonete|cleans|micelar/,'limpador'],[/vitamina c|vit\.? ?c|ascorb/,'vitc'],[/niacin/,'niacina'],[/retin/,'retinol'],[/hialur/,'hialu'],[/ácido|acido|bha|salic|glic|esfol|peeling/,'bha'],[/máscara|mascara|calmant|cica/,'calmante'],[/sérum|serum|ampola|essence|esséncia|essência/,'niacina'],[/hidrat|creme|loção|locao|moistur|gel-creme/,'hidr']];
   for(const [r,k] of T)if(r.test(t))return k;return 'hidr'}
@@ -2930,7 +2930,7 @@ function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow ${r===0?'r0':'rm'}">${c}</div><div class="splank${r===L.R-1?' last':''}"></div>`}
-  const head=`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':n?`<b>${n} ${n===1?'produto':'produtos'}</b>`:'<b>Sem produtos ainda</b>'}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<div class="shh-g"><button class="shh-b" data-shc="open" aria-label="Personalizar a prateleira">${ic('brush',15)}Personalizar</button>${n?`<button class="shh-b" data-shed="edit">${ic('edit',15)}Editar</button>`:''}</div>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reorganizar${showD&&shEd.dp&&shEd.dp.length?' produtos e decoração':''}.</p>`:''}`;
+  const head=`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':n?`<b>${n} ${n===1?'produto':'produtos'}</b>`:'<b>Sem produtos ainda</b>'}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<div class="shh-g"><button class="shh-b" data-shc="open" aria-label="Decorar a prateleira">${ic('brush',15)}Decorar</button>${n?`<button class="shh-b" data-shed="edit" aria-label="Organizar os produtos">${ic('edit',15)}Organizar</button>`:''}</div>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reorganizar${showD&&shEd.dp&&shEd.dp.length?' produtos e decoração':''}.</p>`:''}`;
   return `<div class="shwrap">${head}${ed&&shEd.undo?`<div class="shundo" role="status"><span>Produto removido da prateleira.</span><button data-shed="undo">Desfazer</button></div>`:''}<div class="shelfv sx sty-${st.id}${ed?' shedit':''}" style="${shsVars(st)}" role="group" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div></div>`}
 /* "Para que serve": usa a explicação do scanner quando o produto foi escaneado; senão, só tipos que o nome deixa claros. Sem evidência, não mostra nada. */
 const SH_PU=[[/protetor|fps|solar|sunscreen/,'Protege a pele dos raios UV, ajudando a prevenir manchas e o envelhecimento.'],[/limpa|espuma de limpeza|sabonete|micelar|cleans/,'Remove sujeira, oleosidade e resíduos do dia sem agredir a pele.'],[/vitamina c|vit\.? ?c\b|ascorb/,'Antioxidante que ajuda a uniformizar o tom e dar luminosidade.'],[/niacin/,'Ajuda a controlar a oleosidade e a aparência dos poros.'],[/retinol|retinoico|retinal/,'Estimula a renovação da pele e suaviza linhas finas.'],[/hialur/,'Atrai e retém água, deixando a pele hidratada e macia.'],[/salic|glicolic|\bbha\b|\baha\b|peeling|esfoli/,'Esfolia suavemente e ajuda a desobstruir os poros.'],[/calmante|cica|centella|panthenol|pantenol/,'Ajuda a acalmar a vermelhidão e a sensibilidade da pele.'],[/hidratante|creme|locao|moistur|ceramid/,'Hidrata e ajuda a reforçar a barreira da pele.']];
@@ -3123,8 +3123,8 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
       <span class="pf-conf ${conf==='alta'?'pc-ok':conf==='média'?'pc-md':'pc-lo'}">${ic('lock',14)}Confiança da leitura: ${conf} · ${i.confianca}%</span>
       ${i.texto_lido.length?`<details class="pf-det"><summary>O que lemos na embalagem</summary><div class="pf-chips sm">${i.texto_lido.map(t=>`<span>${esc(t)}</span>`).join('')}</div><small>${i.lista_lida?`Lista de ingredientes lida: ${i.ingredientes_lidos.length} itens.`:'A lista de ingredientes não apareceu na foto.'}</small></details>`:''}
       <div class="pf-ft"><button class="btn obc" data-act="pf-ok" ${duv&&!opts.length?'disabled':''}>Confirmar produto</button><button class="back" data-act="pf-retake" style="padding:10px;color:var(--muted)">${duv?'Não é nenhum desses: tirar outra foto':'Tirar outra foto'}</button></div></div>`}
-  else if(f.st==='score'){const sc=f.sc,C=PF_CLS[sc.cls];
-    b=`<div class="pf-body pf-in" style="text-align:center"><div class="pf-big ind ${C[2]}" data-k="${esc('pf'+Date.now())}" data-dl="300">${odo(sc.v)}</div><b class="pf-lab">Compatibilidade com ${AX[f.area||'pele'].com}</b>
+  else if(f.st==='score'){const sc=f.sc,C=PF_CLS[sc.cls],ent=!f.scVisto;f.scVisto=true;
+    b=`<div class="pf-body${ent?' pf-in':''}" style="text-align:center"><div class="pf-big ind ${C[2]}" data-k="${esc(f.odoK||(f.odoK='pf'+Date.now()))}" data-dl="300">${odo(sc.v)}</div><b class="pf-lab">Compatibilidade com ${AX[f.area||'pele'].com}</b>
       <div class="pf-circ ${C[2]}">${ph}</div>
       <span class="pf-badge ${C[2]}">${ic(sc.cls==='boa'?'checkc':sc.cls==='mod'?'alert':'xc',18)}${C[0]}</span><p class="pf-s" style="margin:0">${esc(f.cmp.resumo)}</p>
       <details class="pf-det"><summary>Como calculamos</summary><ul class="pf-crit">${sc.parts.map(p=>`<li><span><b>${p.lab}</b>${p.mot?`<small>${esc(p.mot)}</small>`:''}</span><em>${p.pts}/${p.max}</em></li>`).join('')}${sc.pen?`<li><span><b>Ingredientes que você evita</b><small>${esc(f.cmp.evitar_encontrados.join(', '))}</small></span><em>-${sc.pen}</em></li>`:''}</ul>
@@ -3231,6 +3231,7 @@ function viewBodyQuiz(){const i=Math.max(0,Math.min(BQ.length-1,S.bqi||0)),[k,l,
   <div class="hf-nv"><button class="btn ghost" data-act="bq-back">Voltar</button><button class="btn pl-go" data-act="bq-next" ${bqOk(k)?'':'disabled'}>${i===BQ.length-1?'Salvar e continuar':'Próximo'}${ic('chev',16)}</button></div></div>`}
 function viewEscanear(){
   if(S.pf)return pfView();
+  if(!S.pfArea&&!S.pfPick)S.pfArea='pele'; /* começa em Pele do rosto; "Trocar" abre a escolha */
   if(S.pfArea==='corpo'&&(S.bqRun||!bqDone()))return viewBodyQuiz();
   const r=S.prodResult;
   const img=S.prodPhoto?`<img class="prodimg" src="${S.prodPhoto}" alt="Foto do produto">`:'';
@@ -3244,7 +3245,7 @@ function viewEscanear(){
     <p class="note">${r.lista_lida===false?'Não consegui ler a lista de ingredientes; a avaliação usa só o tipo do produto. ':''}Não é diagnóstico. Teste em uma área pequena antes.</p></div>`})()
     :'';
   const hist=S.prods.length?`<div class="card"><h3>Já escaneados</h3>${S.prods.map((p,k)=>`<${p.snap?`button data-pfh="${k}" class="entry pf-he"`:'div class="entry"'}><div class="wk">${fmtD(p.d)}</div><div style="text-align:left;flex:1"><div class="small"><b>${esc(p.produto||'Produto')}</b>${p.marca?` <span class="muted">· ${esc(p.marca)}</span>`:''}</div><div class="small muted">${p.snap?(PF_CLS[p.snap.sc.cls]||PF_CLS.mod)[0]+' · '+p.nota+'%':(VERD[p.veredito]||VERD.cuidado)[1]+' · nota '+p.nota}</div></div>${p.snap?ic('chev',16):''}</${p.snap?'button':'div'}>`).join('')}</div>`:'';
-  return `<div class="stack"><div class="seg psg" role="group" aria-label="Seção">${subSeg()}</div>
+  return `<div class="stack"><div class="pl-h"><h1>Escanear produto</h1><p>Fotografe o rótulo e veja se combina com você.</p></div>
   ${(()=>{if(S.pfArea==='cabelo'&&!hairOk())return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Antes, faça a análise do seu cabelo</h2><p class="small muted" style="margin:6px 0 14px">Para saber se um produto combina com o seu cabelo, a Pellie precisa conhecer o seu tipo de fio, porosidade e danos. Leva poucos minutos.</p><button class="btn obc pfg-go" data-act="pf-hair">${ic('hair',18)}Fazer análise do cabelo</button><button class="back" data-pfarea="troca" style="display:block;margin:10px auto 0;padding:8px;color:var(--muted)">Escolher outra área</button></div>`;
     if(!S.pfArea)return `<div class="card pfg"><span class="pfg-k">${ic('scan',14)}Scanner de produtos</span><h2>Esse produto é para...</h2><p class="small muted" style="margin:6px 0 12px">A análise muda conforme a área, então escolha antes de fotografar.</p><div class="hf-os">${Object.keys(PF_AREA).map(a=>`<button class="hf-o" data-pfarea="${a}"><span style="display:flex;align-items:center;gap:10px">${ic(PF_AREA[a][1] in IC?PF_AREA[a][1]:'drop',20)}${a==='corpo'?'Corpo':a==='cabelo'?'Cabelo':'Pele do rosto'}</span>${ic('chev',16)}</button>`).join('')}</div></div>`;
     const tem=!!S.prodFile;const passo=(n,t,d,on,ok)=>`<li class="${ok?'ok':on?'on':''}"><i>${ok?ic('check',12):n}</i><span><b>${t}</b>${on||ok?`<small>${d}</small>`:''}</span></li>`;
@@ -5036,7 +5037,7 @@ const TOUR=[['face','Avalie sua pele','Uma selfie com luz natural e o Pellie mos
 ['hair','Avalie seu cabelo','Foto do cabelo e poucas perguntas geram o seu perfil capilar e o cronograma de hidratação, nutrição e reconstrução.','cabelo'],
 ['tag','Cadastre seus produtos','Escaneie o rótulo e o Pellie identifica o produto, compara com a sua pele e guarda na prateleira.','produtos'],
 ['routine','Organize suas rotinas','Rotina da manhã e da noite com lembretes, e registro do que você já fez.','rotina'],
-['chatai','Converse com o Assistant','Tire dúvidas sobre pele, cabelo e produtos. Ele responde com base no seu perfil.','assistant']];
+['chatai','Converse com o Assistente','Tire dúvidas sobre pele, cabelo e produtos. Ele responde com base no seu perfil.','assistant']];
 function tourHtml(){const T=S.tour||{};if(!T.on&&(T.seen||S.tab!=='hoje'))return '';const i=Math.min(T.i||0,TOUR.length-1),[ico,t,x,go]=TOUR[i],ult=i===TOUR.length-1;
   return `<div class="tr-bg" role="dialog" aria-modal="true" aria-label="Tour do Pellie"><div class="tr-c"><span class="tr-fl">${ic(ico,44)}</span><h2>${t}</h2><p>${x}</p>
   <div class="tr-dots">${TOUR.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div>
@@ -5188,10 +5189,10 @@ document.addEventListener('click',e=>{
   else if(d.act==='ast-menu'){S.astMenu=!S.astMenu;render()}
   else if(d.act==='ast-clear'){S.chat=[];S.astErr=null;S.astMenu=false;save();render()}
   else if(d.act==='ast-back'){const f=S.astFrom&&S.astFrom!=='assistant'?S.astFrom:'hoje';S.astFrom=null;goTab(f)}
-  else if(d.pfarea){if(d.pfarea==='troca'){S.pfArea=null;S.bqRun=false}else{S.pfArea=d.pfarea;if(d.pfarea==='corpo'&&!bqDone()){S.bqRun=true;S.bqi=0}}render();window.scrollTo(0,0)}
+  else if(d.pfarea){if(d.pfarea==='troca'){S.pfArea=null;S.pfPick=true;S.bqRun=false}else{S.pfArea=d.pfarea;S.pfPick=false;if(d.pfarea==='corpo'&&!bqDone()){S.bqRun=true;S.bqi=0}}render();window.scrollTo(0,0)}
   else if(d.bq){const [k,v]=d.bq.split('|');if(BQM[k]){let a=bqA(k).slice();if(v==='nada')a=a.includes('nada')?[]:['nada'];else{a=a.filter(x=>x!=='nada');a=a.includes(v)?a.filter(x=>x!==v):[...a,v]}S.bq[k]=a}else S.bq[k]=v;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='bq-next'){const k=BQ[S.bqi][0];if(!bqOk(k))return;if(S.bqi>=BQ.length-1){S.bqRun=false;save();toast('Quiz do corpo salvo',true)}else S.bqi++;render();window.scrollTo(0,0)}
-  else if(d.act==='bq-back'){if(S.bqi>0)S.bqi--;else{S.bqRun=false;S.pfArea=null}render();window.scrollTo(0,0)}
+  else if(d.act==='bq-back'){if(S.bqi>0)S.bqi--;else{S.bqRun=false;S.pfArea=null;S.pfPick=true}render();window.scrollTo(0,0)}
   else if(d.act==='bq-redo'){S.bqRun=true;S.bqi=0;S.pfArea='corpo';goTab('escanear')}
   else if(d.hq){const [k,v]=d.hq.split('|');if(HQM[k]){let a=hqA(k).slice();if(v==='nao')a=a.includes('nao')?[]:['nao'];else{a=a.filter(x=>x!=='nao');a=a.includes(v)?a.filter(x=>x!==v):[...a,v]}S.hq[k]=a}else S.hq[k]=S.hq[k]===v?null:v;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='analisar-cabelo'){analisarCabelo()}
@@ -5630,7 +5631,7 @@ function shcAct(v){const [a,id]=v.split('|');
     if(!shDOk(id))shC.hint=shLvTxt(m.lv);
     else{const i=shC.put.findIndex(x=>x.a===id);if(i>=0)shC.put.splice(i,1);else{const p=shdSlot(shC.put,shN());shC.put.push({a:id,r:p.r,s:p.s})}shC.hint='';hapt()}}
   else if(a==='cancel'){shcReset();hapt()}
-  else if(a==='apply'){const st=SHS_BY[shC.sty];if(!shStOk(st)){toast('Esse estilo ainda está bloqueado');return}const D=shdGet();D.sel=st.id;D.put=shdNorm(shC.put,shN());shcReset();hapt();toast('Prateleira personalizada',true)}
+  else if(a==='apply'){const st=SHS_BY[shC.sty];if(!shStOk(st)){toast('Esse estilo ainda está bloqueado');return}const D=shdGet();D.sel=st.id;D.put=shdNorm(shC.put,shN());shcReset();hapt();toast('Prateleira decorada',true)}
   shRefresh()}
 /* ---- desbloqueio: um cartão sofisticado, sem confete, que respeita "reduzir movimento" ---- */
 function shunHtml(){const D=shdGet(),p=D.pend.filter(k=>k[0]==='d'?SHD_BY[k.slice(2)]:SHS_BY[k.slice(2)]);if(!p.length)return '';
@@ -5641,7 +5642,7 @@ function shunHtml(){const D=shdGet(),p=D.pend.filter(k=>k[0]==='d'?SHD_BY[k.slic
    <p class="kick">${allS?'Um novo estilo para o seu cantinho.':'Um novo detalhe para o seu cantinho.'}</p><h2 id="shun-t">${esc(tit)}</h2><p class="small muted">${it.length===1?esc(f.d):'Estão no seu inventário, prontas para decorar.'}</p>
    <button class="btn" data-shun="go" id="shun-go">${allS?'Ver estilos':'Decorar minha prateleira'}</button><button class="shun-no" data-shun="no">Agora não</button></div>`}
 function shunUpd(){let m=document.getElementById('shun');if(!m){m=document.createElement('div');m.id='shun';document.body.appendChild(m)}
-  const D=shdGet(),on=S.plus&&S.ob.done&&!S.cele&&D.pend.length&&!document.querySelector('.lg');const h=on?shunHtml():'';if(m.dataset.h===h)return;m.dataset.h=h;m.innerHTML=h;
+  const D=shdGet(),on=S.plus&&S.ob.done&&!S.cele&&!tourHtml()&&D.pend.length&&!document.querySelector('.lg');const h=on?shunHtml():'';if(m.dataset.h===h)return;m.dataset.h=h;m.innerHTML=h;
   if(h)setTimeout(()=>{const b=document.getElementById('shun-go');if(b)try{b.focus({preventScroll:true})}catch(e){}},60)}
 function shunAct(v){const D=shdGet(),hasD=D.pend.some(k=>k[0]==='d');D.pend=[];hapt();
   if(v==='go'){S.tab='produtos';S.prodSub='shelf';S.pkDet=null;S.pkList=false;S.shSel=null;S.shF='todos';render();window.scrollTo(0,0);shcOpen(hasD?'dec':'est')}else render()}
