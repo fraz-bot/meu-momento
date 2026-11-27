@@ -499,7 +499,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795788108";</script>
+<script>window.MM_VER="1795791000";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2169,20 +2169,6 @@ function nextStep(){
 
 
 
-/* ===== Atalho pelo código de barras (27/11/2026): o app lê o código na foto (no próprio aparelho) e envia junto.
-   Se o produto já foi identificado antes, o servidor responde sem chamar a IA. Leitor: BarcodeDetector (Android) ou ZXing (Apache-2.0, carregado só aqui). ===== */
-let ZXP=null;
-function zxLoad(){if(window.ZXing)return Promise.resolve(window.ZXing);if(ZXP)return ZXP;ZXP=new Promise((ok,no)=>{const s=document.createElement('script');s.src='zxing/zxing.min.js';s.onload=()=>ok(window.ZXing);s.onerror=()=>{ZXP=null;no(new Error('zxing'))};document.head.appendChild(s)});return ZXP}
-function gtinNorm(c){c=String(c||'').replace(/\D/g,'');if(c.length===12)c='0'+c;if(!/^(\d{8}|\d{13}|\d{14})$/.test(c))return null;const d=c.split('').map(Number),chk=d.pop();let s=0;d.reverse().forEach((v,i)=>s+=v*(i%2===0?3:1));return (10-s%10)%10===chk?c:null}
-async function pfCodigo(file){try{const f=Array.isArray(file)?file[0]:file;if(!f)return null;
-  const url=typeof f==='string'?f:URL.createObjectURL(f);const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=url});
-  const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);if(typeof f!=='string')URL.revokeObjectURL(url);
-  if('BarcodeDetector' in window){try{const bd=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});const rs=await bd.detect(c);for(const x of rs){const v=gtinNorm(x.rawValue);if(v)return v}}catch(e){}}
-  const Z=await zxLoad(),h=new Map();h.set(Z.DecodeHintType.POSSIBLE_FORMATS,[Z.BarcodeFormat.EAN_13,Z.BarcodeFormat.EAN_8,Z.BarcodeFormat.UPC_A,Z.BarcodeFormat.UPC_E]);h.set(Z.DecodeHintType.TRY_HARDER,true);
-  const rd=new Z.MultiFormatReader();rd.setHints(h);
-  for(const cv of [c,()=>{const r=document.createElement('canvas');r.width=c.height;r.height=c.width;const g=r.getContext('2d');g.translate(r.width,0);g.rotate(Math.PI/2);g.drawImage(c,0,0);return r}]){
-    try{const cc=typeof cv==='function'?cv():cv;const res=rd.decode(new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(cc))));const v=gtinNorm(res.getText());if(v)return v}catch(e){}}
-  return null}catch(e){return null}}
 /* ===== Avisos de validade e recompra (27/11/2026): um aviso por produto, com substituto compatível. Sem IA. ===== */
 const AV_CAT=[['fps',/protetor|fps|spf|solar/],['niacina',/niacin/],['vitc',/vitamina c|vit\.? ?c\b|asc[oó]rb/],['retinol',/retin/],['bha',/salic|\bbha\b/],['hialu',/hialur|hyaluron/],['calmante',/calm|cica|pantenol|panthenol/],['limpador',/limp|cleans|sabonete|micelar|espuma/],['hidr',/hidrat|moistur|ceramid|creme/]];
 function avCat(...t){const x=t.filter(Boolean).join(' ').toLowerCase();const m=AV_CAT.find(([,r])=>r.test(x));return m?m[0]:null}
@@ -2463,7 +2449,7 @@ const sampleP=Promise.resolve({
   async json(prompt,o){
     o=o||{};const corpo={tipo:o.tipo};
     if(o.tipo==='texto')corpo.prompt=prompt;
-    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg';if(o.codigo)corpo.codigo=o.codigo}else if(o.ref&&o.pais){corpo.ref=o.ref;corpo.pais=o.pais}}
+    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg';}else if(o.ref&&o.pais){corpo.ref=o.ref;corpo.pais=o.pais}}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
       const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',cod,msg:(cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
@@ -3171,13 +3157,13 @@ function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'
 function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}if(f.st==='cmp'&&f.t0){const t=(Date.now()-f.t0)/1000;f.p=Math.max(f.p,Math.min(92,92*(1-Math.exp(-t/11))))}else f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
 async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='cabelo'&&!hairOk()){render();return}if(!S.prodFile||(S.pf&&S.pf.busy))return;if(!podeUsar('sc'))return limite();
   const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn),t_ini:Date.now()};render();pfProg();
-  try{const cod=await Promise.race([pfCodigo(S.prodFile),new Promise(ok=>setTimeout(()=>ok(null),2500))]);if(S.pf)S.pf.codLido=cod;
-    const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',codigo:cod||undefined,ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
+  try{
+    const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
     if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
     else{S.pf.idr={area,real:pfReal(r),produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),variante:pfStr(r.variante,60),qtd:(+r.quantidade>0&&+r.quantidade<100000)?Math.round(+r.quantidade*10)/10:null,un:['ml','g','un'].includes(String(r.unidade||'').toLowerCase())?String(r.unidade).toLowerCase():null,codigo:/^\d{8,14}$/.test(String(r.codigo_barras||'').replace(/\D/g,''))?String(r.codigo_barras).replace(/\D/g,''):null,confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
-      S.pf.p=100;S.pf.st='conf';S.pf.t_id=Date.now();S.pf.atalho=r.atalho===true;if(S.pf.atalho)toast('Reconhecido pelo código de barras',1);pfPre(S.pf)}
+      S.pf.p=100;S.pf.st='conf';S.pf.t_id=Date.now();pfPre(S.pf)}
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf){S.pf.busy=false;if(S.pf.st==='conf'&&pfAutoOk(S.pf)){S.pf.auto=true;pfCmp();return}}render()}
 /* Leitura muito confiável (≥ 90%), área certa e opção principal: segue direto para a comparação ("Não é esse produto?" no resultado permite voltar). */
