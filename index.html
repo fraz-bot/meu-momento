@@ -270,6 +270,14 @@
 .shh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 6px;min-height:44px}.shh-t b{font-size:15px;color:#4A2A1E}
 .shh-b{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #E6D3BF;background:rgba(255,253,251,.75);color:#6B4A36;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s,color .18s,border-color .18s;-webkit-tap-highlight-color:transparent}
 .shh-b.on{background:#6A3F2B;border-color:#6A3F2B;color:#fff}
+.shf-s{position:relative;display:inline-flex;align-items:center;min-height:44px;border-radius:999px;border:1px solid #E6D3BF;background:rgba(255,253,251,.75);color:#6B4A36}.shf-s select{appearance:none;-webkit-appearance:none;border:0;background:none;font:inherit;font-weight:700;font-size:14px;color:inherit;min-height:44px;padding:0 34px 0 16px;border-radius:999px;cursor:pointer}.shf-s svg{position:absolute;right:13px;pointer-events:none}.shf-s .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.shsh-b{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;margin:12px 0 2px;border:0;border-radius:999px;background:#6A3F2B;color:#fff;font:inherit;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 18px rgba(106,63,43,.22);-webkit-tap-highlight-color:transparent}.shsh-b:active{transform:scale(.98)}
+.shs-nt{display:flex;gap:12px;align-items:center;border-radius:18px;padding:12px 14px;background:var(--ok-soft,#E7F0EA)}.shs-nt.mod{background:var(--att-soft,#F9E8DE)}.shs-nt.baixa{background:#F6E1DA}
+.shs-sc{flex:none;width:62px;height:62px;border-radius:16px;display:grid;place-content:center;text-align:center;color:#fff;background:var(--ok,#4F8A6B)}.shs-nt.mod .shs-sc{background:var(--att,#B8623F)}.shs-nt.baixa .shs-sc{background:#A2412E}.shs-sc b{font-size:24px;line-height:1}.shs-sc small{font-size:10.5px;opacity:.9;margin-top:2px}
+.shs-ntt{min-width:0}.shs-ntt b{font-size:15px;color:#4A2A1E}.shs-ntt p{margin:3px 0 0;font-size:13.5px;color:#5B4636}.shs-al{display:flex;gap:6px;align-items:flex-start}.shs-al svg{flex:none;margin-top:2px;color:var(--att,#B8623F)}
+#shshare{position:fixed;inset:0;z-index:120;background:rgba(40,22,14,.62);display:grid;place-items:center;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));animation:shsIn .2s ease}#shshare .shp-w{display:grid;gap:14px;justify-items:center;width:100%;max-width:380px}#shshare img{display:block;max-width:100%;max-height:68vh;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35)}#shshare .shsh-b{margin:0;background:#FFFDFB;color:#4A2A1E}#shshare .shp-x{border:0;background:none;color:#fff;font:inherit;font-weight:700;font-size:15px;min-height:44px;padding:0 18px;cursor:pointer}
+@keyframes shsIn{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){#shshare{animation:none}}
+
 .shh-i{display:flex;align-items:center;gap:8px;margin:0 4px 6px;font-size:13px;color:#7B6858}
 .shedit .sbot{animation:none}.shedit .shp{position:relative;width:76px;max-width:100%;min-height:84px;display:grid;place-items:end center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:grab;outline:none}
 .shedit .shp:focus-visible{outline:2px solid #6A3F2B;outline-offset:2px;border-radius:14px}
@@ -507,7 +515,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795802000";</script>
+<script>window.MM_VER="1795803000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1833,6 +1841,7 @@ body.shc-open #view{padding-bottom:58vh}
 <script>
 const IC={
   x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  share:'<path d="M12 3v12M7.5 7.5L12 3l4.5 4.5"/><path d="M5 13v5.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V13"/>',
   grip:'<g fill="currentColor" stroke="none"><circle cx="7" cy="7" r="1.6"/><circle cx="12" cy="7" r="1.6"/><circle cx="17" cy="7" r="1.6"/><circle cx="7" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="17" cy="12" r="1.6"/><circle cx="7" cy="17" r="1.6"/><circle cx="12" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></g>',
   hair:'<path d="M6 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M12 3c3 3-3 6 0 9s-3 6 0 9"/><path d="M18 3c3 3-3 6 0 9s-3 6 0 9"/>',
   face:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 10h.01M15 10h.01"/>',
@@ -1896,6 +1905,7 @@ const IC={
   star:'<path d="M12 3l2.700 5.600 6.100.9-4.400 4.300 1 6.100L12 17l-5.400 2.900 1-6.100L3.200 9.500l6.100-.9z"/>',
   lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
   chev:'<path d="M9 6l6 6-6 6"/>',
+  chevd:'<path d="M6 9l6 6 6-6"/>',
   citrus:'<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M6.300 6.300l11.400 11.400M17.700 6.300L6.300 17.700"/>'
 };
 const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
@@ -3074,7 +3084,8 @@ function shelfViz(it){it=it.filter(x=>stOf(x)!=='acabou');
     else if(idx===n)c+=`<button class="sbot sgh" data-go="escanear" aria-label="Adicionar produto">${ic('plus',22)}</button>`;
     else c+='<div class="sbot"></div>'}
     h+=`<div class="srow ${r===0?'r0':'rm'}">${c}</div><div class="splank${r===L.R-1?' last':''}"></div>`}
-  const head=`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':n?`<b>${n} ${n===1?'produto':'produtos'}</b>`:'<b>Sem produtos ainda</b>'}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<div class="shh-g"><button class="shh-b" data-shc="open" aria-label="Decorar a prateleira">${ic('brush',15)}Decorar</button>${n?`<button class="shh-b" data-shed="edit" aria-label="Organizar os produtos">${ic('edit',15)}Organizar</button>`:''}</div>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reorganizar${showD&&shEd.dp&&shEd.dp.length?' produtos e decoração':''}.</p>`:''}`;
+  const F_=S.shF||'todos',fsel=`<label class="shf-s"><span class="sr">Categoria</span><select id="shf-sel" aria-label="Categoria">${[['todos','Todos'],['rosto','Rosto'],['cabelo','Cabelo'],['corpo','Corpo']].map(([k,l])=>`<option value="${k}"${F_===k?' selected':''}>${l}</option>`).join('')}</select>${ic('chevd',14)}</label>`;
+  const head=`<div class="shh"><div class="shh-t">${ed?'<b>Organizar produtos</b>':S.shelf.length?fsel:'<b>Sem produtos ainda</b>'}</div>${ed?`<button class="shh-b on" data-shed="done">${ic('check',16)}Concluir</button>`:`<div class="shh-g"><button class="shh-b" data-shc="open" aria-label="Decorar a prateleira">${ic('brush',15)}Decorar</button>${n?`<button class="shh-b" data-shed="edit" aria-label="Organizar os produtos">${ic('edit',15)}Organizar</button>`:''}</div>`}</div>${ed?`<p class="shh-i">${ic('grip',16)}Segure e arraste para reorganizar${showD&&shEd.dp&&shEd.dp.length?' produtos e decoração':''}.</p>`:''}`;
   return `<div class="shwrap">${head}${ed&&shEd.undo?`<div class="shundo" role="status"><span>Produto removido da prateleira.</span><button data-shed="undo">Desfazer</button></div>`:''}<div class="shelfv sx sty-${st.id}${ed?' shedit':''}" style="${shsVars(st)}" role="group" aria-label="Sua prateleira com ${n} ${n===1?'produto':'produtos'}">${h}</div></div>`}
 /* "Para que serve": usa a explicação do scanner quando o produto foi escaneado; senão, só tipos que o nome deixa claros. Sem evidência, não mostra nada. */
 const SH_PU=[[/protetor|fps|solar|sunscreen/,'Protege a pele dos raios UV, ajudando a prevenir manchas e o envelhecimento.'],[/limpa|espuma de limpeza|sabonete|micelar|cleans/,'Remove sujeira, oleosidade e resíduos do dia sem agredir a pele.'],[/vitamina c|vit\.? ?c\b|ascorb/,'Antioxidante que ajuda a uniformizar o tom e dar luminosidade.'],[/niacin/,'Ajuda a controlar a oleosidade e a aparência dos poros.'],[/retinol|retinoico|retinal/,'Estimula a renovação da pele e suaviza linhas finas.'],[/hialur/,'Atrai e retém água, deixando a pele hidratada e macia.'],[/salic|glicolic|\bbha\b|\baha\b|peeling|esfoli/,'Esfolia suavemente e ajuda a desobstruir os poros.'],[/calmante|cica|centella|panthenol|pantenol/,'Ajuda a acalmar a vermelhidão e a sensibilidade da pele.'],[/hidratante|creme|locao|moistur|ceramid/,'Hidrata e ajuda a reforçar a barreira da pele.']];
@@ -3084,9 +3095,8 @@ function viewShelf(){
   const rmS=new Set(shEd.active?shEd.removed.map(r=>r.item.id):[]),all=S.shelf.filter(i=>!rmS.has(i.id)),F=S.shF||'todos',it=all.filter(i=>F==='todos'||shCat(i)===F),soon=shelfSoon().length,nT=temP().length,nQ=all.filter(i=>stOf(i)==='quero').length;S.shOpen=S.shOpen||{};
   const ab=it.filter(i=>stOf(i)==='acabou');
   return `<div class="stack pk pl-in">${pkHead('Minha prateleira',`${nT} ${nT===1?'produto':'produtos'}${nQ?` · ${nQ} para comprar`:''}${soon?` · ${soon} vencendo`:''}`)}
-    <div class="pl-chips" role="group" aria-label="Categoria">${[['todos','Todos'],['rosto','Rosto'],['cabelo','Cabelo'],['corpo','Corpo']].map(([k,l])=>`<button data-pk="shf|${k}" aria-pressed="${F===k}">${l}</button>`).join('')}</div>
     ${shelfViz(it)}
-    ${it.length?`${it.filter(i=>stOf(i)!=='acabou').length&&!shEd.active?`<p class="small muted shtip">Toque em um produto para ver detalhes, rotina e validade.</p>`:''}${ab.length?`<div class="shacab"><small>Acabaram</small>${ab.map(i=>`<button class="chip" data-shopen="${esc(i.id)}">${esc(i.n)}</button>`).join('')}</div>`:''}`
+    ${it.length?`${it.filter(i=>stOf(i)!=='acabou').length&&!shEd.active?`${temP().length?`<button class="shsh-b" data-shshare="1">${ic('share',18)}Compartilhar minha prateleira</button>`:''}<p class="small muted shtip">Toque em um produto para ver a nota, a rotina e a validade.</p>`:''}${ab.length?`<div class="shacab"><small>Acabaram</small>${ab.map(i=>`<button class="chip" data-shopen="${esc(i.id)}">${esc(i.n)}</button>`).join('')}</div>`:''}`
       :`<div class="pl-card" style="text-align:center"><h3>${all.length?'Nenhum produto nesta categoria':'Sua prateleira está vazia'}</h3><p class="small muted" style="margin-top:4px">${all.length?'Escolha outra categoria acima.':'Escaneie um produto e guarde aqui.'}</p></div>`}
     ${guia('Adicionar um produto','Escanear','data-go="escanear"')}</div>`}
 function viewProdutos(){
@@ -5781,12 +5791,63 @@ function shSheet(){const i=S.shSel&&S.shelf.find(x=>x.id===S.shSel);if(!i)return
   const ask=S.shRmAsk===i.id;
   return `<button class="shs-bg" data-shsx="close" aria-label="Fechar" tabindex="-1"></button><div class="shs" role="dialog" aria-modal="true" aria-labelledby="shs-t"><i class="scs-grip" aria-hidden="true"></i>
    <div class="shs-h">${shTh(i,64)}<div class="shs-n"><h3 id="shs-t">${esc(i.n)}</h3><em class="pk-st ${st}">${{tenho:'Em uso',quero:'Quero comprar',acabou:'Acabou'}[st]}</em></div><button class="shs-x" data-shsx="close" aria-label="Fechar">${ic('x',18)}</button></div>
+   ${(()=>{const sn=typeof cgSnap==='function'?cgSnap(i):null,cm=sn&&sn.cmp;let sc=sn&&sn.sc;if((!sc||typeof sc.v!=='number')&&typeof i.nota==='number'&&i.nota>=0)sc={v:i.nota,cls:i.nota>=70?'boa':i.nota>=45?'mod':'baixa'};if(!sc||typeof sc.v!=='number')return '';const C=PF_CLS[sc.cls]||PF_CLS.mod,ev=(cm&&cm.evitar_encontrados)||[],a0=cm&&Array.isArray(cm.alertas)&&cm.alertas[0],al=ev.length?'Tem '+ev.slice(0,2).join(' e ')+', que você prefere evitar.':a0&&a0.texto?String(a0.texto):'',qd=cm&&cm.rotina&&{manha:'de manhã',noite:'à noite',ambos:'de manhã e à noite'}[cm.rotina.periodo];
+     return `<div class="shs-nt ${sc.cls}"><span class="shs-sc"><b>${Math.round(sc.v)}</b><small>de 100</small></span><div class="shs-ntt"><b>${C[0]}</b>${qd?`<p>Use ${qd}.</p>`:''}${al?`<p class="shs-al">${ic('alert',14)}<span>${esc(pfStr(al,140))}</span></p>`:''}</div></div>`})()}
    ${pu?`<div class="shs-s"><b>Para que serve</b><p>${esc(pu)}</p></div>`:''}
    ${tm?`<div class="shs-s"><b>Na rotina</b><div class="pk-qr" style="padding:0;margin:6px 0 0">${[['m','sun','Manhã'],['n','moon','Noite']].map(([k,i_,t])=>`<button data-shrot="${i.id}|${k}" aria-pressed="${inRot(i,k)}" aria-label="${inRot(i,k)?'Tirar da':'Adicionar à'} rotina da ${t.toLowerCase()}">${ic(inRot(i,k)?'check':i_,14)}${t}</button>`).join('')}</div>
      <p class="shs-m">${per.length?'Aparece hoje na sua rotina da '+per.join(' e da ')+'.':'Ainda não está na sua rotina.'}</p></div>
    <div class="shs-s"><b>Validade</b><p>${ab?'Abriu em '+ab+' · ':''}<span class="exp ${f.cls}">${f.txt}</span></p><div class="regg">${[6,12,24].map(m=>`<button class="rg" data-pao="${i.id}|${m}" aria-pressed="${i.meses===m}">${m} meses</button>`).join('')}</div><p class="shs-m">Conte os meses a partir da abertura (o potinho no rótulo).</p></div>`:''}
    <div class="shs-s"><b>Situação</b><div class="regg">${[['tenho','Tenho'],['quero','Quero comprar'],['acabou','Acabou']].map(([k,t])=>`<button class="rg" data-shst="${i.id}|${k}" aria-pressed="${st===k}">${t}</button>`).join('')}</div></div>
    ${ask?`<div class="shs-rm"><span>Remover da prateleira?</span><button class="btn ghost" data-shsx="no">Cancelar</button><button class="btn" data-shsx="yes|${esc(i.id)}">Remover</button></div>`:`<button class="shs-del" data-shsx="ask|${esc(i.id)}">Remover da prateleira</button>`}</div>`}
+
+/* Compartilhar a prateleira: monta uma imagem 1080×1920 (formato Stories) com a mesma estante, decoração e recortes que a pessoa vê. Nada sai do aparelho até ela tocar em Compartilhar. */
+async function shShareImg(){
+  const it=S.shelf.filter(x=>stOf(x)==='tenho');if(!it.length)return null;
+  const D=shdGet(),st0=shStyle(D.sel),st=st0.css?SHS_BY.natural:st0,a=st.ar,L=shdRows(Math.max(0,it.length-1),D.put);
+  const ld=src=>new Promise(ok=>{if(!src)return ok(null);const im=new Image();im.decoding='async';im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src=src});
+  const pc={};await Promise.all(['top','mid','plank','end'].map(async k=>{pc[k]=await ld(`img/shelf/${st.id}-${k}.webp`)}));if(!pc.top||!pc.mid||!pc.plank||!pc.end)return null;
+  const srcOf=x=>{if(x.img&&x.imgv===3)return x.img;const m=String(gShelf(x,62)).match(/src="([^"]+)"/);return m?m[1].replace(/&amp;/g,'&'):null};
+  const W=1080,H=1920,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+  const fd=(getComputedStyle(document.documentElement).getPropertyValue('--f-display')||'').trim()||'system-ui,sans-serif',fb=getComputedStyle(document.body).fontFamily||'system-ui,sans-serif';
+  try{await document.fonts.ready}catch(e){}
+  let gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#FCF6EF');gr.addColorStop(.55,'#F7E9DC');gr.addColorStop(1,'#F0DACA');g.fillStyle=gr;g.fillRect(0,0,W,H);
+  const rg=g.createRadialGradient(W/2,H*.5,40,W/2,H*.5,W*.85);rg.addColorStop(0,'rgba(255,255,255,.6)');rg.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=rg;g.fillRect(0,0,W,H);
+  /* medidas: título, estante e assinatura centralizados juntos na tela */
+  const hg=w=>w/a.top+(L.R-1)*(w/a.mid)+(L.R-1)*(w/a.plank)+w/a.end;let Wd=1000;const maxH=1120;if(hg(Wd)>maxH)Wd=Math.floor(maxH/hg(1));
+  const SH=hg(Wd),HD=250,FT=200,G1=90,G2=100,y0=Math.max(110,(H-(HD+G1+SH+G2+FT))/2),sx=(W-Wd)/2,sy=y0+HD+G1,R_=Math.round(Wd*.075);
+  /* título */
+  const nome=(S.nome||'').trim().split(/\s+/)[0]||'';g.textAlign='center';g.textBaseline='alphabetic';g.fillStyle='#9A7B69';
+  g.font=`600 30px ${fb}`;if('letterSpacing' in g)g.letterSpacing='6px';g.fillText(nome?'A PRATELEIRA DE':'MINHA',W/2,y0+40);if('letterSpacing' in g)g.letterSpacing='0px';
+  g.fillStyle='#4A2A1E';let fs=124;const tt=nome||'Prateleira';g.font=`700 ${fs}px ${fd}`;while(g.measureText(tt).width>W-160&&fs>60){fs-=6;g.font=`700 ${fs}px ${fd}`}g.fillText(tt,W/2,y0+165);
+  g.fillStyle='#8A6F62';g.font=`500 38px ${fb}`;g.fillText(`${it.length} ${it.length===1?'produto':'produtos'} que eu uso`,W/2,y0+235);
+  g.save();g.shadowColor='rgba(150,100,60,.28)';g.shadowBlur=60;g.shadowOffsetY=24;g.fillStyle='#F3E4D5';g.beginPath();g.roundRect?g.roundRect(sx,sy,Wd,SH,R_):g.rect(sx,sy,Wd,SH);g.fill();g.restore();
+  g.save();g.beginPath();g.roundRect?g.roundRect(sx,sy,Wd,SH,R_):g.rect(sx,sy,Wd,SH);g.clip();
+  const k=Wd/333,pad=Wd*st.pad/100,gap=4*k,colW=(Wd-2*pad-3*gap)/4,rows=[];let y=sy;
+  for(let r=0;r<L.R;r++){const h=r===0?Wd/a.top:Wd/a.mid;g.drawImage(r===0?pc.top:pc.mid,sx,y,Wd,h+1);y+=h;rows.push(y);const last=r===L.R-1,ph=last?Wd/a.end:Wd/a.plank;g.drawImage(last?pc.end:pc.plank,sx,y-1,Wd,ph+1);y+=ph-1}
+  const draw=(im,cx,bot,mw,mh,sh)=>{if(!im)return;const sc=Math.min(mw/im.width,mh/im.height),w=im.width*sc,h=im.height*sc;g.save();g.shadowColor=`rgba(80,40,30,${sh})`;g.shadowBlur=5*k;g.shadowOffsetY=4*k;g.drawImage(im,cx-w/2,bot-h,w,h);g.restore()};
+  const cx=ci=>sx+pad+ci*(colW+gap)+colW/2;let q=0;const jobs=[];
+  for(let r=0;r<L.R;r++){const rw=L.dec[r],bot=rows[r]+3*k,cols=[0,1,2,3].filter(ci=>!(ci===0&&rw.l)&&!(ci===3&&rw.r));
+    [['l',0],['r',3]].forEach(([sd,ci])=>{const d=rw[sd],m=d&&SHD_BY[d.a];if(m)jobs.push(ld(`img/deco/${m.id}.webp`).then(im=>()=>draw(im,cx(ci),bot,colW,m.h*k,.22)))});
+    for(const ci of cols){if(q>=it.length)break;const x=it[q++],cut=x.img&&x.imgv===3;jobs.push(ld(srcOf(x)).then(im=>()=>draw(im,cx(ci),bot,Math.min(colW,(cut?52:62)*k),(cut?64:70)*k,.25)))}}
+  (await Promise.all(jobs)).forEach(f=>f());g.restore();
+  /* assinatura */
+  const lg=await ld('pellie-logo.png');const fy=sy+SH+G2;if(lg){const lw=300,lh=lw*lg.height/lg.width;g.drawImage(lg,(W-lw)/2,fy,lw,lh)}
+  g.fillStyle='#8A6F62';g.font=`500 30px ${fb}`;g.fillText('Escaneie e veja o que combina com você',W/2,fy+(lg?150:40));
+  const bl=await new Promise(ok=>c.toBlob(ok,'image/png'));return bl?{bl,url:URL.createObjectURL(bl)}:null}
+async function shShareOpen(){if(shShareOpen.busy)return;shShareOpen.busy=1;toast('Preparando a imagem…');let r=null;try{r=await shShareImg()}catch(e){r=null}shShareOpen.busy=0;
+  if(!r){toast('Não consegui montar a imagem agora. Tente de novo.');return}
+  const o=document.getElementById('shshare');if(o){URL.revokeObjectURL(o.dataset.u||'');o.remove()}
+  const m=document.createElement('div');m.id='shshare';m.dataset.u=r.url;m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');m.setAttribute('aria-label','Compartilhar minha prateleira');
+  m.innerHTML=`<div class="shp-w"><img src="${r.url}" alt="Imagem da sua prateleira para compartilhar"><button class="shsh-b" data-shp="go">${ic('share',18)}Compartilhar</button><button class="shp-x" data-shp="x">Agora não</button></div>`;
+  {const t=$('#toast');if(t){clearTimeout(toast.h);t.hidden=true}}m._bl=r.bl;document.body.appendChild(m);const b=m.querySelector('[data-shp="go"]');if(b)b.focus()}
+function shShareClose(){const m=document.getElementById('shshare');if(!m)return;URL.revokeObjectURL(m.dataset.u||'');m.remove()}
+async function shShareGo(){const m=document.getElementById('shshare');if(!m||!m._bl)return;const f=new File([m._bl],'minha-prateleira-pellie.png',{type:'image/png'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Minha prateleira no Pellie'});shShareClose();return}}catch(e){if(e&&e.name==='AbortError')return}
+  const A=document.createElement('a');A.href=m.dataset.u;A.download=f.name;document.body.appendChild(A);A.click();A.remove();toast('Imagem salva',1)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-shshare],[data-shp]');if(!b)return;e.preventDefault();e.stopPropagation();if(b.dataset.shshare){hapt();shShareOpen()}else if(b.dataset.shp==='go')shShareGo();else shShareClose()},true);
+document.addEventListener('click',e=>{if(e.target&&e.target.id==='shshare')shShareClose()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('shshare'))shShareClose()});
+document.addEventListener('change',e=>{if(e.target&&e.target.id==='shf-sel'){if(shEd.dragging)return;S.shF=e.target.value;const y=window.scrollY;render();window.scrollTo(0,y)}});
 function shSheetUpd(){let m=document.getElementById('shsheet');if(!m){m=document.createElement('div');m.id='shsheet';document.body.appendChild(m)}
   const h=(S.shSel&&S.ob.done&&S.tab==='produtos'&&S.prodSub==='shelf'&&!shEd.active)?shSheet():'';if(m.dataset.h===h)return;const was=!!m.dataset.h;m.dataset.h=h;m.innerHTML=h;const sh=m.querySelector('.shs');if(sh&&was)sh.style.animation='none'}
 function shsAct(v){const [a,id]=v.split('|');
