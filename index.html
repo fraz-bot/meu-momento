@@ -497,7 +497,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 @media(prefers-reduced-motion:reduce){.pf-atv p.on{animation:none}}
 .pill.lvb{border:0;font:inherit;font-size:14px;font-weight:800;gap:6px;padding:4px 12px 4px 5px;cursor:pointer}
 .lvr{position:relative;display:inline-grid;place-items:center;width:24px;height:24px}.lvr>svg:first-child{position:absolute;inset:0;transform:rotate(-90deg)}.lvr>svg+svg{position:relative;display:block}
-.lvr circle{fill:none;stroke-width:2.2}.lvr .t{stroke:rgba(138,106,72,.18)}.lvr .a{stroke:currentColor;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.lvr circle{fill:none;stroke-width:2.2}.lvr .t{stroke:rgba(138,106,72,.22)}.lvr .a{stroke:#B0623F;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
 .cm-pd .cm-sc small{display:block}.cm-spin{display:block;width:22px;height:22px;margin:4px auto 2px;border-radius:50%;border:2.5px solid rgba(138,106,72,.2);border-top-color:var(--accent);animation:spin .9s linear infinite}
 .pf-naoe{display:block;margin:8px auto 0;background:none;border:0;font:inherit;font-size:13.5px;color:var(--muted);text-decoration:underline;cursor:pointer;padding:6px}
 .rt-card{position:relative;display:block;width:100%;text-align:left;border:0;font:inherit;cursor:pointer;border-radius:26px;padding:18px 48px 18px 18px;background:linear-gradient(150deg,#4A2A1E 0%,#6B3A27 100%);color:#FFF6EA;box-shadow:0 12px 28px rgba(74,42,30,.22)}
@@ -523,7 +523,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795804000";</script>
+<script>window.MM_VER="1795805000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1704,6 +1704,8 @@ nav button.scanb{background:transparent!important;box-shadow:none!important;over
 .hj-all2{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:#6B4636;cursor:pointer;padding:6px 0 6px 6px;white-space:nowrap}
 .hj2 .hj-sos small{display:block!important;font-size:13.5px;color:#7A5448;margin-top:2px;line-height:1.3}
 button.hj-sk{display:grid;grid-template-columns:40% 1fr;align-items:stretch;width:100%;padding:0;border:0;border-radius:26px;overflow:hidden;background:linear-gradient(120deg,#FBEBE0,#F8E3D6);text-align:left;cursor:pointer;font:inherit;color:#4A2A1E;box-shadow:0 8px 22px rgba(170,128,86,.12);min-height:150px}
+.lvnx{display:flex;gap:8px;align-items:flex-start;margin-top:12px;padding:10px 12px;border-radius:14px;background:rgba(246,226,214,.6);font-size:13.5px;color:#5B4636}.lvnx svg{flex:none;margin-top:2px;color:#B0623F}
+.hj-skf{display:grid;place-items:center;padding:14px 6px 14px 14px}.hj-skf svg{width:100%;max-width:130px;height:auto;display:block;border-radius:28px;background:rgba(255,253,251,.65);box-shadow:inset 0 0 0 1px rgba(214,180,150,.35)}
 .hj-sk img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;-webkit-mask-image:linear-gradient(90deg,#000 68%,transparent);mask-image:linear-gradient(90deg,#000 68%,transparent)}
 .hj-skt{display:grid;gap:6px;align-content:center;padding:14px 14px 14px 2px}.hj-skt b{font-size:clamp(19px,5.6vw,22px);line-height:1.15;font-weight:700}.hj-skt small{font-size:13.5px;color:#7A5A4B;line-height:1.35}
 .hj-skb{justify-self:start;display:inline-flex;gap:7px;align-items:center;border:1.5px solid #B07A62;border-radius:99px;padding:8px 14px;font-weight:600;font-size:14px;color:#4A2A1E;margin-top:4px}
@@ -2255,7 +2257,7 @@ function retroVisto(m){S.retro=S.retro||{};S.retro[m]=hoje();save()}
 function renderChrome(){
   const on=!S.ob.done;try{retroUpd()}catch(e){}
   document.querySelector('header').hidden=on||S.tab==='assistant';document.querySelector('nav').hidden=on;$('#ages').hidden=true;
-  $('#tag').innerHTML=on||!gameOn()?'':`${streak()>0?`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span>`:''}${(S.xp||0)>0?(()=>{const pc=Math.round((S.xp%XPN)/XPN*100);return `<button class="pill lvb" data-go="mais|medalhas" aria-label="Nível ${lvl()}, ${pc}% para o próximo. Ver conquistas"><span class="lvr" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10.5" class="t"/><circle cx="12" cy="12" r="10.5" class="a" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100-pc}"/></svg>${ic('lotus',12)}</span>${lvl()}</button>`})():''}`;
+  $('#tag').innerHTML=on||!gameOn()?'':`${streak()>0?`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span>`:''}${(S.xp||0)>0?(()=>{const pc=Math.round((S.xp%XPN)/XPN*100);return `<button class="pill lvb" data-go="mais|medalhas" aria-label="Nível ${lvl()}, ${pc}% para o próximo. Ver conquistas"><span class="lvr" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10.5" class="t"/><circle cx="12" cy="12" r="10.5" class="a" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100-pc}"/></svg>${ic('lotus',12)}</span>Nível ${lvl()}</button>`})():''}`;
   if(!on)$('#tag').innerHTML+=`<button class="pill hmais" data-tab="mais" aria-label="Ajustes" ${S.tab==='mais'?'aria-current="page"':''}>${ic('gear',17)}<span>Ajustes</span></button>`;
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
   $('#nav').innerHTML=TABS.map(([k,l])=>k==='scan'?SCAN_BTN:`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
@@ -3666,7 +3668,7 @@ function viewHoje(){
   const cgA=(S.cg&&typeof cgAtual==='function')?cgAtual():null;
   const cgC=cgA?`<button class="hj-ck" data-cg="open|crono"><span class="hj-cki">${ic(CGT[cgA.t].i,26)}</span><span class="hj-ckt"><b>Cuidado capilar: ${CGT[cgA.t].n}</b><small>${cgQuando(cgA.dias)} · Semana ${cgA.sem} do seu cronograma</small></span>${ic('chev',18)}</button>`:'';
   const hojeReg=S.diary.some(e=>e.d===hoje());
-  const check=temRot?`<button class="hj-sk" data-go="pele|evo"><img src="img/hoje-pele.webp" alt="" width="320" height="330" loading="lazy"><span class="hj-skt"><b>Como está a sua pele hoje?</b><small>${hojeReg?'Já registrado hoje. Veja a sua evolução.':'Acompanhe sua evolução, resultados e prioridades.'}</small><span class="hj-skb">${ic('chart',18)}Ver evolução</span></span></button>`:'';
+  const check=temRot?`<button class="hj-sk" data-go="pele|evo"><span class="hj-skf" aria-hidden="true">${S.result?faceSvg(S.result):faceEmpty()}</span><span class="hj-skt"><b>Como está a sua pele hoje?</b><small>${hojeReg?'Já registrado hoje. Veja a sua evolução.':'Acompanhe sua evolução, resultados e prioridades.'}</small><span class="hj-skb">${ic('chart',18)}Ver evolução</span></span></button>`:'';
   const doneC=temRot?[['m','sun','Manhã'],['n','moon','Noite']].filter(([p])=>feito(p)).map(([p,i_,nm])=>{const l=S.log[hoje()]||{},f=l.tr&&l.tr[p]&&l.tr[p].f,hr=f?pad(new Date(f).getHours())+':'+pad(new Date(f).getMinutes()):'',n=(p==='m'?R_.m:R_.n).length;
     return `<button class="hj-dn" data-go="rotina|${p}"><span class="hj-pi sm">${ic(i_,22)}</span><span><b>${nm} concluída</b><small>${n} de ${n} etapas${hr?' · '+hr:''}</small></span>${ic('chev',16)}</button>`}).join(''):'';
   const avisos=`${!S.plus?paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.'):''}
@@ -3962,7 +3964,7 @@ const head=(i_,t)=>`<h2 style="display:flex;align-items:center;gap:10px"><span c
 function vMedalhas(){
   const st=streak(),N=nextMedal(),wc=weekCount();
   return `<div class="card medhead"><div class="kick">Seus pontos</div><div class="pbig">${S.xp}</div><span class="small">Nível ${lvl()} · ${lvName()}</span>
-    <div class="lvbar" style="margin-top:10px"><b style="width:${S.xp%XPN/XPN*100}%"></b></div><span class="small muted">${XPN-S.xp%XPN} pts para o nível ${lvl()+1}</span></div>
+    <div class="lvbar" style="margin-top:10px"><b style="width:${S.xp%XPN/XPN*100}%"></b></div><span class="small muted">${XPN-S.xp%XPN} pts para o nível ${lvl()+1}</span>${(()=>{const n=lvl()+1,d=SHD.filter(m=>m.lv===n),e=SHS.filter(x=>x.lv===n&&!x.free);const L=[...e.map(x=>'Prateleira '+x.n),...d.map(m=>m.n)];return L.length?`<div class="lvnx">${ic('sparkle',15)}<span>No nível ${n} você ganha: <b>${esc(L.join(' e '))}</b> para a sua prateleira.</span></div>`:''})()}</div>
   <div class="card"><h3>Meu compromisso</h3>
     <div class="cmpr"><div><b>${st}</b><span>dias seguidos</span></div><div><b>${Math.min(wc,7)}/7</b><span>nesta semana</span></div><div><b>${Object.keys(S.log).filter(counted).length}</b><span>dias no total</span></div></div>
     <p class="small muted" style="margin-top:10px">${N?(N.d>st?`Continue por mais ${N.d-st} ${N.d-st===1?'dia':'dias'} e ganhe a medalha ${N.nm}.`:`A medalha ${N.nm} chega na sua próxima rotina.`):'Você conquistou todas as medalhas. Parabéns!'} Cumpra 5 dias na semana e ganhe 50 pts extras.</p></div>
