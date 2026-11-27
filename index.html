@@ -507,7 +507,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795798000";</script>
+<script>window.MM_VER="1795799000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -3158,7 +3158,7 @@ const VERD={serve:['ok','Combina com sua pele','checkc'],cuidado:['cuidado','Use
 /* ===== Scanner Pro (Pellie Pro): 1 identificar pela foto → 2 confirmar → 3 comparar com o perfil → 4 compatibilidade → 5 resultado → 6 ingredientes e alertas.
    Assinatura checada no servidor (função "analisar"). Compatibilidade calculada AQUI por 4 critérios documentados (PF_W), não é um número livre da IA. */
 const PF_W={tipo_pele:[30,'Tipo de pele'],necessidades:[30,'Suas necessidades'],tolerancia:[20,'Tolerância e segurança'],rotina:[20,'Encaixe na rotina']};
-const PF_CMP=['Lendo os ingredientes do produto','Checando ativos e possíveis irritantes','Cruzando com a sua análise de pele','Vendo como entra na sua rotina e prateleira','Montando a sua nota'],PF_CMP_T=[0,4,9,14,19];
+const PF_CMP=['Lendo os ingredientes do produto','Checando ativos e possíveis irritantes','Cruzando com a sua análise de pele','Vendo como entra na sua rotina e prateleira','Montando a sua nota'],PF_CMP_T=[0,1,2,3,4];
 const PF_STEPS=['Identificando o produto pela fotografia','Lendo as informações da embalagem','Verificando os ingredientes','Comparando com o seu perfil','Preparando sua análise personalizada'];
 const PF_CLS={boa:['Boa compatibilidade','Recomendado para você','pc-ok'],mod:['Compatibilidade moderada','Pode funcionar, com ajustes','pc-md'],baixa:['Baixa compatibilidade','Não é o ideal para você agora','pc-lo']};
 let PFIV=null;
@@ -3217,10 +3217,10 @@ function pfScore(c,idr){const k=c.criterios||{};const parts=Object.keys(PF_W).ma
   let v=parts.reduce((a,p)=>a+p.pts,0);const pen=15*(c.evitar_encontrados||[]).length;v-=pen;const teto=!idr.lista_lida;if(teto)v=Math.min(v,80);v=Math.max(0,Math.min(100,v));
   return {v,cls:v>=70?'boa':v>=45?'mod':'baixa',parts,pen,teto}}
 function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'),a=document.getElementById('pf-arc');if(n)n.textContent=Math.round(f.p)+'%';if(a)a.setAttribute('stroke-dashoffset',(100-f.p).toFixed(1));
-  const cm=f.st==='cmp',cnt=cm?PF_CMP.length:3,tt=cm&&f.t0?(Date.now()-f.t0)/1000:0,cur=f.busy?(cm?PF_CMP_T.filter(x=>tt>=x).length-1:Math.min(cnt-1,Math.floor(f.p/(92/cnt)))):cnt;
+  const cm=f.st==='cmp',cnt=cm?PF_CMP.length:3,tt=cm&&f.t0?(Date.now()-f.t0)/1000:0,cur=f.fimAnim&&f.busy?Math.min(cnt,f.fimC||0):f.busy?(cm?PF_CMP_T.filter(x=>tt>=x).length-1:Math.min(cnt-1,Math.floor(f.p/(92/cnt)))):cnt;
   document.querySelectorAll('#pf-steps li').forEach((li,i)=>{li.className=i<cur?'ok':i===cur?'now':''});
   const av=document.querySelectorAll('#pf-atv p');if(av.length>1){const k=Math.floor(tt/5)%av.length;av.forEach((p,i)=>p.classList.toggle('on',i===k))}}
-function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}if(f.st==='cmp'&&f.t0){const t=(Date.now()-f.t0)/1000;f.p=Math.max(f.p,Math.min(92,92*(1-Math.exp(-t/11))))}else f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
+function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}if(f.st==='cmp'&&f.t0){const t=(Date.now()-f.t0)/1000;f.p=Math.max(f.p,Math.min(92,92*(1-Math.exp(-t/3.5))))}else f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
 async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='cabelo'&&!hairOk()){render();return}if(!S.prodFile||(S.pf&&S.pf.busy))return;if(!podeUsar('sc'))return limite();
   const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn),t_ini:Date.now()};render();pfProg();
   try{
@@ -3254,13 +3254,13 @@ function pfPre(f){try{const i=f&&f.idr;if(!i||f.pre||f.sel!==0)return;if(i.real&
   const q=pfReq(f,0);if(!f.cmpMode&&(shDup((q.marca&&!nmK(q.nome).includes(nmK(q.marca))?q.marca+' ':'')+q.nome)||shDup(q.nome)))return;
   const box={part:null,on:null};f.pre={sel:0,ctx:q.ctx,box,p:sampleP.then(sf=>sf.cmpStream({ctx:q.ctx,ref:q.ref,pais:q.pais},pp=>{box.part=pp;if(box.on)box.on(pp)})).then(r=>({r}),e=>({e}))}}catch(e){f.pre=null}}
 async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,q=pfReq(f,f.sel),alt=q.alt;
-  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.errCod=null;f.t0=Date.now();
+  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.errCod=null;f.fimAnim=false;f.t0=Date.now();
   if(f.cmpMode&&S.cmp&&S.cmp.scn&&!f.bg){const C=cmpS(),k=C.scn.k,tk={nome:f.nome,marca:f.marca,photo:f.photo,box:f.idr&&f.idr.caixa};C.pend=C.pend||{};C.pend[k]=tk;f.bg={k,tk};clearInterval(PFIV);cmpBack();toast('Analisando '+cmpShort({nome:f.nome,marca:f.marca})+'…');}
   else{render();pfProg()}
   const preO=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre:null,pre=preO?preO.p:null;f.pre=null;f.preUsed=!!pre;f.autoUsed=!!f.auto;f.parcial=false;
   const onPart=pp=>pfParcAplica(f,i,pp);if(preO){preO.box.on=onPart;if(preO.box.part)onPart(preO.box.part)}
   try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0&&!f.bg&&!f.parcial)await new Promise(ok=>setTimeout(ok,w))}}
-    if(!r){const sf=await sampleP;r=await sf.cmpStream({ctx:q.ctx,ref:q.ref,pais:q.pais},onPart)}if(!f.bg&&!S.pf)return;f.parcial=false;
+    if(!r){const sf=await sampleP;r=await sf.cmpStream({ctx:q.ctx,ref:q.ref,pais:q.pais},onPart)}if(!f.bg&&!S.pf)return;if(!f.bg&&!f.parcial&&!f.fimAnim&&r&&!r.erro&&S.pf===f){pfFimAnim(f);await new Promise(ok=>setTimeout(ok,560))}f.parcial=false;
     if(!r||r.erro){f.errCod='foto';f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
     else{const ro=r.rotina||{};const c={resumo:pfStr(r.resumo,220)||'',finalidade:pfStr(r.finalidade,400)||'',por_que:pfStr(r.por_que,500)||'',
         rotina:{periodo:['manha','noite','ambos'].includes(ro.periodo)?ro.periodo:'ambos',etapa:pfStr(ro.etapa,30)||'',como:pfStr(ro.como,220)||'',combinar:pfStr(ro.combinar,240)},
@@ -3275,8 +3275,12 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!f.bg&&!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'&&!f.bg){S.pf=null;limite();return}f.errCod=cc==='srv'?e.cod:null;f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   pfTempo(f,!f.err&&!!f.sc);f.busy=false;gameCheck();if(f.bg){pfBgDone(f);return}if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
+/* Fecha a animação da espera (todas as etapas marcadas e 100%) antes de mostrar a nota: a análise ficou rápida e a animação era cortada no meio. */
+function pfFimAnim(f){const n=document.querySelectorAll('#pf-steps li.ok').length;f.fimAnim=true;f.fimC=n;clearInterval(f.fimIV);
+  f.fimIV=setInterval(()=>{f.fimC++;f.p=Math.min(100,f.p+Math.max(8,(100-f.p)/2));if(f.fimC>=PF_CMP.length&&f.p>=100)clearInterval(f.fimIV);try{pfUi()}catch(e){}},90)}
 /* Resultado em partes: a nota e o resumo aparecem antes; a análise completa (ativos, rotina, alertas) chega logo depois. Não vale no comparador. */
 function pfParcAplica(f,i,pp){if(!pp||f.bg||f.cmpMode||S.pf!==f||f.st!=='cmp'||!f.busy)return;const w=2600-(Date.now()-f.t0);if(w>0){setTimeout(()=>pfParcAplica(f,i,pp),w);return}
+  if(!f.fimAnim){pfFimAnim(f);setTimeout(()=>pfParcAplica(f,i,pp),560);return}
   const c={resumo:pfStr(pp.resumo,220)||'',criterios:pp.criterios||{},criterios_motivo:{},evitar_encontrados:pfArr(pp.evitar_encontrados,5).map(x=>String(x).slice(0,50))};
   f.cmp=c;f.sc=pfScore(c,i);f.parcial=true;f.t_parc=Date.now();f.p=100;f.st='score';render()}
 /* Comparador: a análise que correu em segundo plano termina e entra no espaço A ou B (se a pessoa não trocou ou limpou o espaço nesse meio tempo). */
