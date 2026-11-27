@@ -278,6 +278,7 @@ Deno.serve(async (req: Request) => {
             .select("price_min, price_max, source, expires_at, updated_at")
             .eq("product_key", ch.key).eq("country_code", pais).eq("currency", mk.cur).maybeSingle();
           if (!eRow && row && !expirou(row.expires_at)) { precoCache = row; precoEv = "hit"; }
+          else if (!ch.qtd) { precoEv = "sem_volume"; }   // código de barras sem volume lido: não dá para estimar preço por embalagem (e antes isso derrubava a comparação)
           else { precoVelha = !eRow && row ? row : null; pedirPreco = true; precoEv = eRow ? "erro_cache_pediu" : precoVelha ? "vencida_pediu" : "miss_pediu"; }
         }
       }
