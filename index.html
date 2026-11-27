@@ -476,8 +476,26 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .lvr circle{fill:none;stroke-width:2.2}.lvr .t{stroke:rgba(138,106,72,.18)}.lvr .a{stroke:currentColor;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
 .cm-pd .cm-sc small{display:block}.cm-spin{display:block;width:22px;height:22px;margin:4px auto 2px;border-radius:50%;border:2.5px solid rgba(138,106,72,.2);border-top-color:var(--accent);animation:spin .9s linear infinite}
 .pf-naoe{display:block;margin:8px auto 0;background:none;border:0;font:inherit;font-size:13.5px;color:var(--muted);text-decoration:underline;cursor:pointer;padding:6px}
+.rt-card{position:relative;display:block;width:100%;text-align:left;border:0;font:inherit;cursor:pointer;border-radius:26px;padding:18px 48px 18px 18px;background:linear-gradient(150deg,#4A2A1E 0%,#6B3A27 100%);color:#FFF6EA;box-shadow:0 12px 28px rgba(74,42,30,.22)}
+.rt-card .rt-ck{display:block;font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;opacity:.75}.rt-card b{display:block;font-family:var(--f-display);font-size:22px;font-weight:600;margin:4px 0 2px}.rt-card small{font-size:13.5px;opacity:.85}.rt-card>svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);opacity:.8}
+.rt-link{display:flex;align-items:center;gap:8px;width:100%;border:1px solid var(--line);background:#FFFCF9;border-radius:16px;padding:12px 14px;font:inherit;font-weight:700;color:#4A2A1E;cursor:pointer}.rt-link svg:last-child{margin-left:auto}
+.rt{position:fixed;inset:0;z-index:95;background:linear-gradient(170deg,#FBF6EE 0%,#F4E3CF 100%);color:#3A2418;display:flex;flex-direction:column;padding:calc(14px + env(safe-area-inset-top)) 22px calc(20px + env(safe-area-inset-bottom))}
+.rt-bar{display:flex;gap:5px;max-width:520px;width:100%;margin:0 auto}.rt-bar i{flex:1;height:3px;border-radius:3px;background:rgba(74,42,30,.15)}.rt-bar i.ok,.rt-bar i.on{background:#4A2A1E}
+.rt-x{position:absolute;top:calc(26px + env(safe-area-inset-top));right:14px;z-index:3;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.6);color:#4A2A1E;display:grid;place-items:center;cursor:pointer}
+.rt-prev,.rt-next{position:absolute;top:80px;bottom:90px;z-index:1;border:0;background:transparent;cursor:pointer}.rt-prev{left:0;width:35%}.rt-next{right:0;width:65%}.rt-prev:disabled,.rt-next:disabled{pointer-events:none}
+.rt-body{flex:1;display:flex;align-items:center;justify-content:center;max-width:520px;width:100%;margin:0 auto}
+.rt-s{width:100%;text-align:center;animation:rtIn .55s cubic-bezier(.2,.8,.2,1) both}.rt-k{display:block;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#A76F5C;margin-bottom:14px}
+.rt-cap h1{font-family:var(--f-display);font-weight:600;font-size:clamp(40px,11vw,54px);line-height:1.05;margin:0 0 14px;color:#4A2A1E}.rt-s p{margin:0}.rt-cap p{font-size:17px;color:#7C5A4B}
+.rt-n{font-family:var(--f-display);font-weight:600;font-size:clamp(96px,30vw,140px);line-height:1;color:#4A2A1E}.rt-u{font-size:17px;color:#7C5A4B;margin-top:6px!important}
+.rt-t{font-family:var(--f-display);font-weight:600;font-size:clamp(30px,8.5vw,40px);color:#4A2A1E;line-height:1.15}
+.rt-ab{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 2px;font-family:var(--f-display);font-weight:600;color:#4A2A1E}.rt-ab span{font-size:56px;opacity:.45}.rt-ab b{font-size:84px}.rt-ab svg{opacity:.5}
+.rt-l{display:grid;gap:10px;margin:26px auto 0;max-width:320px}.rt-l div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:rgba(255,255,255,.55);border-radius:14px;padding:12px 16px;text-align:left}.rt-l b{font-size:16px;color:#4A2A1E}.rt-l span{font-size:13.5px;color:#7C5A4B;text-align:right}
+.rt-fo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}.rt-fo figure{margin:0}.rt-fo img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:18px;box-shadow:0 10px 24px rgba(74,42,30,.16)}.rt-fo figcaption{font-size:13px;color:#7C5A4B;margin-top:6px;font-weight:700}
+.rt-nota{font-size:12.5px!important;color:#9A8576!important;margin-top:18px!important}.rt-ok{margin-top:28px;min-width:200px;position:relative;z-index:2}.rt-dica{text-align:center;font-size:12.5px;color:#9A8576;min-height:18px;margin:0}
+@keyframes rtIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.rt-s{animation:none}}
+.rt-sub{font-size:12px!important;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#A76F5C;margin-top:26px!important}
 </style>
-<script>window.MM_VER="1795780578";</script>
+<script>window.MM_VER="1795787584";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1961,7 +1979,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -2144,8 +2162,47 @@ function nextStep(){
   if(!S.diary.some(e=>e.d===hoje()))return{t:'Como está a sua pele hoje?',s:'Um registro rápido alimenta o seu gráfico de evolução.',i:'chart',go:'pele|evo',b:'Registrar'};
   return{t:'Tudo feito por hoje',s:'Volte amanhã para manter a sua sequência.',i:'checkc',done:true};
 }
+
+/* ===== Retrospectiva mensal (27/11/2026): resumo do mês com dados que já estão no aparelho. Sem IA, nada sai do aparelho. ===== */
+const RETRO_MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const retroNome=m=>RETRO_MES[+m.slice(5,7)-1];
+const retroProx=m=>{const y=+m.slice(0,4),mm=+m.slice(5,7);return RETRO_MES[mm%12]};
+/* Qual mês tem retrospectiva agora: do dia 28 em diante, o mês atual; até o dia 14, o mês anterior. */
+function retroMesAtual(){const t=new Date(),d=t.getDate();if(d>=28)return ymd(t).slice(0,7);if(d<=14){const p=new Date(t.getFullYear(),t.getMonth()-1,1);return ymd(p).slice(0,7)}return null}
+function retroDados(m){if(!m)return null;
+  const [y,mo]=m.split('-').map(Number),fim=new Date(y,mo,0).getDate(),hj=hoje();let dias=0,man=0,noi=0,seq=0,maxSeq=0;
+  for(let i=1;i<=fim;i++){const k=m+'-'+pad(i);if(k>hj)break;const l=S.log[k];const ok=counted(k);if(ok){dias++;seq++;maxSeq=Math.max(maxSeq,seq)}else seq=0;if(l&&l.mOk)man++;if(l&&l.nOk)noi++}
+  const A=plSorted(),noMes=A.filter(a=>a.d&&a.d.startsWith(m)),ult=noMes[noMes.length-1],antes=A.filter(a=>a.d<m+'-01'),base=antes.length?antes[antes.length-1]:(noMes.length>1?noMes[0]:null);
+  let pele=null;if(ult&&base&&base!==ult){const ch=PL_IND.map(([k,l,i_,inv])=>{const a=+base[k],b=+ult[k];if(!isFinite(a)||!isFinite(b))return null;const d=Math.round(b-a);return {k,l,i_,inv,a:Math.round(a),b:Math.round(b),d,g:inv?d:-d}}).filter(Boolean);
+    const melh=ch.filter(c=>c.g>0).sort((p,q)=>q.g-p.g);pele={desde:base.d,top:melh[0]||null,outras:melh.slice(1).filter(c=>c.g>=3).slice(0,2),piorou:ch.filter(c=>c.g<0).sort((p,q)=>p.g-q.g)[0]||null}}
+  const F=(S.fotos||[]).filter(f=>f.d&&f.d.startsWith(m)),fotos=F.length>=2&&F[0].d!==F[F.length-1].d?[F[0],F[F.length-1]]:null;
+  const P=(S.prods||[]).filter(x=>x.d&&x.d.startsWith(m)&&x.nota!=null),melhor=P.slice().sort((a,b)=>b.nota-a.nota)[0]||null;
+  const ref=ult||A[A.length-1];let foco=null;if(ref){if(ref.prioridades&&ref.prioridades[0])foco=String(ref.prioridades[0]);else{const w=PL_IND.map(([k,l,i_,inv])=>({l,v:inv?100-(+ref[k]||0):(+ref[k]||0)})).sort((a,b)=>b.v-a.v)[0];if(w)foco='Cuidar de '+w.l.toLowerCase()}}
+  const ok=!!pele||dias>=10;if(!ok)return null;
+  return {m,dias,man,noi,maxSeq,pele,fotos,nProd:P.length,melhor,foco}}
+function retroCard(){if(!S.plus||!S.result)return '';const m=retroMesAtual();if(!m||(S.retro&&S.retro[m]))return '';const R=retroDados(m);if(!R)return '';
+  return `<button class="rt-card" data-act="retro-abrir"><span class="rt-ck">Sua retrospectiva</span><b>Seu ${retroNome(m)} com o Pellie</b><small>${R.pele&&R.pele.top?`${R.pele.top.l} ${R.pele.top.g>0?'melhorou':'mudou'} ${Math.abs(R.pele.top.d)} pontos`:`${R.dias} dias de cuidado`} · toque para ver</small>${ic('chev',18)}</button>`}
+function retroSlides(R){const sl=[],nm=retroNome(R.m),cap=nm.charAt(0).toUpperCase()+nm.slice(1);
+  sl.push(`<div class="rt-s rt-cap"><span class="rt-k">Sua retrospectiva</span><h1>${cap}<br>com o Pellie</h1><p>Um resumo do seu cuidado neste mês.</p></div>`);
+  if(R.dias)sl.push(`<div class="rt-s"><span class="rt-k">Seu cuidado</span><div class="rt-n">${R.dias}</div><p class="rt-u">${R.dias===1?'dia de cuidado':'dias de cuidado'}</p><div class="rt-l">${R.maxSeq>1?`<div><b>${R.maxSeq} dias</b><span>maior sequência</span></div>`:''}<div><b>${R.man}</b><span>rotinas da manhã</span></div><div><b>${R.noi}</b><span>rotinas da noite</span></div></div></div>`);
+  if(R.pele&&R.pele.top){const t=R.pele.top;sl.push(`<div class="rt-s"><span class="rt-k">Sua pele</span><p class="rt-t">${esc(t.l)}</p><div class="rt-ab"><span>${t.a}</span>${ic('chev',22)}<b>${t.b}</b></div><p class="rt-u">${t.g} ${t.g===1?'ponto':'pontos'} melhor desde ${fmtD(R.pele.desde)}</p>${R.pele.outras.length?`<p class="rt-sub">Também melhoraram</p><div class="rt-l" style="margin-top:8px">${R.pele.outras.map(o=>`<div><b>${esc(o.l)}</b><span>${o.a} → ${o.b}</span></div>`).join('')}</div>`:''}<p class="rt-nota">Notas estimadas pela foto, de 0 a 100.</p></div>`)}
+  else if(R.pele)sl.push(`<div class="rt-s"><span class="rt-k">Sua pele</span><p class="rt-t">Estável</p><p class="rt-u">Suas notas ficaram parecidas desde ${fmtD(R.pele.desde)}. Constância também é resultado.</p></div>`);
+  if(R.fotos)sl.push(`<div class="rt-s"><span class="rt-k">Antes e depois</span><div class="rt-fo"><figure><img src="${R.fotos[0].img}" alt="Foto de ${fmtD(R.fotos[0].d)}"><figcaption>${fmtD(R.fotos[0].d)}</figcaption></figure><figure><img src="${R.fotos[1].img}" alt="Foto de ${fmtD(R.fotos[1].d)}"><figcaption>${fmtD(R.fotos[1].d)}</figcaption></figure></div><p class="rt-nota">As fotos ficam só no seu aparelho.</p></div>`);
+  if(R.nProd)sl.push(`<div class="rt-s"><span class="rt-k">Seus produtos</span><div class="rt-n">${R.nProd}</div><p class="rt-u">${R.nProd===1?'produto analisado':'produtos analisados'}</p>${R.melhor?`<div class="rt-l"><div><b>${esc(cmpShort({nome:R.melhor.produto,marca:R.melhor.marca}))}</b><span>o que mais combinou com você · ${R.melhor.nota}%</span></div></div>`:''}</div>`);
+  sl.push(`<div class="rt-s rt-fim"><span class="rt-k">Para ${retroProx(R.m)}</span><p class="rt-t">${esc(R.foco||'Manter a constância')}</p><p class="rt-u">Seu foco para o próximo mês.</p><button class="btn rt-ok" data-act="retro-fim">Concluir</button></div>`);
+  return sl}
+function retroUpd(){let el=document.getElementById('retro');const O=S.retroOpen;
+  if(!O){if(el){el.hidden=true;el.innerHTML=''}return}
+  const R=retroDados(O.m);if(!R){S.retroOpen=null;if(el)el.hidden=true;return}
+  if(!el){el=document.createElement('div');el.id='retro';el.className='rt';document.body.appendChild(el)}
+  const sl=retroSlides(R),i=Math.max(0,Math.min(O.i||0,sl.length-1));O.i=i;
+  el.hidden=false;el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Retrospectiva de '+retroNome(O.m));
+  el.innerHTML=`<div class="rt-bar">${sl.map((_,k)=>`<i class="${k<i?'ok':k===i?'on':''}"></i>`).join('')}</div><button class="rt-x" data-act="retro-fechar" aria-label="Fechar">${ic('x',20)}</button>
+    <button class="rt-prev" data-act="retro-ant" aria-label="Anterior" ${i===0?'disabled':''}></button><button class="rt-next" data-act="retro-prox" aria-label="Próxima" ${i===sl.length-1?'disabled':''}></button>
+    <div class="rt-body" aria-live="polite">${sl[i]}</div><p class="rt-dica">${i<sl.length-1?'Toque à direita para continuar':''}</p>`}
+function retroVisto(m){S.retro=S.retro||{};S.retro[m]=hoje();save()}
 function renderChrome(){
-  const on=!S.ob.done;
+  const on=!S.ob.done;try{retroUpd()}catch(e){}
   document.querySelector('header').hidden=on||S.tab==='assistant';document.querySelector('nav').hidden=on;$('#ages').hidden=true;
   $('#tag').innerHTML=on||!gameOn()?'':`${streak()>0?`<span class="pill" title="Dias seguidos">${ic('flame',15)}${streak()}</span>`:''}${(S.xp||0)>0?(()=>{const pc=Math.round((S.xp%XPN)/XPN*100);return `<button class="pill lvb" data-go="mais|medalhas" aria-label="Nível ${lvl()}, ${pc}% para o próximo. Ver conquistas"><span class="lvr" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10.5" class="t"/><circle cx="12" cy="12" r="10.5" class="a" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100-pc}"/></svg>${ic('lotus',12)}</span>${lvl()}</button>`})():''}`;
   if(!on)$('#tag').innerHTML+=`<button class="pill hmais" data-tab="mais" aria-label="Ajustes" ${S.tab==='mais'?'aria-current="page"':''}>${ic('gear',17)}<span>Ajustes</span></button>`;
@@ -3435,6 +3492,7 @@ function viewHoje(){
   return `<div class="stack hj hj2">
   <div class="hj-gr2"><i class="hj-pet" aria-hidden="true"></i><h1>${hi}, ${esc(S.nome)} <span>${ic('heart',22)}</span></h1><p>${st?`${st} ${st===1?'dia seguido':'dias seguidos'} cuidando de você`:'Comece o seu momento de autocuidado hoje.'}</p></div>
   ${rit}
+  ${retroCard()}
   ${cgC}
   ${avisos}
   ${check}
@@ -3576,7 +3634,8 @@ function viewEvo(){
   const A=plSorted(),f=S.evoF||30,k=S.evoK||'oleo',cut=new Date();cut.setDate(cut.getDate()-f);const W=A.filter(a=>a.d>=ymd(cut)),meta=PL_IND.find(x=>x[0]===k)||PL_IND[0],inv=meta[3];
   const fst=W[0],lst=W[W.length-1];
   const hist=[];for(let i=A.length-1;i>=1&&hist.length<5;i--){const a=A[i],b=A[i-1],ch=PL_IND.map(x=>({x,d:Math.round(a[x[0]]-b[x[0]])})).filter(o=>o.d).sort((p,q)=>Math.abs(q.d)-Math.abs(p.d))[0];hist.push(`<div class="pl-hi"><b>${fmtD(b.d)} → ${fmtD(a.d)}</b><small>${a.tipo!==b.tipo?`Tipo de pele: ${esc(b.tipo)} para ${esc(a.tipo)}. `:''}${ch?`Maior mudança: ${ch.x[1].toLowerCase()} ${ch.d>0?'+':'−'}${Math.abs(ch.d)} pts.`:'Sem mudança nas notas.'}</small></div>`)}
-  return `<div class="stack pl-in"><div class="pl-card"><div class="pl-ct"><b>Evolução da pele</b></div>
+  const rtM=S.plus?retroMesAtual():null,rtOk=rtM&&retroDados(rtM);
+  return `<div class="stack pl-in">${rtOk?`<button class="rt-link" data-act="retro-abrir">${ic('sparkle',16)}Retrospectiva de ${retroNome(rtM)}${ic('chev',16)}</button>`:''}<div class="pl-card"><div class="pl-ct"><b>Evolução da pele</b></div>
     <div class="pl-fl" role="group" aria-label="Período">${[7,30,90].map(n=>`<button data-evf="${n}" aria-pressed="${f===n}">${n} dias</button>`).join('')}</div>
     <div class="pl-chips" role="group" aria-label="Indicador">${PL_IND.map(x=>`<button data-evk="${x[0]}" aria-pressed="${x[0]===k}">${x[1]}</button>`).join('')}</div>
     ${W.length?plChart(W,k,inv):A.length?`<p class="small muted" style="margin:12px 0">Nenhuma análise nos últimos ${f} dias.</p>`:`<div class="mx-empty"><b>Sua evolução começa aqui</b><span>Faça a primeira análise e o gráfico aparece.</span><button class="btn" data-go="pele|analise">Analisar minha pele</button></div>`}
@@ -5294,6 +5353,10 @@ document.addEventListener('click',e=>{
     CL.db.collection('posts').add({t,tipo:LBL[S.pele]||'',faixa:AGES.find(a=>a[0]===S.age)[1],uid:CL.uid,ts:Date.now(),likes:[]}).then(()=>{S.draft='';toast('Publicado');render()}).catch(()=>toast('Não consegui publicar'))}
   else if(d.like){const x=(POSTS||[]).find(p=>p.id===d.like);if(x){const l=(x.likes||[]).includes(CL.uid)?(x.likes||[]).filter(u=>u!==CL.uid):[...(x.likes||[]),CL.uid];CL.db.doc('posts/'+x.id).update({likes:l}).catch(()=>toast('Não consegui curtir'))}}
   else if(d.delpost){CL.db.doc('posts/'+d.delpost).delete().catch(()=>toast('Não consegui apagar'))}
+  else if(d.act==='retro-abrir'){const m=retroMesAtual();if(m){S.retroOpen={m,i:0};render()}}
+  else if(d.act==='retro-prox'&&S.retroOpen){S.retroOpen.i++;retroUpd()}
+  else if(d.act==='retro-ant'&&S.retroOpen){S.retroOpen.i=Math.max(0,S.retroOpen.i-1);retroUpd()}
+  else if((d.act==='retro-fechar'||d.act==='retro-fim')&&S.retroOpen){retroVisto(S.retroOpen.m);S.retroOpen=null;render()}
   else if(d.act==='fechar-cele'){S.cele=S.celeQ.shift()||null;render()}
   else if(d.per){if(document.querySelector('.ecl:not(.mini)')&&d.per!==S.period){eclGo(d.per==='n'?180:0);return}S.period=d.per;S.perMan=true;render()}
   else if(d.tier){S.tier=d.tier;render()}
