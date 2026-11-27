@@ -474,8 +474,10 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .pill.lvb{border:0;font:inherit;font-size:14px;font-weight:800;gap:6px;padding:4px 12px 4px 5px;cursor:pointer}
 .lvr{position:relative;display:inline-grid;place-items:center;width:24px;height:24px}.lvr>svg:first-child{position:absolute;inset:0;transform:rotate(-90deg)}.lvr>svg+svg{position:relative;display:block}
 .lvr circle{fill:none;stroke-width:2.2}.lvr .t{stroke:rgba(138,106,72,.18)}.lvr .a{stroke:currentColor;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.cm-pd .cm-sc small{display:block}.cm-spin{display:block;width:22px;height:22px;margin:4px auto 2px;border-radius:50%;border:2.5px solid rgba(138,106,72,.2);border-top-color:var(--accent);animation:spin .9s linear infinite}
+.pf-naoe{display:block;margin:8px auto 0;background:none;border:0;font:inherit;font-size:13.5px;color:var(--muted);text-decoration:underline;cursor:pointer;padding:6px}
 </style>
-<script>window.MM_VER="1795776390";</script>
+<script>window.MM_VER="1795780578";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2150,7 +2152,7 @@ function renderChrome(){
   $('#tag').style.display='flex';$('#tag').style.gap='6px';$('#tag').style.alignItems='center';
   $('#nav').innerHTML=TABS.map(([k,l])=>k==='scan'?SCAN_BTN:`<button data-tab="${k}" ${S.tab===k||(k==='produtos'&&S.tab==='escanear')||(k==='hoje'&&S.tab==='sos')||(k==='cuidados'&&(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina'))?'aria-current="page"':''}>${ICONS[k]}${l}</button>`).join('');
   document.documentElement.dataset.tema=S.tema||'rosa';
-  const c=(S.ob.done&&tourHtml())?null:S.cele,el=$('#cele');
+  const c=((S.ob.done&&tourHtml())||S.pf)?null:S.cele,el=$('#cele');
   el.hidden=!c;
   if(c&&el.dataset.k!==c.id){
     el.dataset.k=c.id;
@@ -3081,7 +3083,10 @@ async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='ca
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
       S.pf.p=100;S.pf.st='conf';pfPre(S.pf)}
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
-  if(S.pf)S.pf.busy=false;render()}
+  if(S.pf){S.pf.busy=false;if(S.pf.st==='conf'&&pfAutoOk(S.pf)){S.pf.auto=true;pfCmp();return}}render()}
+/* Leitura muito confiável (≥ 90%), área certa e opção principal: segue direto para a comparação ("Não é esse produto?" no resultado permite voltar). */
+function pfAutoOk(f){const i=f&&f.idr;return !!i&&f.sel===0&&(i.confianca||0)>=90&&!(i.real&&i.real!==(f.area||'pele'))}
+
 /* Monta o pedido de comparação (o mesmo para a antecipação e para o toque em "Confirmar") */
 function pfReq(f,sel){const i=f.idr,alt=sel>0?i.alternativas[sel-1]:null,nome=(alt?alt.produto:i.produto)||'Produto',marca=(alt?alt.marca:i.marca)||'';
   const ar=f.area||'pele',dados={area:ar,...(PF_INS[ar]?{instrucao_area:PF_INS[ar]}:{}),produto:{nome,marca,categoria:i.categoria,volume:i.volume,escolhido_pela_pessoa_entre_opcoes:!!alt,lista_lida:i.lista_lida,ingredientes_lidos:i.ingredientes_lidos,ativos_declarados:i.ativos_declarados,texto_lido:i.texto_lido},
@@ -3096,10 +3101,12 @@ function pfPre(f){try{const i=f&&f.idr;if(!i||f.pre||f.sel!==0)return;if(i.real&
   const q=pfReq(f,0);if(!f.cmpMode&&(shDup((q.marca&&!nmK(q.nome).includes(nmK(q.marca))?q.marca+' ':'')+q.nome)||shDup(q.nome)))return;
   f.pre={sel:0,ctx:q.ctx,p:sampleP.then(sf=>sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})).then(r=>({r}),e=>({e}))}}catch(e){f.pre=null}}
 async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,q=pfReq(f,f.sel),alt=q.alt;
-  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();render();pfProg();
+  f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();
+  if(f.cmpMode&&S.cmp&&S.cmp.scn&&!f.bg){const C=cmpS(),k=C.scn.k,tk={nome:f.nome,marca:f.marca,photo:f.photo,box:f.idr&&f.idr.caixa};C.pend=C.pend||{};C.pend[k]=tk;f.bg={k,tk};clearInterval(PFIV);cmpBack();toast('Analisando '+cmpShort({nome:f.nome,marca:f.marca})+'…');}
+  else{render();pfProg()}
   const pre=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre.p:null;f.pre=null;
-  try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0)await new Promise(ok=>setTimeout(ok,w))}}
-    if(!r){const sf=await sampleP;r=await sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})}if(!S.pf)return;
+  try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0&&!f.bg)await new Promise(ok=>setTimeout(ok,w))}}
+    if(!r){const sf=await sampleP;r=await sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})}if(!f.bg&&!S.pf)return;
     if(!r||r.erro){f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
     else{const ro=r.rotina||{};const c={resumo:pfStr(r.resumo,220)||'',finalidade:pfStr(r.finalidade,400)||'',por_que:pfStr(r.por_que,500)||'',
         rotina:{periodo:['manha','noite','ambos'].includes(ro.periodo)?ro.periodo:'ambos',etapa:pfStr(ro.etapa,30)||'',como:pfStr(ro.como,220)||'',combinar:pfStr(ro.combinar,240)},
@@ -3108,12 +3115,19 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
         alertas:pfArr(r.alertas,3).filter(a=>a&&a.texto).map(a=>({texto:pfStr(a.texto,200),fundamento:pfStr(a.fundamento,220)})),
         evitar_encontrados:pfArr(r.evitar_encontrados,5).map(x=>String(x).slice(0,50)),nao_confirmado:pfArr(r.nao_confirmado,5).map(x=>String(x).slice(0,140))};
       f.cmp=c;f.sc=pfScore(c,i);f.p=100;f.st='score';if(f.cmpMode)cmpDedupe(f);
-      S.prodResult={produto:f.marca?f.marca+' '+f.nome:f.nome,categoria:i.categoria,nota:f.sc.v,veredito:{boa:'serve',mod:'cuidado',baixa:'evitar'}[f.sc.cls]};
+      const ver={boa:'serve',mod:'cuidado',baixa:'evitar'}[f.sc.cls];if(!f.bg)S.prodResult={produto:f.marca?f.marca+' '+f.nome:f.nome,categoria:i.categoria,nota:f.sc.v,veredito:ver};
       const pc=r.preco?(r.preco.status==='available'?(cmpPr(r.preco)||{status:'insufficient_data'}):{status:'insufficient_data'}):undefined;
-      S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:S.prodResult.veredito,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
+      S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:ver,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
       uso().sc++;xp(15,'Produto escaneado','sc')}
-  }catch(e){if(!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
-  if(S.pf)S.pf.busy=false;gameCheck();if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
+  }catch(e){if(!f.bg&&!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'&&!f.bg){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
+  f.busy=false;gameCheck();if(f.bg){pfBgDone(f);return}if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
+/* Comparador: a análise que correu em segundo plano termina e entra no espaço A ou B (se a pessoa não trocou ou limpou o espaço nesse meio tempo). */
+function pfBgDone(f){const C=cmpS(),k=f.bg.k;if(!C.pend||C.pend[k]!==f.bg.tk){render();return}delete C.pend[k];
+  if(f.err||!f.sc){toast('Não consegui analisar '+cmpShort({nome:f.nome,marca:f.marca})+'. '+(f.err||'Tente de novo.'));render();return}
+  const key=nmK(cmpFull(f.nome,f.marca)),e=(S.prods||[]).find(x=>x.snap&&x.snap.nome===f.nome&&x.marca===f.marca)||(S.prods||[])[0];
+  C[k]=key;if(C.fb)delete C.fb[key];C.ai=null;C.tg=null;save();
+  toast('Produto '+k.toUpperCase()+' analisado: '+f.sc.v+'% de compatibilidade',1);
+  if(e&&f.photo)cmpSetImg(e,key,f.photo,f.idr&&f.idr.caixa);else render()}
 function pfThumb(src,bx){return new Promise(res=>{if(!src||!bx)return res(null);let [x0,y0,x1,y1]=bx;if(x1<=x0||y1<=y0||(x1-x0)*(y1-y0)<.01)return res(null);const im=new Image();im.onload=()=>{try{const W=im.width,H=im.height,pd=.04;
     x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(1,x1+pd);y1=Math.min(1,y1+pd);const sx=x0*W,sy=y0*H,sw=(x1-x0)*W,sh=(y1-y0)*H,M=220,k=Math.min(1,M/Math.max(sw,sh)),c=document.createElement('canvas');
     c.width=Math.max(1,Math.round(sw*k));c.height=Math.max(1,Math.round(sh*k));c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.85))}catch(e){res(null)}};im.onerror=()=>res(null);im.src=src})}
@@ -3183,7 +3197,7 @@ function pfView(){const f=S.pf,nome=S.nome?esc(S.nome):'';const ph=f.photo?`<img
   else if(f.st==='score'){const sc=f.sc,C=PF_CLS[sc.cls],ent=!f.scVisto;f.scVisto=true;
     b=`<div class="pf-body${ent?' pf-in':''}" style="text-align:center"><div class="pf-big ind ${C[2]}" data-k="${esc(f.odoK||(f.odoK='pf'+Date.now()))}" data-dl="300">${odo(sc.v)}</div><b class="pf-lab">Compatibilidade com ${AX[f.area||'pele'].com}</b>
       <div class="pf-circ ${C[2]}">${ph}</div>
-      <span class="pf-badge ${C[2]}">${ic(sc.cls==='boa'?'checkc':sc.cls==='mod'?'alert':'xc',18)}${C[0]}</span><p class="pf-s" style="margin:0">${esc(f.cmp.resumo)}</p>
+      <span class="pf-badge ${C[2]}">${ic(sc.cls==='boa'?'checkc':sc.cls==='mod'?'alert':'xc',18)}${C[0]}</span><p class="pf-s" style="margin:0">${esc(f.cmp.resumo)}</p>${f.auto?`<button class="pf-naoe" data-act="pf-naoe">Não é esse produto?</button>`:''}
       <details class="pf-det"><summary>Como calculamos</summary><ul class="pf-crit">${sc.parts.map(p=>`<li><span><b>${p.lab}</b>${p.mot?`<small>${esc(p.mot)}</small>`:''}</span><em>${p.pts}/${p.max}</em></li>`).join('')}${sc.pen?`<li><span><b>Ingredientes que você evita</b><small>${esc(f.cmp.evitar_encontrados.join(', '))}</small></span><em>-${sc.pen}</em></li>`:''}</ul>
         <small>${sc.teto?'Sem a lista de ingredientes na foto, a nota fica limitada a 80%. ':''}Os pontos de cada critério vêm da avaliação da IA sobre o que foi lido no rótulo e o seu perfil. É uma estimativa, não um teste clínico.</small></details>
       <div class="pf-ft"><button class="btn obc" data-act="pf-det">Ver análise completa</button>${pfShelf(false)}${pfCmpBtn()}</div></div>`}
@@ -5295,6 +5309,7 @@ document.addEventListener('click',e=>{
   else if(d.act==='pf-close'){S.pfWarn=null;S.pfArea=null;S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;clearInterval(PFIV);render();window.scrollTo(0,0)}
   else if(d.act==='pf-retake'){S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;render();setTimeout(()=>{const i=document.getElementById('prod-cam');if(i)i.click()},50)}
   else if(d.act==='pf-ok'){pfCmp()}
+  else if(d.act==='pf-naoe'&&S.pf){const f=S.pf;if(S.prods&&S.prods[0]&&S.prods[0].snap&&S.prods[0].snap.nome===f.nome)S.prods.shift();f.auto=false;f.sc=null;f.cmp=null;f.pre=null;f.odoK=null;f.scVisto=false;f.st='conf';S.prodResult=null;save();render();window.scrollTo(0,0)}
   else if((d.act==='pf-shelf'||d.act==='pf-rot')&&!d.force&&S.pf&&S.pf.sc&&S.pf.sc.cls==='baixa'){S.pfWarn=d.act;render()}
   else if(d.act==='pf-switch'&&S.pf&&S.pf.idr&&S.pf.idr.real){const n=S.pf.idr.real;S.pf=null;S.pfArea=n;if(n==='cabelo'&&!hairOk()){goTab('cabelo');return}if(n==='corpo'&&!bqDone()){S.bqRun=true;S.bqi=0;render();window.scrollTo(0,0);return}pfStart()}
   else if(d.act==='pf-hair'){goTab('cabelo')}
@@ -5364,7 +5379,7 @@ document.addEventListener('change',e=>{
   if((e.target.id==='prod-cam'||e.target.id==='prod-gal')&&e.target.files[0]){
     const f=e.target.files[0];
     S.prodFile=f;S.prodResult=null;S.prodErr=null;
-    const r=new FileReader();r.onload=()=>{S.prodPhoto=r.result;render()};r.readAsDataURL(f);
+    const r=new FileReader();r.onload=()=>{S.prodPhoto=r.result;if(S.plus&&!S.pf&&(S.tab==='escanear'||(S.cmp&&S.cmp.scn))){pfStart();return}render()};r.readAsDataURL(f);
   }
   if(e.target.id==='rem-m'||e.target.id==='rem-n'){S.rem[e.target.id==='rem-m'?'m':'n']=e.target.value||S.rem[e.target.id==='rem-m'?'m':'n'];save();agendarNotif();return}
   if(e.target.id==='cmp-a'){S.cmpA=e.target.value;render();return}
@@ -5911,6 +5926,8 @@ const cmpThumb=(cp,w)=>{const x=cp.item||{id:'cmp:'+cp.key,n:cp.nome,tp:cp.cat||
 /* ---- telas ---- */
 const CMP_SUB='Compare dois produtos e descubra qual faz mais sentido para seus cuidados.';
 function cmSlot(k,cp,L,R){
+  const pd=!cp&&S.cmp&&S.cmp.pend&&S.cmp.pend[k];
+  if(pd)return `<div class="cm-slot on cm-pd" aria-live="polite"><button class="cm-x" data-cmp="clr|${k}" aria-label="Cancelar o produto ${L}">${ic('x',13)}</button><span class="cm-sb" style="cursor:default"><span class="cm-pic">${pd.photo?`<img src="${pd.photo}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:14px">`:ic('scan',28)}</span><span class="cm-nm">${esc(cmpShort({nome:pd.nome,marca:pd.marca}))}</span>${pd.marca?`<small>${esc(pd.marca)}</small>`:''}<span class="cm-sc na"><i class="cm-spin" aria-hidden="true"></i><small>Analisando…</small></span></span></div>`;
   if(!cp)return `<button class="cm-slot empty" data-cmp="pick|${k}" aria-label="Escolher o produto ${L}"><span class="cm-plus">${ic('plus',22)}</span><b>Produto ${L}</b><small>Escolher</small></button>`;
   const win=R&&R.win===cp||R&&R.win&&R.win.key===cp.key,sem=cp.nota==null;
   return `<div class="cm-slot on${win?' win':''}"><button class="cm-x" data-cmp="clr|${k}" aria-label="Remover o produto ${L}">${ic('x',13)}</button>
@@ -5954,8 +5971,8 @@ function viewCmp(){const C=cmpS();C.want=null;
   const R=A&&B?cmpCalc(A,B):null,rec=R?cmpCommit(R):null;if(R){cmpSaldoLazy();cmpPxLazy(R)}
   const n=cmpCands().length,nH=(S.cmpH||[]).length;
   let body='';
-  if(!A&&!B)body=`<div class="cm-st"><span class="cm-sti">${ic('cmp',26)}</span><b>Escolha dois produtos</b><p class="small muted">${n>=2?'Pegue da sua prateleira ou do histórico, ou escaneie um novo.':n===1?'Você tem 1 produto. Escaneie outro para comparar.':'Escaneie dois produtos para começar a comparar.'}</p>${n<2?`<button class="btn pl-go" data-cmp="scan|${A?'b':'a'}">${ic('scan',18)}Escanear um produto</button>`:''}</div>`;
-  else if(!A||!B)body=`<div class="cm-st"><b>Falta mais um</b><p class="small muted">Escolha o ${A?'produto B':'produto A'} para ver a comparação.</p></div>`;
+  if(!A&&!B&&!(C.pend&&(C.pend.a||C.pend.b)))body=`<div class="cm-st"><span class="cm-sti">${ic('cmp',26)}</span><b>Escolha dois produtos</b><p class="small muted">${n>=2?'Pegue da sua prateleira ou do histórico, ou escaneie um novo.':n===1?'Você tem 1 produto. Escaneie outro para comparar.':'Escaneie dois produtos para começar a comparar.'}</p>${n<2?`<button class="btn pl-go" data-cmp="scan|${A?'b':'a'}">${ic('scan',18)}Escanear um produto</button>`:''}</div>`;
+  else if(!A||!B){const P=C.pend||{},pa=!A&&P.a,pb=!B&&P.b;body=pa||pb?`<div class="cm-st"><b>${(pa&&(B||pb))||(pb&&(A||pa))?'Quase lá':'Enquanto isso…'}</b><p class="small muted">${(pa&&(B||pb))||(pb&&(A||pa))?'Estou analisando com o seu perfil. A comparação aparece aqui em instantes.':`Já pode escolher o ${pa?'produto B':'produto A'}: a análise do outro continua por aqui.`}</p></div>`:`<div class="cm-st"><b>Falta mais um</b><p class="small muted">Escolha o ${A?'produto B':'produto A'} para ver a comparação.</p></div>`}
   else if(R.dec==='insufficient_data'){const sem=[['a',A],['b',B]].filter(([k,c])=>c.nota==null);body=`<div class="cm-st"><span class="cm-sti">${ic('alert',24)}</span><b>Informações insuficientes</b><p class="small muted">${esc(R.sum)}</p>${sem.map(([k,c])=>`<button class="btn ghost" data-cmp="scan|${k}" style="margin-top:8px">${ic('scan',18)}Analisar ${esc(cmpShort(c))}</button>`).join('')}</div>`}
   else body=`<p class="cm-disc">Pontuação = indicador estimado de compatibilidade cosmética, não probabilidade clínica de eficácia.</p>${cmTable(R)}${cmDisc(R)}${cmEsc(R,rec)}${cmAi(R,rec)}<button class="cm-new" data-cmp="new">${ic('cmp',16)}Comparar outros produtos</button>`;
   return `<div class="stack pk pl-in cm">${head}<div class="cm-slots">${cmSlot('a',A,'A',R)}${cmSlot('b',B,'B',R)}</div>${body}
@@ -6010,10 +6027,10 @@ function cmpAct(v){const p=v.split('|'),a=p[0],C=cmpS();hapt();
   if(a==='pick'){C.pick=p[1];C.tab=cmpCands().some(c=>c.src.includes('s'))?'shelf':'hist';C.rot=null;render();return}
   if(a==='pickx'){C.pick=null;render();return}
   if(a==='tab'){C.tab=p[1];render();return}
-  if(a==='sel'){const it=cmpPickList()[+p[1]];if(!it)return;C[C.pick]=it.c.key;C.fb[it.c.key]=null;delete C.fb[it.c.key];C.pick=null;C.ai=null;C.tg=null;render();window.scrollTo(0,0);return}
-  if(a==='clr'){C[p[1]]=null;C.ai=null;C.tg=null;render();return}
-  if(a==='new'){C.a=null;C.b=null;C.ai=null;C.tg=null;render();window.scrollTo(0,0);return}
-  if(a==='scan'){const o=C[p[1]==='a'?'b':'a'],oc=o&&cmpCp(o);C.want=null;C.pick=null;C.rot=null;C.scn={k:p[1]};S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;S.prodErr=null;S.pfArea=oc&&['pele','cabelo','corpo'].includes(oc.area)?oc.area:'pele';S.tab='produtos';S.prodSub='cmp';render();window.scrollTo(0,0);return}
+  if(a==='sel'){const it=cmpPickList()[+p[1]];if(!it)return;if(C.pend)delete C.pend[C.pick];C[C.pick]=it.c.key;C.fb[it.c.key]=null;delete C.fb[it.c.key];C.pick=null;C.ai=null;C.tg=null;render();window.scrollTo(0,0);return}
+  if(a==='clr'){C[p[1]]=null;if(C.pend)delete C.pend[p[1]];C.ai=null;C.tg=null;render();return}
+  if(a==='new'){C.a=null;C.b=null;C.pend={};C.ai=null;C.tg=null;render();window.scrollTo(0,0);return}
+  if(a==='scan'){const o=C[p[1]==='a'?'b':'a'],oc=o&&cmpCp(o);C.want=null;C.pick=null;C.rot=null;C.scn={k:p[1]};if(C.pend)delete C.pend[p[1]];S.pf=null;S.prodFile=null;S.prodPhoto=null;S.prodResult=null;S.prodErr=null;S.pfArea=oc&&['pele','cabelo','corpo'].includes(oc.area)?oc.area:'pele';S.tab='produtos';S.prodSub='cmp';render();window.scrollTo(0,0);return}
   if(a==='scx'){cmpBack();return}
   if(a==='ar'){if(p[1]==='cabelo'&&!hairOk()){toast('Antes, faça a análise do seu cabelo');return}if(p[1]==='corpo'&&!bqDone()){toast('Antes, responda o quiz do corpo');return}S.pfArea=p[1];render();return}
   if(a==='use'||a==='go'){const r=S.prodResult,key=r&&r.produto?nmK(r.produto):null;if(!key){cmpBack();return}
