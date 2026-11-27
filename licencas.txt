@@ -7,3 +7,5 @@ MediaPipe Face Mesh (pasta mediapipe/) - Licença Apache 2.0 - Copyright The Med
 Fotos de embalagens de produtos - Open Beauty Facts (https://world.openbeautyfacts.org) - Licença CC BY-SA 4.0 (imagens) e ODbL (dados) - exibidas com crédito, somente quando marca e nome do produto correspondem exatamente. Imagens oficiais licenciadas pelos fabricantes, quando existirem, ficam na pasta produtos/.
 ONNX Runtime Web (pasta bgr/) - Licença MIT - Copyright Microsoft Corporation - https://github.com/microsoft/onnxruntime
 Modelo U²-Net pequeno (bgr/u2netp.onnx) - Licença Apache 2.0 - Xuebin Qin et al. - https://github.com/xuebinqin/U-2-Net (arquivo distribuído pelo projeto rembg, MIT)
+
+ZXing (pasta zxing/, leitor de código de barras) - Licença Apache 2.0 - Copyright ZXing authors - https://github.com/zxing-js/library

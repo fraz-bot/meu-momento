@@ -494,8 +494,12 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .rt-nota{font-size:12.5px!important;color:#9A8576!important;margin-top:18px!important}.rt-ok{margin-top:28px;min-width:200px;position:relative;z-index:2}.rt-dica{text-align:center;font-size:12.5px;color:#9A8576;min-height:18px;margin:0}
 @keyframes rtIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.rt-s{animation:none}}
 .rt-sub{font-size:12px!important;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#A76F5C;margin-top:26px!important}
+.av-c{display:flex;gap:12px;align-items:flex-start;border-radius:22px;padding:16px;background:#FFFCF9;border:1px solid var(--line);box-shadow:0 8px 20px rgba(170,128,86,.10)}
+.av-i{flex:none;width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:#F8EBDA;color:#8A5A3C}.av-t{flex:1;min-width:0}.av-t>b{display:block;font-size:16px;color:#4A2A1E;line-height:1.3}.av-t>small{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
+.av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795787584";</script>
+<script>window.MM_VER="1795788108";</script>
 <script src="supabase.js"></script>
 <script>window.sb=supabase.createClient("https://tobdkptlewiwemafphyf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1979,7 +1983,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro'];
+const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro','avx'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -2163,6 +2167,40 @@ function nextStep(){
   return{t:'Tudo feito por hoje',s:'Volte amanhã para manter a sua sequência.',i:'checkc',done:true};
 }
 
+
+
+/* ===== Atalho pelo código de barras (27/11/2026): o app lê o código na foto (no próprio aparelho) e envia junto.
+   Se o produto já foi identificado antes, o servidor responde sem chamar a IA. Leitor: BarcodeDetector (Android) ou ZXing (Apache-2.0, carregado só aqui). ===== */
+let ZXP=null;
+function zxLoad(){if(window.ZXing)return Promise.resolve(window.ZXing);if(ZXP)return ZXP;ZXP=new Promise((ok,no)=>{const s=document.createElement('script');s.src='zxing/zxing.min.js';s.onload=()=>ok(window.ZXing);s.onerror=()=>{ZXP=null;no(new Error('zxing'))};document.head.appendChild(s)});return ZXP}
+function gtinNorm(c){c=String(c||'').replace(/\D/g,'');if(c.length===12)c='0'+c;if(!/^(\d{8}|\d{13}|\d{14})$/.test(c))return null;const d=c.split('').map(Number),chk=d.pop();let s=0;d.reverse().forEach((v,i)=>s+=v*(i%2===0?3:1));return (10-s%10)%10===chk?c:null}
+async function pfCodigo(file){try{const f=Array.isArray(file)?file[0]:file;if(!f)return null;
+  const url=typeof f==='string'?f:URL.createObjectURL(f);const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=url});
+  const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);if(typeof f!=='string')URL.revokeObjectURL(url);
+  if('BarcodeDetector' in window){try{const bd=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});const rs=await bd.detect(c);for(const x of rs){const v=gtinNorm(x.rawValue);if(v)return v}}catch(e){}}
+  const Z=await zxLoad(),h=new Map();h.set(Z.DecodeHintType.POSSIBLE_FORMATS,[Z.BarcodeFormat.EAN_13,Z.BarcodeFormat.EAN_8,Z.BarcodeFormat.UPC_A,Z.BarcodeFormat.UPC_E]);h.set(Z.DecodeHintType.TRY_HARDER,true);
+  const rd=new Z.MultiFormatReader();rd.setHints(h);
+  for(const cv of [c,()=>{const r=document.createElement('canvas');r.width=c.height;r.height=c.width;const g=r.getContext('2d');g.translate(r.width,0);g.rotate(Math.PI/2);g.drawImage(c,0,0);return r}]){
+    try{const cc=typeof cv==='function'?cv():cv;const res=rd.decode(new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(cc))));const v=gtinNorm(res.getText());if(v)return v}catch(e){}}
+  return null}catch(e){return null}}
+/* ===== Avisos de validade e recompra (27/11/2026): um aviso por produto, com substituto compatível. Sem IA. ===== */
+const AV_CAT=[['fps',/protetor|fps|spf|solar/],['niacina',/niacin/],['vitc',/vitamina c|vit\.? ?c\b|asc[oó]rb/],['retinol',/retin/],['bha',/salic|\bbha\b/],['hialu',/hialur|hyaluron/],['calmante',/calm|cica|pantenol|panthenol/],['limpador',/limp|cleans|sabonete|micelar|espuma/],['hidr',/hidrat|moistur|ceramid|creme/]];
+function avCat(...t){const x=t.filter(Boolean).join(' ').toLowerCase();const m=AV_CAT.find(([,r])=>r.test(x));return m?m[0]:null}
+function avNome(n){n=String(n||'Produto');return n.length>34?n.slice(0,32).trim()+'…':n}
+function avSub(it){const k=avCat(it.tp,it.n),mesmo=x=>nmSame(x,it.n);
+  if(k){const q=S.shelf.find(i=>stOf(i)==='quero'&&!mesmo(i.n)&&avCat(i.tp,i.n)===k);if(q)return {t:'Já está na sua lista de compras',n:q.n}}
+  if(k){const b=(S.prods||[]).filter(p=>p.nota>=70&&!mesmo(cmpFull(p.produto,p.marca))&&avCat(p.snap&&p.snap.idr&&p.snap.idr.categoria,p.produto)===k).sort((a,b)=>b.nota-a.nota)[0];if(b)return {t:`Combina ${b.nota}% com você`,n:cmpFull(b.produto,b.marca)}}
+  const nt=typeof it.nota==='number'?it.nota:null;if(nt!=null&&nt>=70)return {t:`Vale comprar de novo: combinou ${nt}% com você`,n:null};
+  if(k&&P[k]){const tt=(P[k].t[S.tier]||P[k].t.mid||{})[3];const nm=tt&&tt[0];if(nm&&!mesmo(nm))return {t:'Indicado para a sua pele',n:nm}}
+  return null}
+function avisosValidade(soon){const hj=hoje(),X=S.avx||{},ok=(id)=>{const d=X[id];if(!d)return true;const t=new Date(dtOf(d));t.setDate(t.getDate()+7);return new Date()>t};
+  const L=[];temP().forEach(it=>{const f=shelfInfo(it);if(f.dias<=21&&ok(it.id+':v'))L.push({it,k:'v',d:f.dias,txt:f.dias<0?`Seu ${avNome(it.n)} venceu`:f.dias===0?`Seu ${avNome(it.n)} vence hoje`:`Seu ${avNome(it.n)} vence em ${f.dias} ${f.dias===1?'dia':'dias'}`,s:f.dias<0?'Depois da validade, o produto pode perder efeito ou irritar.':''})});
+  S.shelf.filter(i=>stOf(i)==='acabou').forEach(it=>{if(ok(it.id+':a'))L.push({it,k:'a',d:999,txt:`Seu ${avNome(it.n)} acabou`,s:''})});
+  L.sort((a,b)=>a.d-b.d);const show=L.slice(0,2),resto=(soon||[]).length-show.filter(x=>x.k==='v').length;
+  const card=x=>{const sb_=avSub(x.it);return `<div class="av-c"><span class="av-i">${ic(x.k==='a'?'tag':'clock',20)}</span><div class="av-t"><b>${esc(x.txt)}</b>${x.s?`<small>${esc(x.s)}</small>`:''}
+    ${sb_?`<div class="av-s"><span>${esc(sb_.t)}</span>${sb_.n?`<b>${esc(avNome(sb_.n))}</b>`:''}</div>`:''}
+    <div class="av-b"><button class="hj-bt" data-go="produtos|shelf">Ver na prateleira</button><button class="av-x" data-act="av-x|${esc(x.it.id)}:${x.k}">Agora não</button></div></div></div>`};
+  return show.map(card).join('')+(resto>0?`<button class="alertc" data-go="produtos|shelf">${ic('alert',22)}<span><b>Mais ${resto} ${resto===1?'produto vence':'produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:'')}
 /* ===== Retrospectiva mensal (27/11/2026): resumo do mês com dados que já estão no aparelho. Sem IA, nada sai do aparelho. ===== */
 const RETRO_MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const retroNome=m=>RETRO_MES[+m.slice(5,7)-1];
@@ -2425,7 +2463,7 @@ const sampleP=Promise.resolve({
   async json(prompt,o){
     o=o||{};const corpo={tipo:o.tipo};
     if(o.tipo==='texto')corpo.prompt=prompt;
-    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg'}else if(o.ref&&o.pais){corpo.ref=o.ref;corpo.pais=o.pais}}
+    else{corpo.contexto=o.ctx||'';corpo.consent=VERSAO_PRIV;if(o.tipo!=='produto_cmp'){const f=Array.isArray(o.images)?o.images[0]:o.images;if(!f)throw {code:'image_rejected'};corpo.imagem=await reduzFoto(f);corpo.media_type='image/jpeg';if(o.codigo)corpo.codigo=o.codigo}else if(o.ref&&o.pais){corpo.ref=o.ref;corpo.pais=o.pais}}
     const {data,error}=await sb.functions.invoke('analisar',{body:corpo});
     if(error){let j=null;try{j=await error.context.json()}catch(e){}
       const cod=j&&j.codigo;if(cod==='plus'||cod==='limite_gratis'){_lastPf=0;atualizaPlano()}throw {code:'srv',cod,msg:(cod==='limite_dia'?NOMES_ERRO[cod]:(j&&j.erro))||NOMES_ERRO[cod]||'Algo deu errado. Tente de novo.'}}
@@ -3132,16 +3170,22 @@ function pfUi(){const f=S.pf;if(!f)return;const n=document.getElementById('pf-n'
   const av=document.querySelectorAll('#pf-atv p');if(av.length>1){const k=Math.floor(tt/5)%av.length;av.forEach((p,i)=>p.classList.toggle('on',i===k))}}
 function pfProg(){clearInterval(PFIV);PFIV=setInterval(()=>{const f=S.pf;if(!f||!f.busy){clearInterval(PFIV);PFIV=null;return}if(f.st==='cmp'&&f.t0){const t=(Date.now()-f.t0)/1000;f.p=Math.max(f.p,Math.min(92,92*(1-Math.exp(-t/11))))}else f.p=Math.min(92,f.p+(92-f.p)*.03+.2);pfUi()},120)}
 async function pfStart(){if(!S.plus){limite();return}if((S.pfArea||'pele')==='cabelo'&&!hairOk()){render();return}if(!S.prodFile||(S.pf&&S.pf.busy))return;if(!podeUsar('sc'))return limite();
-  const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn)};render();pfProg();
-  try{const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
+  const area=S.pfArea||'pele';S.pf={st:'id',busy:true,p:3,photo:S.prodPhoto,sel:0,area,cmpMode:!!(S.cmp&&S.cmp.scn),t_ini:Date.now()};render();pfProg();
+  try{const cod=await Promise.race([pfCodigo(S.prodFile),new Promise(ok=>setTimeout(()=>ok(null),2500))]);if(S.pf)S.pf.codLido=cod;
+    const sf=await sampleP;const r=await sf.json('',{tipo:'produto_id',codigo:cod||undefined,ctx:`Área do produto informada pela pessoa: ${area==='pele'?'pele do rosto':area}. Responda em português. No JSON de resposta, acrescente também o campo "area_real": "pele" (rosto), "cabelo" ou "corpo", conforme o uso REAL indicado na embalagem do produto, independentemente do que a pessoa informou, ou null se não der para saber.`,images:S.prodFile});
     if(!S.pf)return;if(!r||r.erro){S.pf.err=(r&&r.erro)||'Não consegui identificar o produto. Tente outra foto mostrando o nome e a lista de ingredientes.'}
     else{S.pf.idr={area,real:pfReal(r),produto:pfStr(r.produto,80),marca:pfStr(r.marca,60),categoria:pfStr(r.categoria,30)||'outro',volume:pfStr(r.volume,20),variante:pfStr(r.variante,60),qtd:(+r.quantidade>0&&+r.quantidade<100000)?Math.round(+r.quantidade*10)/10:null,un:['ml','g','un'].includes(String(r.unidade||'').toLowerCase())?String(r.unidade).toLowerCase():null,codigo:/^\d{8,14}$/.test(String(r.codigo_barras||'').replace(/\D/g,''))?String(r.codigo_barras).replace(/\D/g,''):null,confianca:Math.max(0,Math.min(100,Math.round(+r.confianca||0))),
       alternativas:pfArr(r.alternativas,3).filter(a=>a&&a.produto).map(a=>({produto:pfStr(a.produto,80),marca:pfStr(a.marca,60)})),texto_lido:pfArr(r.texto_lido,8).map(x=>String(x).slice(0,60)),
       ingredientes_lidos:pfArr(r.ingredientes_lidos,30).map(x=>String(x).slice(0,60)),lista_lida:r.lista_lida===true,ativos_declarados:pfArr(r.ativos_declarados,6).map(x=>String(x).slice(0,60)),caixa:(Array.isArray(r.caixa)&&r.caixa.length===4&&r.caixa.every(v=>isFinite(+v)))?r.caixa.map(v=>Math.max(0,Math.min(1,+v))):null,na_mao:r.na_mao===true};
-      S.pf.p=100;S.pf.st='conf';pfPre(S.pf)}
+      S.pf.p=100;S.pf.st='conf';S.pf.t_id=Date.now();S.pf.atalho=r.atalho===true;if(S.pf.atalho)toast('Reconhecido pelo código de barras',1);pfPre(S.pf)}
   }catch(e){if(!S.pf)return;const c=e&&e.code;if(c==='srv'&&(e.cod==='plus')){S.pf=null;limite();return}S.pf.err=c==='srv'?e.msg:(c in ERR?ERR[c]:'Algo deu errado. Tente de novo.')}
   if(S.pf){S.pf.busy=false;if(S.pf.st==='conf'&&pfAutoOk(S.pf)){S.pf.auto=true;pfCmp();return}}render()}
 /* Leitura muito confiável (≥ 90%), área certa e opção principal: segue direto para a comparação ("Não é esse produto?" no resultado permite voltar). */
+/* Medição do scanner: grava o tempo de cada etapa (tabela scanner_tempos; só insere, ninguém lê pelo app). Nunca atrapalha o fluxo. */
+function pfTempo(f,ok){try{if(!AUTH.user||typeof sb==='undefined'||!f||!f.t_ini)return;const now=Date.now(),c=(v,mx)=>v==null||!isFinite(v)?null:Math.max(0,Math.min(mx,Math.round(v)));
+  const t_id=f.t_id||f.t0,row={modo:f.cmpMode?'comparador':'scanner',area:['pele','cabelo','corpo'].includes(f.area)?f.area:'pele',auto_conf:!!f.autoUsed,antecipado:!!f.preUsed,atalho:!!f.atalho,
+    ms_id:c(t_id-f.t_ini,600000),ms_conf:c(f.t0-t_id,600000),ms_cmp:c(now-f.t0,600000),ms_total:c(now-f.t_ini,900000),ok:!!ok};
+  sb.from('scanner_tempos').insert(row).then(()=>{},()=>{})}catch(e){}}
 function pfAutoOk(f){const i=f&&f.idr;return !!i&&f.sel===0&&(i.confianca||0)>=90&&!(i.real&&i.real!==(f.area||'pele'))}
 
 /* Monta o pedido de comparação (o mesmo para a antecipação e para o toque em "Confirmar") */
@@ -3161,7 +3205,7 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
   f.nome=q.nome;f.marca=q.marca;if(!f.cmpMode&&(shDup((f.marca&&!nmK(f.nome).includes(nmK(f.marca))?f.marca+' ':'')+f.nome)||shDup(f.nome))){render();return}f.st='cmp';f.busy=true;f.p=3;f.err=null;f.t0=Date.now();
   if(f.cmpMode&&S.cmp&&S.cmp.scn&&!f.bg){const C=cmpS(),k=C.scn.k,tk={nome:f.nome,marca:f.marca,photo:f.photo,box:f.idr&&f.idr.caixa};C.pend=C.pend||{};C.pend[k]=tk;f.bg={k,tk};clearInterval(PFIV);cmpBack();toast('Analisando '+cmpShort({nome:f.nome,marca:f.marca})+'…');}
   else{render();pfProg()}
-  const pre=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre.p:null;f.pre=null;
+  const pre=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre.p:null;f.pre=null;f.preUsed=!!pre;f.autoUsed=!!f.auto;
   try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0&&!f.bg)await new Promise(ok=>setTimeout(ok,w))}}
     if(!r){const sf=await sampleP;r=await sf.json('',{tipo:'produto_cmp',ctx:q.ctx,ref:q.ref,pais:q.pais})}if(!f.bg&&!S.pf)return;
     if(!r||r.erro){f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
@@ -3177,7 +3221,7 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
       S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:ver,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!f.bg&&!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'&&!f.bg){S.pf=null;limite();return}f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
-  f.busy=false;gameCheck();if(f.bg){pfBgDone(f);return}if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
+  pfTempo(f,!f.err&&!!f.sc);f.busy=false;gameCheck();if(f.bg){pfBgDone(f);return}if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
 /* Comparador: a análise que correu em segundo plano termina e entra no espaço A ou B (se a pessoa não trocou ou limpou o espaço nesse meio tempo). */
 function pfBgDone(f){const C=cmpS(),k=f.bg.k;if(!C.pend||C.pend[k]!==f.bg.tk){render();return}delete C.pend[k];
   if(f.err||!f.sc){toast('Não consegui analisar '+cmpShort({nome:f.nome,marca:f.marca})+'. '+(f.err||'Tente de novo.'));render();return}
@@ -3481,7 +3525,7 @@ function viewHoje(){
     return `<button class="hj-dn" data-go="rotina|${p}"><span class="hj-pi sm">${ic(i_,22)}</span><span><b>${nm} concluída</b><small>${n} de ${n} etapas${hr?' · '+hr:''}</small></span>${ic('chev',16)}</button>`}).join(''):'';
   const avisos=`${!S.plus?paywall('Rotina da manhã e da noite','routine','Passo a passo todos os dias, com lembretes e sequência.'):''}
     ${S.fase&&S.fase!=='padrao'&&FASES[S.fase]?`<button class="alertc" style="border-color:var(--accent)" data-go="mais|fase">${ic(FASES[S.fase].i,22)}<span><b>Modo: ${FASES[S.fase].t}</b><span class="small muted" style="display:block">Rotina ajustada</span></span></button>`:''}
-    ${soon.length?`<button class="alertc" data-go="produtos|shelf">${ic('alert',22)}<span><b>${soon.length===1?'1 produto vence':soon.length+' produtos vencem'} em breve</b><span class="small muted" style="display:block">Veja a sua prateleira</span></span></button>`:''}`;
+    ${avisosValidade(soon)}`;
   const tools=[['clock','Horários','lembretes'],['cal','Fase','fase'],['leaf','Ingredientes','ingredientes'],['coin','Gastos','gastos'],['file','Relatório','relatorio'],['crown','Plano','plano']];
   const nums=S.plus?[['image','Antes/depois',S.fotos.length,'ba'],['chart','Diário',S.diary.length,'evo'],['face','Análises',S.analises.length,'analise'],['routine','Registros',S.diary.length+S.analises.length+S.prods.length,'reg']]:null;
   /* dica do dia: relação com os cuidados só quando há dado real */
@@ -5353,6 +5397,7 @@ document.addEventListener('click',e=>{
     CL.db.collection('posts').add({t,tipo:LBL[S.pele]||'',faixa:AGES.find(a=>a[0]===S.age)[1],uid:CL.uid,ts:Date.now(),likes:[]}).then(()=>{S.draft='';toast('Publicado');render()}).catch(()=>toast('Não consegui publicar'))}
   else if(d.like){const x=(POSTS||[]).find(p=>p.id===d.like);if(x){const l=(x.likes||[]).includes(CL.uid)?(x.likes||[]).filter(u=>u!==CL.uid):[...(x.likes||[]),CL.uid];CL.db.doc('posts/'+x.id).update({likes:l}).catch(()=>toast('Não consegui curtir'))}}
   else if(d.delpost){CL.db.doc('posts/'+d.delpost).delete().catch(()=>toast('Não consegui apagar'))}
+  else if(d.act&&d.act.startsWith('av-x|')){S.avx=S.avx||{};S.avx[d.act.slice(5)]=hoje();save();render()}
   else if(d.act==='retro-abrir'){const m=retroMesAtual();if(m){S.retroOpen={m,i:0};render()}}
   else if(d.act==='retro-prox'&&S.retroOpen){S.retroOpen.i++;retroUpd()}
   else if(d.act==='retro-ant'&&S.retroOpen){S.retroOpen.i=Math.max(0,S.retroOpen.i-1);retroUpd()}

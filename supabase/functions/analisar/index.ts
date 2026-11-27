@@ -27,6 +27,16 @@ const MAX_PROMPT = 5000;
 // Preço de referência (compartilhado): validade configurável por segredo PRECO_VALIDADE_DIAS (padrão 90 dias).
 const PRECO_DIAS = Math.max(1, Math.min(365, Number(Deno.env.get("PRECO_VALIDADE_DIAS") ?? VALIDADE_DIAS_PADRAO) || VALIDADE_DIAS_PADRAO));
 
+// Atalho pelo código de barras: normaliza e confere o dígito verificador (EAN-8, EAN-13/UPC-A, GTIN-14).
+function gtinNorm(v: unknown): string | null {
+  let c = String(v ?? "").replace(/\D/g, "");
+  if (c.length === 12) c = "0" + c;
+  if (!/^(\d{8}|\d{13}|\d{14})$/.test(c)) return null;
+  const d = c.split("").map(Number), chk = d.pop()!;
+  let s = 0; d.reverse().forEach((x, i) => { s += x * (i % 2 === 0 ? 3 : 1); });
+  return (10 - (s % 10)) % 10 === chk ? c : null;
+}
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -228,6 +238,23 @@ Deno.serve(async (req: Request) => {
   };
 
   try {
+    // ---- Atalho pelo código de barras: produto já identificado antes (por qualquer pessoa) não passa pela IA ----
+    // O código vem lido pelo app; só é usado para LER. O que fica guardado sempre vem da leitura da IA (abaixo), nunca do app.
+    if (tipo === "produto_id" && userId) {
+      const cod = gtinNorm(body?.codigo);
+      if (cod) {
+        const t0 = Date.now();
+        const { data: hit } = await admin.from("produto_ident_cache").select("resultado, confianca, lista_lida, usos").eq("codigo", cod).maybeSingle();
+        if (hit && hit.lista_lida && hit.confianca >= 90) {
+          const resultado = { ...(hit.resultado as Record<string, unknown>), confianca: hit.confianca, codigo_barras: cod, caixa: null, na_mao: false, atalho: true };
+          try { await admin.from("produto_ident_cache").update({ usos: (hit.usos ?? 0) + 1 }).eq("codigo", cod); } catch (_e) { /* métrica */ }
+          try { await admin.from("uso_ia").insert({ user_id: userId, tipo, modelo: "atalho-codigo", tokens_in: 0, tokens_out: 0, tokens_cache: 0, ok: true, cache_hit: true, custo_usd: 0, latencia_ms: Date.now() - t0 }); } catch (_e) { /* métrica */ }
+          if (regId !== null) await admin.from("analises").update({ resultado: { etapa: tipo, ...resultado } }).eq("id", regId);
+          return json({ ok: true, resultado });
+        }
+      }
+    }
+
     // ---- Preço de referência (só na comparação do scanner, SEM chamada extra de IA) ----
     // 1) Procura no banco compartilhado. 2) Se existir e estiver vigente, reutiliza e NÃO pede preço à IA.
     // 3) Se não existir (ou venceu), pede a estimativa NA MESMA chamada que já faz a comparação, e valida no servidor.
@@ -266,6 +293,7 @@ Deno.serve(async (req: Request) => {
 
     // Chama a IA e devolve o texto + o uso de tokens (para medir o custo real).
     const chamar = async (modelo: string) => {
+      const t0 = Date.now();
       const corpoIA: Record<string, unknown> = { model: modelo, max_tokens: MAX_SAIDA_POR_TIPO[tipo] ?? 2500, messages: [{ role: "user", content }] };
       if (modelo === MODELO_PADRAO && !COM_PENSAMENTO.has(tipo)) corpoIA.thinking = { type: "disabled" };
       let modo = "";
@@ -287,22 +315,22 @@ Deno.serve(async (req: Request) => {
           body: JSON.stringify(corpoIA),
         });
       }
-      if (!r.ok) return { ok: false, txt: "", usage: null as any, modo };
+      if (!r.ok) return { ok: false, txt: "", usage: null as any, modo, ms: Date.now() - t0 };
       const out = await r.json();
       const txt: string = (out?.content ?? []).filter((b: any) => b.type === "text").map((b: any) => b.text).join("");
-      return { ok: true, txt, usage: out?.usage ?? null, modo };
+      return { ok: true, txt, usage: out?.usage ?? null, modo, ms: Date.now() - t0 };
     };
     const ler = (txt: string) => {
       const m = txt.match(/\{[\s\S]*\}/);
       try { return m ? JSON.parse(m[0]) : null; } catch { return null; }
     };
     let usoId: number | null = null;
-    const logUso = async (modelo: string, usage: any, ok: boolean) => {
+    const logUso = async (modelo: string, usage: any, ok: boolean, ms: number | null = null) => {
       try {
         const { data } = await admin.from("uso_ia").insert({
           user_id: userId, tipo, modelo,
           tokens_in: usage?.input_tokens ?? 0, tokens_out: usage?.output_tokens ?? 0,
-          tokens_cache: usage?.cache_read_input_tokens ?? 0, ok,
+          tokens_cache: usage?.cache_read_input_tokens ?? 0, ok, latencia_ms: ms,
           preco_evento: tipo === "produto_cmp" ? precoEv : null,
         }).select("id").single();
         usoId = data?.id ?? null;
@@ -312,13 +340,13 @@ Deno.serve(async (req: Request) => {
     let modelo = MODELO_POR_TIPO[tipo] ?? MODELO_PADRAO;
     let a = await chamar(modelo);
     let resultado: any = a.ok ? ler(a.txt) : null;
-    await logUso(modelo + (a.modo ?? ""), a.usage, !!resultado);
+    await logUso(modelo + (a.modo ?? ""), a.usage, !!resultado, a.ms ?? null);
     // Reserva no Sonnet: desligada durante o teste do Haiku (USAR_RESERVA = false).
     if (!resultado && USAR_RESERVA && modelo !== MODELO_RESERVA) {
       modelo = MODELO_RESERVA;
       a = await chamar(modelo);
       resultado = a.ok ? ler(a.txt) : null;
-      await logUso(modelo, a.usage, !!resultado);
+      await logUso(modelo, a.usage, !!resultado, a.ms ?? null);
     }
     if (!resultado) {
       await devolver();
@@ -368,6 +396,20 @@ Deno.serve(async (req: Request) => {
         resultado.preco = { status: "insufficient_data" };
       }
       if (usoId !== null && precoEv) { try { await admin.from("uso_ia").update({ preco_evento: precoEv }).eq("id", usoId); } catch (_e) { /* métrica */ } }
+    }
+
+    // ---- Atalho pelo código de barras: guarda a identificação muito confiável (sem dados da foto) ----
+    if (tipo === "produto_id") {
+      const cod = gtinNorm(resultado.codigo_barras);
+      const conf = Math.round(Number(resultado.confianca) || 0);
+      if (cod && conf >= 90 && resultado.lista_lida === true && resultado.produto) {
+        const { caixa: _cx, na_mao: _nm, confianca: _cf, ...semFoto } = resultado;
+        try {
+          const { data: ex } = await admin.from("produto_ident_cache").select("lista_lida, confianca").eq("codigo", cod).maybeSingle();
+          if (!ex) await admin.from("produto_ident_cache").insert({ codigo: cod, resultado: semFoto, confianca: conf, lista_lida: true });
+          else if (!ex.lista_lida || ex.confianca < conf) await admin.from("produto_ident_cache").update({ resultado: semFoto, confianca: conf, lista_lida: true, atualizado_em: new Date().toISOString() }).eq("codigo", cod);
+        } catch (_e) { /* o atalho nunca derruba a análise */ }
+      }
     }
 
     // Histórico por usuário: cada etapa do scanner fica guardada em "analises" (resultado em JSON, sem a foto).
