@@ -560,7 +560,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795836073";</script>
+<script>window.MM_VER="1795838491";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1428,6 +1428,51 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .ofp{margin:0;color:var(--muted);line-height:1.45;font-size:16px}
 .ofv{display:flex;flex-direction:column;align-items:center;line-height:1.1}.ofv s{color:var(--muted);font-size:17px}.ofv b{font-size:46px;letter-spacing:-.03em;color:#4A2A1E}.ofv small{color:#A76F5C;font-weight:600;font-size:14px;margin-top:4px}
 @keyframes ofi{from{opacity:0}to{opacity:1}}@keyframes ofu{from{transform:translateY(40px)}to{transform:none}}
+/* oferta animada: cupom que aparece, pétalas, preço descendo de 149,90 para 119,90 */
+.ofc .ofno{align-self:center;text-align:center;justify-content:center;padding:12px;color:var(--muted)}
+.ofp2{font-size:14px!important}
+.ofbd{position:relative;overflow:hidden;animation:ofpop .5s .15s cubic-bezier(.3,1.6,.5,1) backwards}
+.ofbd::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%);transform:translateX(-120%);animation:ofshine 2.8s 1.2s ease-in-out infinite}
+.ofc h2{animation:ofup .45s .3s ease backwards}.ofc>.ofp{animation:ofup .45s .42s ease backwards}
+.oftw{position:relative;width:100%;max-width:330px;margin:6px 0 2px;perspective:700px}
+.oftk{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;line-height:1.1;padding:16px 26px 14px;border-radius:20px;background:linear-gradient(140deg,#FBEFE6 0%,#F3DACB 55%,#EBC8B4 100%);box-shadow:0 14px 30px rgba(120,60,35,.18),inset 0 0 0 1.5px rgba(167,111,92,.35);
+  -webkit-mask:radial-gradient(circle 11px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 11px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;
+  transform-origin:50% 0;animation:offlip .7s .55s cubic-bezier(.2,.9,.25,1.15) backwards}
+.oftl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#A76F5C}
+.ofold{position:relative;text-decoration:none;color:var(--muted);font-size:17px;margin-top:6px}
+.ofold::after{content:'';position:absolute;left:-3px;right:-3px;top:52%;height:2px;border-radius:2px;background:#A76F5C;transform:scaleX(0);transform-origin:0 50%;animation:ofstrike .35s 1.15s ease-out forwards}
+.ofnew{font-size:46px;letter-spacing:-.03em;color:#4A2A1E;font-variant-numeric:tabular-nums;margin-top:2px}
+.ofnew.fim{animation:ofbump .45s cubic-bezier(.3,1.7,.5,1)}
+.oftk small{color:#A76F5C;font-weight:600;font-size:14px;margin-top:2px}
+.ofsv{position:absolute;top:12px;right:14px;font-style:normal;font-size:12.5px;font-weight:800;color:#fff;background:#A76F5C;border-radius:99px;padding:4px 9px;transform:rotate(8deg);animation:ofpop .45s 2.1s cubic-bezier(.3,1.8,.5,1) backwards}
+.ofsh{position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:ofshine 3.2s 2.3s ease-in-out infinite;pointer-events:none}
+.oftw>.oftk{z-index:1}
+.ofmes{margin-top:12px;display:inline-flex;align-items:baseline;gap:5px;background:#A76F5C;color:#fff;border-radius:99px;padding:7px 15px;font-size:14px;font-weight:600;box-shadow:0 6px 14px rgba(140,80,55,.25);animation:ofpop .45s 2.15s cubic-bezier(.3,1.6,.5,1) backwards}
+.ofmes s{opacity:.8}.ofmes b{font-size:19px;font-weight:800;letter-spacing:-.01em}
+/* oferta em tela cheia */
+.ofx{align-items:stretch;background:radial-gradient(120% 70% at 50% 45%,#FBEDE4 0,#F3DDD2 50%,#E4B9A5 100%);animation:ofi .35s ease}
+.ofx .ofc{max-width:520px;height:100%;border-radius:0;background:transparent;justify-content:center;padding:calc(18px + env(safe-area-inset-top)) 22px calc(14px + env(safe-area-inset-bottom));gap:12px;overflow-y:auto;box-sizing:border-box;animation:none}
+.oflg{height:32px;width:auto;margin-bottom:4px;animation:ofin .4s .1s ease backwards}
+.ofx .oftk{background:linear-gradient(140deg,#FFF9F4 0%,#FBEDE3 55%,#F4DCCD 100%);box-shadow:0 18px 40px rgba(120,60,35,.22),inset 0 0 0 1.5px rgba(167,111,92,.35);padding:18px 24px 16px}
+.ofx .ofp{color:#7A5A4C}.ofx .ofno{color:#7A5A4C}
+@media(max-height:700px){.ofx .ofc{gap:9px}.oflg{height:26px}.ofx .ofc h2{font-size:25px}.ofnew{font-size:42px}}
+.ofold{animation:ofin .3s 1s ease backwards}
+.ofhalo{position:absolute;left:50%;top:50%;width:125%;height:230%;transform:translate(-50%,-50%) scale(.6);border-radius:50%;background:radial-gradient(closest-side,rgba(226,168,140,.6),rgba(226,168,140,0) 100%);opacity:0;z-index:0;pointer-events:none;animation:ofhalo 1.6s 1.1s ease-out forwards}
+.ofst{position:absolute;z-index:2;color:#C98B70;width:18px;height:18px;opacity:0;pointer-events:none;animation:oftw 1.3s ease-in-out forwards}.ofst svg{display:block;width:100%;height:100%}
+.ofst0{left:-6px;top:-8px;animation-delay:2.05s}.ofst1{right:-4px;top:-10px;width:13px;height:13px;animation-delay:2.25s}.ofst2{right:-8px;bottom:-6px;animation-delay:2.4s}.ofst3{left:-2px;bottom:-9px;width:12px;height:12px;animation-delay:2.55s}
+@keyframes ofin{from{opacity:0}to{opacity:1}}
+@keyframes ofhalo{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}35%{opacity:1}100%{opacity:.55;transform:translate(-50%,-50%) scale(1)}}
+@keyframes oftw{0%{opacity:0;transform:scale(0) rotate(-40deg)}35%{opacity:1;transform:scale(1.15) rotate(10deg)}60%{transform:scale(.9) rotate(0)}100%{opacity:1;transform:scale(1) rotate(0)}}
+.ofgo{position:relative;overflow:hidden;animation:ofup .45s 1.9s ease backwards}
+.ofgo::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);animation:ofshine 3s 2.6s ease-in-out infinite}
+.ofp2,.ofno{animation:ofup .45s 2s ease backwards}
+@keyframes ofup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ofpop{from{opacity:0;transform:scale(.4)}to{opacity:1}}
+@keyframes offlip{from{opacity:0;transform:rotateX(-75deg) scale(.85)}to{opacity:1;transform:none}}
+@keyframes ofstrike{to{transform:scaleX(1)}}
+@keyframes ofbump{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes ofshine{0%{transform:translateX(-120%)}45%,100%{transform:translateX(120%)}}
+@media(prefers-reduced-motion:reduce){.ofx *,.ofx *::after{animation:none!important}.ofold::after{transform:none}.ofhalo,.ofst{display:none}}
 /* novas telas do onboarding */
 .agb{min-height:76px;border-radius:22px}
 .rspw{margin:-10px -18px 0;padding:76px 18px 40px;min-height:100dvh;background:radial-gradient(120% 70% at 50% 60%,#FBEDE4 0,#F3DDD2 45%,#E4B9A5 100%);color:#4A2A1E;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;overflow:hidden}
@@ -2054,7 +2099,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['rtTm','period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro','avx','astCota'];
+const KEY='mm_v1',SAVED=['rtTm','period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro','avx','astCota','ofVisto','oferta'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -5341,7 +5386,10 @@ function viewOnboarding(){PFI=0;
       <button class="pwo${an?' on':''}" role="radio" aria-checked="${an}" data-plan="ano"><em>Economize ${S.oferta?'oferta':PA.e}</em><i></i><span>Plano anual</span><b>${PA.p}<small>por ano</small></b></button>
       <button class="pwo${!an?' on':''}" role="radio" aria-checked="${!an}" data-plan="mes"><i></i><span>Plano mensal</span><b>R$ 59,90<small>por mês</small></b></button>
       <button class="btn obc pwk" data-act="ob-plano">Quero cuidar da minha pele</button><p class="pwr">Renova automaticamente, cancele quando quiser.</p></div>`:''}
-    ${S.ofOpen?`<div class="ofx" role="dialog" aria-modal="true" aria-labelledby="oft"><div class="ofc"><span class="vbadge">${ic('crown',14)}Oferta única</span><h2 id="oft">${S.nome?esc(S.nome)+', e':'E'}spera um pouco!</h2><p class="ofp">Sua rotina já está montada e é feita só para a sua pele. Liberamos um desconto que não aparece de novo: o plano anual por</p><div class="ofv"><s>R$ 149,90</s><b>R$ 119,90</b><small>por ano · só R$ 9,99 por mês</small></div><p class="ofp" style="font-size:14px">Menos de R$ 0,35 por dia para cuidar da pele que você acabou de analisar.</p><button class="btn obc fill" data-act="of-ok" style="width:100%">Garantir por R$ 119,90</button><button class="back" data-act="of-no" style="padding:12px;color:var(--muted)">Não quero cuidar da minha pele agora</button></div></div>`:''}</div>`}
+    ${S.ofOpen?`<div class="ofx" role="dialog" aria-modal="true" aria-labelledby="oft"><div class="ofc"><img class="oflg" src="pellie-logo.png" alt="Pellie"><span class="vbadge ofbd">${ic('crown',14)}Oferta única</span><h2 id="oft">${S.nome?esc(S.nome)+', e':'E'}spera um pouco!</h2><p class="ofp">Sua rotina já está montada e é feita só para a sua pele. Liberamos um desconto que não aparece de novo:</p>
+      <div class="oftw"><span class="ofhalo" aria-hidden="true"></span><span class="ofst ofst0" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.6 6.2 5.2 11.4 12 12-6.8.6-11.4 5.8-12 12-.6-6.2-5.2-11.4-12-12 6.8-.6 11.4-5.8 12-12z" fill="currentColor"/></svg></span><span class="ofst ofst1" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.6 6.2 5.2 11.4 12 12-6.8.6-11.4 5.8-12 12-.6-6.2-5.2-11.4-12-12 6.8-.6 11.4-5.8 12-12z" fill="currentColor"/></svg></span><span class="ofst ofst2" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.6 6.2 5.2 11.4 12 12-6.8.6-11.4 5.8-12 12-.6-6.2-5.2-11.4-12-12 6.8-.6 11.4-5.8 12-12z" fill="currentColor"/></svg></span><span class="ofst ofst3" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.6 6.2 5.2 11.4 12 12-6.8.6-11.4 5.8-12 12-.6-6.2-5.2-11.4-12-12 6.8-.6 11.4-5.8 12-12z" fill="currentColor"/></svg></span>
+      <div class="oftk" role="img" aria-label="Plano anual: de R$ 149,90 por R$ 119,90 por ano, o equivalente a R$ 9,99 por mês"><span class="ofsh" aria-hidden="true"></span><span class="oftl">Plano anual</span><s class="ofold">R$ 149,90</s><b class="ofnew" id="ofnew">R$ 119,90</b><small>por ano</small><span class="ofmes">de <s>R$ 12,49</s> por <span><b>R$ 9,99</b>/mês</span></span><em class="ofsv">– R$ 30</em></div></div>
+      <p class="ofp ofp2">Cobrança anual. Cancele quando quiser.</p><button class="btn obc fill ofgo" data-act="of-ok" style="width:100%">Garantir por R$ 119,90</button><button class="back ofno" data-act="of-no">Não quero cuidar da minha pele agora</button></div></div>`:''}</div>`}
   if(st==='pele'||st==='sens'){const q=QS.find(x=>x.k===st);return `<div class="ob obx">${back}
     <h1 class="obh" style="text-align:center">${q.t}</h1>${q.s?`<p class="obs">${q.s}</p>`:''}
     <div class="stack" style="gap:10px">${q.o.map(o=>`<button class="op2" data-opt="${q.k}|${o[0]}" aria-pressed="${S[q.k]===o[0]}"><span><b>${o[1]}</b>${o[2]?`<small>${o[2]}</small>`:''}</span><i></i></button>`).join('')}</div>
@@ -6017,6 +6065,8 @@ document.addEventListener('touchmove',e=>{if(shEd.dragging)e.preventDefault()},{
 document.addEventListener('contextmenu',e=>{if(shEd.active&&e.target.closest&&e.target.closest('.shedit'))e.preventDefault()});
 document.addEventListener('keydown',e=>{if(!shEd.active)return;if(e.key==='Escape'){if(shEd.dragging)shEnd(false);else if(shEd.confirm){shEd.confirm=null;shRefresh()}return}
   const n=e.target.closest&&e.target.closest('.shp');if(n&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();shAct('mv|'+n.dataset.shid+'|'+(e.key==='ArrowLeft'?-1:1))}});
+/* oferta: o preço desce de 149,90 para 119,90 quando a folha aparece */
+{const r0=render;render=function(){const x=r0.apply(this,arguments);const el=document.getElementById('ofnew');if(el&&!el.dataset.a){el.dataset.a='1';if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){const f=v=>'R$ '+v.toFixed(2).replace('.',',');el.textContent=f(149.9);const t0=performance.now()+1250,D=850;const tk=t=>{if(!el.isConnected)return;const k=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-k,3);el.textContent=f(149.9-30*e);if(k<1)requestAnimationFrame(tk);else{el.textContent='R$ 119,90';el.classList.add('fim')}};requestAnimationFrame(tk)}}return x}}
 {const r1=render;render=function(){shSyncRot();if(shEd.active&&!(S.tab==='produtos'&&S.prodSub==='shelf'&&S.plus&&S.ob.done))shReset();if(S.shSel&&!(S.tab==='produtos'&&S.prodSub==='shelf')){S.shSel=null;S.shRmAsk=null}const x=r1.apply(this,arguments);shSheetUpd();let m=document.getElementById('shmodal');if(!m){m=document.createElement('div');m.id='shmodal';document.body.appendChild(m)}const h=shModal();if(m.dataset.h!==h){m.dataset.h=h;m.innerHTML=h}return x}}
 /* ---------- Prateleira: estilos, decoração e recompensas (usa o XP e o nível que já existem) ---------- */
 const SHS=[
