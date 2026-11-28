@@ -560,7 +560,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795838491";</script>
+<script>window.MM_VER="1795839733";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1480,15 +1480,44 @@ nav button[aria-current="page"] svg{color:var(--terra)}
 .rspw>*{position:relative}.rspw{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .rspw h1{margin:0;font-size:32px;line-height:1.15;letter-spacing:-.02em;font-weight:700}
 .rsph{margin:0;font-size:19px;font-weight:600;opacity:.95}
-.rspc{position:relative;width:min(76vw,310px);aspect-ratio:3/4;margin-top:14px;border-radius:30px;background:#FFF;box-shadow:0 0 70px rgba(255,255,255,.8),0 18px 40px rgba(90,46,20,.22);overflow:hidden;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.rspc{position:relative;margin-bottom:22px;width:min(76vw,310px,calc((100dvh - 320px)*.75));aspect-ratio:3/4;margin-top:14px;border-radius:30px;background:#FFF;box-shadow:0 0 70px rgba(255,255,255,.8),0 18px 40px rgba(90,46,20,.22);overflow:hidden;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
 .rspc.rv{transform:scale(1.04);animation:rspp .9s ease}
-.rspc canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .6s}
+.rspc canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .6s}
 .rspc canvas.gone{opacity:0;pointer-events:none}
 .rspv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:24px;color:#3B2217}
 .rspv small{font-size:17px;color:#7C5A4B}.rspv b{font-size:84px;line-height:1;color:#A76F5C;letter-spacing:-.03em}.rspv b.rsw{font-size:30px;line-height:1.15;margin:14px 0 4px;color:#3B2217;letter-spacing:-.02em}.rsf{display:block}
 .rspv>span{font-size:21px;font-weight:600}.rspv p{margin:12px 0 0;font-size:15px;color:#5C3F31}.rspv p b{font-size:15px;color:#3B2217;letter-spacing:0}
 .rspb{margin-top:auto;background:#4A2A1E;border:0;color:#fff;box-shadow:0 8px 20px rgba(74,42,30,.25);border-radius:999px;padding:14px 26px;font-family:inherit;font-weight:600;font-size:16px;cursor:pointer}
-@keyframes rspr{to{transform:rotate(360deg)}}@keyframes rspp{0%{box-shadow:0 0 0 rgba(255,255,255,0)}50%{box-shadow:0 0 110px rgba(255,255,255,.9)}}
+@keyframes rspr{to{transform:rotate(360deg)}}
+/* raspadinha: o que aparece embaixo (foto, tipo de pele, pontos), pó ao raspar e pétalas ao revelar */
+.rxr{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%}
+.rxf{position:relative;width:138px;height:138px;margin-bottom:12px;display:grid;place-items:center}
+.rxf img{width:118px;height:118px;border-radius:50%;object-fit:cover;box-shadow:0 8px 22px rgba(90,46,20,.25);position:relative;z-index:1}
+.rxl{width:118px;height:118px;border-radius:50%;background:#FBF1EA;display:grid;place-items:center;position:relative;z-index:1}
+.rxi{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#A76F5C,#EBC7B3,#A76F5C,#F6E2D6,#A76F5C);-webkit-mask:radial-gradient(closest-side,transparent 86%,#000 88%);mask:radial-gradient(closest-side,transparent 86%,#000 88%);animation:rspr 6s linear infinite}
+.rxr small{font-size:15px!important;color:#7C5A4B}
+.rspv b.rxt{font-size:44px;line-height:1.05;color:#3B2217;letter-spacing:-.03em}.rspv b.rxt2{font-size:28px}
+.rxc{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px}
+.rxc span{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#3B2217;background:#FBF1EA;border-radius:99px;padding:7px 14px}
+.rxc i{width:9px;height:9px;border-radius:50%;background:#C9733F}.rxc i.f{background:#3E7B57}
+.rspc.rv .rxf{animation:rsin .6s .05s cubic-bezier(.3,1.5,.5,1) backwards}
+.rspc.rv .rxr>small,.rspc.rv .rxt{animation:rsup .45s .3s ease backwards}
+.rspc.rv .rxc span{animation:rsup .45s .55s ease backwards}.rspc.rv .rxc span+span{animation-delay:.72s}
+.rspc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%);opacity:0;pointer-events:none;z-index:3}
+.rspc.rv::after{animation:rxl .8s ease-out}
+.rspo{position:absolute;z-index:4;width:5px;height:5px;margin:-2px 0 0 -2px;border-radius:50%;background:#C9A28C;pointer-events:none;transform:scale(var(--s));animation:rspo .7s ease-in forwards}
+.rspo:nth-child(3n){background:#E7CDBE}.rspo:nth-child(4n){background:#B98A72;width:4px;height:4px}
+.rspw{position:relative}.rspc{z-index:1}
+.rsbu{position:absolute;left:50%;top:var(--rsy,58%);width:0;height:0;z-index:0;pointer-events:none}
+.rsbu i{position:absolute;left:-8px;top:-13px;width:16px;height:26px;border-radius:50%;background:linear-gradient(#F4D5C5,#C98B70);opacity:0;transform:rotate(var(--a)) translateY(0) scale(.3)}
+.rsbu.on i{animation:rsbu 1.2s var(--t) cubic-bezier(.15,.7,.3,1) forwards}
+@keyframes rsin{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes rsup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rxl{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
+@keyframes rspo{from{opacity:1;transform:translate(0,0) scale(var(--s))}to{opacity:0;transform:translate(var(--dx),46px) scale(calc(var(--s)*.5))}}
+@keyframes rsbu{0%{opacity:0;transform:rotate(var(--a)) translateY(0) scale(.3)}15%,65%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(calc(-1*var(--d))) scale(1.05)}}
+@media(prefers-reduced-motion:reduce){.rxi,.rspc.rv .rxf,.rspc.rv .rxr>small,.rspc.rv .rxt,.rspc.rv .rxc span,.rspc.rv::after,.rsbu.on i,.rspo{animation:none}.rsbu,.rspo{display:none}}
+@keyframes rspp{0%{box-shadow:0 0 0 rgba(255,255,255,0)}50%{box-shadow:0 0 110px rgba(255,255,255,.9)}}
 .ntb{position:relative;margin:36px auto 0;width:min(82vw,330px);height:250px}
 .ntb::before{content:"";position:absolute;left:12%;right:12%;top:36px;bottom:0;border-radius:30px 30px 0 0;background:linear-gradient(#FFF,rgba(255,255,255,0))}
 .ntbell{position:absolute;left:50%;top:0;transform:translateX(-50%);width:104px;height:104px;border-radius:50%;background:linear-gradient(#A76F5C,#D9BBA9);display:grid;place-items:center;color:#fff;animation:ntr 2.4s ease-in-out infinite;transform-origin:50% 0}
@@ -5313,9 +5342,14 @@ function viewOnboarding(){PFI=0;
     <div class="stack" style="gap:12px">${O.map(o=>`<button class="op2 agb" data-obq="agua|${o[0]}" aria-pressed="${S.agua===o[0]}"><span><b>${o[1]}</b></span><i></i></button>`).join('')}</div>
     ${cta('Continuar',S.agua!=null)}</div>`}
   if(st==='raspe'){const r=S.result;if(!r)return '';const ok=!!window.RSP_OK;
-    const rv=`<span class="rsf" aria-hidden="true"><svg viewBox="0 0 120 100" width="86"><g fill="none" stroke="#A76F5C" stroke-width="2">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg></span><b class="rsw">Sua análise ficou pronta</b><p>Já sabemos o que a sua pele mais precisa e o que ela faz de melhor.</p>`;
+    const flor=`<svg viewBox="0 0 120 100" width="74" aria-hidden="true"><g fill="none" stroke="#A76F5C" stroke-width="2">${[0,72,144,216,288].map(a=>`<ellipse cx="60" cy="27" rx="13" ry="21" transform="rotate(${a} 60 50)"/>`).join('')}</g></svg>`;
+    const bad=[r.oleo,r.poros,r.manchas,r.linhas,r.verm,100-r.hid].map(v=>+v||0),na=Math.max(desafio()?1:0,bad.filter(v=>v>=55).length),pk=posK(),nf=(pk?1:0)+boas(pk).length;
+    const tp=String(r.tipo||'').trim(),pl=(n,a,b)=>n+' '+(n===1?a:b);
+    const rv=`<div class="rxr"><div class="rxf"><span class="rxi" aria-hidden="true"></span>${S.photo?`<img src="${S.photo}" alt="Sua foto da análise">`:`<span class="rxl">${flor}</span>`}</div>
+      ${tp?`<small>Sua pele é</small><b class="rxt">${esc(tp.charAt(0).toUpperCase()+tp.slice(1).toLowerCase())}</b>`:`<b class="rxt rxt2">Sua análise ficou pronta</b>`}
+      <div class="rxc">${na?`<span><i class="a"></i>${pl(na,'ponto de atenção','pontos de atenção')}</span>`:''}${nf?`<span><i class="f"></i>${pl(nf,'ponto forte','pontos fortes')}</span>`:''}</div></div>`;
     return `<div class="rspw"><h1>${nome?esc(nome)+', você':'Você'} precisa ver isso.</h1><p class="rsph">${ok?'Pronto!':'Raspe para revelar'}</p>
-    <div class="rspc ${ok?'rv':''}" id="rsp-card"><div class="rspv">${rv}</div>${ok?'':`<canvas id="rsp-c" aria-label="Área para raspar"></canvas>`}</div>
+    <div class="rsbu${ok?' on':''}" aria-hidden="true">${[0,1,2,3,4,5,6,7,8,9,10,11,12,13].map(k=>`<i style="--a:${(k<7?52:232)+(k%7)*12.7}deg;--d:${215+(k%3)*28}px;--t:${(k%4)*.05}s"></i>`).join('')}</div><div class="rspc ${ok?'rv':''}" id="rsp-card"><div class="rspv">${rv}</div>${ok?'':`<canvas id="rsp-c" aria-label="Área para raspar"></canvas>`}</div>
     <button class="rspb" data-act="raspe-ok">${ok?'Ver minha análise':'Revelar sem raspar'}</button></div>`}
   if(st==='notif'){const n=nowMin(),m=hm(S.rem.m),nt=hm(S.rem.n);let at,dia,per;if(n<m){at=S.rem.m;dia='hoje';per='m'}else if(n<nt){at=S.rem.n;dia='hoje';per='n'}else{at=S.rem.m;dia='amanhã';per='m'}
     const [hh,mm]=at.split(':'),fh=mm==='00'?hh.replace(/^0/,'')+'h':hh.replace(/^0/,'')+'h'+mm;
@@ -5475,10 +5509,12 @@ function raspeInit(){const c=document.getElementById('rsp-c');if(!c)return;const
   x.fillStyle='rgba(90,46,20,.6)';x.font='600 15px system-ui,sans-serif';x.textAlign='center';x.fillText('Raspe aqui',W/2,H/2+84);
   let down=false,last=null,fim=false,t0=0;
   const pt=e=>{const r=c.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
-  const sc=(a,z)=>{x.globalCompositeOperation='destination-out';x.lineWidth=48;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(z[0],z[1]);x.stroke()};
+  const cdv=document.getElementById('rsp-card');let tp0=0,tv0=0;
+  const po=(z)=>{const n=Date.now();if(n-tp0<45||!cdv)return;tp0=n;for(let k=0;k<3;k++){const i=document.createElement('i');i.className='rspo';i.style.left=(z[0]+(Math.random()*30-15))+'px';i.style.top=(z[1]+(Math.random()*16-8))+'px';i.style.setProperty('--dx',(Math.random()*40-20)+'px');i.style.setProperty('--s',(.6+Math.random()*.8).toFixed(2));cdv.appendChild(i);i.addEventListener('animationend',()=>i.remove())}if(n-tv0>140){tv0=n;try{navigator.vibrate&&navigator.vibrate(6)}catch(_){}}};
+  const sc=(a,z)=>{po(z);x.globalCompositeOperation='destination-out';x.lineWidth=48;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(z[0],z[1]);x.stroke()};
   const chk=()=>{if(fim)return;const d=x.getImageData(0,0,W,H).data;let n=0,tot=0;for(let i=3;i<d.length;i+=64){tot++;if(d[i]<128)n++}if(n/tot>.5)acabou()};
-  const acabou=()=>{fim=true;window.RSP_OK=true;try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}c.classList.add('gone');const cd=document.getElementById('rsp-card');if(cd)cd.classList.add('rv');const h=document.querySelector('.rsph');if(h)h.textContent='Pronto!';const bt=document.querySelector('.rspb');if(bt)bt.textContent='Ver minha análise';
-};
+  const acabou=()=>{fim=true;window.RSP_OK=true;try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}c.classList.add('gone');const cd=document.getElementById('rsp-card');if(cd)cd.classList.add('rv');const h=document.querySelector('.rsph');if(h)h.textContent='Pronto!';const bt=document.querySelector('.rspb');if(bt)bt.textContent='Ver minha análise';const bu=document.querySelector('.rsbu');if(bu){if(cdv)bu.style.top=(cdv.offsetTop+cdv.offsetHeight/2)+'px';bu.classList.add('on')}
+};c._rev=()=>{if(!fim)acabou()};
   c.addEventListener('pointerdown',e=>{down=true;last=pt(e);try{c.setPointerCapture(e.pointerId)}catch(_){}sc(last,last);e.preventDefault()});
   c.addEventListener('pointermove',e=>{if(!down)return;const p=pt(e);sc(last,p);last=p;const n=Date.now();if(n-t0>120){t0=n;chk()}e.preventDefault()});
   const up=()=>{down=false;chk()};c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up)}
@@ -5557,7 +5593,7 @@ document.addEventListener('click',e=>{
   else if(d.hper){S.obHp=d.hper;render()}
   else if(d.act==='convite-colar'){(navigator.clipboard&&navigator.clipboard.readText?navigator.clipboard.readText():Promise.reject()).then(t=>{S.convite=String(t||'').trim().toUpperCase().slice(0,13);render()}).catch(()=>toast('Cole o código no campo acima'))}
   else if(d.act==='ob-pular'){S.ob.fresh=!AUTH.user;S.ob.done=true;S.tab='hoje';render();window.scrollTo(0,0)}
-  else if(d.act==='raspe-ok'){window.RSP_OK=false;S.ob.step++;render();window.scrollTo(0,0)}
+  else if(d.act==='raspe-ok'){const rc=document.getElementById('rsp-c');if(!window.RSP_OK&&rc&&rc._rev){rc._rev();return}window.RSP_OK=false;S.ob.step++;render();window.scrollTo(0,0)}
   else if(d.act==='notif-ok'){const N=S.notif||(S.notif={on:false});(async()=>{try{if(!N.on){const LN=nativoNotif();let okp=true;if(LN){const rr=await LN.requestPermissions();okp=!!(rr&&rr.display==='granted')}else if('Notification' in window&&Notification.permission==='default'){try{okp=(await Notification.requestPermission())!=='denied'}catch(e){}}else if('Notification' in window&&Notification.permission==='denied')okp=false;if(okp){N.on=true;agendarNotif()}}}catch(e){}S.ob.step++;render();window.scrollTo(0,0)})()}
   else if(d.act==='ob-fechar'){S.pwSheet=false;if(S.ofVisto){S.ofOpen=false;S.ob.done=false;obIr('intro')}else{S.ofVisto=true;S.ofOpen=true}render();window.scrollTo(0,0)}
   else if(d.act==='of-no'){S.ofOpen=false;S.pwSheet=false;S.ob.done=false;obIr('intro');render();window.scrollTo(0,0)}
