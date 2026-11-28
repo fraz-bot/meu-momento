@@ -559,7 +559,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795816000";</script>
+<script>window.MM_VER="1795817000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2564,7 +2564,7 @@ const sampleP=Promise.resolve({
     const rd=res.body.getReader(),dec=new TextDecoder();let buf='',txt='',fim=null,enviou=false;
     try{while(true){const {value,done}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});let k;
       while((k=buf.indexOf('\n'))>=0){const l=buf.slice(0,k).trim();buf=buf.slice(k+1);if(!l)continue;let m;try{m=JSON.parse(l)}catch(e){continue}
-        if(typeof m.d==='string'){txt+=m.d;if(o._txt)o._txt(m.d);if(!enviou&&onPart){const p=pfParc(txt);if(p){enviou=true;try{onPart(p)}catch(e){}}}}else if(m.fim)fim=m}}}
+        if(m.reset){txt='';continue}if(typeof m.d==='string'){txt+=m.d;if(o._txt)o._txt(m.d);if(!enviou&&onPart){const p=pfParc(txt);if(p){enviou=true;try{onPart(p)}catch(e){}}}}else if(m.fim)fim=m}}}
     catch(e){const cod=navigator.onLine?'rede':'off';throw {code:'srv',cod,msg:errMsg(cod,null)}}
     if(!fim)throw {code:'srv',cod:'rede',msg:errMsg('rede',null)};
     const j=fim.fim;if(fim.status!==200||!j||j.ok!==true){const cod=j&&j.codigo;throw {code:'srv',cod,msg:errMsg(cod,j)}}
@@ -3314,7 +3314,10 @@ function pfReq(f,sel){const i=f.idr,alt=sel>0?i.alternativas[sel-1]:null,nome=(a
 /* Antecipação: assim que o produto é identificado, a comparação já começa em segundo plano.
    Só roda quando é provável que a pessoa confirme (boa confiança, área certa, produto que ainda não está na prateleira).
    A comparação não conta no limite mensal (o servidor só conta a identificação); se a pessoa trocar a foto ou escolher outra opção, o resultado é descartado. */
-function pfPre(f){try{const i=f&&f.idr;if(!i||f.pre||f.sel!==0)return;if(i.real&&i.real!==(f.area||'pele'))return;if((i.confianca||0)<70)return;
+/* Reaproveita a comparação quando a MESMA pessoa escaneia o MESMO produto de novo em até 30 dias e nada do perfil mudou (pele, ingredientes evitados, produtos que usa). Não junta pessoas diferentes. */
+function pfKey(q){try{const d=JSON.parse(q.ctx);return 'k'+[q.alt?1:0,nmK(q.marca||''),nmK(q.nome||''),d.area,JSON.stringify(d.perfil),JSON.stringify(d.produtos_que_ja_usa)].join('|').split('').reduce((h,c)=>(h*31+c.charCodeAt(0))|0,7)}catch(e){return null}}
+function pfReuso(q){const k=pfKey(q);if(!k)return null;const lim=new Date(Date.now()-30*864e5).toISOString().slice(0,10);return (S.prods||[]).find(p=>p.snap&&p.snap.k===k&&p.snap.cmp&&p.d>=lim)||null}
+function pfPre(f){try{const i=f&&f.idr;if(!i||f.pre||f.sel!==0)return;if(pfReuso(pfReq(f,0)))return;if(i.real&&i.real!==(f.area||'pele'))return;if((i.confianca||0)<70)return;
   const q=pfReq(f,0);if(!f.cmpMode&&(shDup((q.marca&&!nmK(q.nome).includes(nmK(q.marca))?q.marca+' ':'')+q.nome)||shDup(q.nome)))return;
   const box={part:null,on:null};f.pre={sel:0,ctx:q.ctx,box,p:sampleP.then(sf=>sf.cmpStream({ctx:q.ctx,ref:q.ref,pais:q.pais},pp=>{box.part=pp;if(box.on)box.on(pp)})).then(r=>({r}),e=>({e}))}}catch(e){f.pre=null}}
 async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&f.idr.real!==(f.area||'pele'))return;const i=f.idr,q=pfReq(f,f.sel),alt=q.alt;
@@ -3323,7 +3326,8 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
   else{render();pfProg()}
   const preO=(f.pre&&f.pre.sel===f.sel&&f.pre.ctx===q.ctx)?f.pre:null,pre=preO?preO.p:null;f.pre=null;f.preUsed=!!pre;f.autoUsed=!!f.auto;f.parcial=false;
   const onPart=pp=>pfParcAplica(f,i,pp);if(preO){preO.box.on=onPart;if(preO.box.part)onPart(preO.box.part)}
-  try{let r=null;if(pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0&&!f.bg&&!f.parcial)await new Promise(ok=>setTimeout(ok,w))}}
+  const reu=pre?null:pfReuso(q);f.reuso=reu;
+  try{let r=reu?JSON.parse(JSON.stringify(reu.snap.cmp)):null;if(r){await new Promise(ok=>setTimeout(ok,900))}if(!r&&pre){const o=await pre;if(!o.e&&o.r&&!o.r.erro){r=o.r;const w=2600-(Date.now()-f.t0);if(w>0&&!f.bg&&!f.parcial)await new Promise(ok=>setTimeout(ok,w))}}
     if(!r){const sf=await sampleP;r=await sf.cmpStream({ctx:q.ctx,ref:q.ref,pais:q.pais},onPart)}if(!f.bg&&!S.pf)return;if(!f.bg&&!f.parcial&&!f.fimAnim&&r&&!r.erro&&S.pf===f){pfFimAnim(f);await new Promise(ok=>setTimeout(ok,560))}f.parcial=false;
     if(!r||r.erro){f.errCod='foto';f.err=(r&&r.erro)||'Não consegui comparar com o seu perfil. Tente de novo.'}
     else{const ro=r.rotina||{};const c={resumo:pfStr(r.resumo,220)||'',finalidade:pfStr(r.finalidade,400)||'',por_que:pfStr(r.por_que,500)||'',
@@ -3334,8 +3338,8 @@ async function pfCmp(){const f=S.pf;if(!f||!f.idr||f.busy)return;if(f.idr.real&&
         evitar_encontrados:pfArr(r.evitar_encontrados,5).map(x=>String(x).slice(0,50)),nao_confirmado:pfArr(r.nao_confirmado,5).map(x=>String(x).slice(0,140))};
       f.cmp=c;f.sc=pfScore(c,i);f.p=100;f.st='score';if(f.cmpMode)cmpDedupe(f);
       const ver={boa:'serve',mod:'cuidado',baixa:'evitar'}[f.sc.cls];if(!f.bg)S.prodResult={produto:f.marca?f.marca+' '+f.nome:f.nome,categoria:i.categoria,nota:f.sc.v,veredito:ver};
-      const pc=r.preco?(r.preco.status==='available'?(cmpPr(r.preco)||{status:'insufficient_data'}):{status:'insufficient_data'}):undefined;
-      S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:ver,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc}},...(S.prods||[])].slice(0,10);
+      const pc=r.preco?(r.preco.status==='available'?(cmpPr(r.preco)||{status:'insufficient_data'}):{status:'insufficient_data'}):(f.reuso&&f.reuso.preco!==undefined?f.reuso.preco:undefined);
+      S.prods=[{d:hoje(),produto:f.nome,marca:f.marca,nota:f.sc.v,veredito:ver,...(f.fork?{fork:1}:{}),...(pc!==undefined?{preco:pc}:{}),snap:{idr:i,nome:f.nome,marca:f.marca,cmp:c,sc:f.sc,k:pfKey(q)}},...(S.prods||[]).filter(p=>p!==f.reuso)].slice(0,10);
       uso().sc++;xp(15,'Produto escaneado','sc')}
   }catch(e){if(!f.bg&&!S.pf)return;const cc=e&&e.code;if(cc==='srv'&&e.cod==='plus'&&!f.bg){S.pf=null;limite();return}f.errCod=cc==='srv'?e.cod:null;f.err=cc==='srv'?e.msg:(cc in ERR?ERR[cc]:'Algo deu errado. Tente de novo.')}
   pfTempo(f,!f.err&&!!f.sc);f.busy=false;gameCheck();if(f.bg){pfBgDone(f);return}if(S.pf&&S.pf.cmpMode&&S.pf.st==='score'&&S.pf.sc){cmpScanDone();return}render()}
