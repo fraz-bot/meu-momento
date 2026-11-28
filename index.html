@@ -106,6 +106,7 @@
 .rt-warn{margin:0;display:flex;gap:6px;align-items:center;font-size:13px;color:#8A4A34;background:#FBEDE4;border-radius:12px;padding:8px 10px}
 .rt-blk h3,.rt-why h3{margin:0 0 4px;display:flex;gap:8px;align-items:center;font-size:16px;color:#4A2A1E}.rt-blk h3 svg{color:#A76F5C}.rt-blk p{margin:0;font-size:15px;line-height:1.4;color:#4A2A1E}
 .rt-why{background:#F8EBE2;border-radius:18px;padding:11px 13px}.rt-why h3 svg{color:#A76F5C}.rt-why p{margin:0;font-size:14px;line-height:1.38;color:#6B4A3C}.rt-why small{display:block;margin-top:5px;font-size:11.5px;color:#9A8173}
+.rt-tmw{display:flex;align-items:stretch;gap:8px}.rt-tmw .rt-tm{flex:1}.rt-tma{flex:none;width:52px;border:1.5px solid #EBD8CB;border-radius:18px;background:none;font:inherit;font-size:26px;font-weight:600;color:#6B4A36;cursor:pointer}.rt-tma:disabled{opacity:.35;cursor:default}
 .rt-tm{display:flex;flex-direction:column;align-items:center;gap:1px;width:100%;font:inherit;border:1.5px solid #EBD8CB;border-radius:18px;background:none;padding:8px;color:#4A2A1E}.rt-tm span{color:#A76F5C;display:flex}.rt-tm b{font-size:20px}.rt-tm small{font-size:12.5px;color:#8A6F62}button.rt-tm{cursor:pointer}
 .rt-ft{flex:none;max-width:560px;width:100%;margin:0 auto;padding:10px 14px calc(12px + env(safe-area-inset-bottom));box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px}
 .rt-cta.ok{background:linear-gradient(135deg,#4F8A68,#3E7B67);animation:rtpop .5s ease}@keyframes rtpop{0%{transform:scale(.96)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
@@ -2053,7 +2054,7 @@ const DEF=()=>({nome:'',convite:'',sol:null,agua:null,acido:null,gestT:null,hrot
   analyzing:false,photo:null,file:null,result:null,err:null,rot:null,rotBusy:false,rotErr:null,
   bq:{},bqRun:false,bqi:0,pfArea:null,prodFile:null,prodPhoto:null,prodResult:null,prodErr:null,prodBusy:false,prods:[],log:{},shelf:[],sosHist:[],chat:[],astFoco:null,astSg:false,astDraft:'',astBusy:false,astErr:null,astMenu:false,astFrom:null,sosFile:null,sosPhoto:null,sosBusy:false,sosErr:null,sosRes:null,fotos:[],analises:[],cmpA:null,cmpB:null,reg:{sono:null,est:null,agua:null,sol:null,ciclo:false,doce:false},area:'pele',hq:{quim:null,calor:null,lav:null},hres:null,hFile:null,hPhoto:null,hBusy:false,hErr:null,tema:'rosa',quiz:{},qi:0,unl:{},rem:{on:false,m:'07:30',n:'21:30'},notif:{on:false},ativos:[],ing:{evitar:[],fav:[]},fase:'padrao',plus:false,uso:null,cloud:false,cloudAt:null,maisSub:null,draft:'',prodSub:'rec',xp:0,badges:{},once:{},nAn:0,peleSub:'analise',cele:null,celeQ:[],diary:[]});
 const S=DEF();
-const KEY='mm_v1',SAVED=['period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro','avx','astCota'];
+const KEY='mm_v1',SAVED=['rtTm','period','perMan','eclHint','nome','convite','sol','acido','gestT','ob','ans','pele','pref','sens','gest','age','tier','result','rot','prods','diary','log','shelf','fotos','avatar','analises','hq','hres','tema','quiz','rem','ativos','ing','fase','plus','uso','cloud','cloudAt','xp','badges','once','nAn','hrot','notif','meta','zonas','idade','sosHist','hsch','hlog','bq','chat','guest','cg','tour','tips','shd','cmpH','cmpP','retro','avx','astCota'];
 function save(){try{const o={};SAVED.forEach(k=>o[k]=S[k]);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}if(typeof cloudPush==='function')cloudPush();if(typeof agendarNotif==='function'&&nativoNotif())agendarNotif()}
 function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j)SAVED.forEach(k=>{if(j[k]!==undefined)S[k]=j[k]})}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
@@ -2882,12 +2883,15 @@ function ritAct(v){
     setTimeout(()=>{if(S.rit!==R)return;ritMark(per,cur);R.anim=0;
       if(R.i>=st.length-1){R.fin=true;const l=dayLog();if(l.tr&&l.tr[per])l.tr[per].f=Date.now()}else R.i++;
       R.dir='f';R.fresh=true;render();window.scrollTo(0,0)},620)}
+  else if(a==='tmd'){const cur=st[R.i];if(!cur||R.tm)return;const k=cur.t==='k'?cur.k:cur.id;S.rtTm=S.rtTm||{};const at=S.rtTm[k]||rtSegLer();S.rtTm[k]=Math.max(15,Math.min(300,at+(+b)));save();render()}
   else if(a==='tm'){const secs=+b;if(!secs||R.tm)return;R.tm=Date.now()+secs*1000;R.tmI=R.i;
     clearInterval(ritAct._t);ritAct._t=setInterval(()=>{const e=document.getElementById('rt-tm');
       if(!S.rit||S.rit!==R||R.tmI!==R.i||!e){clearInterval(ritAct._t);return}
       const s=Math.max(0,Math.ceil((R.tm-Date.now())/1000));e.textContent=s>0?s+' s':'Tempo concluído';
       if(s<=0){clearInterval(ritAct._t);R.tm=0;try{navigator.vibrate&&navigator.vibrate(120)}catch(_){}}},250);render()}
 }
+const rtSeg=v=>v<60?v+' segundos':(v%60?Math.floor(v/60)+' min '+(v%60)+' s':(v/60)+(v===60?' minuto':' minutos'));
+function rtSegLer(){const b=document.querySelector('.rt-tm.go');const m=b&&b.dataset.rit&&b.dataset.rit.match(/tm\|(\d+)/);return m?+m[1]:30}
 function ritThumb(it,sz,k){return it&&it.img?`<img class="rt-th" style="width:${sz}px;height:${sz}px" src="${it.img}" alt="">`:`<span class="rt-th" style="width:${sz}px;height:${sz}px">${it?gShelf(it,sz-10):pimg(k||'hidr',sz-10)}</span>`}
 function ritView(){
   const R=S.rit,per=R.per,steps=ritSteps(per),n=steps.length,pn=RT_NM[per];
@@ -2898,7 +2902,7 @@ function ritView(){
   const k=st.k,f=st.t==='k'?infoAny(k):null;
   const nome=st.t==='k'?P[k].n:st.it.n,como=st.t==='k'?((f&&f.como)||STEPS[k]||''):'Use como indicado na embalagem do produto.';
   const mot=st.t==='k'?((f&&f.motivo)||P[k].dica||''):'';
-  const secs=(m=>m?+m[1]:0)(String(como).match(/(\d+)\s*segundos/));
+  const sug=(m=>m?+m[1]:0)(String(como).match(/(\d+)\s*segundos/)),tk=st.t==='k'?st.k:st.id,secs=sug?((S.rtTm&&S.rtTm[tk])||sug):0;
   let prod='';
   if(st.t==='s')prod=`<div class="rt-pn">${esc(st.it.n)}</div>`;
   else if(st.it)prod=`<div class="rt-pn">${esc(st.it.n)}</div>`;
@@ -2907,7 +2911,7 @@ function ritView(){
     :(st.t==='k'?(()=>{const ex=((P[k].t[S.tier]||P[k].t.mid)[3]||[])[0];return ex?`<button class="rt-add" data-rsh="${per}|${k}">${ic('plus',14)}Adicionar à prateleira</button>`:`<span class="rt-no">Ainda não está na sua prateleira</span>`})():'');
   const aviso=st.it&&st.it.v==='cuidado'?`<p class="rt-warn">${ic('alert',14)}O scanner sugeriu cuidado com este produto para a sua pele.</p>`:'';
   const dots=steps.map((s,j)=>{const d=ritDone(per,s),cur=j===i,can=d||cur||j<=first;return `<button class="rt-d ${d?'ok':''} ${cur?'on':''}" ${can?`data-rit="go|${j}"`:'disabled'} aria-label="Etapa ${j+1}${d?' concluída':''}" ${cur?'aria-current="step"':''}>${d?ic('check',12):''}</button>`}).join('<i></i>');
-  const tm=secs?(R.tm&&R.tmI===i?`<div class="rt-tm"><span>${ic('clock',22)}</span><b id="rt-tm">${Math.max(0,Math.ceil((R.tm-Date.now())/1000))} s</b></div>`:`<button class="rt-tm go" data-rit="tm|${secs}"><span>${ic('clock',22)}</span><b>${secs} segundos</b><small>Toque para cronometrar</small></button>`):'';
+  const tm=secs?(R.tm&&R.tmI===i?`<div class="rt-tm"><span>${ic('clock',22)}</span><b id="rt-tm">${Math.max(0,Math.ceil((R.tm-Date.now())/1000))} s</b></div>`:`<div class="rt-tmw"><button class="rt-tma" data-rit="tmd|-15" aria-label="Menos 15 segundos" ${secs<=15?'disabled':''}>−</button><button class="rt-tm go" data-rit="tm|${secs}"><span>${ic('clock',22)}</span><b>${rtSeg(secs)}</b><small>${secs!==sug?'Sugestão: '+sug+' s · toque para iniciar':'Toque para cronometrar'}</small></button><button class="rt-tma" data-rit="tmd|15" aria-label="Mais 15 segundos" ${secs>=300?'disabled':''}>+</button></div>`):'';
   const last=i===n-1,sub=S.rot?'Rotina personalizada para a sua pele.':'Rotina básica. Faça a análise para personalizar.';
   const cta=R.anim?`<button class="rt-cta ok" disabled>${ic('checkc',22)}Feito!</button>`:`<button class="rt-cta" data-rit="ok">${ic('checkc',22)}${done?(last?'Ver resumo do ritual':'Próxima etapa'):'Concluir etapa'}</button>`;
   const foot=R.anim?'':done?(last?'Etapa já concluída.':'Etapa já concluída. Siga para a próxima.'):(last?'Esta é a última etapa do ritual.':'A próxima etapa será liberada automaticamente.');
