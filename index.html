@@ -319,6 +319,7 @@
 .hj-ct{min-height:clamp(104px,14vh,128px);padding:10px 14px 10px 20px}.hj-ctt b{font-size:clamp(17px,2.3vh,19px)}
 .hj-cti{height:clamp(60px,8.4vh,72px)}.hj-cti img,.hj-cti svg{max-height:clamp(52px,7.4vh,62px)}.hj-ctv{height:clamp(60px,8.4vh,72px)}.hj-ctv img{width:clamp(70px,9.6vh,82px);bottom:-26px}
 @media(max-height:700px){.hj2 .hj-gr2 p{display:none}.hj-rxc{display:none}.hj-rxp{margin-top:12px}}
+.gbk-w{display:flex;margin:0 0 10px}
 @keyframes shsIn{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){#shshare{animation:none}}
 
 .shh-i{display:flex;align-items:center;gap:8px;margin:0 4px 6px;font-size:13px;color:#7B6858}
@@ -558,7 +559,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795815000";</script>
+<script>window.MM_VER="1795816000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -2212,7 +2213,15 @@ function toggleStep(per,k){
   if(!full&&l[per+'Ok']){l[per+'Ok']=false;S.xp=Math.max(0,S.xp-20)}
   gameCheck();render();
 }
-function goTab(t,sub){
+/* Voltar: guarda as telas visitadas (só na memória) para o botão Voltar levar à tela anterior */
+const NAVH=[];const navSnap=()=>({tab:S.tab,peleSub:S.peleSub,prodSub:S.prodSub,maisSub:S.maisSub,pkList:S.pkList,period:S.period});
+function navPush(){const c=navSnap(),l=NAVH[NAVH.length-1];if(!l||JSON.stringify(l)!==JSON.stringify(c)){NAVH.push(c);if(NAVH.length>30)NAVH.shift()}}
+function navRoot(){const t=S.tab;return t==='hoje'||t==='assistant'||t==='escanear'||(t==='pele'&&(S.peleSub||'analise')==='analise')||(t==='produtos'&&S.prodSub==='shelf'&&!S.pkDet)||(t==='mais'&&!!S.maisSub)}
+function navBack(){let p=NAVH.pop();while(p&&p.tab===S.tab&&p.peleSub===S.peleSub&&p.prodSub===S.prodSub&&p.maisSub===S.maisSub)p=NAVH.pop();
+  if(p){Object.assign(S,p);S.pkDet=null;S.pv=null}
+  else{const t=S.tab;if(t==='mais'){S.tab='hoje'}else if(t==='produtos'){S.prodSub='shelf';S.pkList=false;S.pkDet=null}else{S.tab='pele';S.peleSub='analise';S.pv=null}}
+  render();window.scrollTo(0,0)}
+function goTab(t,sub){navPush();
   if(t==='cuidados')t=(S.tab==='pele'||S.tab==='cabelo'||S.tab==='rotina')?S.tab:(S.lastCuid||'pele');
   if(t==='cabelo'&&S.tab!=='cabelo')S.chv=null;
   if(t==='assistant'&&S.tab!=='assistant')S.astFrom=S.tab;if(t!=='assistant')S.astMenu=false;
@@ -5458,7 +5467,7 @@ function render(){
   clearTimeout(render._su);if(!S.ob.done){const a=obStepAtual();if(a==='susp'||a==='susp2')render._su=setTimeout(()=>{if(!S.ob.done&&obStepAtual()===a){S.ob.step++;render();window.scrollTo(0,0)}},3200)}
   if(!S.ob.done){const a=obStepAtual();if((a==='scan'&&!S.file&&!S.result&&!S.analyzing)||((a==='analise'||a==='raspe'||a==='susp'||a==='susp2'||a==='analise2'||a==='resumo')&&!S.result))obIr('foto')}
   const g=S.ob.done?gate():null;
-  $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:cuidSw()+tipCtx()+{hoje:viewHoje,pele:viewPele,rotina:viewRotina,assistant:viewAssistant,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]()+(g?'':tourHtml());
+  $('#view').innerHTML=!S.ob.done?viewOnboarding():g?`<div class="stack">${g}</div>`:(()=>{const b=cuidSw()+tipCtx()+{hoje:viewHoje,pele:viewPele,rotina:viewRotina,assistant:viewAssistant,produtos:viewProdutos,escanear:viewEscanear,sos:viewSos,cabelo:viewCabeloTab,mais:viewMais}[S.tab]();const tem=/aria-label="Voltar"|data-act="mais-back"|Voltar ao ritual|Voltar à rotina/.test(b.slice(0,4000));return (navRoot()||tem?'':`<div class="gbk-w"><button class="bk2 gbk" data-act="gback">${ic('back',18)}Voltar</button></div>`)+b})()+(g?'':tourHtml());
   {const w=document.getElementById('age-wheel');if(w)wheelInit(w)}
   {const w=document.getElementById('time-wheel');if(w)timeWheelInit(w)}
   raspeInit();fitIp();eclInit();ecMiniInit();indInit();fitRv();if(document.querySelector('.rv-card'))setTimeout(fitRv,350);if(!S.ob.done&&S.result&&['raspe','susp','analise','susp2'].includes(obStepAtual())){const d=desafio();if(d){pctFetch(d.k);const pk=posK();if(pk)pctFetch(pk)}}pthHidratar();
@@ -5514,13 +5523,14 @@ document.addEventListener('click',e=>{
   else if(d.act==='ob-fim'){S.ob.done=true;S.tab='pele';S.peleSub='analise';gameCheck();render();window.scrollTo(0,0)}
   else if(d.act==='editar-perfil'){S.ob={step:1,done:false};render();window.scrollTo(0,0)}
   else if(d.cu){cuGo(d.cu)}
-  else if(d.tab){goTab(d.tab)}
+  else if(d.tab){if(d.tab!=='mais')NAVH.length=0;goTab(d.tab)}
+  else if(d.act==='gback'){navBack()}
   else if(d.go){const [t,sub]=d.go.split('|');goTab(t,sub)}
   else if(d.act==='editar-reg'){S.editReg=true;const e=S.diary.find(x=>x.d===hoje());if(e)S.reg={...regNew(),...Object.fromEntries(Object.entries(e).filter(([k])=>k in regNew()))};render()}
   else if(d.rmf){S.fotos=S.fotos.filter(f=>f.d!==d.rmf);render()}
   else if(d.ptier){const [k,x]=d.ptier.split('|');S.ptier=S.ptier||{};S.ptier[k]=x;const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.pk!==undefined){pkAct(d.pk)}
-  else if(d.psub){S.tab='produtos';S.prodSub=d.psub;if(d.psub==='rec'){S.pkList=true;S.pkDet=null}render();window.scrollTo(0,0)}
+  else if(d.psub){navPush();S.tab='produtos';S.prodSub=d.psub;if(d.psub==='rec'){S.pkList=true;S.pkDet=null}render();window.scrollTo(0,0)}
   else if(d.pao){const [id,m]=d.pao.split('|');const it=S.shelf.find(i=>i.id===id);if(it){it.meses=+m;render()}}
   else if(d.hrot){const a=S.hrot||(S.hrot=[]),ix=a.indexOf(d.hrot);if(ix>=0)a.splice(ix,1);else a.push(d.hrot);toast(ix>=0?'Tirado da rotina':'Adicionado à rotina');const y=window.scrollY;render();window.scrollTo(0,y)}
   else if(d.act==='hrot-all'&&S.hres){const ks=hairPlan(S.hres).produtos.map(x=>x.k);S.hrot=[...new Set([...(S.hrot||[]),...ks])];toast('Cuidados do cabelo incluídos na rotina');const y=window.scrollY;render();window.scrollTo(0,y)}
