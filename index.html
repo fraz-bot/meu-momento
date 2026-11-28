@@ -559,7 +559,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795817000";</script>
+<script>window.MM_VER="1795836073";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
@@ -1066,6 +1066,10 @@ header{padding:16px 0 12px}
 .obk{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .bkx{align-self:flex-start;border:0;background:transparent;color:var(--ink);padding:8px 8px 8px 0;cursor:pointer;display:inline-flex}
 .obf{margin-top:auto;padding-top:8px;display:flex;justify-content:center;position:sticky;bottom:14px}
+/* rodapé do onboarding: faixa da cor do fundo atrás do botão, para o conteúdo rolar por baixo sem aparecer atrás dele */
+.ob .obf{bottom:0;padding-bottom:calc(14px + env(safe-area-inset-bottom));z-index:3}
+.ob .obf::before{content:'';position:absolute;z-index:-1;left:-60px;right:-60px;top:-26px;bottom:0;background:linear-gradient(to bottom,rgba(250,245,239,0),var(--bg) 26px);pointer-events:none}
+.ob.iny .obf::before,.ob.scx .obf::before{display:none}
 .obc{min-width:230px;min-height:56px;font-size:17px}
 .btn[disabled]{opacity:.45;box-shadow:none!important}
 .obin{text-align:center;font-size:26px!important;font-weight:800;font-family:var(--f-display);background:var(--soft)!important;border:0!important;border-radius:20px!important;padding:20px!important}
