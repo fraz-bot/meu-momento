@@ -308,6 +308,17 @@
 .shs-sc{flex:none;width:62px;height:62px;border-radius:16px;display:grid;place-content:center;text-align:center;color:#fff;background:var(--ok,#4F8A6B)}.shs-nt.mod .shs-sc{background:var(--att,#B8623F)}.shs-nt.baixa .shs-sc{background:#A2412E}.shs-sc b{font-size:24px;line-height:1}.shs-sc small{font-size:10.5px;opacity:.9;margin-top:2px}
 .shs-ntt{min-width:0}.shs-ntt b{font-size:15px;color:#4A2A1E}.shs-ntt p{margin:3px 0 0;font-size:13.5px;color:#5B4636}.shs-al{display:flex;gap:6px;align-items:flex-start}.shs-al svg{flex:none;margin-top:2px;color:var(--att,#B8623F)}
 #shshare{position:fixed;inset:0;z-index:120;background:rgba(40,22,14,.62);display:grid;place-items:center;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));animation:shsIn .2s ease}#shshare .shp-w{display:grid;gap:14px;justify-items:center;width:100%;max-width:380px}#shshare img{display:block;max-width:100%;max-height:68vh;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35)}#shshare .shsh-b{margin:0;background:#FFFDFB;color:#4A2A1E}#shshare .shp-x{border:0;background:none;color:#fff;font:inherit;font-weight:700;font-size:15px;min-height:44px;padding:0 18px;cursor:pointer}
+/* Hoje cabe numa tela de celular: medidas acompanham a altura da tela */
+.hj2{gap:clamp(10px,1.6vh,16px)}.hj2 .hj-gr2{min-height:0;padding:2px 0 0}.hj2 .hj-gr2 h1{font-size:clamp(27px,4vh,34px)}.hj2 .hj-gr2 p{margin-top:4px;font-size:clamp(14px,1.9vh,15.5px)}
+.hj-rx{padding:clamp(14px,2.2vh,20px) 18px clamp(12px,1.8vh,16px)}.hj-rxk span{font-size:12px}
+.hj-rxh{margin-top:clamp(6px,1vh,10px);font-size:clamp(28px,4.3vh,38px)}.hj-rxs{margin-top:4px;font-size:clamp(14px,1.8vh,15.5px)}
+.hj-rxb{min-height:clamp(44px,5.6vh,50px);margin-top:clamp(10px,1.7vh,16px);font-size:16px}
+.hj-rxp{margin-top:clamp(10px,1.7vh,16px)}.hj-rxc{margin-top:6px;font-size:13px}
+.hj-pc{padding:clamp(12px,1.8vh,16px) 16px clamp(12px,1.8vh,16px) 18px}.hj-pch{margin-top:6px;font-size:clamp(16px,2.2vh,18.5px)}.hj-pcs{font-size:14px}
+.hj-pcb{min-width:68px;height:clamp(50px,6.6vh,60px);border-radius:18px;font-size:clamp(24px,3.3vh,29px)}
+.hj-ct{min-height:clamp(104px,14vh,128px);padding:10px 14px 10px 20px}.hj-ctt b{font-size:clamp(17px,2.3vh,19px)}
+.hj-cti{height:clamp(60px,8.4vh,72px)}.hj-cti img,.hj-cti svg{max-height:clamp(52px,7.4vh,62px)}.hj-ctv{height:clamp(60px,8.4vh,72px)}.hj-ctv img{width:clamp(70px,9.6vh,82px);bottom:-26px}
+@media(max-height:700px){.hj2 .hj-gr2 p{display:none}.hj-rxc{display:none}.hj-rxp{margin-top:12px}}
 @keyframes shsIn{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){#shshare{animation:none}}
 
 .shh-i{display:flex;align-items:center;gap:8px;margin:0 4px 6px;font-size:13px;color:#7B6858}
@@ -547,7 +558,7 @@ nav div{grid-template-columns:repeat(5,1fr)!important}nav button{font-size:10.5p
 .av-s{margin-top:10px;padding:10px 12px;border-radius:14px;background:#F8F0E6}.av-s span{display:block;font-size:12.5px;color:#8A6A48;font-weight:700}.av-s b{display:block;font-size:14.5px;color:#4A2A1E;margin-top:2px}
 .av-b{display:flex;align-items:center;gap:10px;margin-top:12px}.av-b .hj-bt{padding:9px 14px;font-size:14px}.av-x{border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;padding:8px}
 </style>
-<script>window.MM_VER="1795812000";</script>
+<script>window.MM_VER="1795813000";</script>
 <script src="supabase.js"></script>
 <script>window.SB_URL="https://tobdkptlewiwemafphyf.supabase.co";window.SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvYmRrcHRsZXdpd2VtYWZwaHlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxNDc1NTYsImV4cCI6MjEwOTcyMzU1Nn0.du1wM-BLPDdWwL1jofBVwTh7lJbzHz2nEXdf1Gl1BJo";window.sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});</script>
 </head><body>
